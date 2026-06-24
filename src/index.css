@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 20% 99%;
+    --foreground: 201 78% 23%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 201 78% 23%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 201 78% 23%;
+
+    --primary: 160 55% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 201 78% 23%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 200 10% 96%;
+    --muted-foreground: 200 10% 45%;
+
+    --accent: 160 30% 96%;
+    --accent-foreground: 160 55% 30%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 200 10% 92%;
+    --input: 200 10% 92%;
+    --ring: 160 55% 45%;
+
+    --radius: 1rem;
+
+    /* Custom tokens */
+    --teal: 160 55% 45%;
+    --teal-light: 160 50% 55%;
+    --teal-dark: 160 60% 35%;
+    --navy: 201 78% 23%;
+    --navy-light: 201 60% 35%;
+    --sky: 205 65% 48%;
+    --sky-light: 205 60% 58%;
+    --warm-white: 30 20% 99%;
+    --warm-gray: 200 10% 55%;
+    --light-gray: 200 10% 97%;
+    --surface: 200 10% 98%;
+    --surface-border: 200 10% 93%;
+    --dark-bg: 201 78% 14%;
+    --dark-surface: 201 65% 18%;
+    --dark-surface-light: 201 50% 24%;
+
+    /* Gradient tokens */
+    --gradient-ocean: linear-gradient(135deg, hsl(201 78% 23%), hsl(205 65% 48%));
+    --gradient-teal: linear-gradient(135deg, hsl(160 55% 45%), hsl(160 50% 55%));
+    --gradient-sunrise: linear-gradient(135deg, hsl(201 78% 23%), hsl(160 55% 45%));
+    --gradient-warm: linear-gradient(135deg, hsl(30 60% 50%), hsl(15 70% 55%));
+
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 201 78% 10%;
+    --foreground: 40 30% 95%;
+    --card: 201 65% 14%;
+    --card-foreground: 40 30% 95%;
+    --popover: 201 65% 14%;
+    --popover-foreground: 40 30% 95%;
+    --primary: 160 55% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 205 65% 48%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 201 40% 18%;
+    --muted-foreground: 200 10% 55%;
+    --accent: 201 40% 18%;
+    --accent-foreground: 40 30% 95%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 201 30% 22%;
+    --input: 201 30% 22%;
+    --ring: 160 55% 45%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .section-badge {
+    @apply inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase;
+    color: hsl(var(--primary));
+    border: 1px solid hsl(var(--primary) / 0.2);
+    background: hsl(var(--primary) / 0.05);
+  }
+
+  .qupe-heading {
+    @apply font-heading font-bold tracking-tight;
+  }
+
+  .section-light {
+    background: hsl(var(--surface));
+  }
+
+  .section-dark {
+    background: hsl(var(--dark-bg));
+    color: hsl(var(--warm-white));
+  }
+
+  .teal-gradient {
+    background: linear-gradient(135deg, hsl(var(--teal)) 0%, hsl(var(--teal-light)) 100%);
+  }
+
+  .navy-gradient {
+    background: linear-gradient(135deg, hsl(var(--navy)) 0%, hsl(var(--navy-light)) 100%);
+  }
+
+  .ocean-gradient {
+    background: linear-gradient(135deg, hsl(var(--navy)) 0%, hsl(var(--sky)) 100%);
+  }
+
+  .sunrise-gradient {
+    background: linear-gradient(135deg, hsl(var(--navy)) 0%, hsl(var(--teal)) 50%, hsl(var(--teal-light)) 100%);
+  }
+
+  .text-teal {
+    color: hsl(var(--teal));
+  }
+
+  .text-navy {
+    color: hsl(var(--navy));
+  }
+
+  .bg-surface {
+    background: hsl(var(--surface));
+  }
+
+  .border-surface {
+    border-color: hsl(var(--surface-border));
+  }
+
+  /* Gradient card variants */
+  .qupe-card {
+    @apply bg-card rounded-3xl border border-border p-8;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .qupe-card:hover {
+    @apply border-primary/20 shadow-xl;
+    box-shadow: 0 20px 60px -15px hsl(var(--primary) / 0.12);
+  }
+
+  .qupe-card-ocean {
+    @apply rounded-3xl p-8 text-white;
+    background: linear-gradient(135deg, hsl(var(--navy)) 0%, hsl(var(--sky)) 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .qupe-card-teal {
+    @apply rounded-3xl p-8 text-white;
+    background: linear-gradient(135deg, hsl(var(--teal-dark)) 0%, hsl(var(--teal)) 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .qupe-card-warm {
+    @apply rounded-3xl p-8;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.06) 0%, hsl(var(--sky) / 0.06) 100%);
+    border: 1px solid hsl(var(--primary) / 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .qupe-card-warm:hover {
+    border-color: hsl(var(--primary) / 0.25);
+    box-shadow: 0 20px 60px -15px hsl(var(--primary) / 0.1);
+  }
+
+  /* Gradient background blobs */
+  .qupe-blob-1 {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, transparent 70%);
+    filter: blur(60px);
+  }
+
+  .qupe-blob-2 {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(var(--sky) / 0.06) 0%, transparent 70%);
+    filter: blur(80px);
+  }
+
+  .qupe-dots {
+    background-image: radial-gradient(circle, hsl(var(--primary) / 0.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
