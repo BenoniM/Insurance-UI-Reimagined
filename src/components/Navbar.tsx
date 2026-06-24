@@ -93,7 +93,9 @@ const Navbar = () => {
           <div 
             className="relative flex items-center justify-center gap-0 transition-all duration-300"
             style={{
-              filter: scrolled ? "drop-shadow(0 12px 32px rgba(0,0,0,0.1))" : "none",
+              filter: scrolled 
+                ? "drop-shadow(0 16px 40px rgba(0,0,0,0.2))" 
+                : "drop-shadow(0 12px 32px rgba(0,0,0,0.15))",
             }}
           >
             {/* ── LEFT PILL: Logo ── */}
@@ -484,8 +486,8 @@ const Navbar = () => {
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
             boxShadow: scrolled
-              ? "0 8px 32px rgba(0,0,0,0.12)"
-              : "0 4px 16px rgba(0,0,0,0.08)",
+              ? "0 12px 40px rgba(0,0,0,0.2)"
+              : "0 8px 24px rgba(0,0,0,0.15)",
             border: "1.5px solid rgba(255,255,255,0.9)",
           }}
         >
