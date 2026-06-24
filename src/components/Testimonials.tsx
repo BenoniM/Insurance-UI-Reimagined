@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import SectionWrapper from "./SectionWrapper";
@@ -38,10 +37,8 @@ const Testimonials = () => {
           <CarouselContent className="-ml-4">
             {testimonials.map((tm, i) => (
               <CarouselItem key={tm.name} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                <motion.div
-                  whileHover={{ y: -6, scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className={`h-full flex flex-col rounded-3xl p-8 bg-gradient-to-br ${tm.gradient} text-white shadow-lg`}
+                <div
+                  className={`h-full flex flex-col rounded-3xl p-8 bg-gradient-to-br ${tm.gradient} text-white shadow-lg hover:-translate-y-1.5 hover:scale-[1.02] transition-all duration-300`}
                 >
                   <div className="flex gap-1 mb-4">
                     {[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 fill-white/80 text-white/80" />)}
@@ -56,7 +53,7 @@ const Testimonials = () => {
                       <p className="text-xs text-white/65">{tm.role[lang]}</p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>

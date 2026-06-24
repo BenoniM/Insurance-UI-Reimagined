@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -33,7 +32,7 @@ const Insights = () => {
         {articles.map((article, i) => (
           <ScrollReveal key={article.slug} animation="fadeUp" delay={i * 0.08}>
             <Link to={`/blog/${article.slug}`} className="group block h-full">
-              <motion.div whileHover={{ y: -6, scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="qupe-card-warm h-full flex flex-col">
+              <div className="qupe-card-warm h-full flex flex-col hover:-translate-y-1.5 hover:scale-[1.02] transition-all duration-300">
                 <span className="inline-block text-xs font-semibold text-primary bg-primary/8 rounded-full px-3 py-1 mb-4 w-fit">{article.category}</span>
                 <h3 className="font-heading font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
                   {lang === "am" && article.title_am ? article.title_am : article.title}
@@ -44,7 +43,7 @@ const Insights = () => {
                 <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
                   {t("insights.readMore")} <ArrowRight className="w-3.5 h-3.5" />
                 </span>
-              </motion.div>
+              </div>
             </Link>
           </ScrollReveal>
         ))}

@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { FileText, Upload, Clock, CheckCircle } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import SectionWrapper from "./SectionWrapper";
@@ -37,7 +36,7 @@ const ClaimsGuide = () => {
             <div className="space-y-4 mt-10">
               {claimSteps.map((step, i) => (
                 <ScrollReveal key={step.title} delay={i * 0.1}>
-                  <motion.div whileHover={{ x: 4 }} className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
+                  <div className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:translate-x-1 transition-all duration-300">
                     <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center shrink-0">
                       <step.icon className="w-5 h-5 text-primary" />
                     </div>
@@ -45,7 +44,7 @@ const ClaimsGuide = () => {
                       <h3 className="font-heading font-semibold text-white mb-1">{step.title}</h3>
                       <p className="text-sm text-white/50">{step.description}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 </ScrollReveal>
               ))}
             </div>
@@ -64,17 +63,12 @@ const ClaimsGuide = () => {
               <h3 className="font-heading font-semibold text-lg text-white mb-6">{t("claims.requiredDocs")}</h3>
               <ul className="space-y-3">
                 {requiredDocs.map((doc, i) => (
-                  <motion.li
-                    key={doc}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.05 }}
-                    className="flex items-start gap-3 text-sm"
-                  >
-                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                    <span className="text-white/60">{doc}</span>
-                  </motion.li>
+                  <ScrollReveal key={doc} animation="fadeUp" delay={0.3 + i * 0.05}>
+                    <li className="flex items-start gap-3 text-sm">
+                      <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                      <span className="text-white/60">{doc}</span>
+                    </li>
+                  </ScrollReveal>
                 ))}
               </ul>
               <div className="mt-6 p-4 rounded-2xl bg-primary/10 border border-primary/20">

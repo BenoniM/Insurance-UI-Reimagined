@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import CTAButton from "./CTAButton";
@@ -20,6 +21,7 @@ const Navbar = () => {
   const { lang, toggleLang, t } = useLanguage();
   const { user, isAdmin, signOut } = useAuth();
   const location = useLocation();
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -32,6 +34,15 @@ const Navbar = () => {
     setDropdownOpen(false);
   }, [location]);
 
+  useGSAP(() => {
+    gsap.from(navContainerRef.current, {
+      y: -20,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.out"
+    });
+  }, []);
+
   const navLinks = [
     { label: t("nav.products"), href: "/products", hasDropdown: true },
     { label: t("nav.claims"), href: "/claims" },
@@ -42,9 +53,8 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 lg:px-6 py-3">
-      <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+      <div
+        ref={navContainerRef}
         className={`max-w-6xl mx-auto rounded-2xl transition-all duration-500 ${
           scrolled
             ? "bg-card/95 backdrop-blur-xl shadow-lg shadow-foreground/5 border border-border"
@@ -62,7 +72,7 @@ const Navbar = () => {
               link.hasDropdown ? (
                 <div
                   key={link.label}
-                  className="relative"
+                  className="relative group"
                   onMouseEnter={() => setDropdownOpen(true)}
                   onMouseLeave={() => setDropdownOpen(false)}
                 >
@@ -70,27 +80,21 @@ const Navbar = () => {
                     {link.label}
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
                   </button>
-                  <AnimatePresence>
-                    {dropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-2 w-56 bg-card border border-border rounded-2xl shadow-xl shadow-foreground/5 p-2"
+                  <div
+                    className={`absolute top-full left-0 mt-2 w-56 bg-card border border-border rounded-2xl shadow-xl shadow-foreground/5 p-2 transition-all duration-200 origin-top ${
+                      dropdownOpen ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"
+                    }`}
+                  >
+                    {products.map((p) => (
+                      <Link
+                        key={p.href}
+                        to={p.href}
+                        className="block px-4 py-2.5 text-sm text-foreground/70 hover:text-primary hover:bg-accent/50 rounded-xl transition-colors"
                       >
-                        {products.map((p) => (
-                          <Link
-                            key={p.href}
-                            to={p.href}
-                            className="block px-4 py-2.5 text-sm text-foreground/70 hover:text-primary hover:bg-accent/50 rounded-xl transition-colors"
-                          >
-                            {p.label[lang]}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        {p.label[lang]}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <Link
@@ -151,71 +155,66 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="lg:hidden mt-2 mx-auto max-w-6xl bg-card border border-border rounded-2xl shadow-xl shadow-foreground/5 overflow-hidden"
-          >
-            <div className="flex flex-col gap-1 p-4">
-              {navLinks.map((link) =>
-                link.hasDropdown ? (
-                  <div key={link.label}>
-                    <button
-                      onClick={() => setDropdownOpen(!dropdownOpen)}
-                      className="flex items-center justify-between w-full px-4 py-3 text-foreground/70 hover:text-foreground rounded-xl transition-colors"
-                    >
-                      {link.label}
-                      <ChevronDown className={`w-4 h-4 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
-                    </button>
-                    {dropdownOpen && (
-                      <div className="ml-4 border-l-2 border-primary/20 pl-4 space-y-1">
-                        {products.map((p) => (
-                          <Link key={p.href} to={p.href} className="block py-2 text-sm text-foreground/60 hover:text-primary" onClick={() => setMobileOpen(false)}>
-                            {p.label[lang]}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <Link key={link.label} to={link.href} className="px-4 py-3 text-foreground/70 hover:text-foreground rounded-xl transition-colors" onClick={() => setMobileOpen(false)}>
+      {mobileOpen && (
+        <div
+          className="lg:hidden mt-2 mx-auto max-w-6xl bg-card border border-border rounded-2xl shadow-xl shadow-foreground/5 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200"
+        >
+          <div className="flex flex-col gap-1 p-4">
+            {navLinks.map((link) =>
+              link.hasDropdown ? (
+                <div key={link.label}>
+                  <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className="flex items-center justify-between w-full px-4 py-3 text-foreground/70 hover:text-foreground rounded-xl transition-colors"
+                  >
                     {link.label}
-                  </Link>
-                )
-              )}
-
-              {user ? (
-                <>
-                  <Link to="/dashboard" className="px-4 py-3 text-primary font-medium" onClick={() => setMobileOpen(false)}>
-                    {t("nav.dashboard")}
-                  </Link>
-                  {isAdmin && (
-                    <Link to="/admin" className="px-4 py-3 text-secondary font-medium" onClick={() => setMobileOpen(false)}>
-                      Admin
-                    </Link>
-                  )}
-                  <button onClick={() => { signOut(); setMobileOpen(false); }} className="px-4 py-3 text-foreground/60 hover:text-primary text-left">
-                    {t("auth.logout")}
+                    <ChevronDown className={`w-4 h-4 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
                   </button>
-                </>
+                  {dropdownOpen && (
+                    <div className="ml-4 border-l-2 border-primary/20 pl-4 space-y-1 animate-in fade-in duration-200">
+                      {products.map((p) => (
+                        <Link key={p.href} to={p.href} className="block py-2 text-sm text-foreground/60 hover:text-primary" onClick={() => setMobileOpen(false)}>
+                          {p.label[lang]}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ) : (
-                <Link to="/auth" className="px-4 py-3 text-primary font-medium" onClick={() => setMobileOpen(false)}>
-                  {t("nav.login")}
+                <Link key={link.label} to={link.href} className="px-4 py-3 text-foreground/70 hover:text-foreground rounded-xl transition-colors" onClick={() => setMobileOpen(false)}>
+                  {link.label}
                 </Link>
-              )}
+              )
+            )}
 
-              <button onClick={toggleLang} className="px-4 py-3 text-sm text-foreground/60 hover:text-primary text-left">
-                {t("nav.switchToAm")}
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {user ? (
+              <>
+                <Link to="/dashboard" className="px-4 py-3 text-primary font-medium" onClick={() => setMobileOpen(false)}>
+                  {t("nav.dashboard")}
+                </Link>
+                {isAdmin && (
+                  <Link to="/admin" className="px-4 py-3 text-secondary font-medium" onClick={() => setMobileOpen(false)}>
+                    Admin
+                  </Link>
+                )}
+                <button onClick={() => { signOut(); setMobileOpen(false); }} className="px-4 py-3 text-foreground/60 hover:text-primary text-left">
+                  {t("auth.logout")}
+                </button>
+              </>
+            ) : (
+              <Link to="/auth" className="px-4 py-3 text-primary font-medium" onClick={() => setMobileOpen(false)}>
+                {t("nav.login")}
+              </Link>
+            )}
+
+            <button onClick={toggleLang} className="px-4 py-3 text-sm text-foreground/60 hover:text-primary text-left">
+              {t("nav.switchToAm")}
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

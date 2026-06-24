@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Zap, Clock, ShieldCheck, HeartHandshake } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import ScrollReveal from "./ScrollReveal";
@@ -42,11 +41,8 @@ const ValueProps = () => {
             const isGradient = style.bg.startsWith("bg-gradient");
             return (
               <ScrollReveal key={item.title} animation="fadeUp" delay={i * 0.08}>
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className={`${isGradient ? style.bg + " rounded-3xl p-8 shadow-lg" : style.bg} text-center relative overflow-hidden group cursor-default`}
+                <div
+                  className={`${isGradient ? style.bg + " rounded-3xl p-8 shadow-lg" : style.bg} text-center relative overflow-hidden group cursor-default hover:-translate-y-2 hover:scale-[1.03] active:scale-95 transition-all duration-300`}
                 >
                   {isGradient && (
                     <div className="absolute inset-0 opacity-10">
@@ -59,16 +55,14 @@ const ValueProps = () => {
                     {item.stat}
                   </div>
 
-                  <motion.div
-                    whileHover={{ rotate: 12, scale: 1.15 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className={`relative z-10 w-14 h-14 rounded-2xl ${style.iconBg} flex items-center justify-center mx-auto mb-5 transition-all`}
+                  <div
+                    className={`relative z-10 w-14 h-14 rounded-2xl ${style.iconBg} flex items-center justify-center mx-auto mb-5 transition-all duration-300 group-hover:rotate-12 group-hover:scale-115`}
                   >
                     <item.icon className={`w-7 h-7 ${isGradient ? "text-white" : "text-primary"}`} />
-                  </motion.div>
+                  </div>
                   <h3 className={`relative z-10 font-heading font-semibold text-lg ${style.text} mb-2`}>{item.title}</h3>
                   <p className={`relative z-10 text-sm ${style.muted} leading-relaxed`}>{item.proof}</p>
-                </motion.div>
+                </div>
               </ScrollReveal>
             );
           })}

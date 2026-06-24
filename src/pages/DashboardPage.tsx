@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { FileText, Shield, CreditCard, User, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -92,13 +91,11 @@ const DashboardPage = () => {
       <Navbar />
       <section className="pt-24 pb-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-heading text-3xl font-bold text-foreground mb-8"
+          <h1
+            className="font-heading text-3xl font-bold text-foreground mb-8 animate-in fade-in slide-in-from-bottom-5 duration-500"
           >
             {t("dashboard.title")}
-          </motion.h1>
+          </h1>
 
           {/* Tabs */}
           <div className="flex gap-1 mb-8 overflow-x-auto border-b border-border pb-1">
@@ -119,7 +116,7 @@ const DashboardPage = () => {
           {loadingData ? (
             <div className="text-center py-12 text-muted-foreground">{t("common.loading")}</div>
           ) : (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} key={tab}>
+            <div key={tab} className="animate-in fade-in duration-500">
               {/* Policies Tab */}
               {tab === "policies" && (
                 <div>
@@ -258,7 +255,7 @@ const DashboardPage = () => {
                   </div>
                 </div>
               )}
-            </motion.div>
+            </div>
           )}
         </div>
       </section>

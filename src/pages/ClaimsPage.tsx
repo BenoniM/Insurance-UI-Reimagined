@@ -4,7 +4,6 @@ import SectionWrapper from "@/components/SectionWrapper";
 import CTAButton from "@/components/CTAButton";
 import PageHero from "@/components/PageHero";
 import ScrollReveal from "@/components/ScrollReveal";
-import { motion } from "framer-motion";
 import { FileText, Upload, Clock, CheckCircle, Phone, MessageCircle, Shield, AlertTriangle, HelpCircle, ArrowRight } from "lucide-react";
 import heroClaims from "@/assets/hero-claims.jpg";
 import heroClaims2 from "@/assets/hero-claims-2.jpg";
@@ -71,10 +70,8 @@ const ClaimsPage = () => (
       <div className="max-w-3xl mx-auto space-y-4">
         {steps.map((step, i) => (
           <ScrollReveal key={step.number} delay={i * 0.08}>
-            <motion.div
-              whileHover={{ x: 6, scale: 1.01 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="rounded-3xl p-6 flex gap-6 items-start group bg-gradient-to-r from-card to-accent/30 border border-border/50 shadow-sm hover:shadow-md transition-all"
+            <div
+              className="rounded-3xl p-6 flex gap-6 items-start group bg-gradient-to-r from-card to-accent/30 border border-border/50 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-x-1.5 hover:scale-[1.01]"
             >
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] flex items-center justify-center shrink-0 text-white shadow-md">
                 <step.icon className="w-6 h-6" />
@@ -86,7 +83,7 @@ const ClaimsPage = () => (
                 <h3 className="font-heading font-semibold text-lg text-foreground mb-2">{step.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
               </div>
-            </motion.div>
+            </div>
           </ScrollReveal>
         ))}
       </div>
@@ -107,17 +104,14 @@ const ClaimsPage = () => (
         <ScrollReveal delay={0.1}>
           <div className="grid sm:grid-cols-2 gap-3">
             {documents.map((doc, i) => (
-              <motion.div
+              <div
                 key={doc}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.04 }}
-                className="flex items-start gap-3 p-4 rounded-2xl bg-card border border-border/50 group hover:border-primary/30 transition-colors"
+                style={{ animationDelay: `${i * 40}ms`, animationFillMode: "backwards" }}
+                className="flex items-start gap-3 p-4 rounded-2xl bg-card border border-border/50 group hover:border-primary/30 transition-all animate-in fade-in slide-in-from-bottom-2 duration-500"
               >
                 <CheckCircle className="w-4 h-4 text-primary mt-1 shrink-0 group-hover:scale-110 transition-transform" />
                 <span className="text-foreground/80 text-sm">{doc}</span>
-              </motion.div>
+              </div>
             ))}
           </div>
         </ScrollReveal>
@@ -128,9 +122,8 @@ const ClaimsPage = () => (
     <SectionWrapper>
       <div className="max-w-3xl mx-auto">
         <ScrollReveal>
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            className="rounded-3xl p-8 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] text-white relative overflow-hidden"
+          <div
+            className="rounded-3xl p-8 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] text-white relative overflow-hidden transition-all duration-300 hover:scale-[1.01]"
           >
             <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-white/10" />
             <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full bg-white/5" />
@@ -146,7 +139,7 @@ const ClaimsPage = () => (
                 <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 mt-0.5 shrink-0 text-primary" />False or exaggerated claims are subject to legal action under Ethiopian law</li>
               </ul>
             </div>
-          </motion.div>
+          </div>
         </ScrollReveal>
       </div>
     </SectionWrapper>

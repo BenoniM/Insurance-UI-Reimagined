@@ -4,7 +4,6 @@ import SectionWrapper from "@/components/SectionWrapper";
 import CTAButton from "@/components/CTAButton";
 import PageHero from "@/components/PageHero";
 import ScrollReveal from "@/components/ScrollReveal";
-import { motion } from "framer-motion";
 import { Shield, Users, Award, Target, Building2, Handshake, Globe, TrendingUp, CheckCircle } from "lucide-react";
 import aboutHero from "@/assets/hero-about.jpg";
 import aboutHero2 from "@/assets/hero-about-2.jpg";
@@ -59,15 +58,13 @@ const AboutPage = () => (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
         {stats.map((stat, i) => (
           <ScrollReveal key={stat.label} animation="scaleUp" delay={i * 0.06}>
-            <motion.div
-              whileHover={{ y: -6, scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className={`rounded-3xl p-6 text-center bg-gradient-to-br ${stat.gradient} text-white shadow-lg relative overflow-hidden`}
+            <div
+              className={`rounded-3xl p-6 text-center bg-gradient-to-br ${stat.gradient} text-white shadow-lg relative overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.03]`}
             >
               <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
               <p className="font-heading text-3xl font-bold text-white relative z-10">{stat.value}</p>
               <p className="text-xs text-white/70 mt-1 relative z-10">{stat.label}</p>
-            </motion.div>
+            </div>
           </ScrollReveal>
         ))}
       </div>
@@ -92,9 +89,9 @@ const AboutPage = () => (
             <CarouselContent>
               {[aboutHero, aboutHero2, heroHome2].map((img, i) => (
                 <CarouselItem key={i}>
-                  <motion.div whileHover={{ scale: 1.02 }} className="rounded-3xl overflow-hidden shadow-xl">
+                  <div className="rounded-3xl overflow-hidden shadow-xl transition-all duration-300 hover:scale-[1.02]">
                     <img src={img} alt={`WASS Insurance team ${i + 1}`} className="w-full aspect-[16/10] object-cover" loading="lazy" width={1280} height={720} />
-                  </motion.div>
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -116,10 +113,7 @@ const AboutPage = () => (
       <div className="max-w-3xl mx-auto">
         {milestones.map((item, i) => (
           <ScrollReveal key={item.year} delay={i * 0.06}>
-            <motion.div
-              whileHover={{ x: 4 }}
-              className="flex gap-6 mb-6 items-start group"
-            >
+            <div className="flex gap-6 mb-6 items-start group transition-all duration-300 hover:translate-x-1">
               <div className="w-20 shrink-0 text-right">
                 <span className="font-heading font-bold text-primary text-lg">{item.year}</span>
               </div>
@@ -128,7 +122,7 @@ const AboutPage = () => (
                 {i < milestones.length - 1 && <div className="absolute top-5 left-[5px] w-0.5 h-12 bg-primary/20" />}
               </div>
               <p className="text-foreground/80 pt-0.5">{item.event}</p>
-            </motion.div>
+            </div>
           </ScrollReveal>
         ))}
       </div>
@@ -145,10 +139,8 @@ const AboutPage = () => (
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
         {values.map((v, i) => (
           <ScrollReveal key={v.title} animation="fadeUp" delay={i * 0.08}>
-            <motion.div
-              whileHover={{ y: -6, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="rounded-3xl p-8 text-center bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] text-white shadow-lg relative overflow-hidden h-full"
+            <div
+              className="rounded-3xl p-8 text-center bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] text-white shadow-lg relative overflow-hidden h-full transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.02]"
             >
               <div className="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-white/10" />
               <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-4 relative z-10">
@@ -156,7 +148,7 @@ const AboutPage = () => (
               </div>
               <h3 className="font-heading font-semibold text-white mb-2 relative z-10">{v.title}</h3>
               <p className="text-sm text-white/75 relative z-10">{v.description}</p>
-            </motion.div>
+            </div>
           </ScrollReveal>
         ))}
       </div>
@@ -174,17 +166,14 @@ const AboutPage = () => (
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
         {leadership.map((person, i) => (
           <ScrollReveal key={person.name} animation="fadeUp" delay={i * 0.08}>
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="qupe-card text-center h-full"
-            >
+            <div className="qupe-card text-center h-full transition-all duration-300 hover:-translate-y-1">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)] flex items-center justify-center mx-auto mb-4">
                 <Users className="w-7 h-7 text-white" />
               </div>
               <h3 className="font-heading font-semibold text-foreground mb-1">{person.name}</h3>
               <p className="text-sm text-primary font-medium mb-3">{person.role}</p>
               <p className="text-xs text-muted-foreground">{person.description}</p>
-            </motion.div>
+            </div>
           </ScrollReveal>
         ))}
       </div>

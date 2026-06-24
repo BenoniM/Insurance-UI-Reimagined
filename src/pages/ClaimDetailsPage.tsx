@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { ArrowLeft, FileText, Download, Eye, Clock, CheckCircle, XCircle, Loader2, AlertCircle } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -119,7 +118,7 @@ const ClaimDetailsPage = () => {
             <ArrowLeft className="w-4 h-4" /> Back to dashboard
           </Link>
 
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="bg-card border border-border rounded-2xl p-6 md:p-8 mb-6">
+          <div className="bg-card border border-border rounded-2xl p-6 md:p-8 mb-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
               <div>
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">Claim · #{claim.id.slice(0, 8)}</p>
@@ -134,11 +133,11 @@ const ClaimDetailsPage = () => {
             {claim.paid_amount && (
               <div className="mt-3 text-sm"><strong>Paid amount:</strong> {Number(claim.paid_amount).toLocaleString()} ETB</div>
             )}
-          </motion.div>
+          </div>
 
           {/* Stage Tracker */}
           {!isRejected && (
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="bg-card border border-border rounded-2xl p-6 md:p-8 mb-6">
+            <div className="bg-card border border-border rounded-2xl p-6 md:p-8 mb-6 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100 fill-mode-backwards">
               <h2 className="font-heading text-lg font-semibold mb-6">Progress</h2>
               <div className="flex items-center justify-between relative">
                 <div className="absolute top-5 left-0 right-0 h-0.5 bg-border" />
@@ -150,18 +149,17 @@ const ClaimDetailsPage = () => {
                   const reached = i <= currentIdx;
                   return (
                     <div key={s.key} className="relative z-10 flex flex-col items-center text-center" style={{ width: `${100 / stages.length}%` }}>
-                      <motion.div
-                        animate={{ scale: reached ? 1 : 0.85 }}
-                        className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${reached ? "bg-primary border-primary text-primary-foreground" : "bg-card border-border text-muted-foreground"}`}
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${reached ? "bg-primary border-primary text-primary-foreground scale-100" : "bg-card border-border text-muted-foreground scale-90"}`}
                       >
                         <s.icon className="w-4 h-4" />
-                      </motion.div>
+                      </div>
                       <p className={`text-xs mt-2 ${reached ? "text-foreground font-medium" : "text-muted-foreground"}`}>{s.label}</p>
                     </div>
                   );
                 })}
               </div>
-            </motion.div>
+            </div>
           )}
 
           {isRejected && (
@@ -175,7 +173,7 @@ const ClaimDetailsPage = () => {
           )}
 
           {/* Timeline */}
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="bg-card border border-border rounded-2xl p-6 md:p-8 mb-6">
+          <div className="bg-card border border-border rounded-2xl p-6 md:p-8 mb-6 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200 fill-mode-backwards">
             <h2 className="font-heading text-lg font-semibold mb-4">Status Timeline</h2>
             <ol className="relative border-l-2 border-border ml-3 space-y-5">
               {history.length === 0 && <li className="text-sm text-muted-foreground pl-5">No updates yet.</li>}
@@ -188,13 +186,13 @@ const ClaimDetailsPage = () => {
                 </li>
               ))}
             </ol>
-          </motion.div>
+          </div>
 
           {/* Documents */}
           {(() => {
             const docs = (Array.isArray(claim.documents) ? claim.documents : []) as unknown as Doc[];
             return (
-              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="bg-card border border-border rounded-2xl p-6 md:p-8">
+              <div className="bg-card border border-border rounded-2xl p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300 fill-mode-backwards">
                 <h2 className="font-heading text-lg font-semibold mb-4">Documents ({docs.length})</h2>
                 {docs.length === 0 && <p className="text-sm text-muted-foreground">No documents attached.</p>}
                 <div className="grid sm:grid-cols-2 gap-3">
@@ -218,7 +216,7 @@ const ClaimDetailsPage = () => {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             );
           })()}
         </div>

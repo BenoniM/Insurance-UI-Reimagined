@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { Shield, FileText, CreditCard, Users, BarChart3, Tag, MessageSquare, UserCheck } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -109,9 +108,9 @@ const AdminPage = () => {
       <Navbar />
       <section className="pt-24 pb-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl font-bold text-foreground mb-8">
+          <h1 className="font-heading text-3xl font-bold text-foreground mb-8 animate-in fade-in slide-in-from-bottom-5 duration-500">
             Admin Dashboard
-          </motion.h1>
+          </h1>
 
           <div className="flex gap-1 mb-8 overflow-x-auto border-b border-border pb-1">
             {adminTabs.map((t) => (
@@ -136,18 +135,16 @@ const AdminPage = () => {
               {tab === "overview" && (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {statCards.map((s) => (
-                    <motion.div
+                    <div
                       key={s.label}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="bg-card border border-border rounded-xl p-6"
+                      className="bg-card border border-border rounded-xl p-6 animate-in fade-in slide-in-from-bottom-5 duration-500"
                     >
                       <div className="flex items-center justify-between mb-3">
                         <s.icon className={`w-5 h-5 ${s.color}`} />
                       </div>
                       <p className="font-heading text-2xl font-bold text-foreground">{s.value}</p>
                       <p className="text-sm text-muted-foreground">{s.label}</p>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               )}

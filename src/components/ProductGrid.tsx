@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Heart, Car, Home, Shield, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -57,11 +56,8 @@ const ProductGrid = () => {
           return (
             <ScrollReveal key={product.slug} animation="fadeUp" delay={i * 0.08}>
               <Link to={`/products/${product.slug}`} className="group block h-full">
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="rounded-3xl h-full flex flex-col relative overflow-hidden p-8 bg-gradient-to-br text-white shadow-lg hover:shadow-2xl transition-shadow"
+                <div
+                  className="rounded-3xl h-full flex flex-col relative overflow-hidden p-8 bg-gradient-to-br text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                   style={{
                     background: `linear-gradient(135deg, ${gradient.includes("201") ? "hsl(201,78%,23%)" : "hsl(160,55%,45%)"}, ${gradient.includes("205") ? "hsl(205,65%,48%)" : "hsl(160,50%,55%)"})`
                   }}
@@ -72,22 +68,19 @@ const ProductGrid = () => {
                     <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-white/10 translate-y-1/2 -translate-x-1/2" />
                   </div>
 
-                  <motion.div
-                    whileHover={{ rotate: 8, scale: 1.1 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className="relative z-10 w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-5 group-hover:bg-white/30 transition-all"
+                  <div
+                    className="relative z-10 w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-5 group-hover:bg-white/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110"
                   >
                     <Icon className="w-6 h-6 text-white" />
-                  </motion.div>
+                  </div>
                   <h3 className="relative z-10 font-heading font-semibold text-lg text-white mb-2">{name}</h3>
                   <p className="relative z-10 text-sm text-white/75 leading-relaxed flex-1 mb-5">{desc}</p>
-                  <motion.span
-                    className="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium text-white/90"
-                    whileHover={{ x: 4 }}
+                  <span
+                    className="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium text-white/90 group-hover:translate-x-1 transition-transform duration-300"
                   >
-                    {t("products.learnMore")} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </motion.span>
-                </motion.div>
+                    {t("products.learnMore")} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
+                </div>
               </Link>
             </ScrollReveal>
           );

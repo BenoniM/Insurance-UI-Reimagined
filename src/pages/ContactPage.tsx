@@ -4,7 +4,6 @@ import ContactBlock from "@/components/ContactBlock";
 import PageHero from "@/components/PageHero";
 import SectionWrapper from "@/components/SectionWrapper";
 import ScrollReveal from "@/components/ScrollReveal";
-import { motion } from "framer-motion";
 import { MapPin, Clock, Shield, Phone } from "lucide-react";
 import heroContact from "@/assets/hero-contact.jpg";
 import heroContact2 from "@/assets/hero-contact-2.jpg";
@@ -42,11 +41,7 @@ const ContactPage = () => (
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
         {branches.map((branch, i) => (
           <ScrollReveal key={branch.city} delay={i * 0.06}>
-            <motion.div
-              whileHover={{ y: -4, scale: 1.01 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="rounded-3xl p-6 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] text-white shadow-lg relative overflow-hidden"
-            >
+            <div className="rounded-3xl p-6 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] text-white shadow-lg relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01]">
               <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
               <div className="flex items-center gap-2 mb-3 relative z-10">
                 <MapPin className="w-4 h-4 text-primary" />
@@ -54,7 +49,7 @@ const ContactPage = () => (
               </div>
               <p className="text-white/70 text-xs mb-2 relative z-10">{branch.address}</p>
               <a href={`tel:${branch.phone.replace(/\s/g, "")}`} className="text-primary text-xs font-medium relative z-10 hover:underline">{branch.phone}</a>
-            </motion.div>
+            </div>
           </ScrollReveal>
         ))}
       </div>
@@ -64,10 +59,7 @@ const ContactPage = () => (
     <SectionWrapper className="bg-accent/30">
       <div className="max-w-3xl mx-auto">
         <ScrollReveal>
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            className="rounded-3xl p-8 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)] text-white relative overflow-hidden"
-          >
+          <div className="rounded-3xl p-8 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)] text-white relative overflow-hidden transition-all duration-300 hover:scale-[1.01]">
             <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-white/10" />
             <div className="relative z-10 grid md:grid-cols-3 gap-8 text-center">
               <div>
@@ -89,7 +81,7 @@ const ContactPage = () => (
                 <p className="text-white/70 text-sm">+251 91 123 4567</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </ScrollReveal>
       </div>
     </SectionWrapper>

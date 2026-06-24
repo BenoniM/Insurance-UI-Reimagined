@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { ClipboardList, FileSearch, CheckCircle, Banknote } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import SectionWrapper from "./SectionWrapper";
@@ -39,27 +38,22 @@ const ProcessSteps = () => {
         <div className="max-w-3xl mx-auto space-y-4">
           {steps.map((step, i) => (
             <ScrollReveal key={step.number} delay={i * 0.1}>
-              <motion.div
-                whileHover={{ x: 6, scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="qupe-card !p-6 flex items-start gap-6 group relative overflow-hidden"
+              <div
+                className="qupe-card !p-6 flex items-start gap-6 group relative overflow-hidden cursor-default hover:translate-x-1.5 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300"
               >
                 {/* Subtle gradient stripe on left */}
-                <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b ${gradients[i]} opacity-0 group-hover:opacity-100 transition-opacity rounded-l-3xl`} />
+                <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b ${gradients[i]} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-l-3xl`} />
                 
-                <motion.div
-                  whileHover={{ rotate: 10, scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${gradients[i]} flex items-center justify-center shrink-0 font-heading font-bold text-white text-lg shadow-lg`}
+                <div
+                  className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${gradients[i]} flex items-center justify-center shrink-0 font-heading font-bold text-white text-lg shadow-lg group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300`}
                 >
                   {step.number}
-                </motion.div>
+                </div>
                 <div>
                   <h3 className="font-heading font-semibold text-lg text-foreground mb-1">{step.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
                 </div>
-              </motion.div>
+              </div>
             </ScrollReveal>
           ))}
         </div>

@@ -1,4 +1,8 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 const partners = [
   { name: "National Bank of Ethiopia", abbr: "NBE" },
@@ -15,6 +19,17 @@ const partners = [
 
 const PartnerMarquee = () => {
   const doubled = [...partners, ...partners];
+  const marqueeRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!marqueeRef.current) return;
+    gsap.to(marqueeRef.current, {
+      xPercent: -50,
+      ease: "none",
+      duration: 30,
+      repeat: -1,
+    });
+  }, { scope: marqueeRef });
 
   return (
     <section className="py-10 overflow-hidden border-y border-border/40 bg-gradient-to-r from-[hsl(201,78%,23%)/0.03] via-[hsl(160,55%,45%)/0.03] to-[hsl(201,78%,23%)/0.03]">
@@ -24,13 +39,12 @@ const PartnerMarquee = () => {
         </p>
       </div>
       <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <motion.div
-          className="flex gap-8 items-center"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        <div
+          ref={marqueeRef}
+          className="flex gap-8 items-center w-max"
         >
           {doubled.map((partner, i) => (
             <div
@@ -45,7 +59,7 @@ const PartnerMarquee = () => {
               </span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

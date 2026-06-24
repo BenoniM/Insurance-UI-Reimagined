@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/i18n/LanguageContext";
 import Navbar from "@/components/Navbar";
@@ -53,10 +52,8 @@ const AuthPage = () => {
       <Navbar />
       <section className="pt-28 pb-16 min-h-[80vh] flex items-center">
         <div className="container mx-auto px-4 max-w-md">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-card border border-border rounded-2xl p-8"
+          <div
+            className="bg-card border border-border rounded-2xl p-8 animate-in fade-in slide-in-from-bottom-5 duration-500"
           >
             <h1 className="font-heading text-2xl font-bold text-foreground text-center mb-6">
               {isLogin ? t("auth.login") : t("auth.signup")}
@@ -110,7 +107,7 @@ const AuthPage = () => {
                 {isLogin ? t("auth.signup") : t("auth.login")}
               </button>
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
       <Footer />

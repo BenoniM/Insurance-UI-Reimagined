@@ -5,7 +5,6 @@ import SectionWrapper from "@/components/SectionWrapper";
 import ScrollReveal from "@/components/ScrollReveal";
 import CTAButton from "@/components/CTAButton";
 import GivebackSection from "@/components/GivebackSection";
-import { motion } from "framer-motion";
 import {
   Heart,
   Droplet,
@@ -111,9 +110,8 @@ const GivebackPage = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
           {yearlyImpact.map((y, i) => (
             <ScrollReveal key={y.year} delay={i * 0.06}>
-              <motion.div
-                whileHover={{ y: -6 }}
-                className="qupe-card !p-7 h-full text-center"
+              <div
+                className="qupe-card !p-7 h-full text-center transition-all duration-300 hover:-translate-y-1.5"
               >
                 <div className="text-xs font-bold tracking-widest text-primary mb-2">{y.year}</div>
                 <div className="font-heading text-3xl font-bold text-foreground mb-1">{y.total}</div>
@@ -122,7 +120,7 @@ const GivebackPage = () => {
                   <div className="flex justify-between"><span>Projects</span><span className="font-semibold text-foreground">{y.projects}</span></div>
                   <div className="flex justify-between"><span>Beneficiaries</span><span className="font-semibold text-foreground">{y.beneficiaries}</span></div>
                 </div>
-              </motion.div>
+              </div>
             </ScrollReveal>
           ))}
         </div>
@@ -144,10 +142,8 @@ const GivebackPage = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
           {causeBreakdown.map((c, i) => (
             <ScrollReveal key={c.title} delay={i * 0.06}>
-              <motion.div
-                whileHover={{ y: -8, scale: 1.03 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className={`rounded-3xl p-7 bg-gradient-to-br ${c.color} text-white shadow-lg relative overflow-hidden h-full`}
+              <div
+                className={`rounded-3xl p-7 bg-gradient-to-br ${c.color} text-white shadow-lg relative overflow-hidden h-full transition-all duration-300 hover:-translate-y-2 hover:scale-[1.03]`}
               >
                 <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/10" />
                 <div className="relative z-10">
@@ -157,17 +153,14 @@ const GivebackPage = () => {
                   <h4 className="font-heading font-semibold text-lg text-white mb-1">{c.title}</h4>
                   <div className="font-heading text-3xl font-bold text-white mb-2">{c.pct}%</div>
                   <div className="h-1.5 rounded-full bg-white/20 overflow-hidden mb-3">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${c.pct}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.2 + i * 0.1, ease: "easeOut" }}
-                      className="h-full bg-white"
+                    <div
+                      className="h-full bg-white animate-in slide-in-from-left-full duration-1000 ease-out"
+                      style={{ width: `${c.pct}%`, animationDelay: `${200 + i * 100}ms`, animationFillMode: "both" }}
                     />
                   </div>
                   <p className="text-sm text-white/85 leading-relaxed">{c.desc}</p>
                 </div>
-              </motion.div>
+              </div>
             </ScrollReveal>
           ))}
         </div>
@@ -190,10 +183,8 @@ const GivebackPage = () => {
         <div className="max-w-3xl mx-auto space-y-4">
           {updates.map((u, i) => (
             <ScrollReveal key={u.title} delay={i * 0.06}>
-              <motion.div
-                whileHover={{ x: 6 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="qupe-card !p-6 flex gap-5 items-start"
+              <div
+                className="qupe-card !p-6 flex gap-5 items-start transition-all duration-300 hover:translate-x-1.5"
               >
                 <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
                   <Calendar className="w-5 h-5 text-primary" />
@@ -203,7 +194,7 @@ const GivebackPage = () => {
                   <h3 className="font-heading font-semibold text-lg text-foreground mb-1.5">{u.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{u.body}</p>
                 </div>
-              </motion.div>
+              </div>
             </ScrollReveal>
           ))}
         </div>

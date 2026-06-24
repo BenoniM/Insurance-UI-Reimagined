@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -109,9 +108,9 @@ const PaymentPage = () => {
       <Navbar />
       <section className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-2xl">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl md:text-4xl font-bold text-center mb-3">
+          <h1 className="font-heading text-3xl md:text-4xl font-bold text-center mb-3 animate-in fade-in slide-in-from-bottom-5 duration-500">
             Make a Payment
-          </motion.h1>
+          </h1>
           <p className="text-center text-muted-foreground mb-8">Record your premium payment — we'll verify it within 24 hours.</p>
 
           <div className="bg-card border border-border rounded-2xl p-6 md:p-8 space-y-6">

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import featureSurveys from "@/assets/feature-surveys.jpg";
 import featureConfig from "@/assets/feature-config.jpg";
 import featureAnalytics from "@/assets/feature-analytics.jpg";
+import ScrollReveal from "./ScrollReveal";
 
 const tabs = [
   { id: "engineers", label: "Risk Engineers" },
@@ -76,23 +76,13 @@ const FeaturesSection = () => {
         </div>
 
         {/* Feature cards */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-            className="grid md:grid-cols-3 gap-6"
-          >
-            {features[activeTab].map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="dark-card rounded-xl overflow-hidden group"
-              >
+        <div
+          key={activeTab}
+          className="grid md:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-8 duration-500"
+        >
+          {features[activeTab].map((feature, i) => (
+            <ScrollReveal key={feature.title} animation="fadeUp" delay={i * 0.1}>
+              <div className="dark-card rounded-xl overflow-hidden group h-full">
                 <div className="overflow-hidden">
                   <img
                     src={feature.image}
@@ -111,10 +101,10 @@ const FeaturesSection = () => {
                     {feature.description}
                   </p>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
       </div>
     </section>
   );

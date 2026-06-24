@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Calculator, FileText, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import ScrollReveal from "./ScrollReveal";
@@ -19,24 +18,19 @@ const QuickActions = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {actions.map((action, i) => (
             <ScrollReveal key={action.label} animation="scaleUp" delay={i * 0.06}>
-              <motion.a
+              <a
                 href={action.href}
-                whileHover={{ y: -8, scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className={`rounded-3xl p-5 md:p-6 flex flex-col items-center text-center gap-3 cursor-pointer group relative overflow-hidden bg-gradient-to-br ${action.gradient} text-white shadow-lg hover:shadow-xl transition-shadow`}
+                className={`rounded-3xl p-5 md:p-6 flex flex-col items-center text-center gap-3 cursor-pointer group relative overflow-hidden bg-gradient-to-br ${action.gradient} text-white shadow-lg hover:shadow-xl hover:-translate-y-2 hover:scale-105 active:scale-95 transition-all duration-300`}
               >
                 <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
-                <motion.div
-                  whileHover={{ rotate: 10, scale: 1.15 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="relative z-10 w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all"
+                <div
+                  className="relative z-10 w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group-hover:rotate-12 group-hover:scale-110"
                 >
                   <action.icon className="w-5 h-5 text-white" />
-                </motion.div>
+                </div>
                 <span className="relative z-10 font-heading font-semibold text-sm text-white">{action.label}</span>
                 <span className="relative z-10 text-xs text-white/70 hidden sm:block">{action.description}</span>
-              </motion.a>
+              </a>
             </ScrollReveal>
           ))}
         </div>

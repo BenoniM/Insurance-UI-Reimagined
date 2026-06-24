@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -214,13 +213,11 @@ const QuotePage = () => {
       <Navbar />
       <section className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-2xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-heading text-3xl md:text-4xl font-bold text-foreground text-center mb-8"
+          <h1
+            className="font-heading text-3xl md:text-4xl font-bold text-foreground text-center mb-8 animate-in slide-in-from-top-4 fade-in duration-500"
           >
             {t("quote.title")}
-          </motion.h1>
+          </h1>
 
           {/* Progress bar */}
           <div className="mb-6">
@@ -231,27 +228,22 @@ const QuotePage = () => {
           <div className="flex items-center justify-center gap-2 mb-10">
             {steps.map((label, i) => (
               <div key={label} className="flex items-center gap-2">
-                <motion.div
-                  animate={{ scale: i === step ? 1.1 : 1 }}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${i === step ? "scale-110" : ""} ${
                     i <= step ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                   }`}
                 >
                   {i < step ? <CheckCircle className="w-4 h-4" /> : i + 1}
-                </motion.div>
+                </div>
                 <span className={`text-xs font-medium hidden sm:block transition-colors ${i === step ? "text-foreground" : "text-muted-foreground"}`}>{label}</span>
                 {i < steps.length - 1 && <div className="w-8 h-[2px] bg-border" />}
               </div>
             ))}
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
+            <div
               key={step}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="bg-card border border-border rounded-2xl p-6 md:p-8"
+              className="bg-card border border-border rounded-2xl p-6 md:p-8 animate-in fade-in slide-in-from-right-4 duration-500"
             >
               {/* Step 0: Select Product */}
               {step === 0 && (
@@ -334,26 +326,20 @@ const QuotePage = () => {
                 <div className="space-y-6">
                   <h2 className="font-heading text-xl font-semibold">{t("quote.review")}</h2>
                   
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                    className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-xl p-8 text-center"
+                  <div
+                    className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-xl p-8 text-center animate-in zoom-in-95 fade-in duration-500 fill-mode-backwards"
                   >
                     <div className="flex items-center justify-center gap-2 text-primary mb-2">
                       <Sparkles className="w-4 h-4" />
                       <p className="text-xs font-bold tracking-widest uppercase">{t("quote.estimatedPremium")}</p>
                     </div>
-                    <motion.p
-                      initial={{ y: 10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.15 }}
-                      className="font-heading text-5xl font-bold text-primary"
+                    <p
+                      className="font-heading text-5xl font-bold text-primary animate-in slide-in-from-bottom-4 fade-in duration-500 delay-150 fill-mode-backwards"
                     >
                       {estimatedPrice?.toLocaleString()} <span className="text-xl">{t("common.etb")}</span>
-                    </motion.p>
+                    </p>
                     <p className="text-xs text-muted-foreground mt-2">{lang === "am" ? "በዓመት" : "per year"}</p>
-                  </motion.div>
+                  </div>
 
                   <div className="space-y-2">
                     <p className="text-sm"><strong>{lang === "am" ? "ምርት" : "Product"}:</strong> {lang === "am" && currentProduct?.name_am ? currentProduct.name_am : currentProduct?.name}</p>
@@ -384,8 +370,7 @@ const QuotePage = () => {
                   </Button>
                 )}
               </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
         </div>
       </section>
       <Footer />

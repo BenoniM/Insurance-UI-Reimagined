@@ -1,5 +1,9 @@
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, ReactNode, useState, useEffect, useCallback } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface PageHeroProps {
   images: string[];
@@ -11,13 +15,12 @@ interface PageHeroProps {
 }
 
 const PageHero = ({ images, badge, title, subtitle, children, interval = 5000 }: PageHeroProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref as any, offset: ["start start", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const particlesRef = useRef<HTMLDivElement>(null);
+  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = useCallback(() => {
@@ -30,36 +33,95 @@ const PageHero = ({ images, badge, title, subtitle, children, interval = 5000 }:
     return () => clearInterval(timer);
   }, [nextSlide, interval, images.length]);
 
+  useGSAP(() => {
+    if (!containerRef.current) return;
+    
+    // Parallax
+    gsap.to(bgRef.current, {
+      y: 120,
+      scale: 1.15,
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      }
+    });
+
+    gsap.to(textRef.current, {
+      y: -60,
+      opacity: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      }
+    });
+
+    // Initial load animations
+    const textElements = gsap.utils.selector(textRef.current);
+    gsap.fromTo(textElements(".hero-badge"), { opacity: 0, y: 20, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.5 });
+    gsap.fromTo(textElements(".hero-title"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: "power3.out" });
+    gsap.fromTo(textElements(".hero-subtitle"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.25 });
+    if (children) {
+       gsap.fromTo(textElements(".hero-children"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, delay: 0.4 });
+    }
+
+    // Scroll indicator animation
+    gsap.to(scrollIndicatorRef.current, { y: 8, duration: 1, repeat: -1, yoyo: true, ease: "sine.inOut" });
+    const scrollDot = scrollIndicatorRef.current?.querySelector('.scroll-dot');
+    if (scrollDot) gsap.to(scrollDot, { y: 12, duration: 1, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
+    // Particles animation
+    if (particlesRef.current) {
+      const particles = gsap.utils.toArray(particlesRef.current.children);
+      particles.forEach((p: any, i) => {
+        gsap.to(p, {
+          y: -40 - i * 5,
+          x: (i % 2 === 0 ? 10 : -10),
+          opacity: 0.7,
+          scale: 1.8,
+          duration: 4 + i * 0.6,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: i * 0.5,
+        });
+      });
+    }
+
+  }, [children]);
+
   return (
-    <section ref={ref as any} className="relative min-h-[75vh] md:min-h-[85vh] flex items-end overflow-hidden">
+    <section ref={containerRef} className="relative min-h-[75vh] md:min-h-[85vh] flex items-end overflow-hidden bg-slate-900">
       {/* Parallax background images with crossfade */}
-      <motion.div style={{ y: imageY, scale: imageScale }} className="absolute inset-0 z-0">
-        <AnimatePresence mode="popLayout">
-          <motion.img
-            key={currentIndex}
-            src={images[currentIndex]}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="eager"
-            width={1920}
-            height={1080}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-          />
-        </AnimatePresence>
-      </motion.div>
+      <div ref={bgRef} className="absolute inset-0 z-0">
+        {images.map((src, idx) => (
+           <img
+             key={src}
+             src={src}
+             alt=""
+             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1500 ease-in-out"
+             style={{ opacity: idx === currentIndex ? 1 : 0 }}
+             loading="eager"
+             width={1920}
+             height={1080}
+           />
+        ))}
+      </div>
 
       {/* Dark scrim — stronger for text legibility */}
       <div className="absolute inset-0 z-[1] bg-[#0D4969]/75" />
 
       {/* Animated particles */}
-      <div className="absolute inset-0 z-[2] pointer-events-none">
+      <div ref={particlesRef} className="absolute inset-0 z-[2] pointer-events-none">
         {[...Array(8)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute rounded-full"
+            className="absolute rounded-full opacity-15"
             style={{
               width: 2 + (i % 3) * 2,
               height: 2 + (i % 3) * 2,
@@ -68,18 +130,6 @@ const PageHero = ({ images, badge, title, subtitle, children, interval = 5000 }:
               background: i % 2 === 0
                 ? "hsl(var(--primary) / 0.35)"
                 : "hsl(0 0% 100% / 0.2)",
-            }}
-            animate={{
-              y: [0, -40 - i * 5, 0],
-              x: [0, (i % 2 === 0 ? 10 : -10), 0],
-              opacity: [0.15, 0.7, 0.15],
-              scale: [1, 1.8, 1],
-            }}
-            transition={{
-              duration: 4 + i * 0.6,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.5,
             }}
           />
         ))}
@@ -101,63 +151,38 @@ const PageHero = ({ images, badge, title, subtitle, children, interval = 5000 }:
       )}
 
       {/* Content */}
-      <motion.div
-        style={{ y: textY, opacity }}
+      <div
+        ref={textRef}
         className="container mx-auto px-4 lg:px-8 relative z-10 pb-16 md:pb-24"
       >
-        <motion.span
-          initial={{ opacity: 0, y: 20, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="inline-block mb-5 px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full bg-primary/20 text-primary border border-primary/30 backdrop-blur-md"
-        >
+        <span className="hero-badge inline-block mb-5 px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full bg-primary/20 text-primary border border-primary/30 backdrop-blur-md">
           {badge}
-        </motion.span>
+        </span>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="qupe-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white max-w-4xl leading-[1.08]"
-        >
+        <h1 className="hero-title qupe-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white max-w-4xl leading-[1.08]">
           {title}
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.25 }}
-          className="mt-5 text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed"
-        >
+        <p className="hero-subtitle mt-5 text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed">
           {subtitle}
-        </motion.p>
+        </p>
 
         {children && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-            className="mt-8"
-          >
+          <div className="hero-children mt-8">
             {children}
-          </motion.div>
+          </div>
         )}
-      </motion.div>
+      </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <div
+        ref={scrollIndicatorRef}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
         <div className="w-5 h-8 rounded-full border-2 border-white/25 flex items-start justify-center p-1">
-          <motion.div
-            className="w-1 h-1 rounded-full bg-primary"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <div className="scroll-dot w-1 h-1 rounded-full bg-primary" />
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

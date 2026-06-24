@@ -1,30 +1,11 @@
-import { motion, Variants } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type AnimationType = "fadeUp" | "fadeLeft" | "fadeRight" | "scaleUp" | "stagger";
-
-const variants: Record<AnimationType, Variants> = {
-  fadeUp: {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
-  },
-  fadeLeft: {
-    hidden: { opacity: 0, x: -40 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
-  },
-  fadeRight: {
-    hidden: { opacity: 0, x: 40 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
-  },
-  scaleUp: {
-    hidden: { opacity: 0, scale: 0.85 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } },
-  },
-  stagger: {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-  },
-};
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -33,17 +14,57 @@ interface ScrollRevealProps {
   className?: string;
 }
 
-const ScrollReveal = ({ children, animation = "fadeUp", delay = 0, className }: ScrollRevealProps) => (
-  <motion.div
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, margin: "-50px" }}
-    variants={variants[animation]}
-    transition={{ delay }}
-    className={className}
-  >
-    {children}
-  </motion.div>
-);
+const ScrollReveal = ({ children, animation = "fadeUp", delay = 0, className }: ScrollRevealProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!ref.current) return;
+
+    let fromVars: gsap.TweenVars = { opacity: 0 };
+    let toVars: gsap.TweenVars = { 
+      opacity: 1, 
+      duration: 0.6, 
+      delay, 
+      ease: "power2.out", 
+      scrollTrigger: { 
+        trigger: ref.current, 
+        start: "top 85%" 
+      } 
+    };
+
+    switch (animation) {
+      case "fadeUp":
+        fromVars.y = 40;
+        toVars.y = 0;
+        break;
+      case "fadeLeft":
+        fromVars.x = -40;
+        toVars.x = 0;
+        break;
+      case "fadeRight":
+        fromVars.x = 40;
+        toVars.x = 0;
+        break;
+      case "scaleUp":
+        fromVars.scale = 0.85;
+        toVars.scale = 1;
+        toVars.duration = 0.5;
+        break;
+      case "stagger":
+        fromVars.y = 20;
+        toVars.y = 0;
+        toVars.duration = 0.4;
+        break;
+    }
+
+    gsap.fromTo(ref.current, fromVars, toVars);
+  }, { scope: ref });
+
+  return (
+    <div ref={ref} className={className}>
+      {children}
+    </div>
+  );
+};
 
 export default ScrollReveal;

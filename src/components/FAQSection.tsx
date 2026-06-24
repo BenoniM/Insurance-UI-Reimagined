@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
@@ -49,7 +48,7 @@ const faqs = [
 
 const FAQItem = ({ faq, index, isOpen, onToggle }: { faq: typeof faqs[0]; index: number; isOpen: boolean; onToggle: () => void }) => (
   <ScrollReveal delay={index * 0.05}>
-    <motion.div
+    <div
       className={`rounded-2xl border overflow-hidden transition-all duration-300 ${
         isOpen
           ? "border-primary/30 bg-gradient-to-br from-[hsl(201,78%,23%)/0.04] to-[hsl(160,55%,45%)/0.04]"
@@ -63,33 +62,28 @@ const FAQItem = ({ faq, index, isOpen, onToggle }: { faq: typeof faqs[0]; index:
         <span className={`font-heading font-semibold text-base transition-colors ${isOpen ? "text-primary" : "text-foreground group-hover:text-primary"}`}>
           {faq.question}
         </span>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className={`shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-colors ${
+        <div
+          className={`shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-300 transform ${isOpen ? "rotate-180" : ""} ${
             isOpen
               ? "bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)] text-white"
               : "bg-primary/10 text-primary"
           }`}
         >
           {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-        </motion.div>
+        </div>
       </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <div className="px-6 pb-6">
-              <p className="text-muted-foreground leading-relaxed text-sm">{faq.answer}</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+      <div 
+        className={`grid transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-6 pb-6">
+            <p className="text-muted-foreground leading-relaxed text-sm">{faq.answer}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </ScrollReveal>
 );
 

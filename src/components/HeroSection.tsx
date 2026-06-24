@@ -1,4 +1,6 @@
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Shield, Award, Users, Handshake } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useRef, useState, useEffect, useCallback } from "react";
@@ -7,17 +9,16 @@ import heroHome from "@/assets/hero-home.jpg";
 import heroHome2 from "@/assets/hero-home-2.jpg";
 import heroHome3 from "@/assets/hero-home-3.jpg";
 
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
 const heroImages = [heroHome, heroHome2, heroHome3];
 
 const HeroSection = () => {
   const { t } = useLanguage();
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-
+  const sectionRef = useRef<HTMLElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = useCallback(() => {
@@ -29,6 +30,109 @@ const HeroSection = () => {
     return () => clearInterval(timer);
   }, [nextSlide]);
 
+  useGSAP(() => {
+    if (!sectionRef.current) return;
+
+    // Parallax effects
+    gsap.to(bgRef.current, {
+      y: 150,
+      scale: 1.2,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "start start",
+        end: "end start",
+        scrub: true,
+      }
+    });
+
+    gsap.to(contentRef.current, {
+      y: -80,
+      opacity: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "start start",
+        end: "60% start",
+        scrub: true,
+      }
+    });
+
+    // Initial load animations
+    const tl = gsap.timeline();
+    
+    tl.fromTo(".hero-badge", 
+      { opacity: 0, y: 20, scale: 0.9 }, 
+      { opacity: 1, y: 0, scale: 1, duration: 0.5 }
+    )
+    .fromTo(".hero-headline",
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+      "-=0.2"
+    )
+    .fromTo(".hero-subtext",
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.5 },
+      "-=0.4"
+    )
+    .fromTo(".hero-cta",
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.4 },
+      "-=0.2"
+    )
+    .fromTo(".trust-badge-container",
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.5 },
+      "-=0.1"
+    )
+    .fromTo(".trust-badge",
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
+      "-=0.2"
+    );
+
+    // Continuous animations
+    gsap.to(".hero-highlight", {
+      scale: 1.02,
+      duration: 1.5,
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut"
+    });
+
+    gsap.to(".scroll-indicator-dot", {
+      y: 16,
+      duration: 1,
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut"
+    });
+
+    gsap.to(".scroll-indicator-container", {
+      y: 10,
+      duration: 1,
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut"
+    });
+
+    // Floating particles
+    gsap.utils.toArray(".particle").forEach((particle: any, i) => {
+      gsap.to(particle, {
+        y: `-=${50 + i * 5}`,
+        x: i % 2 === 0 ? 15 : -15,
+        scale: 1.8,
+        opacity: 0.6,
+        duration: 2.5 + i * 0.25,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut",
+        delay: i * 0.2
+      });
+    });
+
+  }, { scope: sectionRef });
+
   const trustBadges = [
     { icon: Shield, label: t("hero.licensed"), value: "Licensed" },
     { icon: Award, label: t("hero.years"), value: "15+" },
@@ -37,25 +141,23 @@ const HeroSection = () => {
   ];
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Full-screen parallax background with crossfade */}
-      <motion.div style={{ y: imageY, scale: imageScale }} className="absolute inset-0 z-0">
-        <AnimatePresence mode="popLayout">
-          <motion.img
-            key={currentIndex}
-            src={heroImages[currentIndex]}
+    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Full-screen parallax background with crossfade using CSS for simplicity */}
+      <div ref={bgRef} className="absolute inset-0 z-0">
+        {heroImages.map((img, index) => (
+          <img
+            key={img}
+            src={img}
             alt="WASS Insurance Ethiopia"
-            className="absolute inset-0 w-full h-full object-cover"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1500 ease-in-out ${
+              index === currentIndex ? "opacity-100" : "opacity-0"
+            }`}
             width={1920}
             height={1080}
-            loading="eager"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            loading={index === 0 ? "eager" : "lazy"}
           />
-        </AnimatePresence>
-      </motion.div>
+        ))}
+      </div>
 
       {/* Cinematic overlay — gradient for depth */}
       <div className="absolute inset-0 z-[1] bg-[#0D4969]/75" />
@@ -76,9 +178,9 @@ const HeroSection = () => {
       {/* Floating light particles */}
       <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden">
         {[...Array(12)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute rounded-full"
+            className="particle absolute rounded-full opacity-10"
             style={{
               width: 3 + (i % 4) * 3,
               height: 3 + (i % 4) * 3,
@@ -88,126 +190,69 @@ const HeroSection = () => {
                 ? "hsl(var(--primary) / 0.3)"
                 : "hsl(0 0% 100% / 0.15)",
             }}
-            animate={{
-              y: [0, -50 - i * 5, 0],
-              x: [0, (i % 2 === 0 ? 15 : -15), 0],
-              opacity: [0.1, 0.6, 0.1],
-              scale: [1, 1.8, 1],
-            }}
-            transition={{
-              duration: 5 + i * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.4,
-            }}
           />
         ))}
       </div>
 
       {/* Content */}
-      <motion.div
-        style={{ y: contentY, opacity: contentOpacity }}
+      <div
+        ref={contentRef}
         className="container mx-auto px-4 lg:px-8 relative z-10 pt-32 pb-20"
       >
         <div className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6"
-          >
+          <div className="hero-badge mb-6 opacity-0">
             <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full bg-primary/20 text-primary border border-primary/30 backdrop-blur-md">
               WASS INSURANCE
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="qupe-heading text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[1.05] text-white"
-          >
+          <h1 className="hero-headline opacity-0 qupe-heading text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[1.05] text-white">
             {t("hero.headline")}{" "}
-            <motion.span
-              className="text-primary inline-block"
-              animate={{ scale: [1, 1.02, 1] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            >
+            <span className="hero-highlight text-primary inline-block">
               {t("hero.headlineHighlight")}
-            </motion.span>{" "}
+            </span>{" "}
             {t("hero.headlineEnd")}
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-6 text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed"
-          >
+          <p className="hero-subtext opacity-0 mt-6 text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed">
             {t("hero.subtext")}
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.45 }}
-            className="mt-10 flex flex-wrap gap-4"
-          >
+          <div className="hero-cta opacity-0 mt-10 flex flex-wrap gap-4">
             <CTAButton href="/quote" variant="primary" size="lg">
               {t("hero.getQuote")}
             </CTAButton>
             <CTAButton href="/about" variant="outline" size="lg" className="!border-white/30 !text-white hover:!bg-white/10">
               Discover WASS
             </CTAButton>
-          </motion.div>
+          </div>
         </div>
 
         {/* Trust badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
-          className="mt-16 flex flex-wrap gap-4 md:gap-6"
-        >
+        <div className="trust-badge-container opacity-0 mt-16 flex flex-wrap gap-4 md:gap-6">
           {trustBadges.map((badge, i) => (
-            <motion.div
+            <div
               key={badge.label}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 + i * 0.1 }}
-              whileHover={{ scale: 1.08, y: -4 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-2xl px-5 py-3 border border-white/10 cursor-default group"
+              className="trust-badge opacity-0 flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-2xl px-5 py-3 border border-white/10 group hover:-translate-y-1 hover:scale-105 transition-all duration-300"
             >
-              <motion.div
-                whileHover={{ rotate: 15 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
+              <div className="group-hover:rotate-12 transition-transform duration-300">
                 <badge.icon className="w-5 h-5 text-primary group-hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.5)] transition-all" />
-              </motion.div>
+              </div>
               <div>
                 <p className="font-heading font-bold text-white">{badge.value}</p>
                 <p className="text-xs text-white/60">{badge.label}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      >
+      <div className="scroll-indicator-container absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
         <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-1.5">
-          <motion.div
-            className="w-1.5 h-1.5 rounded-full bg-primary"
-            animate={{ y: [0, 16, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <div className="scroll-indicator-dot w-1.5 h-1.5 rounded-full bg-primary" />
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

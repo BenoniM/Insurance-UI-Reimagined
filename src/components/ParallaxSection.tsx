@@ -1,6 +1,10 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, ReactNode } from "react";
+import { ReactNode, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface ParallaxSectionProps {
   children: ReactNode;
@@ -10,18 +14,33 @@ interface ParallaxSectionProps {
 }
 
 const ParallaxSection = ({ children, className, speed = 0.3, direction = "up" }: ParallaxSectionProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef<HTMLDivElement>(null);
 
-  const factor = direction === "up" ? -1 : 1;
-  const y = useTransform(scrollYProgress, [0, 1], [speed * 100 * factor, -speed * 100 * factor]);
+  useGSAP(() => {
+    if (!containerRef.current || !targetRef.current) return;
+    
+    const factor = direction === "up" ? -1 : 1;
+    const yOffset = speed * 100 * factor;
+
+    gsap.fromTo(targetRef.current, 
+      { y: -yOffset },
+      {
+        y: yOffset,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        }
+      }
+    );
+  }, [speed, direction]);
 
   return (
-    <div ref={ref} className={cn("relative overflow-hidden", className)}>
-      <motion.div style={{ y }}>{children}</motion.div>
+    <div ref={containerRef} className={cn("relative overflow-hidden", className)}>
+      <div ref={targetRef}>{children}</div>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -149,13 +148,11 @@ const NewClaimPage = () => {
       <Navbar />
       <section className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-2xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-heading text-3xl md:text-4xl font-bold text-center mb-3"
+          <h1
+            className="font-heading text-3xl md:text-4xl font-bold text-center mb-3 animate-in fade-in slide-in-from-bottom-5 duration-500"
           >
             File a New Claim
-          </motion.h1>
+          </h1>
           <p className="text-center text-muted-foreground mb-8">
             Step {step + 1} of {stepLabels.length} — {stepLabels[step]}
           </p>
@@ -164,13 +161,9 @@ const NewClaimPage = () => {
             <Progress value={((step + 1) / stepLabels.length) * 100} className="h-2" />
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
+            <div
               key={step}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="bg-card border border-border rounded-2xl p-6 md:p-8"
+              className="bg-card border border-border rounded-2xl p-6 md:p-8 animate-in fade-in slide-in-from-right-4 duration-500"
             >
               {step === 0 && (
                 <div className="space-y-4">
@@ -302,8 +295,7 @@ const NewClaimPage = () => {
                   </Button>
                 )}
               </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
         </div>
       </section>
       <Footer />

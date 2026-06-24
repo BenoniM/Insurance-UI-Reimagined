@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import { Heart, Car, Home, Briefcase, Plane, Shield, CheckCircle, XCircle, Calculator, Info, Star, Clock, Users, Phone, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -125,18 +124,14 @@ const ProductPage = () => {
               {whyChooseUs.map((item, i) => (
                 <CarouselItem key={item.title} className="pl-4 md:basis-1/2 lg:basis-1/3">
                   <ScrollReveal delay={i * 0.08}>
-                    <motion.div
-                      whileHover={{ y: -6, scale: 1.02 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className="rounded-3xl p-8 h-full bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] text-white shadow-lg relative overflow-hidden"
-                    >
+                    <div className="rounded-3xl p-8 h-full bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] text-white shadow-lg relative overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.02]">
                       <div className="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-white/10" />
                       <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-5 relative z-10">
                         <item.icon className="w-6 h-6 text-white" />
                       </div>
                       <h3 className="font-heading font-semibold text-lg text-white mb-2 relative z-10">{item.title}</h3>
                       <p className="text-sm text-white/75 leading-relaxed relative z-10">{item.description}</p>
-                    </motion.div>
+                    </div>
                   </ScrollReveal>
                 </CarouselItem>
               ))}
@@ -160,10 +155,10 @@ const ProductPage = () => {
               </div>
               <ul className="space-y-3">
                 {coverageList.map((item: string, i: number) => (
-                  <motion.li key={item} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="flex items-start gap-3 group">
+                  <li key={item} className="flex items-start gap-3 group animate-in fade-in slide-in-from-left-4 duration-500" style={{ animationDelay: `${i * 60}ms`, animationFillMode: "backwards" }}>
                     <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                     <span className="text-foreground/80">{item}</span>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -179,10 +174,10 @@ const ProductPage = () => {
               </div>
               <ul className="space-y-3">
                 {exclusions.map((item: string, i: number) => (
-                  <motion.li key={item} initial={{ opacity: 0, x: 10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 + i * 0.06 }} className="flex items-start gap-3">
+                  <li key={item} className="flex items-start gap-3 animate-in fade-in slide-in-from-right-4 duration-500" style={{ animationDelay: `${150 + i * 60}ms`, animationFillMode: "backwards" }}>
                     <XCircle className="w-5 h-5 text-destructive/70 mt-0.5 shrink-0" />
                     <span className="text-foreground/60">{item}</span>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -212,10 +207,10 @@ const ProductPage = () => {
                   <h3 className="font-heading font-semibold text-foreground mb-3">{t("products.pricingFactors") || "Factors that affect your premium:"}</h3>
                   <div className="grid sm:grid-cols-2 gap-3">
                     {pricingRules.fields?.map((field: string) => (
-                      <motion.div key={field} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="flex items-center gap-3 p-3 bg-accent/50 rounded-xl border border-border">
+                      <div key={field} className="flex items-center gap-3 p-3 bg-accent/50 rounded-xl border border-border animate-in zoom-in-95 duration-500">
                         <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
                         <span className="text-sm text-foreground capitalize">{field.replace(/_/g, " ")}</span>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -244,10 +239,7 @@ const ProductPage = () => {
             <CarouselContent>
               {testimonials.map((item, i) => (
                 <CarouselItem key={item.name} className="md:basis-1/2">
-                  <motion.div
-                    whileHover={{ y: -4 }}
-                    className="qupe-card h-full"
-                  >
+                  <div className="qupe-card h-full transition-all duration-300 hover:-translate-y-1">
                     <div className="flex gap-1 mb-4">
                       {[...Array(item.rating)].map((_, j) => (
                         <Star key={j} className="w-4 h-4 fill-primary text-primary" />
@@ -258,7 +250,7 @@ const ProductPage = () => {
                       <p className="font-heading font-semibold text-foreground">{item.name}</p>
                       <p className="text-sm text-muted-foreground">{item.role}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>

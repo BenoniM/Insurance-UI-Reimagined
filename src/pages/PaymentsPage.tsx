@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { CreditCard, Download, Plus, Receipt, Shield, AlertCircle, CheckCircle, Clock } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -87,9 +86,9 @@ const PaymentsPage = () => {
         <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
             <div>
-              <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl md:text-4xl font-bold">
+              <h1 className="font-heading text-3xl md:text-4xl font-bold animate-in fade-in slide-in-from-bottom-4 duration-500">
                 Payments
-              </motion.h1>
+              </h1>
               <p className="text-muted-foreground mt-1">Your payment history, receipts and premium status</p>
             </div>
             <Link to="/payments/new"><Button className="teal-gradient text-primary-foreground"><Plus className="w-4 h-4 mr-1" /> Record Payment</Button></Link>
@@ -132,10 +131,8 @@ const PaymentsPage = () => {
                         </span>
                       </div>
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${st.due > 0 ? Math.min((st.paid / st.due) * 100, 100) : 0}%` }}
-                          transition={{ duration: 0.8 }}
+                        <div
+                          style={{ width: `${st.due > 0 ? Math.min((st.paid / st.due) * 100, 100) : 0}%`, transition: "width 0.8s ease-out" }}
                           className="h-full bg-primary"
                         />
                       </div>
