@@ -16,6 +16,7 @@ const products = [
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [accountsOpen, setAccountsOpen] = useState(false);
   const [hoveredLeft, setHoveredLeft] = useState(false);
@@ -24,10 +25,22 @@ const Navbar = () => {
   const { user, isAdmin, signOut } = useAuth();
   const location = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrolled(currentScrollY > 20);
+      
+      if (currentScrollY > 60 && currentScrollY > lastScrollY.current) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+    
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -43,6 +56,7 @@ const Navbar = () => {
       opacity: 0,
       duration: 0.6,
       ease: "power3.out",
+      clearProps: "transform"
     });
   }, []);
 
@@ -71,10 +85,17 @@ const Navbar = () => {
           We achieve this with a relative container and absolute bridges.
         */}
         <div
-          className="relative flex items-center justify-center gap-0 pointer-events-auto"
+          className={`relative flex items-center justify-center gap-0 pointer-events-auto transition-transform duration-300 ease-in-out ${
+            hidden ? "-translate-y-[120px]" : "translate-y-0"
+          }`}
           style={{ width: "calc(100vw - 48px)", maxWidth: "1400px" }}
         >
-          <div className="relative flex items-center justify-center gap-0">
+          <div 
+            className="relative flex items-center justify-center gap-0 transition-all duration-300"
+            style={{
+              filter: scrolled ? "drop-shadow(0 12px 32px rgba(0,0,0,0.1))" : "none",
+            }}
+          >
             {/* ── LEFT PILL: Logo ── */}
             <div
               className="relative flex items-center justify-center shrink-0"
@@ -82,7 +103,7 @@ const Navbar = () => {
               onMouseLeave={() => setHoveredLeft(false)}
               style={{
                 zIndex: 2,
-                background: "rgba(255,255,255,1)",
+                background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,1)",
                 backdropFilter: "blur(24px)",
                 WebkitBackdropFilter: "blur(24px)",
                 borderRadius: "12px",
@@ -108,7 +129,7 @@ const Navbar = () => {
                 viewBox="0 0 12 56"
                 preserveAspectRatio="none"
               >
-                <path d="M 0,0 Q 6,24 12,0 L 12,56 Q 6,32 0,56 Z" fill="white" />
+                <path d="M 0,0 Q 6,24 12,0 L 12,56 Q 6,32 0,56 Z" fill={scrolled ? "rgba(255,255,255,0.98)" : "white"} />
               </svg>
             <Link to="/" className="flex items-center gap-2.5 shrink-0">
               <img
@@ -125,7 +146,7 @@ const Navbar = () => {
               style={{
                 zIndex: 2,
                 gap: "4px",
-                background: "rgba(255,255,255,1)",
+                background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,1)",
                 backdropFilter: "blur(24px)",
                 WebkitBackdropFilter: "blur(24px)",
                 borderRadius: "12px",
@@ -254,20 +275,20 @@ const Navbar = () => {
                   letterSpacing: "0.08em",
                   whiteSpace: "nowrap",
                   color: "#fff",
-                  background: "linear-gradient(135deg, hsl(201,78%,23%), hsl(205,65%,48%))",
+                  background: "linear-gradient(135deg, hsl(160,55%,35%), hsl(160,55%,45%))",
                   border: "none",
                   borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(13,73,105,0.20)",
+                  boxShadow: "0 4px 12px rgba(40, 138, 105, 0.20)",
                   display: "inline-block",
                   textDecoration: "none",
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 16px rgba(13,73,105,0.30)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 16px rgba(40, 138, 105, 0.30)";
                   (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 12px rgba(13,73,105,0.20)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 12px rgba(40, 138, 105, 0.20)";
                   (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                 }}
               >
@@ -284,7 +305,7 @@ const Navbar = () => {
               onMouseLeave={() => setHoveredRight(false)}
               style={{
                 zIndex: 2,
-                background: "rgba(255,255,255,1)",
+                background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,1)",
                 backdropFilter: "blur(24px)",
                 WebkitBackdropFilter: "blur(24px)",
                 borderRadius: "12px",
@@ -310,7 +331,7 @@ const Navbar = () => {
                 viewBox="0 0 12 56"
                 preserveAspectRatio="none"
               >
-                <path d="M 0,0 Q 6,24 12,0 L 12,56 Q 6,32 0,56 Z" fill="white" />
+                <path d="M 0,0 Q 6,24 12,0 L 12,56 Q 6,32 0,56 Z" fill={scrolled ? "rgba(255,255,255,0.98)" : "white"} />
               </svg>
 
               {/* Accounts dropdown */}
@@ -449,12 +470,16 @@ const Navbar = () => {
       </nav>
 
       {/* ─── MOBILE NAVBAR ──────────────────────────────────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 lg:hidden px-4 py-3">
+      <nav 
+        className={`fixed top-0 left-0 right-0 z-50 lg:hidden px-4 py-3 transition-transform duration-300 ease-in-out ${
+          hidden && !mobileOpen ? "-translate-y-full" : "translate-y-0"
+        }`}
+      >
         <div
           className="flex items-center justify-between h-14 px-4 rounded-2xl transition-all duration-400"
           style={{
             background: scrolled
-              ? "rgba(255,255,255,0.97)"
+              ? "rgba(255,255,255,0.98)"
               : "rgba(255,255,255,0.92)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
@@ -473,7 +498,7 @@ const Navbar = () => {
               href="/quote"
               className="px-4 py-2 text-xs font-bold rounded-xl text-white"
               style={{
-                background: "linear-gradient(135deg, hsl(201,78%,23%), hsl(205,65%,48%))",
+                background: "linear-gradient(135deg, hsl(160,55%,35%), hsl(160,55%,45%))",
               }}
             >
               {t("nav.getQuote")}

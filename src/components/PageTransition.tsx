@@ -11,7 +11,13 @@ const PageTransition = ({ children }: { children: ReactNode }) => {
     if (!ref.current) return;
     gsap.fromTo(ref.current, 
       { opacity: 0, y: 12 }, 
-      { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }
+      { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.35, 
+        ease: "power2.out",
+        clearProps: "transform"
+      }
     );
   }, []);
 
