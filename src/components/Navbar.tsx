@@ -98,7 +98,7 @@ const Navbar = () => {
               <svg
                 className="absolute left-full top-1/2 -translate-y-1/2 pointer-events-none"
                 style={{
-                  height: "70%",
+                  height: "90%",
                   width: hoveredLeft ? "24px" : "12px",
                   marginLeft: "-6px",
                   zIndex: -1,
@@ -155,7 +155,7 @@ const Navbar = () => {
                       fontWeight: 600,
                       fontFamily: "var(--font-heading)",
                       whiteSpace: "nowrap",
-                      color: productsOpen ? "hsl(160 55% 35%)" : "hsl(210 15% 25%)",
+                      color: productsOpen ? "hsl(160 55% 35%)" : "rgb(11, 63, 91)",
                       background: "transparent",
                       border: "none",
                       borderRadius: "8px",
@@ -167,7 +167,7 @@ const Navbar = () => {
                     }}
                     onMouseLeave={(e) => {
                       if (!productsOpen) {
-                        (e.currentTarget as HTMLButtonElement).style.color = "hsl(210 15% 25%)";
+                        (e.currentTarget as HTMLButtonElement).style.color = "rgb(11, 63, 91)";
                       }
                     }}
                   >
@@ -221,7 +221,7 @@ const Navbar = () => {
                       fontWeight: 600,
                       fontFamily: "var(--font-heading)",
                       whiteSpace: "nowrap",
-                      color: "hsl(210 15% 25%)",
+                      color: "rgb(11, 63, 91)",
                       background: "transparent",
                       border: "none",
                       borderRadius: "8px",
@@ -233,7 +233,7 @@ const Navbar = () => {
                       (e.currentTarget as HTMLElement).style.color = "hsl(160 55% 35%)";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.color = "hsl(210 15% 25%)";
+                      (e.currentTarget as HTMLElement).style.color = "rgb(11, 63, 91)";
                     }}
                   >
                     {link.label}
@@ -300,7 +300,7 @@ const Navbar = () => {
               <svg
                 className="absolute right-full top-1/2 -translate-y-1/2 pointer-events-none"
                 style={{
-                  height: "60%",
+                  height: "90%",
                   width: hoveredRight ? "24px" : "12px",
                   marginRight: "-6px",
                   zIndex: -1,
@@ -342,7 +342,7 @@ const Navbar = () => {
 
                 {/* Accounts Dropdown Menu */}
                 <div
-                  className="absolute top-[100%] right-0 mt-2 py-2 min-w-[200px] transition-all duration-200 origin-top-right flex flex-col items-stretch"
+                  className="absolute top-[100%] right-0 mt-2 py-2 min-w-[190px] transition-all duration-200 origin-top-right flex flex-col items-stretch"
                   style={{
                     background: "rgba(255,255,255,1)",
                     borderRadius: "12px",
