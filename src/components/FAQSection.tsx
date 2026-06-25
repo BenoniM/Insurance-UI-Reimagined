@@ -24,26 +24,6 @@ const faqs = [
     question: "What types of insurance does WASS offer?",
     answer: "Life, Health, Motor, Property, Travel, and Commercial/Business insurance — all designed specifically for Ethiopian individuals, families, and businesses. Bundle multiple policies and save up to 25%.",
   },
-  {
-    question: "How do I file a claim?",
-    answer: "Three easy ways: (1) chat with our AI assistant in the app or on WhatsApp, (2) call our 24/7 hotline at +251 11 123 4567, or (3) walk into any of our 12 branch offices. Most claims need just an ID, a short description, and a photo — that's it.",
-  },
-  {
-    question: "How are premiums calculated?",
-    answer: "We look at the type of coverage, the value of what's insured, your location, and your risk profile — nothing more. No hidden fees, no mysterious adjustments. Use our quote tool to see your exact price in seconds.",
-  },
-  {
-    question: "Is WASS Insurance licensed and regulated?",
-    answer: "Yes. WASS Insurance is fully licensed and regulated by the National Bank of Ethiopia (NBE) and meets every capital, solvency, and reporting standard required to underwrite policies in Ethiopia.",
-  },
-  {
-    question: "Can I manage everything from my phone?",
-    answer: "Absolutely. Buy a policy, file a claim, make payments, download documents, and chat with support — all from the WASS dashboard or via WhatsApp/Telegram. Branches are there if you want them, not because you have to use them.",
-  },
-  {
-    question: "What payment methods do you accept?",
-    answer: "TeleBirr, CBE Birr, bank transfer, and cash at any branch. Pay monthly, quarterly, or annually — your choice, no penalty for switching.",
-  },
 ];
 
 const FAQItem = ({ faq, index, isOpen, onToggle }: { faq: typeof faqs[0]; index: number; isOpen: boolean; onToggle: () => void }) => (

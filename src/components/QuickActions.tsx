@@ -1,36 +1,156 @@
+import React, { useRef, useState, MouseEvent } from "react";
 import { Calculator, FileText, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import ScrollReveal from "./ScrollReveal";
+
+import imgQuote from "@/assets/QuickAction/Quote.png";
+import imgFile from "@/assets/QuickAction/File.png";
+import imgBranch from "@/assets/QuickAction/Branch.png";
+import imgCall from "@/assets/QuickAction/Call.png";
+
+const TiltCard = ({ action }: { action: any }) => {
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef<HTMLAnchorElement>(null);
+
+  const handleMouseMove = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (!cardRef.current) return;
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    setRotate({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+    setIsHovered(false);
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  return (
+    <a
+      ref={cardRef}
+      href={action.href}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouseEnter}
+      style={{
+        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(${isHovered ? 1.02 : 1}, ${isHovered ? 1.02 : 1}, 1)`,
+        transition: isHovered ? 'transform 0.1s ease-out' : 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
+        transformStyle: 'preserve-3d'
+      }}
+      className="relative rounded-3xl overflow-hidden group h-[300px] md:h-[420px] block w-full shadow-lg hover:shadow-2xl hover:z-10"
+    >
+      <img 
+        src={action.image} 
+        alt={action.label} 
+        className="absolute inset-0 w-full h-full object-cover brightness-110 transition-all duration-500 group-hover:scale-110 group-hover:blur-md"
+      />
+      <div 
+        className="absolute inset-0 transition-all duration-500" 
+        style={{
+          backgroundColor: isHovered ? action.hoverColor : '#000000',
+          opacity: isHovered ? 0.4 : 0.2
+        }}
+      />
+      
+      {/* See more overlay text */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-500 group-hover:opacity-100 z-20 pointer-events-none"
+        style={{ transform: 'translateZ(30px)' }}
+      >
+        <span className="text-white font-medium text-lg px-6 py-2">
+          See more
+        </span>
+      </div>
+
+      <div 
+        className="relative z-10 w-full h-full flex flex-col justify-between pointer-events-none"
+        style={{ transform: 'translateZ(20px)' }}
+      >
+        <div className="flex justify-between items-start gap-4 bg-black/40 backdrop-blur-md w-full px-6 py-5 transition-all duration-500 group-hover:bg-transparent group-hover:backdrop-blur-none">
+          <h3 className="text-white font-heading font-medium text-lg max-w-[60%] text-left leading-tight drop-shadow-md">
+            {action.label}
+          </h3>
+          <span className="text-white/90 text-sm font-medium whitespace-nowrap drop-shadow-md">
+            {action.description}
+          </span>
+        </div>
+        
+        <div className="flex justify-start px-6 pb-6">
+          <action.icon
+            className={`w-8 h-8 ${
+              action.iconColor === "green"
+                ? "text-[#a8f5dbff]"
+                : "text-[#96cdf4ff]"
+            }`}
+          />
+        </div>
+      </div>
+    </a>
+  );
+};
 
 const QuickActions = () => {
   const { t } = useLanguage();
 
   const actions = [
-    { icon: Calculator, label: t("quick.getQuote"), description: t("quick.instantEstimate"), href: "/quote", gradient: "from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)]" },
-    { icon: FileText, label: t("quick.fileClaim"), description: t("quick.startClaim"), href: "/claims", gradient: "from-[hsl(160,55%,45%)] to-[hsl(160,50%,55%)]" },
-    { icon: MapPin, label: t("quick.findBranch"), description: t("quick.nearestOffice"), href: "/contact#branches", gradient: "from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)]" },
-    { icon: Phone, label: t("quick.callNow"), description: "+251 11 123 4567", href: "tel:+251111234567", gradient: "from-[hsl(205,65%,48%)] to-[hsl(201,78%,23%)]" },
+    {
+      icon: Calculator,
+      label: t("quick.getQuote"),
+      description: t("quick.instantEstimate"),
+      href: "/quote",
+      image: imgQuote,
+      hoverColor: "#2983C4",
+      iconColor: "green", // 1st
+    },
+    {
+      icon: FileText,
+      label: t("quick.fileClaim"),
+      description: t("quick.startClaim"),
+      href: "/claims",
+      image: imgFile,
+      hoverColor: "#34B288",
+      iconColor: "blue", // 2nd
+    },
+    {
+      icon: MapPin,
+      label: t("quick.findBranch"),
+      description: t("quick.nearestOffice"),
+      href: "/contact#branches",
+      image: imgBranch,
+      hoverColor: "#34B288",
+      iconColor: "blue", // 3rd
+    },
+    {
+      icon: Phone,
+      label: t("quick.callNow"),
+      description: "+251 11 123 4567",
+      href: "tel:+251111234567",
+      image: imgCall,
+      hoverColor: "#2983C4",
+      iconColor: "green", // 4th
+    },
   ];
 
   return (
     <section className="relative z-20 px-4 lg:px-8 py-16">
-      <div className="container mx-auto max-w-5xl">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+      <div className="container mx-auto max-w-[1400px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {actions.map((action, i) => (
             <ScrollReveal key={action.label} animation="scaleUp" delay={i * 0.06}>
-              <a
-                href={action.href}
-                className={`rounded-3xl p-5 md:p-6 flex flex-col items-center text-center gap-3 cursor-pointer group relative overflow-hidden bg-gradient-to-br ${action.gradient} text-white shadow-lg hover:shadow-xl hover:-translate-y-2 hover:scale-105 active:scale-95 transition-all duration-300`}
-              >
-                <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
-                <div
-                  className="relative z-10 w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group-hover:rotate-12 group-hover:scale-110"
-                >
-                  <action.icon className="w-5 h-5 text-white" />
-                </div>
-                <span className="relative z-10 font-heading font-semibold text-sm text-white">{action.label}</span>
-                <span className="relative z-10 text-xs text-white/70 hidden sm:block">{action.description}</span>
-              </a>
+              <TiltCard action={action} />
             </ScrollReveal>
           ))}
         </div>

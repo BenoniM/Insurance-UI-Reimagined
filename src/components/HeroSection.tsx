@@ -4,8 +4,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useRef } from "react";
 import CTAButton from "./CTAButton";
-import leftHero from "@/hero/left-hero.svg";
-import rightHero from "@/hero/Business-Deal-4--Streamline-Milano.svg";
+import homeLeft from "@/assets/Hero/HomeLeft.svg";
+import carLeft from "@/assets/Hero/CarLeft.svg";
+import homeRight from "@/assets/Hero/HomeRight.svg";
+import personRight from "@/assets/Hero/PersonRight.svg";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -21,9 +23,9 @@ const HeroSection = () => {
     const tl = gsap.timeline();
 
     tl.fromTo(".hero-headline",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
-      )
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+    )
       .fromTo(".hero-subtext",
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.5 },
@@ -62,7 +64,7 @@ const HeroSection = () => {
       >
         <div className="max-w-3xl mx-auto flex flex-col items-center pb-20">
           <h1 className="hero-headline opacity-0 font-hero text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] text-gray-800 font-medium tracking-wide capitalize">
-            <span className="hero-highlight text-primary">WASS</span> is reimagining <span className="hero-highlight text-primary">insurance</span> <span className="inline-block">for Ethiopian families</span>
+            Reimagining <span className="hero-highlight text-primary">insurance</span> <span className="inline-block">for Ethiopian families</span>
           </h1>
 
           <p className="hero-subtext opacity-0 mt-6 text-xl md:text-2xl text-gray-600 max-w-2xl leading-relaxed capitalize">
@@ -70,8 +72,8 @@ const HeroSection = () => {
           </p>
 
           <div className="hero-cta opacity-0 mt-10">
-            <CTAButton 
-              href="/quote" 
+            <CTAButton
+              href="/quote"
               variant="primary"
               size="lg"
             >
@@ -84,15 +86,30 @@ const HeroSection = () => {
       {/* Side Images */}
       <div className="hero-images opacity-0 absolute inset-x-0 bottom-16 pointer-events-none z-0 flex justify-center">
         <div className="container mx-auto relative w-full h-[25vh] sm:h-[30vh] md:h-[40vh] lg:h-[45vh]">
-          <img 
-            src={leftHero} 
-            alt="House illustration left" 
-            className="absolute bottom-0 left-4 lg:left-8 w-auto h-full max-w-[42vw] object-contain object-left-bottom"
+          <img
+            src={homeLeft}
+            alt="House illustration left"
+            className="absolute bottom-0 -left-[2vw] lg:-left-[7vw] w-auto h-[130%] lg:h-[130%] max-w-[60vw] object-contain object-left-bottom"
+            style={{ filter: "sepia(1) hue-rotate(180deg) saturate(1.5) opacity(0.9)" }}
           />
-          <img 
-            src={rightHero} 
-            alt="House illustration right" 
-            className="absolute bottom-0 right-4 lg:right-8 w-auto h-full max-w-[42vw] object-contain object-right-bottom"
+          <img
+            src={carLeft}
+            alt="Car illustration left"
+            className="absolute -bottom-2 left-[4vw] lg:-left-[5vw] w-auto h-[65%] lg:h-[65%] max-w-[45vw] object-contain object-left-bottom z-10"
+            style={{ filter: "sepia(1) hue-rotate(90deg) saturate(1.5) opacity(0.9)" }}
+          />
+
+          <img
+            src={homeRight}
+            alt="House illustration right"
+            className="absolute bottom-0 -right-[2vw] lg:-right-[7vw] w-auto h-[150%] lg:h-[150%] max-w-[60vw] object-contain object-right-bottom"
+            style={{ filter: "sepia(1) hue-rotate(180deg) saturate(1.5) opacity(0.9)" }}
+          />
+          <img
+            src={personRight}
+            alt="Person with dog right"
+            className="absolute bottom-2 right-[4vw] lg:-right-[2vw] w-auto h-[100%] lg:h-[100%] max-w-[45vw] object-contain object-right-bottom z-10"
+            style={{ filter: "sepia(1) hue-rotate(90deg) saturate(1.5) opacity(0.9)" }}
           />
         </div>
       </div>

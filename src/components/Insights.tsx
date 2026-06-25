@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -7,13 +6,19 @@ import SectionWrapper from "./SectionWrapper";
 import ScrollReveal from "./ScrollReveal";
 
 const Insights = () => {
-  const { t, lang } = useLanguage();
+  const { lang } = useLanguage();
   const [articles, setArticles] = useState<any[]>([]);
 
   useEffect(() => {
-    supabase.from("articles").select("*").eq("published", true).order("created_at", { ascending: false }).limit(3).then(({ data }) => {
-      if (data) setArticles(data);
-    });
+    supabase
+      .from("articles")
+      .select("*")
+      .eq("published", true)
+      .order("created_at", { ascending: false })
+      .limit(3)
+      .then(({ data }) => {
+        if (data) setArticles(data);
+      });
   }, []);
 
   return (
@@ -24,7 +29,9 @@ const Insights = () => {
           <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
             Insurance Knowledge <span className="text-primary">Hub</span>
           </h2>
-          <p className="mt-5 text-muted-foreground max-w-xl mx-auto text-lg">Expert tips, industry updates, and guides to help you make informed insurance decisions in Ethiopia.</p>
+          <p className="mt-5 text-muted-foreground max-w-xl mx-auto text-lg">
+            Expert tips, industry updates, and guides to help you make informed insurance decisions in Ethiopia.
+          </p>
         </ScrollReveal>
       </div>
 
@@ -32,17 +39,18 @@ const Insights = () => {
         {articles.map((article, i) => (
           <ScrollReveal key={article.slug} animation="fadeUp" delay={i * 0.08}>
             <Link to={`/blog/${article.slug}`} className="group block h-full">
-              <div className="qupe-card-warm h-full flex flex-col hover:-translate-y-1.5 hover:scale-[1.02] transition-all duration-300">
-                <span className="inline-block text-xs font-semibold text-primary bg-primary/8 rounded-full px-3 py-1 mb-4 w-fit">{article.category}</span>
-                <h3 className="font-heading font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+              <div className="insights-card h-full flex flex-col">
+                <h3 className="font-heading font-semibold text-foreground text-lg leading-snug mb-auto">
                   {lang === "am" && article.title_am ? article.title_am : article.title}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed flex-1">
+                <p className="text-sm text-muted-foreground leading-relaxed mt-6 mb-5">
                   {lang === "am" && article.intro_am ? article.intro_am : article.intro}
                 </p>
-                <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
-                  {t("insights.readMore")} <ArrowRight className="w-3.5 h-3.5" />
-                </span>
+                <div className="mt-auto">
+                  <span className="inline-block text-sm font-semibold text-secondary border-b-[1.5px] border-primary pb-0.5 transition-colors group-hover:text-secondary/80 group-hover:border-primary/80">
+                    {lang === "am" ? "ተጨማሪ ያንብቡ" : "Read More"}
+                  </span>
+                </div>
               </div>
             </Link>
           </ScrollReveal>

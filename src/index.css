@@ -114,7 +114,12 @@
     font-family: var(--font-body);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     letter-spacing: -0.02em;
   }
@@ -212,6 +217,22 @@
     box-shadow: 0 20px 60px -15px hsl(var(--primary) / 0.1);
   }
 
+  /* Insights / Knowledge Hub cards — flat muted green, title top, text bottom */
+  .insights-card {
+    @apply rounded-2xl p-8;
+    background: hsl(160 30% 88%);
+    min-height: 300px;
+    transition: transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1);
+  }
+
+  .dark .insights-card {
+    background: hsl(160 25% 22%);
+  }
+
+  .insights-card:hover {
+    transform: scale(1.03);
+  }
+
   /* Gradient background blobs */
   .qupe-blob-1 {
     position: absolute;
@@ -240,4 +261,447 @@
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Testimonials infinite marquee */
+@keyframes testimonial-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.testimonials-track {
+  display: flex;
+  width: max-content;
+  animation: testimonial-marquee 22s linear infinite;
+}
+
+.testimonials-track:hover {
+  animation-play-state: paused;
+}
+
+/* ═══════════════════════════════════════════════
+   ClaimsGuide — Editorial Newspaper Grid
+═══════════════════════════════════════════════ */
+
+.claims-section {
+  background: hsl(var(--surface));
+  border-top: 1px solid hsl(var(--surface-border));
+}
+
+/* ── Top label bar ── */
+.claims-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 2.5rem;
+  border-bottom: 1px solid hsl(var(--surface-border));
+}
+
+.claims-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.claims-label {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--navy));
+}
+
+.claims-label-divider {
+  width: 1px;
+  height: 1rem;
+  background: hsl(var(--surface-border));
+}
+
+.claims-label-sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: hsl(var(--warm-gray));
+}
+
+.claims-header-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: hsl(var(--teal));
+  text-decoration: none;
+  transition: gap 0.2s;
+}
+
+.claims-header-link:hover {
+  gap: 0.65rem;
+}
+
+.claims-header-arrow {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+/* ── Main 2-column editorial grid ── */
+.claims-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 860px) {
+  .claims-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ══ LEFT: Featured panel ══ */
+.claims-featured {
+  border-right: 1px solid hsl(var(--surface-border));
+}
+
+.claims-featured-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Dark hero visual area — holds tag, title, desc, CTA */
+.claims-featured-img {
+  position: relative;
+  background: linear-gradient(155deg, hsl(var(--navy)) 0%, hsl(201 78% 12%) 100%);
+  overflow: hidden;
+  padding: 2.5rem 2.25rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+.claims-featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 25% 70%, hsl(var(--teal) / 0.22) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.claims-featured-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, hsl(var(--primary) / 0.05) 1px, transparent 1px);
+  background-size: 26px 26px;
+  pointer-events: none;
+}
+
+.claims-featured-bignum {
+  position: absolute;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  font-size: 9rem;
+  opacity: 0.08;
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.claims-featured-img-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.claims-featured-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  background: hsl(var(--teal) / 0.15);
+  border: 1px solid hsl(var(--teal) / 0.35);
+  color: hsl(var(--teal-light));
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.claims-featured-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+
+.claims-featured-title-accent {
+  color: hsl(var(--teal-light));
+}
+
+.claims-featured-desc {
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 38ch;
+}
+
+.claims-featured-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 2px solid hsl(var(--teal));
+  padding-bottom: 0.1rem;
+  width: fit-content;
+  margin-top: 0.5rem;
+  transition: gap 0.2s, color 0.2s;
+}
+
+.claims-featured-cta:hover {
+  gap: 0.75rem;
+  color: hsl(var(--teal-light));
+}
+
+.claims-featured-cta-arrow {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+/* Required Documents panel (bottom of left column) */
+.claims-docs-panel {
+  flex: 1;
+  padding: 2rem 2.25rem;
+  border-top: 1px solid hsl(var(--surface-border));
+  background: hsl(var(--surface));
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.claims-docs-title {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: hsl(var(--navy));
+}
+
+.claims-docs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.claims-docs-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: hsl(var(--warm-gray));
+}
+
+.claims-docs-check {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: hsl(var(--teal));
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.claims-processing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.75rem;
+  background: hsl(var(--teal) / 0.08);
+  border: 1px solid hsl(var(--teal) / 0.2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: hsl(var(--teal-dark));
+  width: fit-content;
+}
+
+.claims-processing-icon {
+  font-size: 0.9rem;
+}
+
+/* ══ RIGHT: 2×2 step cards grid ══ */
+.claims-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.claims-cards-grid>* {
+  border-right: 1px solid hsl(var(--surface-border));
+  border-bottom: 1px solid hsl(var(--surface-border));
+}
+
+.claims-cards-grid>*:nth-child(2n) {
+  border-right: none;
+}
+
+.claims-cards-grid>*:nth-child(3),
+.claims-cards-grid>*:nth-child(4) {
+  border-bottom: none;
+}
+
+/* Individual step card */
+.claims-card {
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  background: hsl(var(--surface));
+  transition: background 0.28s ease;
+  cursor: default;
+}
+
+.claims-card:hover {
+  background: hsl(var(--navy) / 0.025);
+}
+
+.claims-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.claims-card-step {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: hsl(var(--teal));
+}
+
+.claims-card-num {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 900;
+  color: hsl(var(--navy) / 0.07);
+  line-height: 1;
+}
+
+.claims-card-icon-wrap {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.7rem;
+  background: hsl(var(--teal) / 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s;
+}
+
+.claims-card:hover .claims-card-icon-wrap {
+  background: hsl(var(--teal) / 0.18);
+}
+
+.claims-card-icon {
+  width: 1rem;
+  height: 1rem;
+  color: hsl(var(--teal));
+}
+
+.claims-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: hsl(var(--navy));
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.claims-card-desc {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: hsl(var(--warm-gray));
+  flex: 1;
+}
+
+.claims-card-footer {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.claims-card-line {
+  display: block;
+  height: 1px;
+  flex: 1;
+  background: hsl(var(--surface-border));
+  margin-right: 0.7rem;
+  transition: background 0.25s;
+}
+
+.claims-card:hover .claims-card-line {
+  background: hsl(var(--teal) / 0.4);
+}
+
+.claims-card-arrow {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: hsl(var(--teal));
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.claims-card:hover .claims-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ═══════════════════════════════════════════════
+   Curtain / Stage Footer Reveal
+   ───────────────────────────────────────────────
+   The curtain (main content) is relative z-1 and
+   has margin-bottom equal to the footer height.
+   The stage (footer) is fixed bottom-0 z-0.
+   As you scroll down past the curtain, you see the
+   stage behind it.
+═══════════════════════════════════════════════ */
+
+.fr-root {
+  position: relative;
+}
+
+.fr-curtain {
+  position: relative;
+  z-index: 1;
+  background: hsl(var(--background));
+  margin-bottom: var(--footer-h, 500px);
+  /* Drop shadow to make the curtain look elevated */
+  box-shadow: 0 20px 60px 0 rgba(0, 0, 0, 0.25);
+}
+
+.fr-stage {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
 }

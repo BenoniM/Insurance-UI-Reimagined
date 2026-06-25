@@ -1,62 +1,167 @@
-import { ClipboardList, FileSearch, CheckCircle, Banknote } from "lucide-react";
+import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import SectionWrapper from "./SectionWrapper";
 import ScrollReveal from "./ScrollReveal";
 
-const gradients = [
-  "from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)]",
-  "from-[hsl(160,55%,45%)] to-[hsl(160,50%,55%)]",
-  "from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)]",
-  "from-[hsl(205,65%,48%)] to-[hsl(160,50%,55%)]",
+const steps = [
+  {
+    titleKey: "process.step1" as const,
+    descKey: "process.step1Desc" as const,
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
+    imageAlt: "Browsing insurance plans on a laptop",
+  },
+  {
+    titleKey: "process.step2" as const,
+    descKey: "process.step2Desc" as const,
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80",
+    imageAlt: "Getting an instant insurance quote",
+  },
+  {
+    titleKey: "process.step3" as const,
+    descKey: "process.step3Desc" as const,
+    image: "https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=800&q=80",
+    imageAlt: "Submitting documents for insurance application",
+  },
+  {
+    titleKey: "process.step4" as const,
+    descKey: "process.step4Desc" as const,
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
+    imageAlt: "Covered and protected by insurance",
+  },
 ];
+
+// Darker navy-blue tinted border colour — visible but not harsh
+const BORDER = "hsl(201 78% 23% / 0.22)";
+const BORDER_STYLE = { borderColor: BORDER };
 
 const ProcessSteps = () => {
   const { t } = useLanguage();
-
-  const steps = [
-    { icon: ClipboardList, number: "1", title: t("process.step1"), description: t("process.step1Desc") },
-    { icon: FileSearch, number: "2", title: t("process.step2"), description: t("process.step2Desc") },
-    { icon: CheckCircle, number: "3", title: t("process.step3"), description: t("process.step3Desc") },
-    { icon: Banknote, number: "4", title: t("process.step4"), description: t("process.step4Desc") },
-  ];
+  const [openIndex, setOpenIndex] = useState<number>(0);
 
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Gradient mesh background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(201,78%,23%)/0.03] via-transparent to-[hsl(160,55%,45%)/0.05]" />
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+    /*
+      section has NO horizontal padding so every border line
+      runs truly edge-to-edge of the viewport.
+      Vertical spacing reduced: small top gap (pt-6) since
+      ValueProps already gives bottom breathing room.
+    */
+    <section className="pt-6 pb-20 overflow-hidden">
+      <div className="flex flex-col lg:flex-row w-full">
+
+        {/* ── LEFT column ── */}
+        {/* border-t top, border-b bottom → matches the right-side lines */}
+        <div
+          className="
+            lg:w-5/12 flex flex-col justify-start
+            px-4 sm:px-8 lg:pl-12 xl:pl-16 lg:pr-16
+            pt-8 pb-10 lg:pb-10
+            border-t border-b
+          "
+          style={BORDER_STYLE}
+        >
           <ScrollReveal>
-            <span className="section-badge mb-6 inline-block">HOW IT WORKS</span>
-            <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
+            <span className="section-badge mb-5 inline-block">HOW IT WORKS</span>
+            <h2 className="qupe-heading text-4xl md:text-[2.75rem] text-foreground mt-3 leading-tight">
               {t("process.title")}
             </h2>
-            <p className="mt-5 text-muted-foreground max-w-xl mx-auto text-lg">{t("process.subtitle")}</p>
+            <p className="mt-4 text-muted-foreground text-base leading-relaxed max-w-xs">
+              {t("process.subtitle")}
+            </p>
           </ScrollReveal>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-4">
-          {steps.map((step, i) => (
-            <ScrollReveal key={step.number} delay={i * 0.1}>
+        {/* ── vertical divider ── */}
+        <div
+          className="hidden lg:block w-px shrink-0 self-stretch"
+          style={{ background: BORDER }}
+        />
+
+        {/* ── RIGHT column ── */}
+        <div className="lg:flex-1 flex flex-col">
+
+          {/* top border — aligns with left column's top border */}
+          <div className="border-t" style={BORDER_STYLE} />
+
+          {steps.map((step, i) => {
+            const isOpen = openIndex === i;
+
+            return (
               <div
-                className="qupe-card !p-6 flex items-start gap-6 group relative overflow-hidden cursor-default hover:translate-x-1.5 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300"
+                key={i}
+                className="border-b"
+                style={BORDER_STYLE}
               >
-                {/* Subtle gradient stripe on left */}
-                <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b ${gradients[i]} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-l-3xl`} />
-                
-                <div
-                  className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${gradients[i]} flex items-center justify-center shrink-0 font-heading font-bold text-white text-lg shadow-lg group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300`}
+                {/* header row */}
+                <button
+                  className="w-full flex items-center py-5 px-4 sm:px-8 lg:px-10 xl:pr-16 text-left"
+                  onClick={() => setOpenIndex(i)}
+                  aria-expanded={isOpen}
                 >
-                  {step.number}
+                  {/* square bullet */}
+                  <span className="flex items-center justify-center w-6 mr-5 shrink-0">
+                    <span
+                      className="w-[7px] h-[7px] rounded-[1px] transition-all duration-300"
+                      style={{
+                        background: isOpen ? BORDER.replace("0.22", "1") : "transparent",
+                        border: `1.5px solid ${BORDER.replace("0.22", "0.5")}`,
+                      }}
+                    />
+                  </span>
+
+                  {/* title */}
+                  <span
+                    className={`flex-1 font-heading font-semibold text-xl transition-colors duration-200 ${
+                      isOpen ? "text-foreground" : "text-foreground/50"
+                    }`}
+                  >
+                    {t(step.titleKey)}
+                  </span>
+
+                  {/* +/− */}
+                  <span
+                    className={`text-2xl font-extralight leading-none w-6 text-right shrink-0 transition-colors duration-200 ${
+                      isOpen ? "text-foreground" : "text-foreground/30"
+                    }`}
+                  >
+                    {isOpen ? "−" : "+"}
+                  </span>
+                </button>
+
+                {/* expanded body — grid-rows, no bounce */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateRows: isOpen ? "1fr" : "0fr",
+                    transition: "grid-template-rows 0.42s cubic-bezier(0.4, 0, 0.2, 1)",
+                  }}
+                >
+                  <div className="overflow-hidden">
+                    <div className="flex flex-col sm:flex-row gap-6 items-start px-4 sm:px-8 lg:px-10 xl:pr-16 pl-16 pb-7">
+                      {/* description */}
+                      <p className="text-muted-foreground leading-relaxed text-sm sm:flex-1">
+                        {t(step.descKey)}
+                      </p>
+
+                      {/* image */}
+                      <div
+                        className="w-full sm:w-44 shrink-0 overflow-hidden rounded-sm"
+                        style={{ aspectRatio: "4/3" }}
+                      >
+                        <img
+                          src={step.image}
+                          alt={step.imageAlt}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-heading font-semibold text-lg text-foreground mb-1">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
-                </div>
+
               </div>
-            </ScrollReveal>
-          ))}
-        </div>
+            );
+          })}
+
+        </div>{/* end right */}
       </div>
     </section>
   );
