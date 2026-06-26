@@ -53,6 +53,9 @@ const testimonials = [
 const TOTAL = whyChooseUs.length;
 const CLONED = [...whyChooseUs, ...whyChooseUs, ...whyChooseUs];
 
+// Fixed strip height = center image (58vh) + card padding top+bottom (40px) + title (~28px) + desc (~60px) + gaps (~18px)
+const STRIP_HEIGHT = "calc(58vh + 146px)";
+
 // ─── Focal Spotlight Carousel ─────────────────────────────────────────────
 const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
   const [activeIndex, setActiveIndex] = useState(TOTAL);
@@ -79,7 +82,7 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
     const t = setTimeout(() => {
       setAnimated(false);
       setActiveIndex(target!);
-    }, 660);
+    }, 620);
     return () => clearTimeout(t);
   }, [activeIndex, animated]);
 
@@ -105,6 +108,9 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
     return "hidden";
   };
 
+  // Slight overshoot on the curve = a livelier, less mechanical resize
+  const EASE = "cubic-bezier(0.33, 1.4, 0.45, 1)";
+
   return (
     <SectionWrapper className="overflow-hidden !px-0 !pb-0">
 
@@ -117,134 +123,192 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
         </div>
       </ScrollReveal>
 
-<div style={{ display: "flex", alignItems: "flex-start", width: "100%", gap: "0px" }}>
+      {/* Card strip — fixed height, completely separate from the button row below */}
+      <div style={{
+        display: "flex",
+        alignItems: "stretch",
+        width: "100%",
+        height: STRIP_HEIGHT,
+        overflow: "hidden",
+      }}>
 
-  {/* Card strip */}
-  <div style={{ display: "flex", alignItems: "flex-start", flex: 1, overflow: "hidden", gap: "10px" }}>
-    {CLONED.map((item, i) => {
-      const role     = getRole(i);
-      const isCenter = role === "center";
-      const isLeft   = role === "left";
-      const isRight  = role === "right";
-      const isVis    = role !== "hidden";
-      const tr       = (p: string) => animated ? p : "none";
+        <div style={{
+          display: "flex",
+          alignItems: "stretch",
+          flex: 1,
+          overflow: "hidden",
+          gap: "10px",
+        }}>
+          {CLONED.map((item, i) => {
+            const role     = getRole(i);
+            const isCenter = role === "center";
+            const isLeft   = role === "left";
+            const isRight  = role === "right";
+            const isVis    = role !== "hidden";
+            const tr       = (p: string) => animated ? p : "none";
 
-      const cardBg = isCenter
-        ? "hsl(152, 48%, 78%)"
-        : "hsl(152, 38%, 88%)";
+            const cardBg = isCenter
+              ? "hsl(152, 48%, 78%)"
+              : "hsl(152, 38%, 88%)";
 
-      return (
-<div
-  key={i}
-  style={{
-    flex: isCenter ? 5 : isVis ? 2.2 : 0,
-    minWidth: isVis && !isCenter ? "120px" : 0,
-    maxWidth: isVis ? "none" : 0,
-    opacity: isVis ? 1 : 0,
-    transition: tr("flex 0.65s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease, min-width 0.65s cubic-bezier(0.4,0,0.2,1)"),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}
->
-          {/* Card mat */}
-<div style={{
-  width: "100%",
-  background: cardBg,
-  borderRadius: isLeft ? "0 14px 14px 0" : isRight ? "14px 0 0 14px" : "14px",
-  padding: isCenter ? "20px" : "12px",
-  display: "flex",
-  flexDirection: "column",
-  overflow: "hidden",   // ← moved here
-  transition: tr("border-radius 0.5s ease, padding 0.5s ease, background 0.5s ease"),
-}}>
-
-            {/* Image */}
-            <div style={{
-              height: isCenter ? "58vh" : "25vh",
-              overflow: "hidden",
-              borderRadius: "8px",
-              flexShrink: 0,
-              transition: tr("height 0.65s cubic-bezier(0.4,0,0.2,1)"),
-            }}>
-              <img
-                src={item.image}
-                alt={item.title}
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-              />
-            </div>
-
-            {/* Text */}
-            <div style={{
-              paddingTop: isCenter ? "18px" : "10px",
-              transition: tr("padding 0.5s ease"),
-            }}>
-              <p
-                className="font-heading font-semibold text-foreground leading-snug"
+            return (
+              <div
+                key={i}
                 style={{
-                  fontSize: isCenter ? "1.05rem" : "0.78rem",
-                  transition: tr("font-size 0.5s ease"),
+                  flex: isCenter ? 5 : isVis ? 2.2 : 0,
+                  minWidth: isVis && !isCenter ? "120px" : 0,
+                  maxWidth: isVis ? "none" : 0,
+                  opacity: isVis ? 1 : 0,
                   overflow: "hidden",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical" as const,
-                  marginBottom: isCenter ? "8px" : "0",
-                }}
-              >
-                {item.title}
-              </p>
-              <div style={{
-                maxHeight: isCenter ? "72px" : "0px",
-                opacity: isCenter ? 1 : 0,
-                overflow: "hidden",
-                transition: tr("max-height 0.5s ease, opacity 0.35s ease"),
-              }}>
-                <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Button below the entire green box — side cards only */}
-          {(isLeft || isRight) && (
-            <div style={{ paddingTop: "12px" }}>
-              <button
-                onClick={() => advance(isLeft ? -1 : 1)}
-                aria-label={isLeft ? "Previous" : "Next"}
-                style={{
+                  height: "100%",
+                  transition: tr(`flex 0.6s ${EASE}, opacity 0.4s ease, min-width 0.6s ${EASE}`),
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
-                  justifyContent: "center",
-                  width: "44px",
-                  height: "44px",
-                  borderRadius: "50%",
-                  border: "2.5px solid hsl(210, 72%, 50%)",
-                  background: "hsl(210, 72%, 94%)",
-                  cursor: "pointer",
-                  color: "hsl(210, 72%, 38%)",
-                  opacity: 0.9,
-                  transition: "opacity 0.2s, background 0.2s",
-                  flexShrink: 0,
+                  justifyContent: "flex-start", // top-align everything, center and sides alike
                 }}
-                onMouseEnter={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.background = "hsl(210, 72%, 86%)"; }}
-                onMouseLeave={e => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.background = "hsl(210, 72%, 94%)"; }}
               >
-                {isLeft
-                  ? <ArrowLeft size={22} strokeWidth={2.6} />
-                  : <ArrowRight size={22} strokeWidth={2.6} />
-                }
-              </button>
-            </div>
-          )}
+                {/* Card mat only — no button inside here anymore */}
+                <div style={{
+                  width: "100%",
+                  height: isCenter ? "100%" : "74%",
+                  background: cardBg,
+                  borderRadius: isLeft ? "0 14px 14px 0" : isRight ? "14px 0 0 14px" : "14px",
+                  padding: isCenter ? "20px" : "12px",
+                  display: "flex",
+                  flexDirection: "column",
+                  overflow: "hidden",
+                  flexShrink: 0,
+                  transform: isCenter ? "scale(1)" : "scale(0.97)",
+                  boxShadow: isCenter
+                    ? "0 18px 40px -12px rgba(0,0,0,0.25)"
+                    : "0 6px 16px -8px rgba(0,0,0,0.12)",
+                  transition: tr(`height 0.6s ${EASE}, transform 0.6s ${EASE}, border-radius 0.5s ease, padding 0.5s ease, background 0.5s ease, box-shadow 0.5s ease`),
+                }}>
 
+                  {/* Image */}
+                  <div style={{
+                    height: isCenter ? "58vh" : "auto",
+                    flex: isCenter ? "none" : 1,
+                    overflow: "hidden",
+                    borderRadius: "8px",
+                    flexShrink: 0,
+                    transition: tr(`height 0.6s ${EASE}`),
+                  }}>
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block",
+                        filter: isCenter ? "brightness(1)" : "brightness(0.92)",
+                        transform: isCenter ? "scale(1)" : "scale(1.04)",
+                        transition: tr("filter 0.5s ease, transform 0.6s ease"),
+                      }}
+                    />
+                  </div>
+
+                  {/* Text */}
+                  <div style={{
+                    paddingTop: isCenter ? "18px" : "10px",
+                    transition: tr("padding 0.5s ease"),
+                  }}>
+                    <p
+                      className="font-heading font-semibold text-foreground leading-snug"
+                      style={{
+                        fontSize: isCenter ? "1.05rem" : "0.78rem",
+                        transition: tr("font-size 0.5s ease"),
+                        overflow: "hidden",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical" as const,
+                        marginBottom: isCenter ? "8px" : "0",
+                      }}
+                    >
+                      {item.title}
+                    </p>
+                    <div style={{
+                      maxHeight: isCenter ? "72px" : "0px",
+                      opacity: isCenter ? 1 : 0,
+                      transform: isCenter ? "translateY(0)" : "translateY(-6px)",
+                      overflow: "hidden",
+                      transition: tr("max-height 0.5s ease, opacity 0.35s ease, transform 0.45s ease"),
+                    }}>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            );
+          })}
         </div>
-      );
-    })}
-  </div>
 
-</div>
+      </div>
 
-      <div style={{ height: "48px" }} />
+      {/* Button row — a totally separate block beneath the strip.
+          Buttons are pinned at fixed % anchors (matching where the side
+          cards sit at rest) and never participate in any card transition,
+          so they can't shake, drift, or jump no matter what the boxes do. */}
+      <div style={{ position: "relative", height: "44px", marginTop: "-124px" }}>
+        <button
+          onClick={() => advance(-1)}
+          aria-label="Previous"
+          style={{
+            position: "absolute",
+            left: "11.7%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "44px",
+            height: "44px",
+            borderRadius: "50%",
+            border: "2.5px solid hsl(210, 72%, 50%)",
+            background: "hsl(210, 72%, 94%)",
+            cursor: "pointer",
+            color: "hsl(210, 72%, 38%)",
+            opacity: 0.92,
+            boxShadow: "0 6px 16px -6px rgba(0,0,0,0.25)",
+            transition: "opacity 0.2s, background 0.2s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.background = "hsl(210, 72%, 86%)"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "0.92"; e.currentTarget.style.background = "hsl(210, 72%, 94%)"; }}
+        >
+          <ArrowLeft size={22} strokeWidth={2.6} />
+        </button>
+
+        <button
+          onClick={() => advance(1)}
+          aria-label="Next"
+          style={{
+            position: "absolute",
+            right: "11.7%",
+            transform: "translateX(50%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "44px",
+            height: "44px",
+            borderRadius: "50%",
+            border: "2.5px solid hsl(210, 72%, 50%)",
+            background: "hsl(210, 72%, 94%)",
+            cursor: "pointer",
+            color: "hsl(210, 72%, 38%)",
+            opacity: 0.92,
+            boxShadow: "0 6px 16px -6px rgba(0,0,0,0.25)",
+            transition: "opacity 0.2s, background 0.2s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.background = "hsl(210, 72%, 86%)"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "0.92"; e.currentTarget.style.background = "hsl(210, 72%, 94%)"; }}
+        >
+          <ArrowRight size={22} strokeWidth={2.6} />
+        </button>
+      </div>
+
+      <div style={{ height: "100px" }} />
     </SectionWrapper>
   );
 };
