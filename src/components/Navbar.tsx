@@ -215,7 +215,7 @@ const Navbar = () => {
                       <Link
                         key={p.href}
                         to={p.href}
-                        className="flex items-center justify-center px-4 py-3.5 transition-all duration-150"
+                        className="flex items-center justify-between px-4 py-3.5 transition-all duration-150 w-full"
                         style={{
                           color: "hsl(201 78% 20%)",
                           fontFamily: "var(--font-heading)",
@@ -229,7 +229,21 @@ const Navbar = () => {
                           (e.currentTarget as HTMLElement).style.color = "hsl(201 78% 20%)";
                         }}
                       >
-                        {p.label[lang]}
+                        <span>{p.label[lang]}</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          style={{ flexShrink: 0, opacity: 0.5 }}
+                        >
+                          <path d="M9 18l6-6-6-6" />
+                        </svg>
                       </Link>
                     ))}
                   </div>
