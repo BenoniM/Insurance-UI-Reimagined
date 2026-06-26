@@ -1,7 +1,7 @@
 import CTAButton from "./CTAButton";
 
 const CTABanner = () => (
-  <section className="relative py-20 overflow-hidden bg-background">
+  <section className="relative py-20 overflow-hidden bg-white">
     <div className="container mx-auto px-4 lg:px-8 relative z-10">
       <div className="rounded-3xl !p-12 text-center max-w-3xl mx-auto bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)] text-white shadow-2xl relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10" />

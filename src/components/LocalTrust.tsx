@@ -88,7 +88,7 @@ export default function LocalTrust() {
     <div
       ref={sectionRef}
       style={{ height: `${100 + slides.length * 105}vh` }}
-      className="relative"
+      className="relative bg-white"
     >
       {/* ── STICKY VIEWPORT ── */}
       <div

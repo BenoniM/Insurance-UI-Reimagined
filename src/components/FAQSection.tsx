@@ -29,7 +29,7 @@ const faqs = [
 const FAQItem = ({ faq, index, isOpen, onToggle }: { faq: typeof faqs[0]; index: number; isOpen: boolean; onToggle: () => void }) => (
   <ScrollReveal delay={index * 0.05}>
     <div
-      className={`rounded-2xl border overflow-hidden transition-all duration-300 ${
+      className={`rounded-2xl bg-white border overflow-hidden transition-all duration-300 ${
         isOpen
           ? "border-primary/30 bg-gradient-to-br from-[hsl(201,78%,23%)/0.04] to-[hsl(160,55%,45%)/0.04]"
           : "border-border bg-card hover:border-primary/15"
@@ -72,7 +72,7 @@ const FAQSection = () => {
 
   return (
     <SectionWrapper>
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto bg-white">
         <div className="text-center mb-16">
           <ScrollReveal>
             <span className="section-badge mb-6 inline-block">FAQ</span>

@@ -50,7 +50,7 @@ const TiltCard = ({ action }: { action: any }) => {
         transition: isHovered ? 'transform 0.1s ease-out' : 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
         transformStyle: 'preserve-3d'
       }}
-      className="relative rounded-3xl overflow-hidden group h-[300px] md:h-[420px] block w-full shadow-lg hover:shadow-2xl hover:z-10"
+      className="relative rounded-3xl overflow-hidden group h-[300px] md:h-[420px] block w-full shadow-lg hover:shadow-2xl hover:z-10 bg-white"
     >
       <img 
         src={action.image} 

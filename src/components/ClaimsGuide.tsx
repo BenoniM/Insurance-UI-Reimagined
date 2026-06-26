@@ -68,7 +68,7 @@ const ClaimsGuide = () => {
       ];
 
   return (
-    <section className="claims-section">
+    <section className="claims-section bg-white">
 
       {/* ── Main editorial grid ── */}
       <div className="container mx-auto px-4 lg:px-8 py-12 md:py-20">

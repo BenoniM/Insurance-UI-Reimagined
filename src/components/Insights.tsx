@@ -22,7 +22,7 @@ const Insights = () => {
   }, []);
 
   return (
-    <SectionWrapper id="blog">
+    <SectionWrapper id="blog" className="bg-white">
       <div className="text-center mb-16">
         <ScrollReveal>
           <span className="section-badge mb-6 inline-block">INSIGHTS & RESOURCES</span>

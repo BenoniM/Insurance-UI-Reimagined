@@ -678,11 +678,14 @@ html {
 /* ═══════════════════════════════════════════════
    Curtain / Stage Footer Reveal
    ───────────────────────────────────────────────
-   The curtain (main content) is relative z-1 and
-   has margin-bottom equal to the footer height.
-   The stage (footer) is fixed bottom-0 z-0.
-   As you scroll down past the curtain, you see the
-   stage behind it.
+   Footer-reveal: the content (curtain) scrolls
+   over the footer (stage), which sticks to the
+   bottom of the viewport.
+
+   Using sticky (not fixed) keeps the footer in
+   normal document flow so it cannot bleed through
+   transparent sections or GSAP-animated elements
+   that create new stacking contexts.
 ═══════════════════════════════════════════════ */
 
 .fr-root {
@@ -693,15 +696,15 @@ html {
   position: relative;
   z-index: 1;
   background: hsl(var(--background));
-  margin-bottom: var(--footer-h, 500px);
-  /* Drop shadow to make the curtain look elevated */
+  /* Seal the stacking context so children with transforms/opacity
+     (GSAP ScrollReveal, ValueProps card stack, etc.) stay contained */
+  isolation: isolate;
+  /* Drop shadow to make the curtain look elevated above the footer */
   box-shadow: 0 20px 60px 0 rgba(0, 0, 0, 0.25);
 }
 
 .fr-stage {
-  position: fixed;
+  position: sticky;
   bottom: 0;
-  left: 0;
-  width: 100%;
   z-index: 0;
 }

@@ -56,7 +56,7 @@ const ProductPage = () => {
     return (
       <div className="min-h-screen">
         <Navbar />
-        <section className="pt-28 pb-16">
+        <section className="pt-28 pb-16 bg-white">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl space-y-4">
             <Skeleton className="h-14 w-14 rounded-xl" />
             <Skeleton className="h-12 w-3/4" />

@@ -44,7 +44,7 @@ const ProcessSteps = () => {
       Vertical spacing reduced: small top gap (pt-6) since
       ValueProps already gives bottom breathing room.
     */
-    <section className="pt-6 pb-20 overflow-hidden">
+    <section className="pt-6 pb-20 overflow-hidden bg-white">
       <div className="flex flex-col lg:flex-row w-full">
 
         {/* ── LEFT column ── */}

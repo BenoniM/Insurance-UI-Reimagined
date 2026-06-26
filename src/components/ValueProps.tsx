@@ -125,7 +125,7 @@ const ValueProps = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative"
+      className="relative bg-white"
       // Extra height = header dwell (1 screen) + one screen per card
       style={{ height: `${100 + 20 + values.length * 100}vh` }}
     >
