@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Heart, Car, Home, Briefcase, Plane, Shield, CheckCircle, XCircle, Calculator, Info, Star, Clock, Users, Phone, ArrowRight, ArrowLeft } from "lucide-react";
+import {
+  Heart, Car, Home, Briefcase, Plane, Shield,
+  CheckCircle, XCircle, Star, Clock, Users, Phone,
+  ArrowRight, ArrowLeft,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/i18n/LanguageContext";
 import Navbar from "@/components/Navbar";
@@ -13,7 +17,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { trackProductView } from "@/components/AnalyticsProvider";
 import heroProducts from "@/assets/hero-products.jpg";
 import heroProducts2 from "@/assets/hero-products-2.jpg";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import NoSmoking from "@/assets/Pricing/No-Smoking--Streamline-Milano.png";
+import Coverage from "@/assets/Pricing/Stack-Of-Money-2--Streamline-Milano.png";
+import Term from "@/assets/Pricing/Work-Deadline-2--Streamline-Milano.png";
 
 const iconMap: Record<string, typeof Heart> = { Heart, Car, Home, Briefcase, Plane, Shield };
 
@@ -44,19 +50,257 @@ const whyChooseUs = [
   },
 ];
 
+// ─── Marquee Testimonials Data ────────────────────────────────────────────────
+
 const testimonials = [
-  { name: "Abebe Kebede", role: "Business Owner", quote: "WASS made filing my motor insurance claim effortless. The settlement was fast and the team was incredibly supportive throughout.", rating: 5 },
-  { name: "Sara Tadesse", role: "Family Policyholder", quote: "We've trusted WASS with our family's health and life insurance for over 5 years. Their coverage and service are unmatched in Addis.", rating: 5 },
-  { name: "Daniel Mekonnen", role: "Fleet Manager", quote: "Managing insurance for our 40+ vehicle fleet is seamless with WASS. Their commercial motor package saves us both time and money.", rating: 5 },
+  {
+    quote: {
+      en: "WASS made filing my motor insurance claim effortless. The settlement was fast and the team was incredibly supportive throughout.",
+      am: "የመኪና ጥያቄዬን ቀላል አደረጉት። ክፍያው ፈጣን ነበር።",
+    },
+    name: "Abebe Kebede",
+    handle: "@abebe_kebede",
+    initials: "AK",
+    color: "hsl(201 78% 23%)",
+  },
+  {
+    quote: {
+      en: "We've trusted WASS with our family's health and life insurance for over 5 years. Their coverage and service are unmatched in Addis.",
+      am: "ከ5 ዓመት በላይ ዋስን እናምናለን። አገልግሎታቸው አቻ የለውም።",
+    },
+    name: "Sara Tadesse",
+    handle: "@sara_tadesse",
+    initials: "ST",
+    color: "hsl(160 55% 45%)",
+  },
+  {
+    quote: {
+      en: "Managing insurance for our 40+ vehicle fleet is seamless with WASS. Their commercial motor package saves us both time and money.",
+      am: "40+ ተሽከርካሪዎቻችን ኢንሹራንስ ቀላል ሆኗል። ጊዜና ገንዘብ ቆጥበናል።",
+    },
+    name: "Daniel Mekonnen",
+    handle: "@daniel_mek",
+    initials: "DM",
+    color: "hsl(205 65% 48%)",
+  },
+  {
+    quote: {
+      en: "Filed my motor claim from my phone at 8am. Money in my account by lunch. I genuinely couldn't believe it.",
+      am: "የመኪና ጥያቄዬን በስልኬ አቀረብኩ። በምሳ ሰዓት ገንዘቡ መጣ።",
+    },
+    name: "Meron Alemu",
+    handle: "@meron_a",
+    initials: "MA",
+    color: "hsl(201 78% 35%)",
+  },
+  {
+    quote: {
+      en: "Finally — an insurance company that talks like a human. No fine print games. WASS just gets it.",
+      am: "በመጨረሻ እንደ ሰው የሚናገር የኢንሹራንስ ድርጅት።",
+    },
+    name: "Yohannes Girma",
+    handle: "@yohannes_g",
+    initials: "YG",
+    color: "hsl(160 60% 35%)",
+  },
 ];
+
+// ─── Testimonial Card ─────────────────────────────────────────────────────────
+
+const TestimonialCard = ({
+  tm,
+  lang,
+}: {
+  tm: (typeof testimonials)[number];
+  lang: "en" | "am";
+}) => (
+  <div className="w-72 md:w-80 shrink-0 flex flex-col rounded-2xl bg-white border border-[hsl(200,10%,92%)] p-6 shadow-sm select-none">
+    <div className="flex items-center gap-3 mb-4">
+      <div
+        className="w-11 h-11 rounded-full flex items-center justify-center font-heading font-bold text-white text-sm shrink-0"
+        style={{ background: tm.color }}
+      >
+        {tm.initials}
+      </div>
+      <div>
+        <p className="font-heading font-bold text-[hsl(201,78%,23%)] text-sm leading-tight">{tm.name}</p>
+        <p className="text-xs text-muted-foreground leading-tight mt-0.5">{tm.handle}</p>
+      </div>
+    </div>
+    <p className="text-[hsl(200,10%,35%)] text-sm leading-relaxed flex-1">
+      {tm.quote[lang as "en" | "am"] ?? tm.quote.en}
+    </p>
+    <div className="flex gap-0.5 mt-4">
+      {[...Array(5)].map((_, j) => (
+        <svg key={j} viewBox="0 0 20 20" className="w-3.5 h-3.5">
+          <polygon
+            points="10,1.5 12.2,7.2 18.5,7.6 13.9,11.6 15.5,17.8 10,14.4 4.5,17.8 6.1,11.6 1.5,7.6 7.8,7.2"
+            fill="hsl(160 55% 45%)"
+            stroke="hsl(160 55% 45%)"
+            strokeWidth="1"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ))}
+    </div>
+  </div>
+);
+
+// ─── Marquee Testimonials Section ─────────────────────────────────────────────
+
+const TestimonialsMarquee = ({ lang }: { lang: string }) => (
+  <SectionWrapper className="bg-accent/30 !pb-0 overflow-hidden">
+    <ScrollReveal>
+      <div className="text-center mb-12">
+        <span className="section-badge mb-4 inline-block">TESTIMONIALS</span>
+        <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
+          What Our <span className="text-primary">Clients Say</span>
+        </h2>
+        <p className="mt-4 text-muted-foreground max-w-md mx-auto text-base leading-relaxed">
+          Hear from real policyholders about their experience with WASS Insurance.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    {/* Marquee track — full bleed */}
+    <div className="relative w-full overflow-hidden pb-16">
+      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-r from-[hsl(var(--background))] to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-l from-[hsl(var(--background))] to-transparent" />
+      <div className="testimonials-track gap-4 py-2 px-2">
+        {[...testimonials, ...testimonials].map((tm, i) => (
+          <TestimonialCard key={i} tm={tm} lang={lang as "en" | "am"} />
+        ))}
+      </div>
+    </div>
+  </SectionWrapper>
+);
+
+// ─── SVG Illustrations ────────────────────────────────────────────────────────
+
+const CoverageAmountImg = () => (
+  <img src={Coverage} alt="Coverage amount" width={72} height={72} style={{ objectFit: "contain" }} />
+);
+
+const TermYearsImg = () => (
+  <img src={Term} alt="Term years" width={72} height={72} style={{ objectFit: "contain" }} />
+);
+
+const SmokerImg = () => (
+  <img src={NoSmoking} alt="Smoker status" width={72} height={72} style={{ objectFit: "contain" }} />
+);
+
+// ─── Pricing Factors Data ─────────────────────────────────────────────────────
+
+const pricingFactors = [
+  {
+    id: "coverage",
+    Illustration: CoverageAmountImg,
+    headline: (
+      <>
+        Based on how much<br />you want covered
+      </>
+    ),
+    description:
+      "Higher coverage amounts mean a larger payout for your beneficiaries — and a slightly higher premium to match.",
+  },
+  {
+    id: "term",
+    Illustration: TermYearsImg,
+    headline: (
+      <>
+        Based on how long<br />you need protection
+      </>
+    ),
+    description:
+      "Longer terms lock in your rate for more years. Shorter terms cost less upfront but may need renewal sooner.",
+  },
+  {
+    id: "smoker",
+    Illustration: SmokerImg,
+    headline: (
+      <>
+        Based on whether<br />you smoke
+      </>
+    ),
+    description:
+      "Smokers carry higher health risk, which affects your premium. Quitting for 12+ months can qualify you for non-smoker rates.",
+  },
+];
+
+// ─── Pricing Section ──────────────────────────────────────────────────────────
+
+const PricingSection = ({ pricingRules, t }: { pricingRules: any; t: (key: string) => string }) => (
+  <SectionWrapper>
+    <div className="text-center mb-4">
+      <span className="section-badge mb-4 inline-block">PRICING</span>
+      <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4 capitalize">
+        How your{" "}
+        <span className="text-primary">premium</span>{" "}
+        is calculated
+      </h2>
+      <p className="text-muted-foreground mt-4 max-w-md mx-auto text-base leading-relaxed">
+        A few key details shape your quote — here's exactly what we look at.
+      </p>
+    </div>
+
+    <div
+      className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0 max-w-4xl mx-auto mt-14"
+      style={{ borderTop: "1px solid #e5e5e5" }}
+    >
+      {pricingFactors.map(({ id, Illustration, headline, description }, i) => (
+        <div
+          key={id}
+          className="flex flex-col items-center text-center px-10 py-12"
+          style={{
+            borderRight: i < pricingFactors.length - 1 ? "1px solid #e5e5e5" : "none",
+            borderBottom: "1px solid #e5e5e5",
+          }}
+        >
+          <div
+            className="flex items-center justify-center rounded-full mb-8"
+            style={{ width: "112px", height: "112px", background: "#f4f4f4" }}
+          >
+            <Illustration />
+          </div>
+          <h3
+            className="font-heading font-bold text-foreground mb-3 capitalize"
+            style={{ fontSize: "1.1rem" }}
+          >
+            {headline}
+          </h3>
+          <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+        </div>
+      ))}
+    </div>
+
+    {pricingRules?.base_rate && (
+      <div className="flex flex-col items-center gap-4 mt-10">
+        <p className="text-center text-sm text-muted-foreground">
+          Premiums start from{" "}
+          <span className="font-semibold text-foreground">
+            ETB {pricingRules.base_rate.toLocaleString()}
+          </span>{" "}
+          per year.
+        </p>
+        <a
+          href="/quote"
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          style={{ background: "hsl(152, 48%, 38%)" }}
+        >
+          Get Your Exact Quote
+          <ArrowRight size={15} strokeWidth={2.5} />
+        </a>
+      </div>
+    )}
+  </SectionWrapper>
+);
+
+// ─── Focal Spotlight Carousel ─────────────────────────────────────────────────
 
 const TOTAL = whyChooseUs.length;
 const CLONED = [...whyChooseUs, ...whyChooseUs, ...whyChooseUs];
-
-// Fixed strip height = center image (58vh) + card padding top+bottom (40px) + title (~28px) + desc (~60px) + gaps (~18px)
 const STRIP_HEIGHT = "calc(58vh + 146px)";
 
-// ─── Focal Spotlight Carousel ─────────────────────────────────────────────
 const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
   const [activeIndex, setActiveIndex] = useState(TOTAL);
   const [animated, setAnimated] = useState(true);
@@ -108,12 +352,10 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
     return "hidden";
   };
 
-  // Slight overshoot on the curve = a livelier, less mechanical resize
   const EASE = "cubic-bezier(0.33, 1.4, 0.45, 1)";
 
   return (
     <SectionWrapper className="overflow-hidden !px-0 !pb-0">
-
       <ScrollReveal>
         <div className="text-center mb-12 px-6 lg:px-16">
           <span className="section-badge mb-4 inline-block">KEY BENEFITS</span>
@@ -123,22 +365,8 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
         </div>
       </ScrollReveal>
 
-      {/* Card strip — fixed height, completely separate from the button row below */}
-      <div style={{
-        display: "flex",
-        alignItems: "stretch",
-        width: "100%",
-        height: STRIP_HEIGHT,
-        overflow: "hidden",
-      }}>
-
-        <div style={{
-          display: "flex",
-          alignItems: "stretch",
-          flex: 1,
-          overflow: "hidden",
-          gap: "10px",
-        }}>
+      <div style={{ display: "flex", alignItems: "stretch", width: "100%", height: STRIP_HEIGHT, overflow: "hidden" }}>
+        <div style={{ display: "flex", alignItems: "stretch", flex: 1, overflow: "hidden", gap: "10px" }}>
           {CLONED.map((item, i) => {
             const role     = getRole(i);
             const isCenter = role === "center";
@@ -146,10 +374,7 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
             const isRight  = role === "right";
             const isVis    = role !== "hidden";
             const tr       = (p: string) => animated ? p : "none";
-
-            const cardBg = isCenter
-              ? "hsl(152, 48%, 78%)"
-              : "hsl(152, 38%, 88%)";
+            const cardBg   = isCenter ? "hsl(152, 48%, 78%)" : "hsl(152, 38%, 88%)";
 
             return (
               <div
@@ -165,10 +390,9 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  justifyContent: "flex-start", // top-align everything, center and sides alike
+                  justifyContent: "flex-start",
                 }}
               >
-                {/* Card mat only — no button inside here anymore */}
                 <div style={{
                   width: "100%",
                   height: isCenter ? "100%" : "74%",
@@ -185,8 +409,6 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
                     : "0 6px 16px -8px rgba(0,0,0,0.12)",
                   transition: tr(`height 0.6s ${EASE}, transform 0.6s ${EASE}, border-radius 0.5s ease, padding 0.5s ease, background 0.5s ease, box-shadow 0.5s ease`),
                 }}>
-
-                  {/* Image */}
                   <div style={{
                     height: isCenter ? "58vh" : "auto",
                     flex: isCenter ? "none" : 1,
@@ -210,11 +432,7 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
                     />
                   </div>
 
-                  {/* Text */}
-                  <div style={{
-                    paddingTop: isCenter ? "18px" : "10px",
-                    transition: tr("padding 0.5s ease"),
-                  }}>
+                  <div style={{ paddingTop: isCenter ? "18px" : "10px", transition: tr("padding 0.5s ease") }}>
                     <p
                       className="font-heading font-semibold text-foreground leading-snug"
                       style={{
@@ -239,19 +457,13 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
                       <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
                     </div>
                   </div>
-
                 </div>
               </div>
             );
           })}
         </div>
-
       </div>
 
-      {/* Button row — a totally separate block beneath the strip.
-          Buttons are pinned at fixed % anchors (matching where the side
-          cards sit at rest) and never participate in any card transition,
-          so they can't shake, drift, or jump no matter what the boxes do. */}
       <div style={{ position: "relative", height: "44px", marginTop: "-124px" }}>
         <button
           onClick={() => advance(-1)}
@@ -313,7 +525,162 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
   );
 };
 
-// ──────────────────────────────────────────────────────────────────────────────
+// ─── Coverage & Exclusions ────────────────────────────────────────────────────
+
+const CoverageAndExclusions = ({
+  coverageList,
+  exclusions,
+  t,
+}: {
+  coverageList: string[];
+  exclusions: string[];
+  t: (key: string) => string;
+}) => {
+  const CoverageCard = () => {
+    const [hovered, setHovered] = useState(false);
+    return (
+      <ScrollReveal animation="fadeLeft">
+        <div
+          className="relative w-full h-56 md:h-72 rounded-2xl overflow-hidden cursor-pointer"
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          <img
+            src="https://images.unsplash.com/photo-1637763723578-79a4ca9225f7?q=80&w=1171&auto=format&fit=crop"
+            alt="Coverage"
+            className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
+            style={{ filter: hovered ? "brightness(0.25)" : "brightness(0.75)" }}
+          />
+
+          <div
+            className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
+            style={{ opacity: hovered ? 0 : 1, pointerEvents: hovered ? "none" : "auto" }}
+          >
+            <div
+              className="flex items-center gap-2 px-6 py-3 rounded-full"
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                backdropFilter: "blur(14px)",
+                border: "1.5px solid rgba(255,255,255,0.35)",
+              }}
+            >
+              <CheckCircle className="w-4 h-4 text-white" />
+              <span className="font-heading font-semibold text-white text-sm tracking-wide">
+                {t("products.coverage") || "What's Covered"}
+              </span>
+            </div>
+          </div>
+
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center px-6 py-4 transition-opacity duration-500"
+            style={{ opacity: hovered ? 1 : 0, pointerEvents: hovered ? "auto" : "none" }}
+          >
+            <div className="flex flex-col items-center max-w-xs w-full">
+              <div className="flex items-center gap-2 mb-3">
+                <CheckCircle className="w-5 h-5 text-white" />
+                <h2 className="font-heading text-base md:text-lg font-bold text-white">
+                  {t("products.coverage") || "What's Covered"}
+                </h2>
+              </div>
+              <div className="w-full relative left-20 space-y-2 overflow-y-auto max-h-36 md:max-h-40 pr-1">
+                {coverageList.map((item) => (
+                  <div key={item} className="flex items-start gap-3 justify-start">
+                    <CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-white" />
+                    <span className="text-xs md:text-sm text-white leading-relaxed text-left">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </ScrollReveal>
+    );
+  };
+
+const ExclusionsCard = () => {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <ScrollReveal animation="fadeRight" delay={0.1}>
+      <div
+        className="relative w-full h-56 md:h-72 rounded-2xl overflow-hidden cursor-pointer"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <img
+          src="https://images.pexels.com/photos/8297426/pexels-photo-8297426.jpeg"
+          alt="Exclusions"
+          className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
+          style={{
+            filter: hovered ? "brightness(0.25)" : "brightness(0.75)",
+          }}
+        />
+
+        {/* Default State */}
+        <div
+          className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
+          style={{
+            opacity: hovered ? 0 : 1,
+            pointerEvents: hovered ? "none" : "auto",
+          }}
+        >
+          <div
+            className="flex items-center gap-2 px-6 py-3 rounded-full"
+            style={{
+              background: "rgba(255,255,255,0.15)",
+              backdropFilter: "blur(14px)",
+              border: "1.5px solid rgba(255,255,255,0.35)",
+            }}
+          >
+            <XCircle className="w-4 h-4 text-white" />
+            <span className="font-heading font-semibold text-white text-sm tracking-wide">
+              {t("products.exclusions") || "Exclusions"}
+            </span>
+          </div>
+        </div>
+
+        {/* Hover State */}
+        <div
+  className="absolute inset-0 flex items-center justify-center px-6 py-4 transition-opacity duration-500"
+  style={{
+    opacity: hovered ? 1 : 0,
+    pointerEvents: hovered ? "auto" : "none",
+  }}
+>
+  <div className="w-full max-w-xs">
+    <div className="flex items-center gap-2 mb-3">
+      <XCircle className="w-5 h-5 text-white shrink-0" />
+      <h2 className="font-heading text-base md:text-lg font-bold text-white">
+        {t("products.exclusions") || "Exclusions"}
+      </h2>
+    </div>
+
+    <div className="space-y-2 overflow-y-auto max-h-36 md:max-h-40">
+      {exclusions.map((item) => (
+        <div key={item} className="flex items-start gap-3">
+          <XCircle className="w-4 h-4 mt-0.5 shrink-0 text-white" />
+          <span className="text-xs md:text-sm leading-relaxed text-white">
+            {item}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+      </div>
+    </ScrollReveal>
+  );
+};
+
+  return (
+    <div className="grid md:grid-cols-2 gap-6 md:gap-8 w-full">
+      <CoverageCard />
+      <ExclusionsCard />
+    </div>
+  );
+};
+
+// ─── Main Page ────────────────────────────────────────────────────────────────
 
 const ProductPage = () => {
   const { slug } = useParams();
@@ -368,12 +735,11 @@ const ProductPage = () => {
     );
   }
 
-  const Icon = iconMap[product.icon] || Shield;
   const name = lang === "am" && product.name_am ? product.name_am : product.name;
   const description = lang === "am" && product.full_description_am ? product.full_description_am : product.full_description;
   const coverageList: string[] = Array.isArray(product.coverage_list) ? product.coverage_list : [];
-  const exclusions: string[] = Array.isArray(product.exclusions) ? product.exclusions : [];
-  const pricingRules = product.pricing_rules || {};
+  const exclusions: string[]   = Array.isArray(product.exclusions)    ? product.exclusions    : [];
+  const pricingRules           = product.pricing_rules || {};
 
   return (
     <div className="min-h-screen">
@@ -396,120 +762,27 @@ const ProductPage = () => {
       <KeyBenefitsSpotlight name={name} />
 
       {/* Coverage & Exclusions */}
-      <SectionWrapper className="bg-accent/30">
-        <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-          <ScrollReveal animation="fadeLeft">
-            <div className="qupe-card h-full">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <CheckCircle className="w-5 h-5 text-primary" />
-                </div>
-                <h2 className="font-heading text-2xl font-bold text-foreground">{t("products.coverage") || "What's Covered"}</h2>
-              </div>
-              <ul className="space-y-3">
-                {coverageList.map((item: string, i: number) => (
-                  <li key={item} className="flex items-start gap-3 group animate-in fade-in slide-in-from-left-4 duration-500" style={{ animationDelay: `${i * 60}ms`, animationFillMode: "backwards" }}>
-                    <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
-                    <span className="text-foreground/80">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal animation="fadeRight" delay={0.1}>
-            <div className="qupe-card h-full">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center">
-                  <XCircle className="w-5 h-5 text-destructive" />
-                </div>
-                <h2 className="font-heading text-2xl font-bold text-foreground">{t("products.exclusions") || "Exclusions"}</h2>
-              </div>
-              <ul className="space-y-3">
-                {exclusions.map((item: string, i: number) => (
-                  <li key={item} className="flex items-start gap-3 animate-in fade-in slide-in-from-right-4 duration-500" style={{ animationDelay: `${150 + i * 60}ms`, animationFillMode: "backwards" }}>
-                    <XCircle className="w-5 h-5 text-destructive/70 mt-0.5 shrink-0" />
-                    <span className="text-foreground/60">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </ScrollReveal>
-        </div>
-      </SectionWrapper>
-
-      {/* Pricing Explanation */}
-      {pricingRules.base_rate && (
-        <SectionWrapper>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto">
-              <div className="flex items-center gap-3 mb-8 justify-center">
-                <Calculator className="w-7 h-7 text-primary" />
-                <h2 className="font-heading text-3xl font-bold text-foreground">{t("products.pricingTitle") || "How Pricing Works"}</h2>
-              </div>
-              <div className="qupe-card space-y-6">
-                <div className="flex items-start gap-4 p-4 bg-primary/5 rounded-xl border border-primary/10">
-                  <Info className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                  <div>
-                    <p className="font-heading font-semibold text-foreground mb-1">{t("products.pricingBase") || "Base Rate"}</p>
-                    <p className="text-muted-foreground text-sm">Starting from <span className="font-bold text-primary">ETB {pricingRules.base_rate?.toLocaleString()}</span> per year</p>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-heading font-semibold text-foreground mb-3">{t("products.pricingFactors") || "Factors that affect your premium:"}</h3>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {pricingRules.fields?.map((field: string) => (
-                      <div key={field} className="flex items-center gap-3 p-3 bg-accent/50 rounded-xl border border-border animate-in zoom-in-95 duration-500">
-                        <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
-                        <span className="text-sm text-foreground capitalize">{field.replace(/_/g, " ")}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <p className="text-xs text-muted-foreground text-center pt-2 border-t border-border">
-                  {t("products.pricingDisclaimer") || "Final premium is calculated based on your specific details. Get an instant quote for your exact price."}
-                </p>
-              </div>
-            </div>
-          </ScrollReveal>
-        </SectionWrapper>
-      )}
-
-      {/* Customer Testimonials Carousel */}
-      <SectionWrapper className="bg-accent/30">
+      <SectionWrapper>
         <ScrollReveal>
           <div className="text-center mb-12">
-            <span className="section-badge mb-4 inline-block">TESTIMONIALS</span>
+            <span className="section-badge mb-4 inline-block">COVERAGE DETAILS</span>
             <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
-              What Our <span className="text-primary">Clients Say</span>
+              What's <span className="text-primary">Included & Excluded</span>
             </h2>
           </div>
         </ScrollReveal>
-        <div className="max-w-4xl mx-auto">
-          <Carousel opts={{ align: "start", loop: true }} className="w-full">
-            <CarouselContent>
-              {testimonials.map((item) => (
-                <CarouselItem key={item.name} className="md:basis-1/2">
-                  <div className="qupe-card h-full transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex gap-1 mb-4">
-                      {[...Array(item.rating)].map((_, j) => (
-                        <Star key={j} className="w-4 h-4 fill-primary text-primary" />
-                      ))}
-                    </div>
-                    <p className="text-foreground/80 italic mb-6 leading-relaxed">"{item.quote}"</p>
-                    <div>
-                      <p className="font-heading font-semibold text-foreground">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">{item.role}</p>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
-          </Carousel>
+        <div className="max-w-6xl mx-auto">
+          <CoverageAndExclusions coverageList={coverageList} exclusions={exclusions} t={t} />
         </div>
       </SectionWrapper>
+
+      {/* Pricing Section */}
+      {pricingRules.base_rate && (
+        <PricingSection pricingRules={pricingRules} t={t} />
+      )}
+
+      {/* Testimonials — marquee design */}
+      <TestimonialsMarquee lang={lang} />
 
       {/* CTA */}
       <section className="relative py-20 overflow-hidden">
