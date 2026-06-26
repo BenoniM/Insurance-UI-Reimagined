@@ -5,10 +5,10 @@ import { supabase } from "@/integrations/supabase/client";
 import SectionWrapper from "./SectionWrapper";
 import ScrollReveal from "./ScrollReveal";
 
-import imgHospital from "@/assets/Coverage/Hospital-Clinic-1--Streamline-Milano.png";
-import imgLife from "@/assets/Coverage/Life-Coverage.png";
-import imgNetWorth from "@/assets/Coverage/Net-Worth--Streamline-Milano.png";
-import imgCar from "@/assets/Coverage/Speed-Go-Fast-4--Streamline-Milano.png";
+import imgHospital from "@/assets/Coverage/Hospital-Clinic-1--Streamline-Milano-01.svg";
+import imgLife from "@/assets/Coverage/Life-Coverage-01.svg";
+import imgNetWorth from "@/assets/Coverage/Net-Worth--Streamline-Milano-01.svg";
+import imgCar from "@/assets/Coverage/Speed-Go-Fast-4--Streamline-Milano-01.svg";
 
 const imageMap: Record<string, string> = {
   Heart: imgLife,
