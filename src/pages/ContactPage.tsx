@@ -1,12 +1,11 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactBlock from "@/components/ContactBlock";
-import PageHero from "@/components/PageHero";
+import ExpandingHero from "@/components/ExpandingHero";
 import SectionWrapper from "@/components/SectionWrapper";
 import ScrollReveal from "@/components/ScrollReveal";
 import { MapPin, Clock, Shield, Phone } from "lucide-react";
-import heroContact from "@/assets/hero-contact.jpg";
-import heroContact2 from "@/assets/hero-contact-2.jpg";
+
 
 const branches = [
   { city: "Addis Ababa (Head Office)", address: "Bole Road, Friendship Building, 4th Floor", phone: "+251 11 123 4567" },
@@ -20,11 +19,18 @@ const branches = [
 const ContactPage = () => (
   <div className="min-h-screen">
     <Navbar />
-    <PageHero
-      images={[heroContact, heroContact2]}
-      badge="CONTACT"
-      title={<>Get in <span className="text-primary">Touch</span></>}
-      subtitle="We're here to help. Reach out to our team for any questions about coverage, claims, or partnership opportunities. Our agents are available 24/7."
+    <ExpandingHero
+      images={[
+        "https://images.pexels.com/photos/5386491/pexels-photo-5386491.jpeg",
+        "https://images.pexels.com/photos/8204351/pexels-photo-8204351.jpeg",
+        "https://images.pexels.com/photos/8204325/pexels-photo-8204325.jpeg",
+        "https://images.pexels.com/photos/33507830/pexels-photo-33507830.jpeg",
+      ]}
+      badge="CONTACT US"
+      headline={'Let\'s <span class="text-primary">Talk</span>'}
+      subtitle="Our team is available 24/7 to answer questions, assist with claims, or help you find the right plan."
+      ctaLabel="Reach Out"
+      ctaHref="/contact"
     />
 
     {/* Branch Network */}

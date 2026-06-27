@@ -58,10 +58,10 @@ const ProductGrid = () => {
             <ScrollReveal key={product.slug} animation="fadeUp" delay={i * 0.08}>
               <Link to={`/products/${product.slug}`} className="group block h-full">
                 <div className={`${[
-                  "bg-teal-500/10 hover:bg-teal-500/20",
-                  "bg-cyan-500/10 hover:bg-cyan-500/20",
-                  "bg-emerald-500/10 hover:bg-emerald-500/20",
                   "bg-sky-500/10 hover:bg-sky-500/20",
+                  "bg-emerald-500/10 hover:bg-emerald-500/20",
+                  "bg-blue-500/10 hover:bg-blue-500/20",
+                  "bg-teal-500/10 hover:bg-teal-500/20",
                 ][i % 4]} rounded-[24px] p-6 md:p-12 flex flex-col items-center text-center shadow-sm hover:shadow-2xl transition-all duration-400 h-full`}>
                   
                   {/* Image */}
@@ -70,6 +70,14 @@ const ProductGrid = () => {
                       src={imgSrc} 
                       alt={name} 
                       className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500 ease-out" 
+                      style={{
+                        filter: [
+                          "invert(53%) sepia(48%) saturate(3020%) hue-rotate(167deg) brightness(98%) contrast(92%)", // bluish (sky-500)
+                          "invert(58%) sepia(58%) saturate(452%) hue-rotate(113deg) brightness(97%) contrast(92%)", // greenish (emerald-500)
+                          "invert(41%) sepia(74%) saturate(3821%) hue-rotate(207deg) brightness(101%) contrast(98%)", // bluish (blue-500)
+                          "invert(56%) sepia(87%) saturate(389%) hue-rotate(124deg) brightness(94%) contrast(92%)", // greenish (teal-500)
+                        ][i % 4]
+                      }}
                     />
                   </div>
                   

@@ -62,9 +62,9 @@ const Navbar = () => {
 
   const navLinks = [
     { label: t("nav.products"), href: "/products", hasDropdown: true },
+    { label: t("nav.about"), href: "/about" },
     { label: t("nav.claims"), href: "/claims" },
     { label: lang === "am" ? "ጊቨባክ" : "Giveback", href: "/giveback" },
-    { label: t("nav.about"), href: "/about" },
     { label: t("nav.contact"), href: "/contact" },
   ];
 

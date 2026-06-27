@@ -20,6 +20,31 @@ import heroProducts2 from "@/assets/hero-products-2.jpg";
 import NoSmoking from "@/assets/Pricing/No-Smoking--Streamline-Milano.png";
 import Coverage from "@/assets/Pricing/Stack-Of-Money-2--Streamline-Milano.png";
 import Term from "@/assets/Pricing/Work-Deadline-2--Streamline-Milano.png";
+import imgHospital from "@/assets/Coverage/Hospital-Clinic-1--Streamline-Milano-01.svg";
+import imgLife from "@/assets/Coverage/Life-Coverage-01.svg";
+import imgNetWorth from "@/assets/Coverage/Net-Worth--Streamline-Milano-01.svg";
+import imgCar from "@/assets/Coverage/Speed-Go-Fast-4--Streamline-Milano-01.svg";
+
+const productImagesMap: Record<string, string> = {
+  Heart: imgLife,
+  Car: imgCar,
+  Home: imgNetWorth,
+  Shield: imgHospital,
+};
+
+const productColorMap: Record<string, string> = {
+  Heart: "bg-sky-500/10",
+  Car: "bg-emerald-500/10",
+  Home: "bg-blue-500/10",
+  Shield: "bg-teal-500/10",
+};
+
+const productFilterMap: Record<string, string> = {
+  Heart: "invert(53%) sepia(48%) saturate(3020%) hue-rotate(167deg) brightness(98%) contrast(92%)",
+  Car: "invert(58%) sepia(58%) saturate(452%) hue-rotate(113deg) brightness(97%) contrast(92%)",
+  Home: "invert(41%) sepia(74%) saturate(3821%) hue-rotate(207deg) brightness(101%) contrast(98%)",
+  Shield: "invert(56%) sepia(87%) saturate(389%) hue-rotate(124deg) brightness(94%) contrast(92%)",
+};
 
 const iconMap: Record<string, typeof Heart> = { Heart, Car, Home, Briefcase, Plane, Shield };
 
@@ -745,19 +770,42 @@ const ProductPage = () => {
     <div className="min-h-screen">
       <Navbar />
 
-      <PageHero
-        images={[heroProducts, heroProducts2]}
-        badge={product.slug.replace(/-/g, " ").toUpperCase()}
-        title={<>{name}</>}
-        subtitle={description || "Comprehensive coverage tailored to your needs."}
-      >
-        <div className="flex flex-wrap gap-4">
-          <CTAButton href="/quote" variant="primary" size="lg">{t("hero.getQuote")}</CTAButton>
-          <CTAButton href="/contact" variant="outline" size="lg" className="!border-white/30 !text-white hover:!bg-white/10">
-            {t("contact.title") || "Talk to an Agent"}
-          </CTAButton>
+      <section className="relative pt-32 pb-20 bg-white overflow-hidden">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+            {/* Left side: Text */}
+            <div className="w-full lg:w-1/2 flex flex-col items-start text-left z-10">
+              <span className="section-badge mb-6 inline-block">
+                {product.slug.replace(/-/g, " ").toUpperCase()}
+              </span>
+              <h1 className="font-hero text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] text-gray-800 font-medium tracking-wide capitalize">
+                {name}
+              </h1>
+              <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-xl leading-relaxed">
+                {description || "Comprehensive coverage tailored to your needs."}
+              </p>
+              <div className="flex flex-wrap gap-4 mt-10">
+                <CTAButton href="/quote" variant="primary" size="lg" className="bg-primary text-white hover:bg-primary/90">
+                  {t("hero.getQuote")}
+                </CTAButton>
+                <CTAButton href="/contact" variant="outline" size="lg" className="border border-gray-200 bg-white text-gray-800 hover:bg-gray-50">
+                  {t("contact.title") || "Talk to an Agent"}
+                </CTAButton>
+              </div>
+            </div>
+            
+            {/* Right side: Image/Icon */}
+            <div className="w-full lg:w-1/2 flex justify-center lg:justify-end z-10">
+              <img 
+                src={productImagesMap[product.icon] || imgHospital} 
+                alt={name} 
+                className="w-full max-w-md aspect-square object-contain hover:scale-110 transition-transform duration-500 ease-out"
+                style={{ filter: productFilterMap[product.icon] || "invert(53%) sepia(48%) saturate(3020%) hue-rotate(167deg) brightness(98%) contrast(92%)" }}
+              />
+            </div>
+          </div>
         </div>
-      </PageHero>
+      </section>
 
       <KeyBenefitsSpotlight name={name} />
 
@@ -784,26 +832,7 @@ const ProductPage = () => {
       {/* Testimonials — marquee design */}
       <TestimonialsMarquee lang={lang} />
 
-      {/* CTA */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(201,78%,16%)]" />
-        <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
-          <ScrollReveal animation="scaleUp">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
-              {t("products.ctaTitle") || "Ready to Get Protected?"}
-            </h2>
-            <p className="text-white/60 mb-8 max-w-lg mx-auto">
-              Get a personalized quote for {name.toLowerCase()} in minutes. Our agents are standing by to help you find the perfect coverage.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <CTAButton href="/quote" variant="primary" size="lg">{t("hero.getQuote")}</CTAButton>
-              <CTAButton href="/contact" variant="outline" size="lg" className="!border-white/30 !text-white hover:!bg-white/10">
-                <Phone className="w-4 h-4 mr-2" /> Talk to an Agent
-              </CTAButton>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+
 
       <Footer />
     </div>

@@ -80,9 +80,8 @@ const ClaimsGuide = () => {
 
               {/* Dark hero area */}
               <div className="claims-featured-img relative z-10">
-                {/* Bleed background */}
-                <div className="absolute top-0 bottom-0 right-0 w-[50vw] -z-10 overflow-hidden pointer-events-none">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--navy))] to-[hsl(201,78%,12%)]" />
+                {/* Edge-to-edge background overlays */}
+                <div className="absolute inset-0 -z-10 pointer-events-none">
                   <div className="claims-featured-overlay" />
                   <div className="claims-featured-pattern" />
                 </div>

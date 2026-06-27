@@ -11,7 +11,7 @@ import Testimonials from "@/components/Testimonials";
 import FAQSection from "@/components/FAQSection";
 import Insights from "@/components/Insights";
 import LocalTrust from "@/components/LocalTrust";
-import CTABanner from "@/components/CTABanner";
+
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -30,7 +30,7 @@ const Index = () => {
       <Insights />
       <LocalTrust />
       <PartnersSection />
-      <CTABanner />
+
       <Footer />
     </div>
   );

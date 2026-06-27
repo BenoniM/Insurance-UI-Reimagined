@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import PageHero from "@/components/PageHero";
+import ExpandingHero from "@/components/ExpandingHero";
 import SectionWrapper from "@/components/SectionWrapper";
 import ScrollReveal from "@/components/ScrollReveal";
 import CTAButton from "@/components/CTAButton";
@@ -17,8 +17,7 @@ import {
   CheckCircle,
   Calendar,
 } from "lucide-react";
-import heroAbout from "@/assets/hero-about.jpg";
-import heroAbout2 from "@/assets/hero-about-2.jpg";
+
 
 const yearlyImpact = [
   { year: "2026", total: "4.2M ETB", projects: 38, beneficiaries: "12,400+" },
@@ -74,22 +73,19 @@ const GivebackPage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <PageHero
-        images={[heroAbout, heroAbout2]}
-        badge="WASS GIVEBACK"
-        title={<>Insurance with a <span className="text-primary">heart</span></>}
-        subtitle="Every Birr we don't pay in claims goes back to causes our customers chose. Over 4.2M ETB returned to Ethiopian communities — and counting."
-      >
-        <div className="flex flex-wrap gap-4">
-          <CTAButton href="/quote" variant="primary" size="lg">Join the movement</CTAButton>
-          <a
-            href="#impact"
-            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all"
-          >
-            See the impact <ArrowRight className="w-4 h-4" />
-          </a>
-        </div>
-      </PageHero>
+      <ExpandingHero
+        images={[
+          "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=1600&q=80",
+          "https://images.pexels.com/photos/12431091/pexels-photo-12431091.jpeg",
+          "https://images.pexels.com/photos/9353491/pexels-photo-9353491.jpeg",
+          "https://images.pexels.com/photos/14896176/pexels-photo-14896176.jpeg",
+        ]}
+        badge="GIVEBACK"
+        headline={'Insurance That <span class="text-primary">Gives Back</span>'}
+        subtitle="Earn rewards for healthy living and a claims-free year. WASS puts people first."
+        ctaLabel="Learn More"
+        ctaHref="/quote"
+      />
 
       {/* Reuse the homepage Giveback section for the "how it works" + causes */}
       <GivebackSection />
@@ -257,23 +253,7 @@ const GivebackPage = () => {
         </div>
       </SectionWrapper>
 
-      {/* Final CTA */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(160,55%,40%)]" />
-        <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
-          <ScrollReveal animation="scaleUp">
-            <h2 className="qupe-heading text-3xl md:text-4xl text-white mb-4">
-              Your premium can do more than protect you.
-            </h2>
-            <p className="text-white/75 mb-8 max-w-xl mx-auto">
-              Get a quote, pick your cause, and join 50,000+ Ethiopians lifting up the country we share.
-            </p>
-            <CTAButton href="/quote" variant="primary" size="lg" className="!bg-white !text-[hsl(201,78%,23%)] hover:!bg-white/90">
-              Start your quote <ArrowRight className="w-4 h-4 ml-1" />
-            </CTAButton>
-          </ScrollReveal>
-        </div>
-      </section>
+
 
       <Footer />
     </div>

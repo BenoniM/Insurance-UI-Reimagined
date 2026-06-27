@@ -1,33 +1,183 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SectionWrapper from "@/components/SectionWrapper";
 import CTAButton from "@/components/CTAButton";
-import PageHero from "@/components/PageHero";
+import ExpandingHero from "@/components/ExpandingHero";
 import ScrollReveal from "@/components/ScrollReveal";
 import { FileText, Upload, Clock, CheckCircle, Phone, MessageCircle, Shield, AlertTriangle, HelpCircle, ArrowRight } from "lucide-react";
-import heroClaims from "@/assets/hero-claims.jpg";
-import heroClaims2 from "@/assets/hero-claims-2.jpg";
+
 
 const steps = [
-  { icon: Phone, number: "1", title: "Report the Incident", description: "Contact us within 48 hours of the incident via phone (+251 11 123 4567), WhatsApp, email, or visit any of our 12 branch offices across Ethiopia. Our agents are available 24/7 for emergency claims." },
-  { icon: FileText, number: "2", title: "Submit Required Documents", description: "Provide all necessary documentation including your valid ID, original policy, police report (if applicable), photographs of damage, and completed claim form. You can submit digitally or in person." },
-  { icon: Upload, number: "3", title: "Assessment & Investigation", description: "Our experienced claims team reviews your submission within 1–2 business days. For motor and property claims, a certified assessor will be assigned to evaluate the damage on-site." },
-  { icon: Clock, number: "4", title: "Approval & Processing", description: "Once assessment is complete, your claim is reviewed by our underwriting team. You'll receive real-time status updates via SMS and email throughout the entire process." },
-  { icon: CheckCircle, number: "5", title: "Settlement & Payment", description: "Approved claims are settled within 3–5 business days directly to your bank account, Telebirr, or CBE Birr. You'll receive a detailed settlement statement for your records." },
+  { 
+    number: "1", 
+    title: "Report the Incident", 
+    description: "Contact us within 48 hours of the incident via phone (+251 11 123 4567), WhatsApp, email, or visit any of our 12 branch offices across Ethiopia. Our agents are available 24/7 for emergency claims.",
+    image: "https://images.pexels.com/photos/8960941/pexels-photo-8960941.jpeg"
+  },
+  { 
+    number: "2", 
+    title: "Submit Required Documents", 
+    description: "Provide all necessary documentation including your valid ID, original policy, police report (if applicable), photographs of damage, and completed claim form. You can submit digitally or in person.",
+    image: "https://images.pexels.com/photos/2928232/pexels-photo-2928232.jpeg" 
+  },
+  { 
+    number: "3", 
+    title: "Assessment & Investigation", 
+    description: "Our experienced claims team reviews your submission within 1–2 business days. For motor and property claims, a certified assessor will be assigned to evaluate the damage on-site.",
+    image: "https://images.pexels.com/photos/8369520/pexels-photo-8369520.jpeg" 
+  },
+  { 
+    number: "4", 
+    title: "Approval & Processing", 
+    description: "Once assessment is complete, your claim is reviewed by our underwriting team. You'll receive real-time status updates via SMS and email throughout the entire process.",
+    image: "https://images.pexels.com/photos/5510476/pexels-photo-5510476.jpeg" 
+  },
+  { 
+    number: "5", 
+    title: "Settlement & Payment", 
+    description: "Approved claims are settled within 3–5 business days directly to your bank account, Telebirr, or CBE Birr. You'll receive a detailed settlement statement for your records.",
+    image: "https://images.pexels.com/photos/5198284/pexels-photo-5198284.jpeg" 
+  },
 ];
 
-const documents = [
+const standardDocuments = [
   "Valid ID (Kebele ID, Passport, or Driver's License)",
   "Original insurance policy document or policy number",
   "Completed claim form (available at branches or download online)",
   "Police report (required for theft, accidents, and third-party claims)",
   "Photographs and/or video evidence of damage or loss",
+];
+
+const specificDocuments = [
   "Medical reports, prescriptions, and hospital bills (health/life claims)",
   "Vehicle inspection report from authorized garage (motor claims)",
   "Repair cost estimates from at least two authorized service providers",
   "Death certificate and beneficiary documents (life insurance claims)",
   "Fire brigade report (fire and property damage claims)",
 ];
+
+const StandardDocsCard = () => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <ScrollReveal animation="fadeLeft">
+      <div
+        className="relative w-full h-72 md:h-80 rounded-2xl overflow-hidden cursor-pointer shadow-lg"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <img
+          src="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt="Standard Documents"
+          className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
+          style={{ filter: hovered ? "brightness(0.2)" : "brightness(0.7)" }}
+        />
+
+        <div
+          className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
+          style={{ opacity: hovered ? 0 : 1, pointerEvents: hovered ? "none" : "auto" }}
+        >
+          <div
+            className="flex items-center gap-2 px-6 py-3 rounded-full"
+            style={{
+              background: "rgba(255,255,255,0.15)",
+              backdropFilter: "blur(14px)",
+              border: "1.5px solid rgba(255,255,255,0.35)",
+            }}
+          >
+            <FileText className="w-4 h-4 text-white" />
+            <span className="font-heading font-semibold text-white text-sm tracking-wide">
+              Standard Requirements
+            </span>
+          </div>
+        </div>
+
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center px-6 py-6 transition-opacity duration-500"
+          style={{ opacity: hovered ? 1 : 0, pointerEvents: hovered ? "auto" : "none" }}
+        >
+          <div className="flex flex-col items-center max-w-sm w-full">
+            <div className="flex items-center gap-2 mb-4">
+              <FileText className="w-5 h-5 text-white" />
+              <h2 className="font-heading text-lg md:text-xl font-bold text-white">
+                Standard Requirements
+              </h2>
+            </div>
+            <div className="w-full relative space-y-3 overflow-y-auto max-h-48 md:max-h-56 pr-2 scrollbar-hide">
+              {standardDocuments.map((item) => (
+                <div key={item} className="flex items-start gap-3 justify-start">
+                  <CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-white" />
+                  <span className="text-xs text-white leading-relaxed text-left">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+  );
+};
+
+const SpecificDocsCard = () => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <ScrollReveal animation="fadeRight" delay={0.1}>
+      <div
+        className="relative w-full h-72 md:h-80 rounded-2xl overflow-hidden cursor-pointer shadow-lg"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <img
+          src="https://images.pexels.com/photos/5206040/pexels-photo-5206040.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt="Specific Documents"
+          className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
+          style={{ filter: hovered ? "brightness(0.2)" : "brightness(0.7)" }}
+        />
+
+        <div
+          className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
+          style={{ opacity: hovered ? 0 : 1, pointerEvents: hovered ? "none" : "auto" }}
+        >
+          <div
+            className="flex items-center gap-2 px-6 py-3 rounded-full"
+            style={{
+              background: "rgba(255,255,255,0.15)",
+              backdropFilter: "blur(14px)",
+              border: "1.5px solid rgba(255,255,255,0.35)",
+            }}
+          >
+            <AlertTriangle className="w-4 h-4 text-white" />
+            <span className="font-heading font-semibold text-white text-sm tracking-wide">
+              Claim-Specific Proofs
+            </span>
+          </div>
+        </div>
+
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center px-6 py-6 transition-opacity duration-500"
+          style={{ opacity: hovered ? 1 : 0, pointerEvents: hovered ? "auto" : "none" }}
+        >
+          <div className="flex flex-col items-center max-w-sm w-full">
+            <div className="flex items-center gap-2 mb-4">
+              <AlertTriangle className="w-5 h-5 text-white" />
+              <h2 className="font-heading text-lg md:text-xl font-bold text-white">
+                Claim-Specific Proofs
+              </h2>
+            </div>
+            <div className="w-full relative space-y-3 overflow-y-auto max-h-48 md:max-h-56 pr-2 scrollbar-hide">
+              {specificDocuments.map((item) => (
+                <div key={item} className="flex items-start gap-3 justify-start">
+                  <CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-white" />
+                  <span className="text-xs text-white leading-relaxed text-left">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+  );
+};
 
 const faqs = [
   { q: "How long does the claims process take?", a: "Most claims are processed within 3–5 business days after all required documents are submitted. Complex claims involving investigations may take up to 15 business days." },
@@ -39,59 +189,86 @@ const faqs = [
 const ClaimsPage = () => (
   <div className="min-h-screen">
     <Navbar />
-    <PageHero
-      images={[heroClaims, heroClaims2]}
+    <ExpandingHero
+      images={[
+        "https://images.pexels.com/photos/27745581/pexels-photo-27745581.jpeg",
+        "https://images.pexels.com/photos/29899813/pexels-photo-29899813.jpeg",
+        "https://images.pexels.com/photos/28914932/pexels-photo-28914932.jpeg",
+        "https://images.pexels.com/photos/12955837/pexels-photo-12955837.jpeg",
+      ]}
       badge="CLAIMS"
-      title={<>File a <span className="text-primary">Claim</span></>}
-      subtitle="We make the claims process as simple and fast as possible. Our dedicated team of claims specialists is here to guide you every step of the way — from initial report to final settlement."
-    >
-      <div className="flex flex-wrap gap-4">
-        <CTAButton href="/claims/new" variant="primary" size="lg">File a Claim Online</CTAButton>
-        <a href="tel:+251111234567" className="inline-flex items-center gap-2 bg-white text-[hsl(201,78%,23%)] px-6 py-3 rounded-xl font-semibold hover:bg-white/90 transition-all">
-          <Phone className="w-4 h-4" /> Call Claims Hotline
-        </a>
-        <a href="https://wa.me/251911234567" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[hsl(142,70%,40%)] text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-all">
-          <MessageCircle className="w-4 h-4" /> WhatsApp
-        </a>
-      </div>
-    </PageHero>
+      headline={'Fast, Fair <span class="text-primary">Claims Processing</span>'}
+      subtitle="We handle your claims with speed and transparency — so you can focus on what matters."
+      ctaLabel="File a Claim"
+      ctaHref="/claims/submit"
+    />
 
     {/* Claims Process Steps */}
-    <SectionWrapper>
+    <div className="py-12 md:py-20 bg-card border-y border-border overflow-hidden">
       <ScrollReveal>
-        <div className="text-center mb-12">
-          <span className="section-badge mb-4 inline-block">STEP BY STEP</span>
-          <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
+        <div className="text-center mb-10 md:mb-16 px-4">
+          <span className="section-badge mb-3 inline-block">STEP BY STEP</span>
+          <h2 className="qupe-heading text-3xl md:text-5xl lg:text-6xl text-foreground mt-2">
             Claims <span className="text-primary">Process</span>
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">Our streamlined 5-step process ensures your claim is handled quickly, fairly, and transparently.</p>
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">Our streamlined 5-step process ensures your claim is handled quickly, fairly, and transparently.</p>
         </div>
       </ScrollReveal>
-      <div className="max-w-3xl mx-auto space-y-4">
+      <div className="flex flex-col border-b border-border">
         {steps.map((step, i) => (
-          <ScrollReveal key={step.number} delay={i * 0.08}>
-            <div
-              className="rounded-3xl p-6 flex gap-6 items-start group bg-gradient-to-r from-card to-accent/30 border border-border/50 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-x-1.5 hover:scale-[1.01]"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] flex items-center justify-center shrink-0 text-white shadow-md">
-                <step.icon className="w-6 h-6" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-bold text-primary uppercase tracking-wider">Step {step.number}</span>
+          <ScrollReveal key={step.number} delay={i * 0.05}>
+            <div className="group border-t border-border transition-colors duration-300 hover:bg-primary cursor-default">
+              <div className="grid grid-cols-1 lg:grid-cols-12 w-full max-w-[1400px] mx-auto">
+                {/* Left Column (50%) */}
+                <div className="lg:col-span-6 p-6 md:p-8 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-border group-hover:border-primary-foreground/20 transition-colors">
+                  <span className="text-sm font-bold text-foreground group-hover:text-primary-foreground/80 mb-6 md:mb-10 block transition-colors uppercase tracking-widest">
+                    Step {step.number}
+                  </span>
+                  <div className="relative overflow-hidden pr-4 pb-1">
+                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-foreground transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-[120%] tracking-tight">
+                      {step.title}
+                    </h3>
+                    <h3 className="absolute inset-0 text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-primary-foreground transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] -translate-y-[120%] group-hover:translate-y-0 tracking-tight">
+                      {step.title}
+                    </h3>
+                  </div>
                 </div>
-                <h3 className="font-heading font-semibold text-lg text-foreground mb-2">{step.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
+                
+                {/* Right Area (50%) */}
+                <div className="lg:col-span-6 grid grid-cols-1 md:grid-cols-2">
+                  {/* Middle Column (Text) */}
+                  <div className="p-6 md:p-8 flex flex-col justify-center border-b md:border-b-0 group-hover:border-primary-foreground/20 transition-colors">
+                    <div>
+                      <span className="text-xs font-bold text-muted-foreground group-hover:text-primary-foreground/60 block mb-3 transition-colors uppercase tracking-widest">
+                        Details
+                      </span>
+                      <p className="text-sm md:text-base text-foreground/80 group-hover:text-primary-foreground/90 transition-colors leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Rightmost Column (Image) */}
+                  <div className="p-6 md:p-8 flex items-center justify-center lg:justify-end">
+                    <div className="aspect-[4/3] w-full max-w-[220px] overflow-hidden shadow-sm group-hover:shadow-2xl transition-all duration-500">
+                      <img 
+                        src={step.image} 
+                        alt={step.title}
+                        className="w-full h-full object-cover filter grayscale-[10%] group-hover:grayscale-0 transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </ScrollReveal>
         ))}
       </div>
-    </SectionWrapper>
+    </div>
 
     {/* Required Documents */}
     <SectionWrapper className="bg-accent/30">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-12">
             <span className="section-badge mb-4 inline-block">DOCUMENTATION</span>
@@ -101,20 +278,11 @@ const ClaimsPage = () => (
             <p className="mt-4 text-muted-foreground max-w-xl mx-auto">Prepare these documents before filing your claim to ensure fast processing.</p>
           </div>
         </ScrollReveal>
-        <ScrollReveal delay={0.1}>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {documents.map((doc, i) => (
-              <div
-                key={doc}
-                style={{ animationDelay: `${i * 40}ms`, animationFillMode: "backwards" }}
-                className="flex items-start gap-3 p-4 rounded-2xl bg-card border border-border/50 group hover:border-primary/30 transition-all animate-in fade-in slide-in-from-bottom-2 duration-500"
-              >
-                <CheckCircle className="w-4 h-4 text-primary mt-1 shrink-0 group-hover:scale-110 transition-transform" />
-                <span className="text-foreground/80 text-sm">{doc}</span>
-              </div>
-            ))}
-          </div>
-        </ScrollReveal>
+        
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8 w-full mt-8">
+          <StandardDocsCard />
+          <SpecificDocsCard />
+        </div>
       </div>
     </SectionWrapper>
 
@@ -173,22 +341,7 @@ const ClaimsPage = () => (
       </div>
     </SectionWrapper>
 
-    {/* CTA */}
-    <section className="relative py-20 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(201,78%,16%)]" />
-      <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
-        <ScrollReveal animation="scaleUp">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Need Help Filing a Claim?</h2>
-          <p className="text-white/60 mb-8 max-w-lg mx-auto">Our claims specialists are available 24/7. Call us now or visit your nearest branch office.</p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <CTAButton href="/claims/new" variant="primary" size="lg">Start Your Claim</CTAButton>
-            <a href="tel:+251111234567" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all">
-              <Phone className="w-4 h-4" /> +251 11 123 4567
-            </a>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
+
 
     <Footer />
   </div>

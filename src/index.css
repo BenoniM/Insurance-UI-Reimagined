@@ -383,6 +383,15 @@ html {
   padding: 2.5rem 2.25rem;
   display: flex;
   align-items: flex-end;
+  margin-left: -50vw;
+  padding-left: calc(50vw + 2.25rem);
+}
+
+@media (max-width: 860px) {
+  .claims-featured-img {
+    margin-right: -50vw;
+    padding-right: calc(50vw + 2.25rem);
+  }
 }
 
 .claims-featured-overlay {
