@@ -5,7 +5,11 @@ import SectionWrapper from "@/components/SectionWrapper";
 import CTAButton from "@/components/CTAButton";
 import ExpandingHero from "@/components/ExpandingHero";
 import ScrollReveal from "@/components/ScrollReveal";
-import { FileText, Upload, Clock, CheckCircle, Phone, MessageCircle, Shield, AlertTriangle, HelpCircle, ArrowRight } from "lucide-react";
+import { FileText, CheckCircle, AlertTriangle, ArrowRight } from "lucide-react";
+
+// Matches the ProcessSteps border treatment
+const FAQ_BORDER = "hsl(201 78% 23% / 0.22)";
+const FAQ_BORDER_STYLE = { borderColor: FAQ_BORDER };
 
 
 const steps = [
@@ -128,7 +132,7 @@ const SpecificDocsCard = () => {
         onMouseLeave={() => setHovered(false)}
       >
         <img
-          src="https://images.pexels.com/photos/5206040/pexels-photo-5206040.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          src="https://images.pexels.com/photos/9870226/pexels-photo-9870226.jpeg"
           alt="Specific Documents"
           className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
           style={{ filter: hovered ? "brightness(0.2)" : "brightness(0.7)" }}
@@ -186,9 +190,13 @@ const faqs = [
   { q: "Do I need a police report?", a: "A police report is required for theft, traffic accidents, and third-party liability claims. For other types of claims, it depends on the nature of the incident." },
 ];
 
-const ClaimsPage = () => (
+const ClaimsPage = () => {
+  const [faqOpenIndex, setFaqOpenIndex] = useState<number>(0);
+
+  return (
   <div className="min-h-screen">
     <Navbar />
+
     <ExpandingHero
       images={[
         "https://images.pexels.com/photos/27745581/pexels-photo-27745581.jpeg",
@@ -312,39 +320,112 @@ const ClaimsPage = () => (
       </div>
     </SectionWrapper>
 
-    {/* FAQ */}
-    <SectionWrapper className="bg-accent/30">
-      <div className="max-w-3xl mx-auto">
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <span className="section-badge mb-4 inline-block">FAQ</span>
-            <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
+    {/* FAQ — ProcessSteps-style two-column accordion */}
+    <section className="pt-6 pb-20 overflow-hidden bg-accent/30">
+      <div className="flex flex-col lg:flex-row w-full">
+
+        {/* ── LEFT column ── */}
+        <div
+          className="
+            lg:w-5/12 flex flex-col justify-start
+            px-4 sm:px-8 lg:pl-12 xl:pl-16 lg:pr-16
+            pt-8 pb-10 lg:pb-10
+            border-t border-b
+          "
+          style={FAQ_BORDER_STYLE}
+        >
+          <ScrollReveal>
+            <span className="section-badge mb-5 inline-block">FAQ</span>
+            <h2 className="qupe-heading text-4xl md:text-[2.75rem] text-foreground mt-3 leading-tight">
               Claims <span className="text-primary">FAQ</span>
             </h2>
-          </div>
-        </ScrollReveal>
-        <div className="space-y-4">
-          {faqs.map((faq, i) => (
-            <ScrollReveal key={faq.q} delay={i * 0.06}>
-              <div className="qupe-card">
-                <div className="flex items-start gap-3">
-                  <HelpCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                  <div>
-                    <h3 className="font-heading font-semibold text-foreground mb-2">{faq.q}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
+            <p className="mt-4 text-muted-foreground text-base leading-relaxed max-w-xs">
+              Quick answers to the most common questions about filing and managing your insurance claims.
+            </p>
+          </ScrollReveal>
+        </div>
+
+        {/* ── vertical divider ── */}
+        <div
+          className="hidden lg:block w-px shrink-0 self-stretch"
+          style={{ background: FAQ_BORDER }}
+        />
+
+        {/* ── RIGHT column — accordion rows ── */}
+        <div className="lg:flex-1 flex flex-col">
+
+          {/* top border aligns with left column's top border */}
+          <div className="border-t" style={FAQ_BORDER_STYLE} />
+
+          {faqs.map((faq, i) => {
+            const isOpen = faqOpenIndex === i;
+            return (
+              <div key={faq.q} className="border-b" style={FAQ_BORDER_STYLE}>
+                {/* header row */}
+                <button
+                  className="w-full flex items-center py-5 px-4 sm:px-8 lg:px-10 xl:pr-16 text-left"
+                  onClick={() => setFaqOpenIndex(i)}
+                  aria-expanded={isOpen}
+                >
+                  {/* square bullet */}
+                  <span className="flex items-center justify-center w-6 mr-5 shrink-0">
+                    <span
+                      className="w-[7px] h-[7px] rounded-[1px] transition-all duration-300"
+                      style={{
+                        background: isOpen ? FAQ_BORDER.replace("0.22", "1") : "transparent",
+                        border: `1.5px solid ${FAQ_BORDER.replace("0.22", "0.5")}`,
+                      }}
+                    />
+                  </span>
+
+                  {/* question */}
+                  <span
+                    className={`flex-1 font-heading font-semibold text-xl transition-colors duration-200 ${
+                      isOpen ? "text-foreground" : "text-foreground/50"
+                    }`}
+                  >
+                    {faq.q}
+                  </span>
+
+                  {/* +/− */}
+                  <span
+                    className={`text-2xl font-extralight leading-none w-6 text-right shrink-0 transition-colors duration-200 ${
+                      isOpen ? "text-foreground" : "text-foreground/30"
+                    }`}
+                  >
+                    {isOpen ? "−" : "+"}
+                  </span>
+                </button>
+
+                {/* expanded body — smooth grid-rows animation */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateRows: isOpen ? "1fr" : "0fr",
+                    transition: "grid-template-rows 0.42s cubic-bezier(0.4, 0, 0.2, 1)",
+                  }}
+                >
+                  <div className="overflow-hidden">
+                    <div className="px-4 sm:px-8 lg:px-10 xl:pr-16 pl-16 pb-7">
+                      <p className="text-muted-foreground leading-relaxed text-sm">
+                        {faq.a}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </ScrollReveal>
-          ))}
-        </div>
+            );
+          })}
+
+        </div>{/* end right */}
       </div>
-    </SectionWrapper>
+    </section>
 
 
 
     <Footer />
   </div>
-);
+  );
+};
 
 export default ClaimsPage;

@@ -1,23 +1,17 @@
-import Navbar from "@/components/Navbar";
+﻿import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ExpandingHero from "@/components/ExpandingHero";
-import SectionWrapper from "@/components/SectionWrapper";
-import ScrollReveal from "@/components/ScrollReveal";
-import CTAButton from "@/components/CTAButton";
 import GivebackSection from "@/components/GivebackSection";
+import ScrollReveal from "@/components/ScrollReveal";
 import {
   Heart,
   Droplet,
   GraduationCap,
   Stethoscope,
-  TrendingUp,
-  Users,
-  ArrowRight,
   Quote as QuoteIcon,
   CheckCircle,
   Calendar,
 } from "lucide-react";
-
 
 const yearlyImpact = [
   { year: "2026", total: "4.2M ETB", projects: 38, beneficiaries: "12,400+" },
@@ -34,39 +28,15 @@ const causeBreakdown = [
 ];
 
 const updates = [
-  {
-    date: "March 2026",
-    title: "Water access for Bishoftu villages",
-    body: "Three solar-powered wells came online, serving 2,100 people who previously walked 6km daily for clean water.",
-  },
-  {
-    date: "January 2026",
-    title: "School supply drive — Addis Ababa",
-    body: "Distributed 4,200 backpacks, notebooks, and uniforms to children entering Grade 1 across 18 public schools.",
-  },
-  {
-    date: "November 2025",
-    title: "Mobile clinic launches in Hawassa",
-    body: "WASS Giveback funded a fully-equipped mobile health unit reaching 6 villages monthly with maternal care.",
-  },
-  {
-    date: "September 2025",
-    title: "Flood relief — Afar region",
-    body: "Emergency disbursement of 480,000 ETB delivered tents, food, and medical supplies within 72 hours.",
-  },
+  { date: "March 2026", title: "Water access for Bishoftu villages", body: "Three solar-powered wells came online, serving 2,100 people who previously walked 6km daily for clean water." },
+  { date: "January 2026", title: "School supply drive — Addis Ababa", body: "Distributed 4,200 backpacks, notebooks, and uniforms to children entering Grade 1 across 18 public schools." },
+  { date: "November 2025", title: "Mobile clinic launches in Hawassa", body: "WASS Giveback funded a fully-equipped mobile health unit reaching 6 villages monthly with maternal care." },
+  { date: "September 2025", title: "Flood relief — Afar region", body: "Emergency disbursement of 480,000 ETB delivered tents, food, and medical supplies within 72 hours." },
 ];
 
 const testimonials = [
-  {
-    quote: "I never thought my insurance would help my daughter go to school. The scholarship from WASS Giveback changed our family.",
-    name: "Almaz T.",
-    role: "Policyholder, Adama",
-  },
-  {
-    quote: "The mobile clinic comes to our village every month. My mother gets her diabetes medication without traveling four hours.",
-    name: "Dawit G.",
-    role: "Policyholder, Hawassa",
-  },
+  { quote: "I never thought my insurance would help my daughter go to school. The scholarship from WASS Giveback changed our family.", name: "Almaz T.", role: "Policyholder, Adama" },
+  { quote: "The mobile clinic comes to our village every month. My mother gets her diabetes medication without traveling four hours.", name: "Dawit G.", role: "Policyholder, Hawassa" },
 ];
 
 const GivebackPage = () => {
@@ -87,173 +57,183 @@ const GivebackPage = () => {
         ctaHref="/quote"
       />
 
-      {/* Reuse the homepage Giveback section for the "how it works" + causes */}
+      {/* How it works + causes + impact callout */}
       <GivebackSection />
 
-      {/* Yearly impact */}
-      <SectionWrapper id="impact" className="bg-accent/30">
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <span className="section-badge mb-4 inline-block">YEAR-OVER-YEAR</span>
-            <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
-              Impact, in <span className="text-primary">numbers</span>
-            </h2>
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              We publish our Giveback totals every year. Here's what your policy has helped fund.
-            </p>
-          </div>
-        </ScrollReveal>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
-          {yearlyImpact.map((y, i) => (
-            <ScrollReveal key={y.year} delay={i * 0.06}>
-              <div
-                className="qupe-card !p-7 h-full text-center transition-all duration-300 hover:-translate-y-1.5"
-              >
-                <div className="text-xs font-bold tracking-widest text-primary mb-2">{y.year}</div>
-                <div className="font-heading text-3xl font-bold text-foreground mb-1">{y.total}</div>
-                <div className="text-xs text-muted-foreground mb-4">returned to causes</div>
-                <div className="border-t border-border pt-4 space-y-1.5 text-sm text-muted-foreground">
-                  <div className="flex justify-between"><span>Projects</span><span className="font-semibold text-foreground">{y.projects}</span></div>
-                  <div className="flex justify-between"><span>Beneficiaries</span><span className="font-semibold text-foreground">{y.beneficiaries}</span></div>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      {/* Cause breakdown */}
-      <SectionWrapper>
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <span className="section-badge mb-4 inline-block">2026 ALLOCATION</span>
-            <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
-              Where the <span className="text-primary">money went</span>
-            </h2>
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              Customers vote at signup. Here's how our 4.2M ETB was allocated this year.
-            </p>
-          </div>
-        </ScrollReveal>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
-          {causeBreakdown.map((c, i) => (
-            <ScrollReveal key={c.title} delay={i * 0.06}>
-              <div
-                className={`rounded-3xl p-7 bg-gradient-to-br ${c.color} text-white shadow-lg relative overflow-hidden h-full transition-all duration-300 hover:-translate-y-2 hover:scale-[1.03]`}
-              >
-                <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/10" />
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4">
-                    <c.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h4 className="font-heading font-semibold text-lg text-white mb-1">{c.title}</h4>
-                  <div className="font-heading text-3xl font-bold text-white mb-2">{c.pct}%</div>
-                  <div className="h-1.5 rounded-full bg-white/20 overflow-hidden mb-3">
-                    <div
-                      className="h-full bg-white animate-in slide-in-from-left-full duration-1000 ease-out"
-                      style={{ width: `${c.pct}%`, animationDelay: `${200 + i * 100}ms`, animationFillMode: "both" }}
-                    />
-                  </div>
-                  <p className="text-sm text-white/85 leading-relaxed">{c.desc}</p>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      {/* Recent updates */}
-      <SectionWrapper className="bg-accent/30">
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <span className="section-badge mb-4 inline-block">FIELD UPDATES</span>
-            <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
-              Recent <span className="text-primary">impact updates</span>
-            </h2>
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              Stories from the ground — what your premium has helped make happen this season.
-            </p>
-          </div>
-        </ScrollReveal>
-
-        <div className="max-w-3xl mx-auto space-y-4">
-          {updates.map((u, i) => (
-            <ScrollReveal key={u.title} delay={i * 0.06}>
-              <div
-                className="qupe-card !p-6 flex gap-5 items-start transition-all duration-300 hover:translate-x-1.5"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <Calendar className="w-5 h-5 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <div className="text-xs font-bold tracking-wider text-primary uppercase mb-1">{u.date}</div>
-                  <h3 className="font-heading font-semibold text-lg text-foreground mb-1.5">{u.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{u.body}</p>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      {/* Voices */}
-      <SectionWrapper>
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <span className="section-badge mb-4 inline-block">VOICES FROM COMMUNITIES</span>
-            <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
-              Real <span className="text-primary">stories</span>, real change
-            </h2>
-          </div>
-        </ScrollReveal>
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {testimonials.map((t, i) => (
-            <ScrollReveal key={t.name} delay={i * 0.08}>
-              <div className="qupe-card !p-8 h-full relative">
-                <QuoteIcon className="w-8 h-8 text-primary/20 absolute top-6 right-6" />
-                <p className="text-foreground/90 text-base leading-relaxed mb-5 italic">"{t.quote}"</p>
-                <div>
-                  <div className="font-heading font-semibold text-foreground">{t.name}</div>
-                  <div className="text-xs text-muted-foreground">{t.role}</div>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      {/* Transparency */}
-      <SectionWrapper className="bg-accent/30">
-        <div className="max-w-4xl mx-auto">
+      {/* YEAR-OVER-YEAR — minimal data table */}
+      <section id="impact" className="py-16 px-6 border-t border-border" style={{ background: "hsl(var(--surface))" }}>
+        <div className="max-w-5xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-10">
-              <span className="section-badge mb-4 inline-block">TRANSPARENCY</span>
-              <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
-                How we keep ourselves <span className="text-primary">honest</span>
-              </h2>
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+              <div>
+                <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">YEAR-OVER-YEAR</p>
+                <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground" style={{ letterSpacing: "-0.025em" }}>
+                  Impact, in numbers.
+                </h2>
+              </div>
+              <p className="text-sm text-muted-foreground max-w-xs">
+                We publish our Giveback totals every year. Here's what your policy has helped fund.
+              </p>
             </div>
           </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                "Annual third-party audit by an independent Ethiopian firm.",
-                "Live impact tracker — updated quarterly on this page.",
-                "100% of unclaimed premiums (after fixed fee) go to causes.",
-                "Nonprofit partners are vetted and publicly listed.",
-                "Customers vote on causes during signup — no surprises.",
-                "Field reports published for every funded project.",
-              ].map((item) => (
-                <div key={item} className="flex gap-3 p-4 rounded-2xl bg-card border border-border">
-                  <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                  <span className="text-sm text-foreground/85">{item}</span>
+          <div className="grid grid-cols-4 pb-3 border-b border-border">
+            {["Year", "Total Returned", "Projects", "Beneficiaries"].map((h) => (
+              <span key={h} className="text-xs font-bold tracking-widest uppercase text-muted-foreground">{h}</span>
+            ))}
+          </div>
+          <div className="divide-y divide-border">
+            {yearlyImpact.map((y, i) => (
+              <ScrollReveal key={y.year} delay={i * 0.06}>
+                <div className="grid grid-cols-4 py-5 items-baseline group hover:bg-accent/40 transition-colors duration-200 rounded-sm px-1 -mx-1 cursor-default">
+                  <span className="text-xs font-bold tracking-widest text-primary">{y.year}</span>
+                  <span className="font-heading font-bold text-xl md:text-3xl text-foreground" style={{ letterSpacing: "-0.03em" }}>{y.total}</span>
+                  <span className="font-heading font-bold text-xl md:text-3xl text-foreground" style={{ letterSpacing: "-0.03em" }}>{y.projects}</span>
+                  <span className="font-heading font-bold text-lg md:text-2xl text-foreground" style={{ letterSpacing: "-0.03em" }}>{y.beneficiaries}</span>
                 </div>
-              ))}
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2026 ALLOCATION — editorial progress rows */}
+      <section className="py-16 px-6 border-t border-border bg-background">
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+              <div>
+                <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">2026 ALLOCATION</p>
+                <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground" style={{ letterSpacing: "-0.025em" }}>
+                  Where the money went.
+                </h2>
+              </div>
+              <p className="text-sm text-muted-foreground max-w-xs">
+                Customers vote at signup. Here's how our 4.2M ETB was allocated this year.
+              </p>
             </div>
           </ScrollReveal>
+          <div className="space-y-0 divide-y divide-border">
+            {causeBreakdown.map((c, i) => (
+              <ScrollReveal key={c.title} delay={i * 0.07}>
+                <div className="flex items-center gap-5 md:gap-8 py-6 group cursor-default hover:pl-2 transition-all duration-300">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${c.color} flex items-center justify-center shrink-0`}>
+                    <c.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-baseline justify-between mb-2">
+                      <span className="font-heading font-semibold text-foreground text-base md:text-lg group-hover:text-primary transition-colors duration-300">
+                        {c.title}
+                      </span>
+                      <span className="font-heading font-bold text-3xl md:text-4xl text-foreground" style={{ letterSpacing: "-0.03em" }}>
+                        {c.pct}%
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="flex-1 h-[2px] bg-border rounded-full overflow-hidden">
+                        <div
+                          className={`h-full bg-gradient-to-r ${c.color} rounded-full`}
+                          style={{ width: `${c.pct}%`, transition: "width 1s ease-out" }}
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground shrink-0 max-w-[180px] text-right hidden md:block">{c.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
-      </SectionWrapper>
+      </section>
 
+      {/* FIELD UPDATES — 2-column editorial grid */}
+      <section className="py-20 px-6 border-t border-border" style={{ background: "hsl(var(--surface))" }}>
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
+            <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">FIELD UPDATES</p>
+            <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground mb-12" style={{ letterSpacing: "-0.025em" }}>
+              Recent impact updates.
+            </h2>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-2 gap-x-16 gap-y-10">
+            {updates.map((u, i) => (
+              <ScrollReveal key={u.title} delay={i * 0.07}>
+                <article className="group cursor-default">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Calendar className="w-4 h-4 shrink-0 text-primary" />
+                    <span className="text-xs font-bold tracking-wider text-primary uppercase">{u.date}</span>
+                  </div>
+                  <h3 className="font-heading font-bold text-xl text-foreground mb-2 group-hover:text-primary transition-colors duration-300 leading-snug">
+                    {u.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{u.body}</p>
+                  <div className="mt-4 h-[1px] bg-border w-0 group-hover:w-full transition-all duration-500" />
+                </article>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      {/* VOICES — dark testimonials */}
+      <section className="py-20 px-6 border-t border-border" style={{ background: "hsl(201 78% 14%)" }}>
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
+            <p className="text-xs font-bold tracking-[0.25em] uppercase mb-3" style={{ color: "hsl(160 55% 55%)" }}>
+              VOICES FROM COMMUNITIES
+            </p>
+            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-14 leading-tight" style={{ color: "hsl(30 20% 97%)", letterSpacing: "-0.025em" }}>
+              Real stories, real change.
+            </h2>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-2 gap-12">
+            {testimonials.map((t, i) => (
+              <ScrollReveal key={t.name} delay={i * 0.1}>
+                <div className="group">
+                  <QuoteIcon className="w-6 h-6 mb-5 text-primary" />
+                  <p className="font-heading text-xl md:text-2xl leading-relaxed mb-6 italic" style={{ color: "hsl(30 20% 88%)", letterSpacing: "-0.01em" }}>
+                    "{t.quote}"
+                  </p>
+                  <div className="h-[1px] mb-5" style={{ background: "hsl(201 65% 24%)" }} />
+                  <div className="font-heading font-semibold" style={{ color: "hsl(30 20% 97%)" }}>{t.name}</div>
+                  <div className="text-xs tracking-widest uppercase mt-0.5" style={{ color: "hsl(201 60% 50%)" }}>{t.role}</div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TRANSPARENCY — 3-col numbered checklist */}
+      <section className="py-20 px-6 bg-background border-t border-border">
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
+            <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">TRANSPARENCY</p>
+            <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground mb-12" style={{ letterSpacing: "-0.025em" }}>
+              How we keep ourselves honest.
+            </h2>
+          </ScrollReveal>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-0 divide-y sm:divide-y-0 divide-border border-t border-border">
+            {[
+              { n: "01", text: "Annual third-party audit by an independent Ethiopian firm." },
+              { n: "02", text: "Live impact tracker — updated quarterly on this page." },
+              { n: "03", text: "100% of unclaimed premiums (after fixed fee) go to causes." },
+              { n: "04", text: "Nonprofit partners are vetted and publicly listed." },
+              { n: "05", text: "Customers vote on causes during signup — no surprises." },
+              { n: "06", text: "Field reports published for every funded project." },
+            ].map((item) => (
+              <ScrollReveal key={item.n}>
+                <div className="flex gap-4 p-6 group cursor-default hover:bg-accent/40 transition-colors duration-200">
+                  <CheckCircle className="w-5 h-5 shrink-0 mt-0.5 text-primary" />
+                  <div>
+                    <p className="text-xs font-bold tracking-widest text-primary mb-1">{item.n}</p>
+                    <p className="text-sm text-foreground/85 leading-relaxed">{item.text}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>
