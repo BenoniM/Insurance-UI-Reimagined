@@ -295,30 +295,36 @@ const ClaimsPage = () => {
     </SectionWrapper>
 
     {/* Important Notice */}
-    <SectionWrapper>
-      <div className="max-w-3xl mx-auto">
-        <ScrollReveal>
-          <div
-            className="rounded-3xl p-8 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] text-white relative overflow-hidden transition-all duration-300 hover:scale-[1.01]"
-          >
-            <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-white/10" />
-            <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full bg-white/5" />
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-4">
-                <AlertTriangle className="w-6 h-6 text-white" />
-                <h3 className="font-heading text-xl font-bold text-white">Important Notice</h3>
-              </div>
-              <ul className="space-y-3 text-white/80 text-sm">
-                <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 mt-0.5 shrink-0 text-primary" />Report all incidents within 48 hours for timely processing</li>
-                <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 mt-0.5 shrink-0 text-primary" />Do not authorize repairs without prior approval from WASS Insurance</li>
-                <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 mt-0.5 shrink-0 text-primary" />Keep all original documents — photocopies may delay your claim</li>
-                <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 mt-0.5 shrink-0 text-primary" />False or exaggerated claims are subject to legal action under Ethiopian law</li>
-              </ul>
-            </div>
-          </div>
-        </ScrollReveal>
+{/* Important Notice — edge-to-edge */}
+<ScrollReveal>
+  <div className="bg-gradient-to-r from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] relative overflow-hidden">
+    <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/5 pointer-events-none" />
+    <div className="absolute -bottom-8 left-1/3 w-28 h-28 rounded-full bg-white/5 pointer-events-none" />
+
+    <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-8">
+      <div className="flex items-center gap-3 mb-5">
+        <AlertTriangle className="w-5 h-5 text-white/90 shrink-0" />
+        <span className="font-heading text-base font-bold text-white tracking-wide uppercase">
+          Important Notice
+        </span>
       </div>
-    </SectionWrapper>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          "Report all incidents within 48 hours for timely processing",
+          "Do not authorize repairs without prior approval from WASS Insurance",
+          "Keep all original documents — photocopies may delay your claim",
+          "False or exaggerated claims are subject to legal action under Ethiopian law",
+        ].map((item) => (
+          <div key={item} className="flex items-start gap-2.5">
+            <ArrowRight className="w-3.5 h-3.5 mt-0.5 shrink-0 text-white/60" />
+            <p className="text-white/80 text-sm leading-snug">{item}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</ScrollReveal>
 
     {/* FAQ — ProcessSteps-style two-column accordion */}
     <section className="pt-6 pb-20 overflow-hidden bg-accent/30">
