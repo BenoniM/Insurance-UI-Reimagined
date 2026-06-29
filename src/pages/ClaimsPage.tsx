@@ -295,36 +295,37 @@ const ClaimsPage = () => {
     </SectionWrapper>
 
     {/* Important Notice */}
-{/* Important Notice — edge-to-edge */}
-<ScrollReveal>
-  <div className="bg-gradient-to-r from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] relative overflow-hidden">
-    <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/5 pointer-events-none" />
-    <div className="absolute -bottom-8 left-1/3 w-28 h-28 rounded-full bg-white/5 pointer-events-none" />
+    <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8 my-8 lg:my-12">
+      <ScrollReveal>
+        <div className="w-full bg-[hsl(201,78%,20%)] rounded-3xl p-6 lg:p-8 relative overflow-hidden drop-shadow-xl">
+          <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/5 pointer-events-none" />
+          <div className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full bg-white/5 pointer-events-none" />
 
-    <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-8">
-      <div className="flex items-center gap-3 mb-5">
-        <AlertTriangle className="w-5 h-5 text-white/90 shrink-0" />
-        <span className="font-heading text-base font-bold text-white tracking-wide uppercase">
-          Important Notice
-        </span>
-      </div>
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-5">
+              <AlertTriangle className="w-6 h-6 text-white/90 shrink-0" />
+              <h2 className="qupe-heading text-xl md:text-2xl text-white">
+                Important Notice
+              </h2>
+            </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          "Report all incidents within 48 hours for timely processing",
-          "Do not authorize repairs without prior approval from WASS Insurance",
-          "Keep all original documents — photocopies may delay your claim",
-          "False or exaggerated claims are subject to legal action under Ethiopian law",
-        ].map((item) => (
-          <div key={item} className="flex items-start gap-2.5">
-            <ArrowRight className="w-3.5 h-3.5 mt-0.5 shrink-0 text-white/60" />
-            <p className="text-white/80 text-sm leading-snug">{item}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+              {[
+                "Report all incidents within 48 hours for timely processing",
+                "Do not authorize repairs without prior approval from WASS Insurance",
+                "Keep all original documents — photocopies may delay your claim",
+                "False or exaggerated claims are subject to legal action under Ethiopian law",
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-2.5">
+                  <ArrowRight className="w-4 h-4 mt-0.5 shrink-0 text-white/60" />
+                  <p className="text-white/80 text-xs md:text-sm leading-relaxed">{item}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
+        </div>
+      </ScrollReveal>
     </div>
-  </div>
-</ScrollReveal>
 
     {/* FAQ — ProcessSteps-style two-column accordion */}
     <section className="pt-6 pb-20 overflow-hidden bg-accent/30">

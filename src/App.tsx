@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -28,8 +29,21 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
 const AnimatedRoutes = () => {
   const location = useLocation();
+
+  useEffect(() => {
+    // Push the scroll event slightly down the call stack to ensure it fires after initial render
+    const timeout = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }, 10);
+    return () => clearTimeout(timeout);
+  }, [location.pathname]);
+
   return (
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<PageTransition><Index /></PageTransition>} />

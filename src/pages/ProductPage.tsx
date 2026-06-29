@@ -255,23 +255,24 @@ const pricingFactors = [
 // ─── Pricing Section ──────────────────────────────────────────────────────────
 
 const PricingSection = ({ pricingRules, t }: { pricingRules: any; t: (key: string) => string }) => (
-  <SectionWrapper>
-    <div className="text-center mb-4">
-      <span className="section-badge mb-4 inline-block">PRICING</span>
-      <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4 capitalize">
-        How your{" "}
-        <span className="text-primary">premium</span>{" "}
-        is calculated
-      </h2>
-      <p className="text-muted-foreground mt-4 max-w-md mx-auto text-base leading-relaxed">
-        A few key details shape your quote — here's exactly what we look at.
-      </p>
-    </div>
+  <section className="py-16 md:py-24 w-full">
+    <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8">
+      <div className="text-center mb-4">
+        <span className="section-badge mb-4 inline-block">PRICING</span>
+        <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4 capitalize">
+          How your{" "}
+          <span className="text-primary">premium</span>{" "}
+          is calculated
+        </h2>
+        <p className="text-muted-foreground mt-4 max-w-md mx-auto text-base leading-relaxed">
+          A few key details shape your quote — here's exactly what we look at.
+        </p>
+      </div>
 
-    <div
-      className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0 max-w-4xl mx-auto mt-14"
-      style={{ borderTop: "1px solid #e5e5e5" }}
-    >
+      <div
+        className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0 max-w-6xl mx-auto mt-14"
+        style={{ borderTop: "1px solid #e5e5e5" }}
+      >
       {pricingFactors.map(({ id, Illustration, headline, description }, i) => (
         <div
           key={id}
@@ -317,7 +318,8 @@ const PricingSection = ({ pricingRules, t }: { pricingRules: any; t: (key: strin
         </a>
       </div>
     )}
-  </SectionWrapper>
+    </div>
+  </section>
 );
 
 // ─── Focal Spotlight Carousel ─────────────────────────────────────────────────
@@ -380,9 +382,9 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
   const EASE = "cubic-bezier(0.33, 1.4, 0.45, 1)";
 
   return (
-    <SectionWrapper className="overflow-hidden !px-0 !pb-0">
+    <section className="pt-16 md:pt-24 overflow-hidden w-full max-w-[1800px] mx-auto">
       <ScrollReveal>
-        <div className="text-center mb-12 px-6 lg:px-16">
+        <div className="text-center mb-12 px-4 lg:px-8">
           <span className="section-badge mb-4 inline-block">KEY BENEFITS</span>
           <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
             Why Choose <span className="text-primary">{name}</span>
@@ -546,7 +548,7 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
       </div>
 
       <div style={{ height: "100px" }} />
-    </SectionWrapper>
+    </section>
   );
 };
 
@@ -561,146 +563,51 @@ const CoverageAndExclusions = ({
   exclusions: string[];
   t: (key: string) => string;
 }) => {
-  const CoverageCard = () => {
-    const [hovered, setHovered] = useState(false);
-    return (
-      <ScrollReveal animation="fadeLeft">
-        <div
-          className="relative w-full h-56 md:h-72 rounded-2xl overflow-hidden cursor-pointer"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          <img
-            src="https://images.unsplash.com/photo-1637763723578-79a4ca9225f7?q=80&w=1171&auto=format&fit=crop"
-            alt="Coverage"
-            className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
-            style={{ filter: hovered ? "brightness(0.25)" : "brightness(0.75)" }}
-          />
-
-          <div
-            className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
-            style={{ opacity: hovered ? 0 : 1, pointerEvents: hovered ? "none" : "auto" }}
-          >
-            <div
-              className="flex items-center gap-2 px-6 py-3 rounded-full"
-              style={{
-                background: "rgba(255,255,255,0.15)",
-                backdropFilter: "blur(14px)",
-                border: "1.5px solid rgba(255,255,255,0.35)",
-              }}
-            >
-              <CheckCircle className="w-4 h-4 text-white" />
-              <span className="font-heading font-semibold text-white text-sm tracking-wide">
-                {t("products.coverage") || "What's Covered"}
-              </span>
-            </div>
-          </div>
-
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center px-6 py-4 transition-opacity duration-500"
-            style={{ opacity: hovered ? 1 : 0, pointerEvents: hovered ? "auto" : "none" }}
-          >
-            <div className="flex flex-col items-center max-w-xs w-full">
-              <div className="flex items-center gap-2 mb-3">
-                <CheckCircle className="w-5 h-5 text-white" />
-                <h2 className="font-heading text-base md:text-lg font-bold text-white">
-                  {t("products.coverage") || "What's Covered"}
-                </h2>
-              </div>
-              <div className="w-full relative left-20 space-y-2 overflow-y-auto max-h-36 md:max-h-40 pr-1">
-                {coverageList.map((item) => (
-                  <div key={item} className="flex items-start gap-3 justify-start">
-                    <CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-white" />
-                    <span className="text-xs md:text-sm text-white leading-relaxed text-left">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </ScrollReveal>
-    );
-  };
-
-const ExclusionsCard = () => {
-  const [hovered, setHovered] = useState(false);
-
   return (
-    <ScrollReveal animation="fadeRight" delay={0.1}>
-      <div
-        className="relative w-full h-56 md:h-72 rounded-2xl overflow-hidden cursor-pointer"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        <img
-          src="https://images.pexels.com/photos/8297426/pexels-photo-8297426.jpeg"
-          alt="Exclusions"
-          className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
-          style={{
-            filter: hovered ? "brightness(0.25)" : "brightness(0.75)",
-          }}
-        />
-
-        {/* Default State */}
-        <div
-          className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
-          style={{
-            opacity: hovered ? 0 : 1,
-            pointerEvents: hovered ? "none" : "auto",
-          }}
-        >
-          <div
-            className="flex items-center gap-2 px-6 py-3 rounded-full"
-            style={{
-              background: "rgba(255,255,255,0.15)",
-              backdropFilter: "blur(14px)",
-              border: "1.5px solid rgba(255,255,255,0.35)",
-            }}
-          >
-            <XCircle className="w-4 h-4 text-white" />
-            <span className="font-heading font-semibold text-white text-sm tracking-wide">
-              {t("products.exclusions") || "Exclusions"}
-            </span>
+    <div className="bg-[hsl(201,78%,14%)] w-full rounded-3xl overflow-hidden drop-shadow-xl grid grid-cols-1 lg:grid-cols-2 text-white">
+      {/* WHAT'S COVERED COLUMN */}
+      <div className="p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-white/10">
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_2fr] gap-6 xl:gap-8">
+          <div>
+            <h3 className="text-xs font-bold tracking-[0.15em] uppercase text-white/60">
+              {t("products.coverage") || "WHAT'S COVERED"}
+            </h3>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-6">Coverage Highlights</h4>
+            <ul className="text-white/70 text-sm leading-relaxed grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
+              {coverageList.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="leading-snug">{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-
-        {/* Hover State */}
-        <div
-  className="absolute inset-0 flex items-center justify-center px-6 py-4 transition-opacity duration-500"
-  style={{
-    opacity: hovered ? 1 : 0,
-    pointerEvents: hovered ? "auto" : "none",
-  }}
->
-  <div className="w-full max-w-xs">
-    <div className="flex items-center gap-2 mb-3">
-      <XCircle className="w-5 h-5 text-white shrink-0" />
-      <h2 className="font-heading text-base md:text-lg font-bold text-white">
-        {t("products.exclusions") || "Exclusions"}
-      </h2>
-    </div>
-
-    <div className="space-y-2 overflow-y-auto max-h-36 md:max-h-40">
-      {exclusions.map((item) => (
-        <div key={item} className="flex items-start gap-3">
-          <XCircle className="w-4 h-4 mt-0.5 shrink-0 text-white" />
-          <span className="text-xs md:text-sm leading-relaxed text-white">
-            {item}
-          </span>
-        </div>
-      ))}
-    </div>
-  </div>
-</div>
       </div>
-    </ScrollReveal>
-  );
-};
 
-  return (
-    <div className="grid md:grid-cols-2 gap-6 md:gap-8 w-full">
-      <CoverageCard />
-      <ExclusionsCard />
+      {/* EXCLUSIONS COLUMN */}
+      <div className="p-8 lg:p-12">
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_2fr] gap-6 xl:gap-8">
+          <div>
+            <h3 className="text-xs font-bold tracking-[0.15em] uppercase text-white/60">
+              {t("products.exclusions") || "EXCLUSIONS"}
+            </h3>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-6">Standard Exclusions</h4>
+            <ul className="text-white/70 text-sm leading-relaxed grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
+              {exclusions.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <XCircle className="w-4 h-4 mt-0.5 shrink-0 text-red-400" />
+                  <span className="leading-snug">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -810,7 +717,7 @@ const ProductPage = () => {
       <KeyBenefitsSpotlight name={name} />
 
       {/* Coverage & Exclusions */}
-      <SectionWrapper>
+      <section className="py-16 md:py-24 w-full">
         <ScrollReveal>
           <div className="text-center mb-12">
             <span className="section-badge mb-4 inline-block">COVERAGE DETAILS</span>
@@ -819,10 +726,10 @@ const ProductPage = () => {
             </h2>
           </div>
         </ScrollReveal>
-        <div className="max-w-6xl mx-auto">
+        <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8">
           <CoverageAndExclusions coverageList={coverageList} exclusions={exclusions} t={t} />
         </div>
-      </SectionWrapper>
+      </section>
 
       {/* Pricing Section */}
       {pricingRules.base_rate && (
