@@ -1,28 +1,45 @@
+import { useEffect, useState, useRef } from "react";
 import { Heart, Droplet, GraduationCap, Stethoscope, ArrowRight } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
 import ScrollReveal from "./ScrollReveal";
 import CTAButton from "./CTAButton";
 
-const causes = [
-  { icon: Droplet, title: "Clean Water", desc: "Funding wells & water access in rural Ethiopia", color: "from-[hsl(205,65%,48%)] to-[hsl(201,78%,23%)]" },
-  { icon: GraduationCap, title: "Education", desc: "School supplies & scholarships for children", color: "from-[hsl(160,55%,45%)] to-[hsl(160,50%,55%)]" },
-  { icon: Stethoscope, title: "Healthcare", desc: "Mobile clinics & medical supplies for underserved communities", color: "from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)]" },
-  { icon: Heart, title: "Disaster Relief", desc: "Rapid response support during emergencies", color: "from-[hsl(160,55%,45%)] to-[hsl(205,65%,48%)]" },
-];
 
 const steps = [
-  { n: "1", title: "Choose your cause", desc: "When you sign up for a WASS policy, pick a cause you care about." },
-  { n: "2", title: "We pool the leftovers", desc: "We take a flat fee. Whatever isn't paid out in claims goes into the Giveback pot." },
-  { n: "3", title: "Communities get funded", desc: "Once a year, every Birr left over flows directly to the nonprofits our customers chose." },
+  { n: "1", title: "Choose your cause", desc: "When you sign up for a WASS policy, pick a cause you care about.", image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&q=80" },
+  { n: "2", title: "We pool the leftovers", desc: "We take a flat fee. Whatever isn't paid out in claims goes into the Giveback pot.", image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&q=80" },
+  { n: "3", title: "Communities get funded", desc: "Once a year, every Birr left over flows directly to the nonprofits our customers chose.", image: "https://images.pexels.com/photos/9630216/pexels-photo-9630216.jpeg" },
 ];
 
 const GivebackSection = () => {
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const stepsContainerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const stepObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute('data-step-index'));
+            setActiveStepIndex(index);
+          }
+        });
+      },
+      { threshold: 0.5, rootMargin: "-10% 0px -10% 0px" }
+    );
+    const stepTriggers = stepsContainerRef.current?.querySelectorAll('.step-scroll-trigger');
+    stepTriggers?.forEach((child) => stepObserver.observe(child));
+
+    return () => {
+      stepObserver.disconnect();
+    };
+  }, []);
+
   return (
     <SectionWrapper id="giveback" className="relative">
       {/* Backdrop accent */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[hsl(160,55%,45%)/0.04] to-transparent" />
 
-      <div className="text-center mb-16">
+      <div className="text-center mb-6">
         <ScrollReveal>
           <span className="section-badge mb-6 inline-block">WASS GIVEBACK</span>
           <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
@@ -34,70 +51,110 @@ const GivebackSection = () => {
         </ScrollReveal>
       </div>
 
-      {/* How it works */}
-      <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-16">
-        {steps.map((step, i) => (
-          <ScrollReveal key={step.n} delay={i * 0.08}>
-            <div
-              className="qupe-card !p-8 h-full text-center relative hover:-translate-y-1.5 transition-transform duration-300"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)] flex items-center justify-center mx-auto mb-5 font-heading font-bold text-white text-lg shadow-lg">
-                {step.n}
-              </div>
-              <h3 className="font-heading font-semibold text-lg text-foreground mb-2">{step.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+      {/* Steps Scroll Showcase */}
+      <div className="relative h-[250vh]" ref={stepsContainerRef}>
+        {/* Invisible Triggers */}
+        <div className="absolute top-0 left-0 w-full h-full flex flex-col pointer-events-none z-0">
+          <div className="h-[25vh]" />
+          {steps.map((_, i) => (
+            <div key={i} data-step-index={i} className="step-scroll-trigger w-full h-[60vh]" />
+          ))}
+        </div>
+
+        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-12 md:py-0 z-10">
+          <div className="w-full max-w-[85rem] mx-auto relative px-6 md:px-8">
+            <div className="flex flex-col divide-y divide-border/60">
+              {steps.map((step, i) => {
+                const isActive = activeStepIndex === i;
+                
+                return (
+                  <div 
+                    key={step.title} 
+                    className="grid grid-cols-[80px_1fr] md:grid-cols-[100px_minmax(0,1.2fr)_1fr] items-center gap-x-6 md:gap-x-16 py-6 relative"
+                  >
+                    {/* Number */}
+                    <div className="flex justify-center md:justify-start self-start md:self-center">
+                      <span 
+                        className={`text-6xl md:text-[5.5rem] leading-none transition-colors duration-500 ${isActive ? 'text-[hsl(201,78%,23%)] font-medium' : 'text-muted-foreground/20 font-light'}`}
+                        style={{ letterSpacing: "-0.04em" }}
+                      >
+                        {step.n}
+                      </span>
+                    </div>
+                    
+                    {/* Mobile Text */}
+                    <div className="flex flex-col justify-center md:hidden pb-2">
+                      <h4 
+                        className={`font-heading text-xl transition-colors duration-500 ${isActive ? 'text-[hsl(201,78%,23%)] font-bold' : 'text-foreground/80 font-semibold'}`}
+                      >
+                        {step.title}
+                      </h4>
+                      <div 
+                        className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isActive ? 'max-h-32 mt-2 opacity-100' : 'max-h-0 opacity-0'}`}
+                      >
+                        <p className="text-muted-foreground text-sm leading-relaxed">
+                          {step.desc}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Image */}
+                    <div 
+                      className={`col-span-2 md:col-span-1 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden rounded-2xl ${isActive ? 'h-[140px] opacity-100 mt-4 md:mt-0' : 'h-0 opacity-0 mt-0'}`}
+                    >
+                      <img 
+                        src={step.image} 
+                        alt={step.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Desktop Text */}
+                    <div className="hidden md:flex flex-col justify-center">
+                      <h4 
+                        className={`font-heading text-xl transition-colors duration-500 ${isActive ? 'text-[hsl(201,78%,23%)] font-bold' : 'text-foreground/80 font-semibold'}`}
+                      >
+                        {step.title}
+                      </h4>
+                      <div 
+                        className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isActive ? 'max-h-32 mt-2 opacity-100' : 'max-h-0 opacity-0'}`}
+                      >
+                        <p className="text-muted-foreground text-sm leading-relaxed">
+                          {step.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </ScrollReveal>
-        ))}
+          </div>
+        </div>
       </div>
 
-      {/* Causes grid */}
-      <ScrollReveal>
-        <h3 className="font-heading text-2xl md:text-3xl text-center text-foreground mb-8">
-          Causes our community supports
-        </h3>
-      </ScrollReveal>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
-        {causes.map((cause, i) => (
-          <ScrollReveal key={cause.title} animation="fadeUp" delay={i * 0.06}>
-            <div
-              className={`rounded-3xl p-7 bg-gradient-to-br ${cause.color} text-white shadow-lg relative overflow-hidden h-full group hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300`}
-            >
-              <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/10" />
-              <div
-                className="relative z-10 w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300"
-              >
-                <cause.icon className="w-6 h-6 text-white" />
-              </div>
-              <h4 className="relative z-10 font-heading font-semibold text-lg text-white mb-2">{cause.title}</h4>
-              <p className="relative z-10 text-sm text-white/80 leading-relaxed">{cause.desc}</p>
-            </div>
-          </ScrollReveal>
-        ))}
-      </div>
 
       {/* Impact callout */}
       <ScrollReveal delay={0.2}>
         <div
-          className="mt-16 max-w-5xl mx-auto rounded-3xl p-10 md:p-12 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(201,78%,18%)] text-white shadow-xl relative overflow-hidden hover:scale-[1.005] transition-transform duration-300"
+          className="mt-16 max-w-[85rem] mx-auto rounded-3xl p-8 md:p-10 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(201,78%,18%)] text-white shadow-xl relative overflow-hidden hover:scale-[1.005] transition-transform duration-300 mx-4 md:mx-8"
         >
           <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-primary/15" />
           <div className="absolute -bottom-12 -left-12 w-40 h-40 rounded-full bg-white/5" />
 
-          <div className="relative z-10 grid md:grid-cols-3 gap-8 items-center">
-            <div className="md:col-span-2">
-              <span className="inline-block px-3 py-1 rounded-full bg-white/15 text-xs font-bold tracking-wider uppercase text-white/90 mb-4">
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div className="flex-1 max-w-3xl">
+              <span className="inline-block px-3 py-1 rounded-full bg-white/15 text-xs font-bold tracking-wider uppercase text-white/90 mb-3">
                 IMPACT TO DATE
               </span>
-              <h3 className="qupe-heading text-3xl md:text-4xl text-white mb-3">
+              <h3 className="qupe-heading text-2xl md:text-3xl text-white mb-2">
                 Over 4.2M Birr returned to Ethiopian communities
               </h3>
-              <p className="text-white/75 leading-relaxed">
+              <p className="text-white/75 text-sm md:text-base leading-relaxed">
                 Funding clean water projects, scholarships, mobile clinics, and emergency response — chosen by you, the policyholder. Your coverage doesn't just protect you, it lifts up the country we all share.
               </p>
             </div>
-            <div className="flex md:justify-end">
-              <CTAButton href="/quote" variant="primary" size="lg" className="!bg-white !text-[hsl(201,78%,23%)] hover:!bg-white/90">
+            <div className="shrink-0">
+              <CTAButton href="/quote" variant="secondary" size="lg" className="!bg-primary !text-[hsla(0, 0%, 100%, 1.00)] hover:!bg-primary/90">
                 Join the movement <ArrowRight className="w-4 h-4 ml-1" />
               </CTAButton>
             </div>

@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import ExpandingHero from "@/components/ExpandingHero";
 import GivebackSection from "@/components/GivebackSection";
 import ScrollReveal from "@/components/ScrollReveal";
+import { useEffect, useState, useRef } from "react";
 import {
   Heart,
   Droplet,
@@ -21,10 +22,10 @@ const yearlyImpact = [
 ];
 
 const causeBreakdown = [
-  { icon: Droplet, title: "Clean Water", pct: 32, desc: "12 wells funded across Oromia & SNNPR.", color: "from-[hsl(205,65%,48%)] to-[hsl(201,78%,23%)]" },
-  { icon: GraduationCap, title: "Education", pct: 28, desc: "1,840 scholarships and school-supply kits.", color: "from-[hsl(160,55%,45%)] to-[hsl(160,50%,55%)]" },
-  { icon: Stethoscope, title: "Healthcare", pct: 24, desc: "4 mobile clinics serving rural districts.", color: "from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)]" },
-  { icon: Heart, title: "Disaster Relief", pct: 16, desc: "Emergency grants during floods in Awash.", color: "from-[hsl(160,55%,45%)] to-[hsl(205,65%,48%)]" },
+  { icon: Droplet, title: "Clean Water", pct: 32, desc: "12 wells funded across Oromia & SNNPR.", image: "https://images.unsplash.com/photo-1594398901394-4e34939a4fd0?w=600&q=80" },
+  { icon: GraduationCap, title: "Education", pct: 28, desc: "1,840 scholarships and school-supply kits.", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80" },
+  { icon: Stethoscope, title: "Healthcare", pct: 24, desc: "4 mobile clinics serving rural districts.", image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&q=80" },
+  { icon: Heart, title: "Disaster Relief", pct: 16, desc: "Emergency grants during floods in Awash.", image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=600&q=80" },
 ];
 
 const updates = [
@@ -40,6 +41,29 @@ const testimonials = [
 ];
 
 const GivebackPage = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute('data-index'));
+            setActiveIndex(index);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const isMobile = window.innerWidth < 768;
+    const triggers = containerRef.current?.querySelectorAll(isMobile ? '.cause-row-mobile' : '.cause-trigger');
+    triggers?.forEach((child) => observer.observe(child));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -96,51 +120,109 @@ const GivebackPage = () => {
         </div>
       </section>
 
-      {/* 2026 ALLOCATION — editorial progress rows */}
-      <section className="py-16 px-6 border-t border-border bg-background">
-        <div className="max-w-5xl mx-auto">
-          <ScrollReveal>
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-              <div>
+      {/* 2026 ALLOCATION — Pinned scroll showcase */}
+      <section className="relative border-t border-border bg-background h-auto md:h-[280vh]" ref={containerRef}>
+
+        {/* Invisible Triggers (Desktop Only) */}
+        <div className="hidden md:flex absolute top-0 left-0 w-full h-full flex-col pointer-events-none">
+          <div className="h-[20vh]" />
+          {causeBreakdown.map((_, i) => (
+            <div key={i} data-index={i} className="cause-trigger w-full h-[60vh]" />
+          ))}
+        </div>
+
+        {/* Sticky Visual Content */}
+        <div className="md:sticky md:top-0 md:h-screen w-full flex items-center justify-center overflow-hidden py-24 md:py-0">
+          <div className="w-full max-w-[90rem] mx-auto px-6 relative">
+
+            {/* Section Header */}
+            <div className="md:absolute md:-top-[25vh] md:left-6 mb-12 md:mb-0">
+              <ScrollReveal>
                 <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">2026 ALLOCATION</p>
                 <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground" style={{ letterSpacing: "-0.025em" }}>
                   Where the money went.
                 </h2>
-              </div>
-              <p className="text-sm text-muted-foreground max-w-xs">
-                Customers vote at signup. Here's how our 4.2M ETB was allocated this year.
-              </p>
+              </ScrollReveal>
             </div>
-          </ScrollReveal>
-          <div className="space-y-0 divide-y divide-border">
-            {causeBreakdown.map((c, i) => (
-              <ScrollReveal key={c.title} delay={i * 0.07}>
-                <div className="flex items-center gap-5 md:gap-8 py-6 group cursor-default hover:pl-2 transition-all duration-300">
-                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${c.color} flex items-center justify-center shrink-0`}>
-                    <c.icon className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-baseline justify-between mb-2">
-                      <span className="font-heading font-semibold text-foreground text-base md:text-lg group-hover:text-primary transition-colors duration-300">
-                        {c.title}
-                      </span>
-                      <span className="font-heading font-bold text-3xl md:text-4xl text-foreground" style={{ letterSpacing: "-0.03em" }}>
+
+            <div className="flex flex-col md:flex-row items-center justify-between w-full">
+
+              {/* Col 1: Percentage */}
+              <div className="hidden md:flex flex-col w-[15%]">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] mb-2">Allocated</p>
+                <div
+                  className="font-heading font-bold transition-colors duration-500 text-5xl lg:text-6xl"
+                  style={{ color: activeIndex % 2 === 0 ? "hsl(var(--primary))" : "hsl(160 55% 55%)", letterSpacing: "-0.03em" }}
+                >
+                  {causeBreakdown[activeIndex].pct}%
+                </div>
+              </div>
+
+              {/* Col 2: Titles */}
+              <div className="w-full md:w-[40%] flex flex-col justify-center items-start gap-2 md:gap-1 z-10">
+                {causeBreakdown.map((c, i) => {
+                  const isActive = activeIndex === i;
+                  const activeColor = i % 2 === 0 ? "hsl(var(--primary))" : "hsl(160 55% 55%)";
+
+                  return (
+                    <h3
+                      key={c.title}
+                      data-index={i}
+                      onClick={() => setActiveIndex(i)}
+                      onMouseEnter={() => setActiveIndex(i)}
+                      className="cause-row-mobile font-heading font-bold transition-all duration-500 whitespace-nowrap cursor-pointer py-4 md:py-0"
+                      style={{
+                        fontSize: "clamp(2.5rem, 5vw, 5.5rem)",
+                        lineHeight: "1.05",
+                        letterSpacing: "-0.02em",
+                        color: isActive ? activeColor : "hsl(var(--foreground))",
+                        opacity: isActive ? 1 : 0.2,
+                        transform: isActive ? "translateX(10px)" : "translateX(0px)"
+                      }}
+                    >
+                      <span className="text-[0.5em] opacity-80 md:hidden mr-4 align-middle" style={{ letterSpacing: "-0.03em" }}>
                         {c.pct}%
                       </span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex-1 h-[2px] bg-border rounded-full overflow-hidden">
-                        <div
-                          className={`h-full bg-gradient-to-r ${c.color} rounded-full`}
-                          style={{ width: `${c.pct}%`, transition: "width 1s ease-out" }}
-                        />
-                      </div>
-                      <p className="text-xs text-muted-foreground shrink-0 max-w-[180px] text-right hidden md:block">{c.desc}</p>
-                    </div>
-                  </div>
+                      {c.title}
+                    </h3>
+                  );
+                })}
+              </div>
+
+              {/* Col 3: Image */}
+              <div className="w-full md:w-[25%] flex justify-center mt-12 md:mt-0">
+                <div className="relative w-full max-w-[280px] aspect-[1/1] shrink-0 rounded-xl overflow-hidden bg-accent/20 transition-all duration-500 shadow-2xl">
+                  {causeBreakdown.map((c, i) => (
+                    <img
+                      key={c.title}
+                      src={c.image}
+                      alt={c.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+                      style={{ opacity: activeIndex === i ? 1 : 0 }}
+                    />
+                  ))}
                 </div>
-              </ScrollReveal>
-            ))}
+              </div>
+
+              {/* Col 4: Description */}
+              <div className="w-full md:w-[20%] text-center md:text-left mt-8 md:mt-0 md:pl-6">
+                <div className="relative w-full min-h-[80px]">
+                  {causeBreakdown.map((c, i) => (
+                    <p
+                      key={c.title}
+                      className="absolute inset-x-0 top-0 md:top-1/2 md:-translate-y-1/2 text-sm lg:text-base text-muted-foreground md:text-foreground font-medium leading-relaxed transition-all duration-500"
+                      style={{
+                        opacity: activeIndex === i ? 1 : 0,
+                        pointerEvents: activeIndex === i ? 'auto' : 'none'
+                      }}
+                    >
+                      {c.desc}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>

@@ -120,34 +120,60 @@ const ContactPage = () => (
       <HoverBranchList />
     </SectionWrapper>
 
-    {/* Office Hours */}
-    <SectionWrapper className="bg-accent/30">
-      <div className="max-w-3xl mx-auto">
-        <ScrollReveal>
-          <div className="rounded-3xl p-8 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(160,55%,45%)] text-white relative overflow-hidden transition-all duration-300 hover:scale-[1.01]">
-            <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-white/10" />
-            <div className="relative z-10 grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <Clock className="w-8 h-8 text-primary mx-auto mb-3" />
-                <h3 className="font-heading font-semibold text-white mb-2">Office Hours</h3>
-                <p className="text-white/70 text-sm">Mon – Fri: 8:30 AM – 5:30 PM</p>
-                <p className="text-white/70 text-sm">Sat: 9:00 AM – 1:00 PM</p>
+    {/* Contact Information Cards */}
+    <SectionWrapper className="bg-accent/10">
+      <div className="max-w-5xl mx-auto px-4">
+        <div className="grid md:grid-cols-3 gap-4">
+          
+          <ScrollReveal>
+            <div className="rounded-xl border border-border bg-background overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
+              <div className="h-32 w-full overflow-hidden">
+                <img src="https://images.pexels.com/photos/234140/pexels-photo-234140.jpeg" alt="Office Hours" className="w-full h-full object-cover" />
               </div>
-              <div>
-                <Phone className="w-8 h-8 text-primary mx-auto mb-3" />
-                <h3 className="font-heading font-semibold text-white mb-2">Claims Hotline</h3>
-                <p className="text-white/70 text-sm">Available 24/7</p>
-                <p className="text-white/70 text-sm">+251 11 123 4567</p>
-              </div>
-              <div>
-                <Shield className="w-8 h-8 text-primary mx-auto mb-3" />
-                <h3 className="font-heading font-semibold text-white mb-2">Emergency</h3>
-                <p className="text-white/70 text-sm">Roadside assistance</p>
-                <p className="text-white/70 text-sm">+251 91 123 4567</p>
+              <div className="p-4 relative flex flex-col min-h-[150px]">
+                <span className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wider">Availability</span>
+                <h3 className="font-heading font-semibold text-base text-foreground mb-2 leading-tight">Office Hours</h3>
+                <p className="text-[13px] text-muted-foreground leading-relaxed mb-1">Mon – Fri: 8:30 AM – 5:30 PM</p>
+                <p className="text-[13px] text-muted-foreground leading-relaxed">Sat: 9:00 AM – 1:00 PM</p>
+                
+                <span className="absolute bottom-4 right-4 text-[10px] text-muted-foreground">WASS Insurance</span>
               </div>
             </div>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <div className="rounded-xl border border-border bg-background overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
+              <div className="h-32 w-full overflow-hidden">
+                <img src="https://images.pexels.com/photos/7709152/pexels-photo-7709152.jpeg" alt="Claims Hotline" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-4 relative flex flex-col min-h-[150px]">
+                <span className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wider">Support</span>
+                <h3 className="font-heading font-semibold text-base text-foreground mb-2 leading-tight">Claims Hotline</h3>
+                <p className="text-[13px] text-muted-foreground leading-relaxed mb-1">Available 24/7</p>
+                <p className="text-[13px] text-foreground font-medium leading-relaxed">+251 11 123 4567</p>
+                
+                <span className="absolute bottom-4 right-4 text-[10px] text-muted-foreground">WASS Insurance</span>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.2}>
+            <div className="rounded-xl border border-border bg-background overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
+              <div className="h-32 w-full overflow-hidden">
+                <img src="https://images.pexels.com/photos/6831054/pexels-photo-6831054.jpeg" alt="Emergency Support" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-4 relative flex flex-col min-h-[150px]">
+                <span className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wider">Urgent</span>
+                <h3 className="font-heading font-semibold text-base text-foreground mb-2 leading-tight">Emergency</h3>
+                <p className="text-[13px] text-muted-foreground leading-relaxed mb-1">Roadside assistance</p>
+                <p className="text-[13px] text-foreground font-medium leading-relaxed">+251 91 123 4567</p>
+                
+                <span className="absolute bottom-4 right-4 text-[10px] text-muted-foreground">WASS Insurance</span>
+              </div>
+            </div>
+          </ScrollReveal>
+
+        </div>
       </div>
     </SectionWrapper>
 
