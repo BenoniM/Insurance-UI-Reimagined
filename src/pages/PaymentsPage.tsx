@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const statusBadge = (s: string) => {
   const map: Record<string, string> = {
@@ -94,6 +95,17 @@ const PaymentsPage = () => {
             <Link to="/payments/new"><Button className="teal-gradient text-primary-foreground"><Plus className="w-4 h-4 mr-1" /> Record Payment</Button></Link>
           </div>
 
+          {loading ? (
+            <>
+              <div className="grid sm:grid-cols-3 gap-4 mb-8">
+                <Skeleton className="h-24 w-full rounded-xl" />
+                <Skeleton className="h-24 w-full rounded-xl" />
+                <Skeleton className="h-24 w-full rounded-xl" />
+              </div>
+              <Skeleton className="h-48 w-full rounded-xl" />
+            </>
+          ) : (
+            <>
           <div className="grid sm:grid-cols-3 gap-4 mb-8">
             <div className="bg-card border border-border rounded-xl p-5">
               <CheckCircle className="w-5 h-5 text-primary mb-2" />
@@ -150,9 +162,7 @@ const PaymentsPage = () => {
 
           {/* Payment history */}
           <h2 className="font-heading text-lg font-semibold mb-3">Payment history</h2>
-          {loading ? (
-            <p className="text-center py-8 text-muted-foreground">Loading...</p>
-          ) : payments.length === 0 ? (
+          {payments.length === 0 ? (
             <div className="text-center py-16 bg-card border border-border rounded-xl">
               <CreditCard className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground mb-4">No payments recorded yet</p>
@@ -191,6 +201,8 @@ const PaymentsPage = () => {
                 </table>
               </div>
             </div>
+          )}
+            </>
           )}
         </div>
       </section>

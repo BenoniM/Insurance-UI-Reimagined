@@ -208,7 +208,7 @@ const ClaimsPage = () => {
       headline={'Fast, Fair <span class="text-primary">Claims Processing</span>'}
       subtitle="We handle your claims with speed and transparency — so you can focus on what matters."
       ctaLabel="File a Claim"
-      ctaHref="/claims/submit"
+      ctaHref="/claims/new"
     />
 
     {/* Claims Process Steps */}

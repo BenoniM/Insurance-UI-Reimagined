@@ -10,8 +10,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle, ArrowRight, ArrowLeft, Sparkles } from "lucide-react";
+import { CheckCircle, ArrowRight, ArrowLeft, Sparkles, Pencil, ShieldCheck } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Product {
   id: string;
@@ -30,10 +31,13 @@ const QuotePage = () => {
 
   const [step, setStep] = useState(0);
   const [products, setProducts] = useState<Product[]>([]);
+  const [productsLoading, setProductsLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     supabase.from("products").select("id, name, slug, name_am, pricing_rules").eq("active", true).order("sort_order").then(({ data }) => {
@@ -45,8 +49,22 @@ const QuotePage = () => {
           if (found) setSelectedProduct(found.id);
         }
       }
+      setProductsLoading(false);
     });
   }, [searchParams]);
+
+  // Reset details when the chosen product changes so stale answers from a
+  // different product's fields don't carry over into the price calc.
+  useEffect(() => {
+    setFormData((prev) => {
+      const next: Record<string, string> = {};
+      if (prev.name) next.name = prev.name;
+      if (prev.email) next.email = prev.email;
+      if (prev.phone) next.phone = prev.phone;
+      return next;
+    });
+    setFieldErrors({});
+  }, [selectedProduct]);
 
   const currentProduct = products.find((p) => p.id === selectedProduct);
   const pricingRules = currentProduct?.pricing_rules as any;
@@ -146,12 +164,33 @@ const QuotePage = () => {
     return Math.round(price);
   };
 
+  const livePrice = step === 1 ? calculatePrice() : null;
+  const requiredFieldsComplete = fields.length > 0 && fields.every((f) => formData[f] !== undefined && formData[f] !== "");
+
+  const validateStep1 = () => {
+    const errors: Record<string, boolean> = {};
+    if (!user) {
+      if (!formData.name?.trim()) errors.name = true;
+      if (!formData.email?.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) errors.email = true;
+      if (!formData.phone?.trim()) errors.phone = true;
+    }
+    fields.forEach((f) => {
+      if (!formData[f] || formData[f] === "") errors[f] = true;
+    });
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleNext = () => {
     if (step === 0 && !selectedProduct) {
       toast({ title: "Please select a product", variant: "destructive" });
       return;
     }
     if (step === 1) {
+      if (!validateStep1()) {
+        toast({ title: "A few details are missing", description: "Please fill in the highlighted fields to continue.", variant: "destructive" });
+        return;
+      }
       const price = calculatePrice();
       setEstimatedPrice(price);
     }
@@ -198,7 +237,7 @@ const QuotePage = () => {
       }
 
       toast({ title: "Quote submitted!", description: "We'll contact you shortly with your personalized quote." });
-      navigate(user ? "/dashboard" : "/");
+      setSubmitted(true);
     } catch (error: any) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } finally {
@@ -207,6 +246,58 @@ const QuotePage = () => {
   };
 
   const steps = [t("quote.selectProduct"), t("quote.yourDetails"), t("quote.review")];
+
+  if (submitted) {
+    return (
+      <div className="min-h-screen">
+        <Navbar />
+        <section className="pt-28 pb-16">
+          <div className="container mx-auto px-4 max-w-2xl">
+            <div className="bg-card border border-border rounded-2xl p-8 md:p-12 text-center animate-in fade-in zoom-in-95 duration-500">
+              <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-8 h-8" />
+              </div>
+              <h1 className="font-heading text-2xl md:text-3xl font-bold mb-2">
+                {lang === "am" ? "ጥያቄዎ ተልኳል!" : "Your quote is on its way!"}
+              </h1>
+              <p className="text-muted-foreground mb-6">
+                {lang === "am"
+                  ? "የእርስዎ የግምት ዋጋ ተልኳል። ቡድናችን በቅርቡ ያነጋግርዎታል።"
+                  : "We've sent your estimate and a member of our team will follow up shortly to finalize your policy."}
+              </p>
+
+              <div className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-xl p-6 mb-8">
+                <p className="text-xs font-bold tracking-widest uppercase text-primary mb-1">{t("quote.estimatedPremium")}</p>
+                <p className="font-heading text-4xl font-bold text-primary">
+                  {estimatedPrice?.toLocaleString()} <span className="text-lg">{t("common.etb")}</span>
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button className="teal-gradient text-primary-foreground" onClick={() => navigate(user ? "/dashboard" : "/")}>
+                  {user ? (lang === "am" ? "ወደ ዳሽቦርድ ይሂዱ" : "Go to Dashboard") : (lang === "am" ? "ወደ መነሻ ገጽ ይመለሱ" : "Back to Home")}
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSubmitted(false);
+                    setStep(0);
+                    setSelectedProduct("");
+                    setFormData({});
+                    setEstimatedPrice(null);
+                  }}
+                >
+                  {lang === "am" ? "ሌላ ግምት ያግኙ" : "Get another quote"}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -249,37 +340,80 @@ const QuotePage = () => {
               {step === 0 && (
                 <div className="space-y-4">
                   <h2 className="font-heading text-xl font-semibold mb-4">{t("quote.selectProduct")}</h2>
-                  <RadioGroup value={selectedProduct} onValueChange={setSelectedProduct}>
-                    {products.map((p) => (
-                      <div key={p.id} className="flex items-center space-x-3 border border-border rounded-lg p-4 hover:bg-accent/50 transition-colors cursor-pointer" onClick={() => setSelectedProduct(p.id)}>
-                        <RadioGroupItem value={p.id} id={p.id} />
-                        <Label htmlFor={p.id} className="cursor-pointer font-medium">
-                          {lang === "am" && p.name_am ? p.name_am : p.name}
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
+                  {productsLoading ? (
+                    <div className="space-y-3">
+                      {[0, 1, 2].map((i) => (
+                        <Skeleton key={i} className="h-[60px] w-full rounded-lg" />
+                      ))}
+                    </div>
+                  ) : products.length === 0 ? (
+                    <p className="text-sm text-muted-foreground text-center py-8">
+                      {lang === "am" ? "በአሁኑ ጊዜ ምንም ምርቶች የሉም።" : "No products are available right now. Please check back soon."}
+                    </p>
+                  ) : (
+                    <RadioGroup value={selectedProduct} onValueChange={setSelectedProduct}>
+                      {products.map((p) => (
+                        <div
+                          key={p.id}
+                          className={`flex items-center space-x-3 border rounded-lg p-4 hover:bg-accent/50 transition-colors cursor-pointer ${
+                            selectedProduct === p.id ? "border-primary bg-primary/5" : "border-border"
+                          }`}
+                          onClick={() => setSelectedProduct(p.id)}
+                        >
+                          <RadioGroupItem value={p.id} id={p.id} />
+                          <Label htmlFor={p.id} className="cursor-pointer font-medium flex-1">
+                            {lang === "am" && p.name_am ? p.name_am : p.name}
+                          </Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
+                  )}
                 </div>
               )}
 
               {/* Step 1: Form fields */}
               {step === 1 && (
                 <div className="space-y-4">
-                  <h2 className="font-heading text-xl font-semibold mb-4">{t("quote.yourDetails")}</h2>
-                  
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="font-heading text-xl font-semibold">{t("quote.yourDetails")}</h2>
+                    <button
+                      type="button"
+                      onClick={() => setStep(0)}
+                      className="text-xs text-primary hover:underline flex items-center gap-1"
+                    >
+                      <Pencil className="w-3 h-3" /> {lang === "am" ? "ምርት ቀይር" : "Change product"}
+                    </button>
+                  </div>
+
                   {!user && (
                     <>
                       <div>
                         <Label>{lang === "am" ? "ስም" : "Name"}</Label>
-                        <Input value={formData.name || ""} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Full name" />
+                        <Input
+                          value={formData.name || ""}
+                          onChange={(e) => { setFormData({ ...formData, name: e.target.value }); setFieldErrors((f) => ({ ...f, name: false })); }}
+                          placeholder="Full name"
+                          className={fieldErrors.name ? "border-destructive focus-visible:ring-destructive" : ""}
+                        />
                       </div>
                       <div>
                         <Label>{lang === "am" ? "ኢሜይል" : "Email"}</Label>
-                        <Input type="email" value={formData.email || ""} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="you@email.com" />
+                        <Input
+                          type="email"
+                          value={formData.email || ""}
+                          onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setFieldErrors((f) => ({ ...f, email: false })); }}
+                          placeholder="you@email.com"
+                          className={fieldErrors.email ? "border-destructive focus-visible:ring-destructive" : ""}
+                        />
                       </div>
                       <div>
                         <Label>{lang === "am" ? "ስልክ" : "Phone"}</Label>
-                        <Input value={formData.phone || ""} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+251..." />
+                        <Input
+                          value={formData.phone || ""}
+                          onChange={(e) => { setFormData({ ...formData, phone: e.target.value }); setFieldErrors((f) => ({ ...f, phone: false })); }}
+                          placeholder="+251..."
+                          className={fieldErrors.phone ? "border-destructive focus-visible:ring-destructive" : ""}
+                        />
                       </div>
                     </>
                   )}
@@ -287,15 +421,22 @@ const QuotePage = () => {
                   {fields.map((field) => {
                     const label = fieldLabels[field]?.[lang] || field;
                     const options = fieldOptions[field];
+                    const hasError = !!fieldErrors[field];
 
                     if (options) {
                       return (
                         <div key={field}>
                           <Label>{label}</Label>
-                          <RadioGroup value={formData[field] || ""} onValueChange={(val) => setFormData({ ...formData, [field]: val })}>
+                          <RadioGroup value={formData[field] || ""} onValueChange={(val) => { setFormData({ ...formData, [field]: val }); setFieldErrors((f) => ({ ...f, [field]: false })); }}>
                             <div className="grid grid-cols-2 gap-2 mt-1">
                               {options.map((opt) => (
-                                <div key={opt.value} className="flex items-center space-x-2 border border-border rounded-lg p-3 hover:bg-accent/50 cursor-pointer" onClick={() => setFormData({ ...formData, [field]: opt.value })}>
+                                <div
+                                  key={opt.value}
+                                  className={`flex items-center space-x-2 border rounded-lg p-3 hover:bg-accent/50 cursor-pointer ${
+                                    formData[field] === opt.value ? "border-primary bg-primary/5" : hasError ? "border-destructive" : "border-border"
+                                  }`}
+                                  onClick={() => { setFormData({ ...formData, [field]: opt.value }); setFieldErrors((f) => ({ ...f, [field]: false })); }}
+                                >
                                   <RadioGroupItem value={opt.value} id={`${field}-${opt.value}`} />
                                   <Label htmlFor={`${field}-${opt.value}`} className="cursor-pointer text-sm">{opt.label}</Label>
                                 </div>
@@ -312,19 +453,39 @@ const QuotePage = () => {
                         <Input
                           type="number"
                           value={formData[field] || ""}
-                          onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                          onChange={(e) => { setFormData({ ...formData, [field]: e.target.value }); setFieldErrors((f) => ({ ...f, [field]: false })); }}
                           placeholder={label}
+                          className={hasError ? "border-destructive focus-visible:ring-destructive" : ""}
                         />
                       </div>
                     );
                   })}
+
+                  {/* Live price preview, updates as the form is filled in */}
+                  {requiredFieldsComplete && livePrice !== null && (
+                    <div className="flex items-center justify-between bg-primary/5 border border-primary/20 rounded-lg px-4 py-3 mt-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                      <span className="text-xs text-muted-foreground">{lang === "am" ? "የቀጥታ ግምት" : "Live estimate"}</span>
+                      <span className="font-heading font-bold text-primary">
+                        {livePrice.toLocaleString()} {t("common.etb")} <span className="text-xs font-normal text-muted-foreground">{lang === "am" ? "/ ዓመት" : "/ yr"}</span>
+                      </span>
+                    </div>
+                  )}
                 </div>
               )}
 
               {/* Step 2: Review */}
               {step === 2 && (
                 <div className="space-y-6">
-                  <h2 className="font-heading text-xl font-semibold">{t("quote.review")}</h2>
+                  <div className="flex items-center justify-between">
+                    <h2 className="font-heading text-xl font-semibold">{t("quote.review")}</h2>
+                    <button
+                      type="button"
+                      onClick={() => setStep(1)}
+                      className="text-xs text-primary hover:underline flex items-center gap-1"
+                    >
+                      <Pencil className="w-3 h-3" /> {lang === "am" ? "አርትዕ" : "Edit details"}
+                    </button>
+                  </div>
                   
                   <div
                     className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-xl p-8 text-center animate-in zoom-in-95 fade-in duration-500 fill-mode-backwards"
@@ -349,6 +510,15 @@ const QuotePage = () => {
                       </p>
                     ))}
                   </div>
+
+                  <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/40 rounded-lg p-3">
+                    <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                    <span>
+                      {lang === "am"
+                        ? "ይህ ግምት ብቻ ነው እና አስገዳጅ አይደለም። ቡድናችን ለማረጋገጥ ያነጋግርዎታል።"
+                        : "This is a non-binding estimate. No payment is taken now — our team will confirm final pricing with you."}
+                    </span>
+                  </div>
                 </div>
               )}
 
@@ -361,7 +531,11 @@ const QuotePage = () => {
                 ) : <div />}
 
                 {step < 2 ? (
-                  <Button className="teal-gradient text-primary-foreground" onClick={handleNext}>
+                  <Button
+                    className="teal-gradient text-primary-foreground"
+                    onClick={handleNext}
+                    disabled={step === 0 && (productsLoading || !selectedProduct)}
+                  >
                     {t("quote.next")} <ArrowRight className="w-4 h-4 ml-1" />
                   </Button>
                 ) : (

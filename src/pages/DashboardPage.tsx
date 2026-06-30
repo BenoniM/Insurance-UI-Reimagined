@@ -8,6 +8,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import CTAButton from "@/components/CTAButton";
 
@@ -42,7 +43,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      navigate("/auth");
+      navigate("/auth?redirect=/dashboard");
     }
   }, [user, authLoading, navigate]);
 
@@ -67,9 +68,13 @@ const DashboardPage = () => {
     });
   }, [user]);
 
+  const [savingProfile, setSavingProfile] = useState(false);
+
   const updateProfile = async () => {
     if (!user) return;
+    setSavingProfile(true);
     const { error } = await supabase.from("profiles").update(profileForm).eq("user_id", user.id);
+    setSavingProfile(false);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
@@ -79,12 +84,18 @@ const DashboardPage = () => {
 
   if (authLoading || !user) return null;
 
-  const tabs: { key: Tab; label: string; icon: typeof Shield }[] = [
-    { key: "policies", label: t("dashboard.policies"), icon: Shield },
-    { key: "claims", label: t("dashboard.claims"), icon: FileText },
+  const tabs: { key: Tab; label: string; icon: typeof Shield; count?: number }[] = [
+    { key: "policies", label: t("dashboard.policies"), icon: Shield, count: policies.length },
+    { key: "claims", label: t("dashboard.claims"), icon: FileText, count: claims.filter((c) => c.status !== "approved" && c.status !== "rejected").length },
     { key: "payments", label: t("dashboard.payments"), icon: CreditCard },
     { key: "profile", label: t("dashboard.profile"), icon: User },
   ];
+
+  const openClaims = claims.filter((c) => c.status === "submitted" || c.status === "under_review").length;
+  const totalDue = policies.reduce((sum, p) => {
+    const paid = payments.filter((x) => x.policy_id === p.id && x.status === "confirmed").reduce((s, x) => s + Number(x.amount || 0), 0);
+    return sum + Math.max(Number(p.premium_amount || 0) - paid, 0);
+  }, 0);
 
   return (
     <div className="min-h-screen">
@@ -97,24 +108,54 @@ const DashboardPage = () => {
             {t("dashboard.title")}
           </h1>
 
+          {/* At-a-glance summary */}
+          {!loadingData && (
+            <div className="grid sm:grid-cols-3 gap-4 mb-8 animate-in fade-in slide-in-from-bottom-3 duration-500">
+              <div className="bg-card border border-border rounded-xl p-5">
+                <Shield className="w-5 h-5 text-primary mb-2" />
+                <p className="text-2xl font-heading font-bold">{policies.length}</p>
+                <p className="text-xs text-muted-foreground">{t("dashboard.policies")}</p>
+              </div>
+              <div className="bg-card border border-border rounded-xl p-5">
+                <FileText className="w-5 h-5 text-primary mb-2" />
+                <p className="text-2xl font-heading font-bold">{openClaims}</p>
+                <p className="text-xs text-muted-foreground">{lang === "am" ? "ክፍት የይገባኛል ጥያቄዎች" : "Open claims"}</p>
+              </div>
+              <div className="bg-card border border-border rounded-xl p-5">
+                <CreditCard className="w-5 h-5 text-yellow-600 mb-2" />
+                <p className="text-2xl font-heading font-bold">{totalDue.toLocaleString()} {t("common.etb")}</p>
+                <p className="text-xs text-muted-foreground">{lang === "am" ? "ያለ ክፍያ መጠን" : "Premium balance due"}</p>
+              </div>
+            </div>
+          )}
+
           {/* Tabs */}
           <div className="flex gap-1 mb-8 overflow-x-auto border-b border-border pb-1">
-            {tabs.map((t) => (
+            {tabs.map((tabItem) => (
               <button
-                key={t.key}
-                onClick={() => setTab(t.key)}
+                key={tabItem.key}
+                onClick={() => setTab(tabItem.key)}
                 className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap ${
-                  tab === t.key ? "bg-primary/10 text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"
+                  tab === tabItem.key ? "bg-primary/10 text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                <t.icon className="w-4 h-4" />
-                {t.label}
+                <tabItem.icon className="w-4 h-4" />
+                {tabItem.label}
+                {!!tabItem.count && (
+                  <span className={`text-[10px] font-bold rounded-full px-1.5 py-0.5 ${tab === tabItem.key ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+                    {tabItem.count}
+                  </span>
+                )}
               </button>
             ))}
           </div>
 
           {loadingData ? (
-            <div className="text-center py-12 text-muted-foreground">{t("common.loading")}</div>
+            <div className="space-y-4">
+              <Skeleton className="h-24 w-full rounded-xl" />
+              <Skeleton className="h-24 w-full rounded-xl" />
+              <Skeleton className="h-24 w-full rounded-xl" />
+            </div>
           ) : (
             <div key={tab} className="animate-in fade-in duration-500">
               {/* Policies Tab */}
@@ -236,7 +277,7 @@ const DashboardPage = () => {
               )}
 
               {/* Profile Tab */}
-              {tab === "profile" && profile && (
+              {tab === "profile" && (
                 <div className="max-w-md">
                   <div className="bg-card border border-border rounded-xl p-6 space-y-4">
                     <div>
@@ -251,7 +292,9 @@ const DashboardPage = () => {
                       <label className="text-sm font-medium text-foreground mb-1.5 block">{t("contact.phone")}</label>
                       <Input value={profileForm.phone} onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })} placeholder="+251..." />
                     </div>
-                    <Button className="teal-gradient text-primary-foreground" onClick={updateProfile}>{t("common.save")}</Button>
+                    <Button className="teal-gradient text-primary-foreground" onClick={updateProfile} disabled={savingProfile}>
+                      {savingProfile ? t("common.loading") : t("common.save")}
+                    </Button>
                   </div>
                 </div>
               )}

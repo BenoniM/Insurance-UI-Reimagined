@@ -39,6 +39,7 @@ const NewClaimPage = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [submittedClaim, setSubmittedClaim] = useState<{ id: string } | null>(null);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth?redirect=/claims/new");
@@ -133,7 +134,7 @@ const NewClaimPage = () => {
 
       setUploadProgress(100);
       toast({ title: "Claim submitted!", description: "We've received your claim and sent a confirmation email." });
-      navigate("/dashboard");
+      setSubmittedClaim({ id: claim.id });
     } catch (err: any) {
       toast({ title: "Submission failed", description: err.message, variant: "destructive" });
     } finally {
@@ -142,6 +143,37 @@ const NewClaimPage = () => {
   };
 
   if (authLoading || !user) return null;
+
+  if (submittedClaim) {
+    return (
+      <div className="min-h-screen">
+        <Navbar />
+        <section className="pt-28 pb-16">
+          <div className="container mx-auto px-4 max-w-2xl">
+            <div className="bg-card border border-border rounded-2xl p-8 md:p-12 text-center animate-in fade-in zoom-in-95 duration-500">
+              <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-8 h-8" />
+              </div>
+              <h1 className="font-heading text-2xl md:text-3xl font-bold mb-2">Claim submitted</h1>
+              <p className="text-muted-foreground mb-1">
+                Your claim <span className="font-mono text-foreground">#{submittedClaim.id.slice(0, 8).toUpperCase()}</span> is now under review.
+              </p>
+              <p className="text-muted-foreground mb-8">We've emailed you a confirmation and will update you as it progresses.</p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button className="teal-gradient text-primary-foreground" onClick={() => navigate(`/claims/${submittedClaim.id}`)}>
+                  Track this claim <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+                <Button variant="outline" onClick={() => navigate("/dashboard")}>
+                  Back to Dashboard
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">

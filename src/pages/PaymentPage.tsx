@@ -174,7 +174,7 @@ const PaymentPage = () => {
               <strong className="text-foreground">How verification works:</strong> Once submitted, our finance team checks your reference against the receiving account and marks the payment as confirmed in your dashboard.
             </div>
 
-            <Button onClick={submit} disabled={submitting} className="w-full teal-gradient text-primary-foreground">
+            <Button onClick={submit} disabled={submitting || !amount || !reference.trim()} className="w-full teal-gradient text-primary-foreground">
               {submitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting</> : <><CheckCircle className="w-4 h-4 mr-2" /> Record Payment</>}
             </Button>
           </div>

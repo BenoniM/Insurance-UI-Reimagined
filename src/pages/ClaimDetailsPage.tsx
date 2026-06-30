@@ -34,8 +34,8 @@ const ClaimDetailsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!authLoading && !user) navigate("/auth");
-  }, [user, authLoading, navigate]);
+    if (!authLoading && !user) navigate(`/auth?redirect=/claims/${id}`);
+  }, [user, authLoading, navigate, id]);
 
   const load = async () => {
     if (!id || !user) return;
