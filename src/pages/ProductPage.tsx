@@ -323,21 +323,21 @@ const PricingSection = ({ pricingRules, t }: { pricingRules: any; t: (key: strin
     </div>
 
     {pricingRules?.base_rate && (
-      <div className="flex flex-col items-center gap-4 mt-10">
-        <p className="text-center text-sm text-muted-foreground">
+      <div className="flex flex-col items-center gap-6 mt-10">
+        <p className="text-center text-lg md:text-xl text-muted-foreground">
           Premiums start from{" "}
-          <span className="font-semibold text-foreground">
+          <span className="font-semibold text-primary underline underline-offset-16">
             ETB {pricingRules.base_rate.toLocaleString()}
           </span>{" "}
           per year.
         </p>
         <a
           href="/quote"
-          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 active:scale-95"
           style={{ background: "hsl(152, 48%, 38%)" }}
         >
           Get Your Exact Quote
-          <ArrowRight size={15} strokeWidth={2.5} />
+          <ArrowRight size={18} strokeWidth={2.5} />
         </a>
       </div>
     )}
