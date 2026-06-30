@@ -71,7 +71,7 @@ const ClaimsGuide = () => {
     <section className="claims-section bg-white">
 
       {/* ── Main editorial grid ── */}
-      <div className="container mx-auto px-4 lg:px-8 py-12 md:py-20">
+      <div className="container mx-auto px-4 lg:px-8 py-8 md:py-12">
         <div className="claims-grid">
 
           {/* ══ LEFT: Featured panel ══ */}

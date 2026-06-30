@@ -199,7 +199,7 @@ const Testimonials = () => {
   const starsRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="relative py-24 overflow-hidden bg-white">
+    <section className="relative py-12 md:py-16 overflow-hidden bg-white">
       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(201,78%,23%)]/[0.03] to-[hsl(160,55%,45%)]/[0.05]" />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

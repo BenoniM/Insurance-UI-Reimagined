@@ -24,6 +24,7 @@ import imgHospital from "@/assets/Products/Gemini_Generated_Image_6wjalo6wjalo6w
 import imgLife from "@/assets/Products/Gemini_Generated_Image_oq6fqfoq6fqfoq6f-Photoroom.png";
 import imgNetWorth from "@/assets/Products/Gemini_Generated_Image_onpwheonpwheonpw-Photoroom.png";
 import imgCar from "@/assets/Products/Gemini_Generated_Image_cmkms6cmkms6cmkm-Photoroom.png";
+import videoMotor from "@/assets/Products/magnific_make-the-vector-animated.mp4";
 
 const productImagesMap: Record<string, string> = {
   Heart: imgLife,
@@ -255,7 +256,7 @@ const pricingFactors = [
 // ─── Pricing Section ──────────────────────────────────────────────────────────
 
 const PricingSection = ({ pricingRules, t }: { pricingRules: any; t: (key: string) => string }) => (
-  <section className="py-16 md:py-24 w-full">
+  <section className="py-8 md:py-12 w-full">
     <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8">
       <div className="text-center mb-4">
         <span className="section-badge mb-4 inline-block">PRICING</span>
@@ -382,7 +383,7 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
   const EASE = "cubic-bezier(0.33, 1.4, 0.45, 1)";
 
   return (
-    <section className="pt-16 md:pt-24 overflow-hidden w-full max-w-[1800px] mx-auto">
+    <section className="pt-8 md:pt-12 overflow-hidden w-full max-w-[1800px] mx-auto">
       <ScrollReveal>
         <div className="text-center mb-12 px-4 lg:px-8">
           <span className="section-badge mb-4 inline-block">KEY BENEFITS</span>
@@ -683,7 +684,7 @@ const ProductPage = () => {
     <div className="min-h-screen">
       <Navbar />
 
-      <section className="relative pt-32 pb-20 bg-white overflow-hidden">
+      <section className="relative pt-32 pb-10 md:pb-12 bg-white overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
             {/* Left side: Text */}
@@ -703,7 +704,7 @@ const ProductPage = () => {
                   className={`inline-flex items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-base font-heading font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-white shadow-lg ${
                     product?.name === "Property Insurance" ||
                     product?.name === "Health Insurance"
-                      ? "bg-[hsl(152,48%,38%)] hover:bg-[hsl(152,48%,32%)] shadow-[hsl(152,48%,28%)/0.2]"
+                      ? "bg-gradient-to-r from-[hsl(160,55%,35%)] to-[hsl(160,55%,45%)] hover:opacity-90 shadow-[hsl(160,55%,35%)/0.2]"
                       : "bg-gradient-to-r from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] hover:opacity-90 shadow-[hsl(201,78%,23%)/0.2]"
                   }`}
                 >
@@ -719,11 +720,23 @@ const ProductPage = () => {
             
             {/* Right side: Image/Icon */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end z-10">
-              <img 
-                src={productImagesMap[product.icon] || imgHospital} 
-                alt={name} 
-                className="w-full max-w-lg aspect-square object-contain hover:scale-110 transition-transform duration-500 ease-out"
-              />
+              {product.icon === "Car" ? (
+                <video 
+                  src={videoMotor}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full max-w-lg aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken"
+                  style={{ mixBlendMode: 'darken' }}
+                />
+              ) : (
+                <img 
+                  src={productImagesMap[product.icon] || imgHospital} 
+                  alt={name} 
+                  className="w-full max-w-lg aspect-square object-contain hover:scale-110 transition-transform duration-500 ease-out"
+                />
+              )}
             </div>
           </div>
         </div>
@@ -732,7 +745,7 @@ const ProductPage = () => {
       <KeyBenefitsSpotlight name={name} />
 
       {/* Coverage & Exclusions */}
-      <section className="py-16 md:py-24 w-full">
+      <section className="py-8 md:py-12 w-full">
         <ScrollReveal>
           <div className="text-center mb-12">
             <span className="section-badge mb-4 inline-block">COVERAGE DETAILS</span>

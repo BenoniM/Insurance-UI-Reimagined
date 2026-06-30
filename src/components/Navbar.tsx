@@ -164,7 +164,7 @@ const Navbar = () => {
               link.hasDropdown ? (
                 <div
                   key={link.label}
-                  className="h-full flex items-center"
+                  className="h-full flex items-center group"
                   onMouseEnter={() => setProductsOpen(true)}
                   onMouseLeave={() => setProductsOpen(false)}
                 >
@@ -178,7 +178,7 @@ const Navbar = () => {
                       fontWeight: 600,
                       fontFamily: "var(--font-heading)",
                       whiteSpace: "nowrap",
-                      color: productsOpen ? "hsl(160 55% 35%)" : "rgb(11, 63, 91)",
+                      color: productsOpen ? "hsl(160 55% 35%)" : location.pathname.startsWith(link.href) ? "hsl(160,55%,45%)" : "rgb(11, 63, 91)",
                       background: "transparent",
                       border: "none",
                       borderRadius: "8px",
@@ -190,11 +190,18 @@ const Navbar = () => {
                     }}
                     onMouseLeave={(e) => {
                       if (!productsOpen) {
-                        (e.currentTarget as HTMLButtonElement).style.color = "rgb(11, 63, 91)";
+                        (e.currentTarget as HTMLButtonElement).style.color = location.pathname.startsWith(link.href) ? "hsl(160,55%,45%)" : "rgb(11, 63, 91)";
                       }
                     }}
                   >
-                    {link.label}
+                    <span className="relative inline-block">
+                      {link.label}
+                      <span 
+                        className={`absolute -bottom-1 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
+                          location.pathname.startsWith(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                        }`}
+                      />
+                    </span>
                     <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`} />
                   </button>
 
@@ -249,7 +256,7 @@ const Navbar = () => {
                   </div>
                 </div>
               ) : (
-                <div key={link.label} className="h-full flex items-center">
+                <div key={link.label} className="h-full flex items-center group">
                   <Link
                     to={link.href}
                     style={{
@@ -258,22 +265,28 @@ const Navbar = () => {
                       fontWeight: 600,
                       fontFamily: "var(--font-heading)",
                       whiteSpace: "nowrap",
-                      color: "rgb(11, 63, 91)",
+                      color: location.pathname.startsWith(link.href) ? "hsl(160,55%,45%)" : "rgb(11, 63, 91)",
                       background: "transparent",
                       border: "none",
                       borderRadius: "8px",
                       display: "inline-block",
                       transition: "all 0.2s ease",
-                      textDecoration: "none",
                     }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.color = "hsl(160 55% 35%)";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.color = "rgb(11, 63, 91)";
+                      (e.currentTarget as HTMLElement).style.color = location.pathname.startsWith(link.href) ? "hsl(160,55%,45%)" : "rgb(11, 63, 91)";
                     }}
                   >
-                    {link.label}
+                    <span className="relative inline-block">
+                      {link.label}
+                      <span 
+                        className={`absolute -bottom-1 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
+                          location.pathname.startsWith(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                        }`}
+                      />
+                    </span>
                   </Link>
                 </div>
               )
@@ -291,7 +304,7 @@ const Navbar = () => {
                   letterSpacing: "0.08em",
                   whiteSpace: "nowrap",
                   color: "#fff",
-                  background: "linear-gradient(135deg, hsl(160,55%,35%), hsl(160,55%,45%))",
+                  background: location.pathname === "/quote" ? "linear-gradient(135deg, hsl(205,65%,48%), hsl(201,78%,35%))" : "linear-gradient(135deg, hsl(160,55%,35%), hsl(160,55%,45%))",
                   border: "none",
                   borderRadius: "8px",
                   boxShadow: "0 4px 12px rgba(40, 138, 105, 0.20)",
@@ -514,7 +527,7 @@ const Navbar = () => {
               href="/quote"
               className="px-4 py-2 text-xs font-bold rounded-xl text-white"
               style={{
-                background: "linear-gradient(135deg, hsl(160,55%,35%), hsl(160,55%,45%))",
+                background: location.pathname === "/quote" ? "linear-gradient(135deg, hsl(205,65%,48%), hsl(201,78%,35%))" : "linear-gradient(135deg, hsl(160,55%,35%), hsl(160,55%,45%))",
               }}
             >
               {t("nav.getQuote")}
@@ -548,10 +561,19 @@ const Navbar = () => {
                   <div key={link.label}>
                     <button
                       onClick={() => setProductsOpen(!productsOpen)}
-                      className="flex items-center justify-between w-full px-4 py-3 text-sm font-semibold rounded-xl transition-colors"
-                      style={{ color: "hsl(201 78% 20%)" }}
+                      className="group flex items-center justify-between w-full px-4 py-3 text-sm font-semibold rounded-xl transition-colors"
+                      style={{
+                        color: location.pathname.startsWith(link.href) ? "hsl(160,55%,45%)" : "hsl(201 78% 20%)",
+                      }}
                     >
-                      {link.label}
+                      <span className="relative inline-block">
+                        {link.label}
+                        <span 
+                          className={`absolute -bottom-1 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
+                            location.pathname.startsWith(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                          }`}
+                        />
+                      </span>
                       <ChevronDown
                         className={`w-4 h-4 transition-transform ${
                           productsOpen ? "rotate-180" : ""
@@ -579,11 +601,20 @@ const Navbar = () => {
                   <Link
                     key={link.label}
                     to={link.href}
-                    className="px-4 py-3 text-sm font-semibold rounded-xl transition-colors"
-                    style={{ color: "hsl(201 78% 20%)" }}
+                    className="group block px-4 py-3 text-sm font-semibold rounded-xl transition-colors"
+                    style={{
+                      color: location.pathname.startsWith(link.href) ? "hsl(160,55%,45%)" : "hsl(201 78% 20%)",
+                    }}
                     onClick={() => setMobileOpen(false)}
                   >
-                    {link.label}
+                    <span className="relative inline-block">
+                      {link.label}
+                      <span 
+                        className={`absolute -bottom-1 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
+                          location.pathname.startsWith(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                        }`}
+                      />
+                    </span>
                   </Link>
                 )
               )}

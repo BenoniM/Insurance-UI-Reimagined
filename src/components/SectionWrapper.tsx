@@ -13,7 +13,7 @@ const SectionWrapper = ({ children, className, id, dark = false }: SectionWrappe
     <section
       id={id}
       className={cn(
-        "py-16 md:py-24",
+        "py-8 md:py-12",
         dark ? "section-dark" : "",
         className
       )}

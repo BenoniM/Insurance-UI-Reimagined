@@ -33,7 +33,7 @@ const ProductGrid = () => {
   }, []);
 
   return (
-    <SectionWrapper id="products" className="bg-slate-50/50 py-20">
+    <SectionWrapper id="products" className="bg-slate-50/50 py-8 md:py-12">
       <div className="text-center mb-16">
         <ScrollReveal>
           <span className="section-badge mb-6 inline-block">INSURANCE SOLUTIONS</span>

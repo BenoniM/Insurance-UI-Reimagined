@@ -20,7 +20,7 @@ export default function PartnersSection() {
   }, [isInView]);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-[100px] bg-white overflow-hidden">
+    <section ref={sectionRef} className="py-12 md:py-16 bg-white overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 lg:px-8">
         
         {/* Header Section */}

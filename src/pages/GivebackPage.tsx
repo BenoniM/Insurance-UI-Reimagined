@@ -1,4 +1,4 @@
-﻿import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ExpandingHero from "@/components/ExpandingHero";
 import GivebackSection from "@/components/GivebackSection";
@@ -181,44 +181,8 @@ const GivebackPage = () => {
       {/* How it works + causes + impact callout */}
       <GivebackSection />
 
-      {/* YEAR-OVER-YEAR — minimal data table */}
-      <section id="impact" className="py-16 px-6 border-t border-border" style={{ background: "hsl(var(--surface))" }}>
-        <div className="max-w-5xl mx-auto">
-          <ScrollReveal>
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-              <div>
-                <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">YEAR-OVER-YEAR</p>
-                <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground" style={{ letterSpacing: "-0.025em" }}>
-                  Impact, in numbers.
-                </h2>
-              </div>
-              <p className="text-sm text-muted-foreground max-w-xs">
-                We publish our Giveback totals every year. Here's what your policy has helped fund.
-              </p>
-            </div>
-          </ScrollReveal>
-          <div className="grid grid-cols-4 pb-3 border-b border-border">
-            {["Year", "Total Returned", "Projects", "Beneficiaries"].map((h) => (
-              <span key={h} className="text-xs font-bold tracking-widest uppercase text-muted-foreground">{h}</span>
-            ))}
-          </div>
-          <div className="divide-y divide-border">
-            {yearlyImpact.map((y, i) => (
-              <ScrollReveal key={y.year} delay={i * 0.06}>
-                <div className="grid grid-cols-4 py-5 items-baseline group hover:bg-accent/40 transition-colors duration-200 rounded-sm px-1 -mx-1 cursor-default">
-                  <span className="text-xs font-bold tracking-widest text-primary">{y.year}</span>
-                  <span className="font-heading font-bold text-xl md:text-3xl text-foreground" style={{ letterSpacing: "-0.03em" }}>{y.total}</span>
-                  <span className="font-heading font-bold text-xl md:text-3xl text-foreground" style={{ letterSpacing: "-0.03em" }}>{y.projects}</span>
-                  <span className="font-heading font-bold text-lg md:text-2xl text-foreground" style={{ letterSpacing: "-0.03em" }}>{y.beneficiaries}</span>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 2026 ALLOCATION — Pinned scroll showcase */}
-      <section className="relative border-t border-border bg-background h-auto md:h-[280vh]" ref={containerRef}>
+      <section className="relative bg-background h-auto md:h-[280vh]" ref={containerRef}>
         {/* Invisible Triggers (Desktop Only) */}
         <div className="hidden md:flex absolute top-0 left-0 w-full h-full flex-col pointer-events-none">
           <div className="h-[20vh]" />
@@ -228,15 +192,17 @@ const GivebackPage = () => {
         </div>
 
         {/* Sticky Visual Content */}
-        <div className="md:sticky md:top-0 md:h-screen w-full flex items-center justify-center overflow-hidden py-24 md:py-0">
+        <div className="md:sticky md:top-0 md:h-screen w-full flex items-center justify-center overflow-hidden py-12 md:py-0">
           <div className="w-full max-w-[90rem] mx-auto px-6 relative">
             {/* Section Header */}
-            <div className="md:absolute md:-top-[25vh] md:left-6 mb-12 md:mb-0">
+            <div className="md:absolute md:-top-[16vh] w-full left-0 mb-8 md:mb-0 flex justify-center text-center">
               <ScrollReveal>
-                <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">2026 ALLOCATION</p>
-                <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground" style={{ letterSpacing: "-0.025em" }}>
-                  Where the money went.
-                </h2>
+                <div className="flex flex-col items-center">
+                  <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">2026 ALLOCATION</p>
+                  <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground" style={{ letterSpacing: "-0.025em" }}>
+                    Where the money went.
+                  </h2>
+                </div>
               </ScrollReveal>
             </div>
 
@@ -320,9 +286,9 @@ const GivebackPage = () => {
       </section>
 
 {/* FIELD UPDATES — Lemonade-style 4-column icon row */}
-<section className="py-20 px-24 border-t border-border" style={{ background: "hsl(var(--surface))" }}>
+<section className="py-10 md:py-16 px-6 md:px-12 lg:px-24 border-t border-border" style={{ background: "hsl(var(--surface))" }}>
   <ScrollReveal>
-    <div className="mb-16 pl-0">
+    <div className="mb-10 flex flex-col items-center text-center">
       <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">FIELD UPDATES</p>
       <h2 className="font-heading font-bold text-3xl md:text-4xl capitalize text-foreground" style={{ letterSpacing: "-0.025em" }}>
         Recent impact updates.
@@ -403,18 +369,20 @@ const GivebackPage = () => {
 </section>
 
       {/* TRANSPARENCY — header on white */}
-      <section className="py-16 px-24 border-t border-border bg-background">
-        <div>
+      <section className="py-10 px-6 md:px-12 lg:px-24 border-t border-border bg-background">
+        <div className="flex flex-col items-center text-center w-full">
           <ScrollReveal>
-            <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">
-              TRANSPARENCY
-            </p>
-            <h2
-              className="font-heading font-bold text-3xl md:text-4xl text-foreground"
-              style={{ letterSpacing: "-0.025em" }}
-            >
-              How we keep ourselves honest.
-            </h2>
+            <div className="flex flex-col items-center">
+              <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">
+                TRANSPARENCY
+              </p>
+              <h2
+                className="font-heading font-bold text-3xl md:text-4xl text-foreground"
+                style={{ letterSpacing: "-0.025em" }}
+              >
+                How we keep ourselves honest.
+              </h2>
+            </div>
           </ScrollReveal>
         </div>
       </section>
@@ -455,6 +423,7 @@ const GivebackPage = () => {
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
                     color: "hsl(160 55% 55%)",
+                    textAlign: "center",
                   }}
                 >
                   {p.label}
@@ -470,6 +439,7 @@ const GivebackPage = () => {
                     lineHeight: 1.2,
                     margin: 0,
                     textTransform: "capitalize",
+                    textAlign: "center",
                   }}
                 >
                   {p.title}
@@ -481,6 +451,7 @@ const GivebackPage = () => {
                     lineHeight: 1.65,
                     color: "hsl(201 30% 72%)",
                     margin: 0,
+                    textAlign: "center",
                   }}
                 >
                   {p.body}
@@ -488,7 +459,7 @@ const GivebackPage = () => {
 
                 <button
                   style={{
-                    alignSelf: "flex-start",
+                    alignSelf: "center",
                     marginTop: "0.25rem",
                     display: "flex",
                     alignItems: "center",

@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 
 import ExpandingHero from "@/components/ExpandingHero";
 import ScrollReveal from "@/components/ScrollReveal";
+import AboutMilestones from "@/components/AboutMilestones";
 import { Shield, Users, Award, Target } from "lucide-react";
 import aboutHero from "@/assets/hero-about.jpg";
 import aboutHero2 from "@/assets/hero-about-2.jpg";
@@ -53,54 +54,6 @@ const values = [
   },
 ];
 
-const milestones = [
-  {
-    year: "2010",
-    event:
-      "WASS Insurance founded in Addis Ababa, licensed by the National Bank of Ethiopia",
-    image:
-      "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1600&q=80",
-  },
-  {
-    year: "2013",
-    event: "Expanded to 5 branch offices across major Ethiopian cities",
-    image:
-      "https://images.unsplash.com/photo-1523289333742-be1143f6b766?w=1600&q=80",
-  },
-  {
-    year: "2016",
-    event: "Launched comprehensive motor and property insurance products",
-    image:
-      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=1600&q=80",
-  },
-  {
-    year: "2018",
-    event: "Reached 20,000 active policyholders milestone",
-    image:
-      "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&q=80",
-  },
-  {
-    year: "2020",
-    event:
-      "Introduced digital claims processing and Telebirr payment integration",
-    image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1600&q=80",
-  },
-  {
-    year: "2023",
-    event:
-      "Grew partner network to 200+ institutions, serving 50,000+ clients",
-    image:
-      "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1600&q=80",
-  },
-  {
-    year: "2025",
-    event:
-      "12 branches nationwide, leading innovation in Ethiopian insurance",
-    image:
-      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80",
-  },
-];
 
 const leadership = [
   {
@@ -130,46 +83,6 @@ const leadership = [
 ];
 
 const AboutPage = () => {
-  const tlSectionRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [parallaxOffset, setParallaxOffset] = useState(0);
-
-  useEffect(() => {
-    const section = tlSectionRef.current;
-    if (!section) return;
-
-const onScroll = () => {
-  const { top, height } = section.getBoundingClientRect();
-  const scrolled = -top;
-  const scrollable = height - window.innerHeight;
-  const progress = Math.max(0, Math.min(1, scrolled / scrollable));
-
-  // active index
-  const idx = Math.min(
-    milestones.length - 1,
-    Math.floor(progress * milestones.length)
-  );
-  setActiveIndex(idx);
-
-  // parallax: simple continuous offset from total progress
-  // as you scroll down the page, images drift downward 0 → 80px
-  const parallaxY = progress * 80;
-  setParallaxOffset(parallaxY);
-};
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const scrollToIndex = (i) => {
-    const section = tlSectionRef.current;
-    if (!section) return;
-    const scrollable = section.offsetHeight - window.innerHeight;
-    const target =
-      section.offsetTop + (scrollable * i) / milestones.length;
-    window.scrollTo({ top: target, behavior: "smooth" });
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -255,51 +168,7 @@ const onScroll = () => {
       </section>
 
       {/* ── TIMELINE ──────────────────────────────────────────────── */}
-      <section className="tl-section" ref={tlSectionRef}>
-        <div className="tl-sticky">
-
-          {/* Background images */}
-          <div className="tl-images">
-{milestones.map((item, i) => (
-  <div
-    key={item.year}
-    className={`tl-image${activeIndex === i ? " tl-image--active" : ""}`}
-    style={{
-      backgroundImage: `url(${item.image})`,
-      transform: `translateY(${parallaxOffset}px)`,
-    }}
-  />
-))}
-            <div className="tl-image-overlay" />
-          </div>
-
-          <div className="absolute top-5 left-0 w-full flex justify-center z-10 pointer-events-none">
-            <h2 className="text-primary text-5xl md:text-6xl font-hero font-bold opacity-95">Our Journey</h2>
-          </div>
-
-          {/* Top-left — giant year + eyebrow + date list */}
-          <div className="tl-dates">
-            <span className="text-primary font-bold text-2xl tracking-widest" style={{ marginTop: '0.8rem' }}>MILESTONES</span>
-            <div className="tl-dates-list">
-              {milestones.map((item, i) => (
-                <button
-                  key={item.year}
-                  className={`tl-date${activeIndex === i ? " tl-date--active" : ""}`}
-                  onClick={() => scrollToIndex(i)}
-                >
-                  {item.year}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom-right — description */}
-          <div className="tl-desc-wrap">
-            <p className="tl-desc">{milestones[activeIndex]?.event}</p>
-          </div>
-
-        </div>
-      </section>
+      <AboutMilestones />
 
       {/* ── VALUES ────────────────────────────────────────────────── */}
       <section className="about-values-section">
