@@ -131,16 +131,15 @@ export default function LocalTrust() {
               style={{ top: `clamp(0px, calc(${progress * 100}% - 18px), calc(100% - 36px))` }}
             >
               <div
-                className="w-9 h-9 rounded-full flex items-center justify-center shadow-md border-2"
+                className="w-10 h-10 rounded-full flex items-center justify-center"
                 style={{
                   background: "hsl(160 55% 97%)",
-                  borderColor: "hsl(160 55% 45%)",
                 }}
               >
                 <img
                   src="/images/wass-cropped.svg"
                   alt="WASS logo"
-                  className="w-5 h-5 object-contain"
+                  className="w-10 h-10 object-contain"
                 />
               </div>
             </div>
