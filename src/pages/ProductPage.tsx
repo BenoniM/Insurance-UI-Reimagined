@@ -20,10 +20,10 @@ import heroProducts2 from "@/assets/hero-products-2.jpg";
 import NoSmoking from "@/assets/Pricing/No-Smoking--Streamline-Milano.png";
 import Coverage from "@/assets/Pricing/Stack-Of-Money-2--Streamline-Milano.png";
 import Term from "@/assets/Pricing/Work-Deadline-2--Streamline-Milano.png";
-import imgHospital from "@/assets/Coverage/Hospital-Clinic-1--Streamline-Milano-01.svg";
-import imgLife from "@/assets/Coverage/Life-Coverage-01.svg";
-import imgNetWorth from "@/assets/Coverage/Net-Worth--Streamline-Milano-01.svg";
-import imgCar from "@/assets/Coverage/Speed-Go-Fast-4--Streamline-Milano-01.svg";
+import imgHospital from "@/assets/Products/Gemini_Generated_Image_6wjalo6wjalo6wja-Photoroom.png";
+import imgLife from "@/assets/Products/Gemini_Generated_Image_oq6fqfoq6fqfoq6f-Photoroom.png";
+import imgNetWorth from "@/assets/Products/Gemini_Generated_Image_onpwheonpwheonpw-Photoroom.png";
+import imgCar from "@/assets/Products/Gemini_Generated_Image_cmkms6cmkms6cmkm-Photoroom.png";
 
 const productImagesMap: Record<string, string> = {
   Heart: imgLife,
@@ -706,8 +706,7 @@ const ProductPage = () => {
               <img 
                 src={productImagesMap[product.icon] || imgHospital} 
                 alt={name} 
-                className="w-full max-w-md aspect-square object-contain hover:scale-110 transition-transform duration-500 ease-out"
-                style={{ filter: productFilterMap[product.icon] || "invert(53%) sepia(48%) saturate(3020%) hue-rotate(167deg) brightness(98%) contrast(92%)" }}
+                className="w-full max-w-lg aspect-square object-contain hover:scale-110 transition-transform duration-500 ease-out"
               />
             </div>
           </div>
