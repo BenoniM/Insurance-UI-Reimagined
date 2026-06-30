@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -40,8 +41,26 @@ const AnimatedRoutes = () => {
     // Push the scroll event slightly down the call stack to ensure it fires after initial render
     const timeout = setTimeout(() => {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      // New page's components mount with their own ScrollTrigger instances, but GSAP
+      // measures trigger positions against whatever layout existed at mount time. If
+      // images on the new page haven't finished loading yet, those measurements go
+      // stale and the scroll-revealed sections never fire (they stay opacity: 0)
+      // until something else forces a recalculation, like a manual refresh.
+      ScrollTrigger.refresh();
     }, 10);
-    return () => clearTimeout(timeout);
+
+    // Layout keeps shifting as each image on the new page finishes loading, so
+    // refresh again every time one does. The "load" window event only fires once
+    // per full page load and won't catch images on later client-side route changes,
+    // so listen on the images themselves instead.
+    const images = Array.from(document.images).filter((img) => !img.complete);
+    const handleImageLoad = () => ScrollTrigger.refresh();
+    images.forEach((img) => img.addEventListener("load", handleImageLoad, { once: true }));
+
+    return () => {
+      clearTimeout(timeout);
+      images.forEach((img) => img.removeEventListener("load", handleImageLoad));
+    };
   }, [location.pathname]);
 
   return (

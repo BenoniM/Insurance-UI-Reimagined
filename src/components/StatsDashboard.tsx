@@ -102,9 +102,10 @@ const StatsDashboard = () => {
     );
 
     return () => {
+      leftAnim.scrollTrigger?.kill();
+      rightAnim.scrollTrigger?.kill();
       leftAnim.kill();
       rightAnim.kill();
-      ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
 
