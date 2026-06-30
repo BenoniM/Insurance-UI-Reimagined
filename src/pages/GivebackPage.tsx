@@ -140,6 +140,10 @@ const GivebackPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+  const isMobile = window.innerWidth < 768;
+
+  // Mobile: keep IntersectionObserver, since rows aren't pinned/scroll-driven there.
+  if (isMobile) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -151,15 +155,55 @@ const GivebackPage = () => {
       },
       { threshold: 0.5 }
     );
-
-    const isMobile = window.innerWidth < 768;
-    const triggers = containerRef.current?.querySelectorAll(
-      isMobile ? ".cause-row-mobile" : ".cause-trigger"
-    );
+    const triggers = containerRef.current?.querySelectorAll(".cause-row-mobile");
     triggers?.forEach((child) => observer.observe(child));
-
     return () => observer.disconnect();
-  }, []);
+  }
+
+  // Desktop: derive activeIndex from scroll position directly, every frame.
+  // This is robust to fast/back-and-forth scrolling, unlike IntersectionObserver
+  // entries, which can be skipped or fire out of order between animation frames
+  // when the user scrolls quickly.
+  const triggers = Array.from(
+    containerRef.current?.querySelectorAll<HTMLElement>(".cause-trigger") ?? []
+  );
+  if (triggers.length === 0) return;
+
+  let rafId: number | null = null;
+
+  const computeActiveIndex = () => {
+    rafId = null;
+    const viewCenter = window.innerHeight / 2;
+
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    triggers.forEach((el, i) => {
+      const rect = el.getBoundingClientRect();
+      const elCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(elCenter - viewCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = i;
+      }
+    });
+
+    setActiveIndex(closestIndex);
+  };
+
+  const onScroll = () => {
+    if (rafId !== null) return;
+    rafId = requestAnimationFrame(computeActiveIndex);
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  computeActiveIndex();
+
+  return () => {
+    window.removeEventListener("scroll", onScroll);
+    if (rafId !== null) cancelAnimationFrame(rafId);
+  };
+}, []);
 
   return (
     <div className="min-h-screen">

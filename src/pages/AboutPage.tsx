@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import ExpandingHero from "@/components/ExpandingHero";
 import ScrollReveal from "@/components/ScrollReveal";
 import AboutMilestones from "@/components/AboutMilestones";
-import { Shield, Users, Award, Target } from "lucide-react";
+import { Shield, Users, Award, Target, ChevronDown } from "lucide-react";
 import aboutHero from "@/assets/hero-about.jpg";
 import aboutHero2 from "@/assets/hero-about-2.jpg";
 import heroHome2 from "@/assets/hero-home-2.jpg";
@@ -63,6 +63,7 @@ const leadership = [
     roleEn: "Founding Committee Chair & Coordinator",
     description:
       "Leading the formation of WASS Insurance with a vision to deliver the best health-focused insurance products in Ethiopia.",
+    bio: "አቶ ሄኖክ ተካ የአደራጅ ኮሚቴው ሰብሳቢና አስተባባሪ ከጎንደር ዩኒቨርሲቲ በፋርማሲ የመጀመሪያ ዲግሪ ያጠናቀቁ ሲሆን በዲላ ዩኒቨርሲቲ ሆስፒታል በፋርማሲስትነት እና መምህርነት ፣ በቀድሞ የመድኃኒት ፈንድ እና አቅርቦት ኤጀንሲ በፋርማሲቲካልስ ኳንቲፊኬሽን ኦፊሰርነት ፣በአንዱ የኬሚካል አስመጪ ድርጅት ማርኬቲንግ ሥራ አስኪያጅነት ያገለገሉ ሲሆን በአሁኑ ወቅት ድሮጋ ፋርማ እና ኤማ ኮንስትራክሽን ትሬዲንግ ኃላ.የተ.የግ.ማህበር ትረስት ፋርማሲቲካልስ ማኑፋችቸሪን ኃላ.የተ.የግ.ማ. በማቋቋም እየመሩ ይገኛሉ፡፡",
   },
   {
     name: "ዶ/ር አብዲ ኤርሞሎ",
@@ -71,6 +72,7 @@ const leadership = [
     roleEn: "Deputy Chair, Founding Committee",
     description:
       "Bringing expert leadership and strategic direction to guide WASS Insurance's foundational development.",
+    bio: "ዶ/ር አብዲ ኤርሞሎ በህክምና የመጀመሪያ ዲግሪያቸውን ከጎንደር ዩኒቨርሲቲ ያገኙ ሲሆን በጎንደር ዩኒቨርሲቲ በመምህርነት አገልግለዋል ከዚህም በተጨማሪ በአዲስ አበባ ዩኒቨርሲቲ ጥቁር አንበሳ ስፔሻላይዝድ ሆስፒታል በአንጎልና ህብረሰረሰር ቀዶ ጥገና የስፔሻላይዜሽን ትምርህታቸውን ለ5 አመታት የተከታተሉ ሲሆን በአሁን ወቅት በቅዱስ ጴጥሮስ ስፔሻላይዝድ ሆስፒታል በአንጎልና ህብረሰረሰር ቀዶ ጥገና እያገለግሉ ነው። በተጨማሪም ድሮጋ ፋርማ እና ኤማ ኮንስትራክሽን እና ትሬዲንግ ኃላ.የተ.የግ.ማህበር ትረስት ፋርማሲቲካልስ ማኑፋችቸሪን ኃላ.የተ.የግ.ማ. በማቋቋም እየመሩ ይገኛሉ፡፡",
   },
   {
     name: "አቶ አማረ ሃበ",
@@ -79,10 +81,13 @@ const leadership = [
     roleEn: "Founding Committee Member & Project Manager",
     description:
       "Overseeing project operations and ensuring the company's formation milestones are achieved on time.",
+    bio: "አቶ አማረ ሃበ የአደራጅ ኮሚቴው አባልና የፕሮጀክት ሥራ አስኪያጅ ከአዲስ አበባ ዩኒቨርስቲ በኢኮኖሚክስ ቢ.ኤ. ስኮትላንድ ከሚገኘው ከግላሰጎው ዩኒቨርስቲ ከዲቨሎፕመንት ፖሊሲ ድኀረ ዲግሪ ዲፕሎማ/ Post Graduate Diploma እና እንግሊዝ አገር ከሚገኘው ኬንት ዩኒቨርስቲ በዲቨሎፕመንት ኢኮኖሚክስ የማስተርስ ዲግሪ እንዲሁም ከዩኒቲ ዩኒቨርስቲ በሕግ ዲግሪ በእጅግ በጣም ከፍተኛ ማዕረግ ያጠናቀቁ ሲሆን በአዲስ አበባ ዩኒቨርስቲ በስነ-ልቦና ትምህርት ክፍል የሥነ ልቦና አማካሪነት/Counseling Psychology/ በማስተርስ ዲግሪ የመመረቂያ ጽሁፍ ይቀራቸዋል፡፡ በስራ ልምድም በኢኮኖሚ ፕላን ኢኮኖሚክስት የዋጋ ጥናት ፖሊሲ ኢንስቲትዩት ማኔጂንግ ዳይሬክተር፣ በንግድ ሚኒስቴር የውጭ ንግድ ማስፋፊያ መምሪያ ኃላፊ እንዲሁም የአንዱ የመድኃኒት አስመጪና አከፋፋይ አክሲዮን ማህበር በዋና ሥራ አስኪያጅነት ለ8 ዓመታት ሰርተዋል፡፡ ከዚህ በተጨማሪ በሶስት የመንግስት የልማት ድርጅቶች የሥራ አመራር ቦርድ ሰብሳቢ በአራቱ ደግሞ የሥራ አመራር ቦርድ አባል ሆነው የሰሩ ሲሆን በአዲስ አበባ ንግድ ምክር ቤት በቦርድ አባልነት አገልግለዋል፡፡ ላለፉት 7 ዓመታትም የዘመን ባንክ የቦርድ ሊቀመንበርና (3 ዓመት) የቦርድ አባል (3 ዓመት ከ7 ወር) ያገለገሉ ሲሆን በቅርቡ ተቋቁሞ የኢንሹራንስ ኢንዱስትውን የተቀላቀለው የዘመን ኢንሹራንስ አክሲዮን ማህበር የአደራጅ ኮሚቴው ሰብሳቢና አስተባባሪ ሆነው አገልግለዋል፡፡",
   },
 ];
 
 const AboutPage = () => {
+  const [expandedLeader, setExpandedLeader] = useState<number | null>(null);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -221,21 +226,50 @@ const AboutPage = () => {
           </ScrollReveal>
 
           <div className="about-leadership-list">
-            {leadership.map((person, i) => (
-              <ScrollReveal key={person.name} delay={i * 0.06}>
-                <div className="about-leader-row">
-                  <div className="about-leader-index">
-                    {String(i + 1).padStart(2, "0")}
+            {leadership.map((person, i) => {
+              const isOpen = expandedLeader === i;
+              return (
+                <ScrollReveal key={person.name} delay={i * 0.06}>
+                  <div className="about-leader-row">
+                    <div className="about-leader-row-main">
+                      <div className="about-leader-index">
+                        {String(i + 1).padStart(2, "0")}
+                      </div>
+                      <div className="about-leader-info">
+                        <p className="about-leader-name">{person.name}</p>
+                        <p className="about-leader-name-en">{person.nameEn}</p>
+                        <p className="about-leader-role">{person.roleEn}</p>
+                      </div>
+                      <p className="about-leader-desc">{person.description}</p>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="about-leader-toggle"
+                      onClick={() => setExpandedLeader(isOpen ? null : i)}
+                      aria-expanded={isOpen}
+                    >
+                      <span>{isOpen ? "መግለጫ ደብቅ" : "አጭር መግለጫ አሳይ"}</span>
+                      <ChevronDown
+                        className={`about-leader-toggle-icon ${
+                          isOpen ? "about-leader-toggle-icon--open" : ""
+                        }`}
+                      />
+                    </button>
+
+                    <div
+                      className="about-leader-bio-wrap"
+                      style={{
+                        maxHeight: isOpen ? "1000px" : "0px",
+                        opacity: isOpen ? 1 : 0,
+                      }}
+                    >
+                      <p className="about-leader-bio">{person.bio}</p>
+                    </div>
                   </div>
-                  <div className="about-leader-info">
-                    <p className="about-leader-name">{person.name}</p>
-                    <p className="about-leader-name-en">{person.nameEn}</p>
-                    <p className="about-leader-role">{person.roleEn}</p>
-                  </div>
-                  <p className="about-leader-desc">{person.description}</p>
-                </div>
-              </ScrollReveal>
-            ))}
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -497,26 +531,28 @@ const AboutPage = () => {
         }
         .about-values-section .about-section-header { margin-bottom: 4rem; }
         .about-values-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1px;
-          background: hsl(201 78% 10%);
-          border: 1px solid hsl(201 78% 10%);
-        }
-        @media (min-width: 640px) {
-          .about-values-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 1024px) {
-          .about-values-grid { grid-template-columns: repeat(4, 1fr); }
-        }
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  background: transparent;
+  border: none;
+}
+@media (min-width: 640px) {
+  .about-values-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .about-values-grid { grid-template-columns: repeat(4, 1fr); }
+}
         .about-value-card {
-          padding: 2.5rem 2rem;
-          background: hsl(201 78% 17%);
-          position: relative;
-          transition: background 0.25s;
-          height: 100%;
-          box-sizing: border-box;
-        }
+  padding: 2.5rem 2rem;
+  background: hsl(201 78% 17%);
+  position: relative;
+  transition: background 0.25s;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  border: 1px solid hsl(201 78% 22%);
+}
         .about-value-card:hover { background: hsl(201 78% 20%); }
         .about-value-index {
           font-family: var(--font-heading, inherit);
@@ -527,14 +563,15 @@ const AboutPage = () => {
           margin-bottom: 1.5rem;
         }
         .about-value-icon-wrap {
-          width: 2.5rem;
-          height: 2.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 1.25rem;
-          border: 1px solid hsl(var(--primary) / 0.3);
-        }
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  border: 1px solid hsl(var(--primary) / 0.3);
+  border-radius: 0.5rem;
+}
         .about-value-icon { width: 1.125rem; height: 1.125rem; color: hsl(var(--primary)); }
         .about-value-title {
           font-family: var(--font-heading, inherit);
@@ -553,16 +590,12 @@ const AboutPage = () => {
         }
         .about-leadership-list { border-top: 1px solid hsl(var(--border)); }
         .about-leader-row {
-          display: grid;
-          grid-template-columns: 3rem 1fr;
-          gap: 0 2rem;
-          align-items: baseline;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
           padding: 2rem 0;
           border-bottom: 1px solid hsl(var(--border));
           transition: background 0.2s;
-        }
-        @media (min-width: 768px) {
-          .about-leader-row { grid-template-columns: 3rem 1fr 1fr; }
         }
         .about-leader-row:hover {
           background: hsl(var(--accent) / 0.3);
@@ -570,6 +603,15 @@ const AboutPage = () => {
           padding-right: 0.75rem;
           margin-left: -0.75rem;
           margin-right: -0.75rem;
+        }
+        .about-leader-row-main {
+          display: grid;
+          grid-template-columns: 3rem 1fr;
+          gap: 0 2rem;
+          align-items: baseline;
+        }
+        @media (min-width: 768px) {
+          .about-leader-row-main { grid-template-columns: 3rem 1fr 1fr; }
         }
         .about-leader-index {
           font-size: 0.6875rem;
@@ -607,6 +649,48 @@ const AboutPage = () => {
         }
         @media (min-width: 768px) { .about-leader-desc { display: block; } }
 
+        /* ─── LEADERSHIP BIO TOGGLE ────────────────────────────── */
+        .about-leader-toggle {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          align-self: flex-start;
+          margin-top: 1rem;
+          margin-left: 5rem;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0.25rem 0;
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          color: hsl(var(--primary));
+          text-transform: uppercase;
+        }
+        .about-leader-toggle:hover {
+          opacity: 0.8;
+        }
+        .about-leader-toggle-icon {
+          width: 0.875rem;
+          height: 0.875rem;
+          transition: transform 0.25s ease;
+        }
+        .about-leader-toggle-icon--open {
+          transform: rotate(180deg);
+        }
+
+        .about-leader-bio-wrap {
+          overflow: hidden;
+          margin-left: 5rem;
+          transition: max-height 0.4s ease, opacity 0.3s ease;
+        }
+        .about-leader-bio {
+          font-size: 0.875rem;
+          color: hsl(var(--muted-foreground));
+          line-height: 1.85;
+          padding-top: 1rem;
+          margin: 0;
+        }
 
       `}</style>
 

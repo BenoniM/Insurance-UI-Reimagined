@@ -24,7 +24,29 @@ import imgHospital from "@/assets/Products/Gemini_Generated_Image_6wjalo6wjalo6w
 import imgLife from "@/assets/Products/Gemini_Generated_Image_oq6fqfoq6fqfoq6f-Photoroom.png";
 import imgNetWorth from "@/assets/Products/Gemini_Generated_Image_onpwheonpwheonpw-Photoroom.png";
 import imgCar from "@/assets/Products/Gemini_Generated_Image_cmkms6cmkms6cmkm-Photoroom.png";
-import videoMotor from "@/assets/Products/magnific_make-the-vector-animated.mp4";
+import videoMotor from "@/assets/Products/magnific_use-the-provided-image-as_9RllHD3NYZ.mp4";
+import videoLife from "@/assets/Products/magnific_use-the-provided-image-as_kLfa5HX16B.mp4";
+import videoHealth from "@/assets/Products/magnific_use-the-provided-image-as_ohccbjt829.mp4";
+import videoProperty from "@/assets/Products/magnific_animate-this-reference-im_ubooflmQLD.mp4";
+
+const SlowVideo = ({ src, className }: { src: string; className?: string }) => {
+  const ref = useRef<HTMLVideoElement>(null);
+  return (
+    <video
+      ref={ref}
+      src={src}
+      autoPlay
+      loop
+      muted
+      playsInline
+      onLoadedMetadata={() => {
+        if (ref.current) ref.current.playbackRate = 0.75;
+      }}
+      className={className}
+      style={{ mixBlendMode: "darken" }}
+    />
+  );
+};
 
 const productImagesMap: Record<string, string> = {
   Heart: imgLife,
@@ -719,22 +741,26 @@ const ProductPage = () => {
             </div>
             
             {/* Right side: Image/Icon */}
-            <div className="w-full lg:w-1/2 flex justify-center lg:justify-end z-10">
+            <div className="w-full lg:w-1/2 flex justify-center lg:justify-end lg:items-start z-10">
               {product.icon === "Car" ? (
-                <video 
+                <SlowVideo
                   src={videoMotor}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full max-w-lg aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken"
-                  style={{ mixBlendMode: 'darken' }}
+                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
+                />
+              ) : product.icon === "Heart" ? (
+                <SlowVideo
+                  src={videoLife}
+                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
+                />
+              ) : product.icon === "Shield" ? (
+                <SlowVideo
+                  src={videoHealth}
+                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
                 />
               ) : (
-                <img 
-                  src={productImagesMap[product.icon] || imgHospital} 
-                  alt={name} 
-                  className="w-full max-w-lg aspect-square object-contain hover:scale-110 transition-transform duration-500 ease-out"
+                <SlowVideo
+                  src={videoProperty}
+                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
                 />
               )}
             </div>

@@ -58,10 +58,10 @@ const ProductGrid = () => {
             <ScrollReveal key={product.slug} animation="fadeUp" delay={i * 0.08}>
               <Link to={`/products/${product.slug}`} className="group block h-full">
                 <div className={`${[
-                  "bg-sky-500/10 hover:bg-sky-500/20",
                   "bg-emerald-500/10 hover:bg-emerald-500/20",
-                  "bg-blue-500/10 hover:bg-blue-500/20",
+                  "bg-sky-500/10 hover:bg-sky-500/20",
                   "bg-teal-500/10 hover:bg-teal-500/20",
+                  "bg-blue-500/10 hover:bg-blue-500/20",
                 ][i % 4]} rounded-[24px] p-6 md:p-12 flex flex-col items-center text-center shadow-sm hover:shadow-2xl transition-all duration-400 h-full`}>
                   
                   {/* Image */}
@@ -72,10 +72,10 @@ const ProductGrid = () => {
                       className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500 ease-out" 
                       style={{
                         filter: [
-                          "invert(53%) sepia(48%) saturate(3020%) hue-rotate(167deg) brightness(98%) contrast(92%)", // bluish (sky-500)
-                          "invert(58%) sepia(58%) saturate(452%) hue-rotate(113deg) brightness(97%) contrast(92%)", // greenish (emerald-500)
-                          "invert(41%) sepia(74%) saturate(3821%) hue-rotate(207deg) brightness(101%) contrast(98%)", // bluish (blue-500)
-                          "invert(56%) sepia(87%) saturate(389%) hue-rotate(124deg) brightness(94%) contrast(92%)", // greenish (teal-500)
+                          "invert(40%) sepia(55%) saturate(3200%) hue-rotate(167deg) brightness(75%) contrast(105%)", // bluish icon on greenish bg
+                          "invert(43%) sepia(95%) saturate(420%) hue-rotate(124deg) brightness(72%) contrast(105%)", // greenish icon on bluish bg
+                          "invert(20%) sepia(90%) saturate(4500%) hue-rotate(207deg) brightness(55%) contrast(120%)", // bluish icon on greenish bg, extra dark
+                          "invert(45%) sepia(65%) saturate(500%) hue-rotate(113deg) brightness(75%) contrast(105%)", // greenish icon on bluish bg
                         ][i % 4]
                       }}
                     />
@@ -92,7 +92,7 @@ const ProductGrid = () => {
                     {/* Glow effect behind button */}
                     <div className="absolute inset-0 bg-primary/30 blur-lg rounded-xl translate-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
-                    <button className="relative w-full bg-primary text-white font-semibold py-3.5 px-6 rounded-xl group-hover:-translate-y-1 transition-transform duration-300 shadow-md">
+                    <button className="relative w-full bg-primary text-white font-semibold py-2.5 px-6 rounded-xl group-hover:-translate-y-1 transition-transform duration-300 shadow-md">
                       {t("products.learnMore").toUpperCase()}
                     </button>
                   </div>

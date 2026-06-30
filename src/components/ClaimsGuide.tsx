@@ -70,77 +70,76 @@ const ClaimsGuide = () => {
   return (
     <section className="claims-section bg-white">
 
-      {/* ── Main editorial grid ── */}
-      <div className="container mx-auto px-4 lg:px-8 py-8 md:py-12">
-        <div className="claims-grid">
+      {/* ── Main editorial layout ── */}
+      <div className="container mx-auto px-5 sm:px-6 lg:px-10 py-8 md:py-10">
 
-          {/* ══ LEFT: Featured panel ══ */}
-          <ScrollReveal animation="fadeLeft" className="claims-featured">
-            <div className="claims-featured-inner">
+        {/* ══ TOP: Featured panel (left) + Required Documents (right) ══ */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6 mb-6 md:mb-8">
 
-              {/* Dark hero area */}
-              <div className="claims-featured-img relative z-10">
-                {/* Edge-to-edge background overlays */}
-                <div className="absolute inset-0 -z-10 pointer-events-none">
-                  <div className="claims-featured-overlay" />
-                  <div className="claims-featured-pattern" />
-                </div>
-                <div className="claims-featured-img-content relative z-10">
-                  <span className="claims-featured-tag">
-                    {lang === "am" ? "ፈጣን ሂደት" : "Fast Process"}
+          {/* LEFT: Featured hero panel */}
+          <ScrollReveal animation="fadeLeft">
+            <div className="claims-featured-img relative z-10 rounded-3xl overflow-hidden h-full">
+              {/* Edge-to-edge background overlays */}
+              <div className="absolute inset-0 -z-10 pointer-events-none rounded-3xl overflow-hidden">
+                <div className="claims-featured-overlay" />
+                <div className="claims-featured-pattern" />
+              </div>
+              <div className="claims-featured-img-content relative z-10 p-5 md:p-8">
+                <span className="claims-featured-tag rounded-full">
+                  {lang === "am" ? "ፈጣን ሂደት" : "Fast Process"}
+                </span>
+                <h2 className="claims-featured-title">
+                  {t("claims.title")}{" "}
+                  <span className="claims-featured-title-accent">
+                    {t("claims.titleHighlight")}
                   </span>
-                  <h2 className="claims-featured-title">
-                    {t("claims.title")}{" "}
-                    <span className="claims-featured-title-accent">
-                      {t("claims.titleHighlight")}
-                    </span>
-                  </h2>
-                  <p className="claims-featured-desc">{t("claims.subtitle")}</p>
-                  <a href="/claims" className="claims-featured-cta">
-                    {t("claims.startClaim")}
-                  </a>
-                </div>
+                </h2>
+                <p className="claims-featured-desc">{t("claims.subtitle")}</p>
+                <a href="/claims" className="claims-featured-cta rounded-full">
+                  {t("claims.startClaim")}
+                </a>
               </div>
-
-              {/* Required Documents panel */}
-              <div className="claims-docs-panel">
-                <h3 className="claims-docs-title">{t("claims.requiredDocs")}</h3>
-                <ul className="claims-docs-list">
-                  {requiredDocs.map((doc) => (
-                    <li key={doc} className="claims-docs-item">
-                      <CheckCircle className="claims-docs-check" />
-                      <span>{doc}</span>
-                    </li>
-                  ))}
-                </ul>
-
-              </div>
-
             </div>
           </ScrollReveal>
 
-          {/* ══ RIGHT: 2×2 step cards ══ */}
-          <div className="claims-cards-grid">
-            {claimSteps.map((step, i) => {
-              const Icon = step.icon;
-              return (
-                <ScrollReveal key={step.num} delay={i * 0.08}>
-                  <div className="claims-card">
-                    <div className="claims-card-top">
-                      <span className="claims-card-step">{step.step}</span>
-                    </div>
-                    <div className="claims-card-icon-wrap">
-                      <Icon className="claims-card-icon" />
-                    </div>
-                    <h3 className="claims-card-title">{step.title}</h3>
-                    <p className="claims-card-desc">{step.description}</p>
-                  </div>
-                </ScrollReveal>
-              );
-            })}
-          </div>
+          {/* RIGHT: Required Documents panel */}
+          <ScrollReveal animation="fadeRight" delay={0.1}>
+            <div className="claims-docs-panel rounded-3xl p-5 md:p-8 h-full">
+              <h3 className="claims-docs-title">{t("claims.requiredDocs")}</h3>
+              <ul className="claims-docs-list">
+                {requiredDocs.map((doc) => (
+                  <li key={doc} className="claims-docs-item rounded-xl px-3 py-1.5">
+                    <CheckCircle className="claims-docs-check" />
+                    <span>{doc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </ScrollReveal>
 
         </div>
+
+        {/* ══ BOTTOM: 4-across step cards ══ */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+          {claimSteps.map((step, i) => {
+            const Icon = step.icon;
+            return (
+              <ScrollReveal key={step.num} delay={i * 0.08}>
+                <div className="claims-card rounded-2xl p-4 md:p-5 h-full">
+                  <div className="claims-card-top">
+                    <span className="claims-card-step rounded-full px-3 py-1">{step.step}</span>
+                  </div>
+                  <div className="claims-card-icon-wrap rounded-full">
+                    <Icon className="claims-card-icon" />
+                  </div>
+                  <h3 className="claims-card-title">{step.title}</h3>
+                  <p className="claims-card-desc">{step.description}</p>
+                </div>
+              </ScrollReveal>
+            );
+          })}
+        </div>
+
       </div>
     </section>
   );
