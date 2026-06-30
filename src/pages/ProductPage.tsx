@@ -620,6 +620,12 @@ const ProductPage = () => {
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  const isGreenCTA = slug === "property" || slug === "health";
+
+  const ctaClass = isGreenCTA
+    ? "bg-secondary text-white hover:bg-secodnary/90"
+    : "bg-primary text-white hover:bg-primary/90";
+
   useEffect(() => {
     if (!slug) return;
     setLoading(true);
@@ -692,9 +698,19 @@ const ProductPage = () => {
                 {description || "Comprehensive coverage tailored to your needs."}
               </p>
               <div className="flex flex-wrap gap-4 mt-10">
-                <CTAButton href="/quote" variant="primary" size="lg" className="bg-primary text-white hover:bg-primary/90">
+                <a
+                  href="/quote"
+                  className={`inline-flex items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-base font-heading font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-white shadow-lg ${
+                    product?.name === "Property Insurance" ||
+                    product?.name === "Health Insurance"
+                      ? "bg-[hsl(152,48%,38%)] hover:bg-[hsl(152,48%,32%)] shadow-[hsl(152,48%,28%)/0.2]"
+                      : "bg-gradient-to-r from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] hover:opacity-90 shadow-[hsl(201,78%,23%)/0.2]"
+                  }`}
+                >
                   {t("hero.getQuote")}
-                </CTAButton>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+
                 <CTAButton href="/contact" variant="outline" size="lg" className="border border-gray-200 bg-white text-gray-800 hover:bg-gray-50">
                   {t("contact.title") || "Talk to an Agent"}
                 </CTAButton>
