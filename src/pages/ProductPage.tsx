@@ -296,51 +296,51 @@ const PricingSection = ({ pricingRules, t }: { pricingRules: any; t: (key: strin
         className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0 max-w-6xl mx-auto mt-14"
         style={{ borderTop: "1px solid #e5e5e5" }}
       >
-      {pricingFactors.map(({ id, Illustration, headline, description }, i) => (
-        <div
-          key={id}
-          className="flex flex-col items-center text-center px-10 py-12"
-          style={{
-            borderRight: i < pricingFactors.length - 1 ? "1px solid #e5e5e5" : "none",
-            borderBottom: "1px solid #e5e5e5",
-          }}
-        >
+        {pricingFactors.map(({ id, Illustration, headline, description }, i) => (
           <div
-            className="flex items-center justify-center rounded-full mb-8"
-            style={{ width: "112px", height: "112px", background: "#f4f4f4" }}
+            key={id}
+            className="flex flex-col items-center text-center px-10 py-12"
+            style={{
+              borderRight: i < pricingFactors.length - 1 ? "1px solid #e5e5e5" : "none",
+              borderBottom: "1px solid #e5e5e5",
+            }}
           >
-            <Illustration />
+            <div
+              className="flex items-center justify-center rounded-full mb-8"
+              style={{ width: "112px", height: "112px", background: "#f4f4f4" }}
+            >
+              <Illustration />
+            </div>
+            <h3
+              className="font-heading font-bold text-foreground mb-3 capitalize"
+              style={{ fontSize: "1.1rem" }}
+            >
+              {headline}
+            </h3>
+            <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
           </div>
-          <h3
-            className="font-heading font-bold text-foreground mb-3 capitalize"
-            style={{ fontSize: "1.1rem" }}
-          >
-            {headline}
-          </h3>
-          <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
-        </div>
-      ))}
-    </div>
-
-    {pricingRules?.base_rate && (
-      <div className="flex flex-col items-center gap-6 mt-10">
-        <p className="text-center text-lg md:text-xl text-muted-foreground">
-          Premiums start from{" "}
-          <span className="font-semibold text-primary underline underline-offset-16">
-            ETB {pricingRules.base_rate.toLocaleString()}
-          </span>{" "}
-          per year.
-        </p>
-        <a
-          href="/quote"
-          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 active:scale-95"
-          style={{ background: "hsl(152, 48%, 38%)" }}
-        >
-          Get Your Exact Quote
-          <ArrowRight size={18} strokeWidth={2.5} />
-        </a>
+        ))}
       </div>
-    )}
+
+      {pricingRules?.base_rate && (
+        <div className="flex flex-col items-center gap-6 mt-10">
+          <p className="text-center text-lg md:text-xl text-muted-foreground">
+            Premiums start from{" "}
+            <span className="font-semibold text-primary underline underline-offset-16">
+              ETB {pricingRules.base_rate.toLocaleString()}
+            </span>{" "}
+            per year.
+          </p>
+          <a
+            href="/quote"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 active:scale-95"
+            style={{ background: "hsl(152, 48%, 38%)" }}
+          >
+            Get Your Exact Quote
+            <ArrowRight size={18} strokeWidth={2.5} />
+          </a>
+        </div>
+      )}
     </div>
   </section>
 );
@@ -370,7 +370,7 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
     if (!animated) return;
     let target: number | null = null;
     if (activeIndex >= TOTAL * 2) target = activeIndex - TOTAL;
-    if (activeIndex < TOTAL)      target = activeIndex + TOTAL;
+    if (activeIndex < TOTAL) target = activeIndex + TOTAL;
     if (target === null) return;
 
     const t = setTimeout(() => {
@@ -396,9 +396,9 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
 
   const getRole = (i: number) => {
     const d = i - activeIndex;
-    if (d === 0)  return "center";
+    if (d === 0) return "center";
     if (d === -1) return "left";
-    if (d === 1)  return "right";
+    if (d === 1) return "right";
     return "hidden";
   };
 
@@ -418,13 +418,13 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
       <div style={{ display: "flex", alignItems: "stretch", width: "100%", height: STRIP_HEIGHT, overflow: "hidden" }}>
         <div style={{ display: "flex", alignItems: "stretch", flex: 1, overflow: "hidden", gap: "10px" }}>
           {CLONED.map((item, i) => {
-            const role     = getRole(i);
+            const role = getRole(i);
             const isCenter = role === "center";
-            const isLeft   = role === "left";
-            const isRight  = role === "right";
-            const isVis    = role !== "hidden";
-            const tr       = (p: string) => animated ? p : "none";
-            const cardBg   = isCenter ? "hsl(152, 48%, 78%)" : "hsl(152, 38%, 88%)";
+            const isLeft = role === "left";
+            const isRight = role === "right";
+            const isVis = role !== "hidden";
+            const tr = (p: string) => animated ? p : "none";
+            const cardBg = isCenter ? "hsl(152, 48%, 78%)" : "hsl(152, 38%, 88%)";
 
             return (
               <div
@@ -587,7 +587,7 @@ const CoverageAndExclusions = ({
   t: (key: string) => string;
 }) => {
   return (
-    <div className="bg-[hsl(201,78%,20%)] w-full rounded-3xl overflow-hidden drop-shadow-xl grid grid-cols-1 lg:grid-cols-2 text-white">
+    <div className="bg-secondary w-full rounded-3xl overflow-hidden drop-shadow-xl grid grid-cols-1 lg:grid-cols-2 text-white">
       {/* WHAT'S COVERED COLUMN */}
       <div className="p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-white/10">
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_2fr] gap-6 xl:gap-8">
@@ -611,7 +611,7 @@ const CoverageAndExclusions = ({
       </div>
 
       {/* EXCLUSIONS COLUMN */}
-      <div className="p-8 lg:p-12 bg-[hsl(160,78%,20%)]">
+      <div className="p-8 lg:p-12 bg-primary">
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_2fr] gap-6 xl:gap-8">
           <div>
             <h3 className="text-xs font-bold tracking-[0.15em] uppercase text-white/60">
@@ -699,8 +699,8 @@ const ProductPage = () => {
   const name = lang === "am" && product.name_am ? product.name_am : product.name;
   const description = lang === "am" && product.full_description_am ? product.full_description_am : product.full_description;
   const coverageList: string[] = Array.isArray(product.coverage_list) ? product.coverage_list : [];
-  const exclusions: string[]   = Array.isArray(product.exclusions)    ? product.exclusions    : [];
-  const pricingRules           = product.pricing_rules || {};
+  const exclusions: string[] = Array.isArray(product.exclusions) ? product.exclusions : [];
+  const pricingRules = product.pricing_rules || {};
 
   return (
     <div className="min-h-screen">
@@ -723,12 +723,11 @@ const ProductPage = () => {
               <div className="flex flex-wrap gap-4 mt-10">
                 <a
                   href="/quote"
-                  className={`inline-flex items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-base font-heading font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-white shadow-lg ${
-                    product?.name === "Property Insurance" ||
-                    product?.name === "Health Insurance"
+                  className={`inline-flex items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-base font-heading font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-white shadow-lg ${product?.name === "Property Insurance" ||
+                      product?.name === "Health Insurance"
                       ? "bg-gradient-to-r from-[hsl(160,55%,35%)] to-[hsl(160,55%,45%)] hover:opacity-90 shadow-[hsl(160,55%,35%)/0.2]"
                       : "bg-gradient-to-r from-[hsl(201,78%,23%)] to-[hsl(205,65%,48%)] hover:opacity-90 shadow-[hsl(201,78%,23%)/0.2]"
-                  }`}
+                    }`}
                 >
                   {t("hero.getQuote")}
                   <ArrowRight className="w-4 h-4" />
@@ -739,7 +738,7 @@ const ProductPage = () => {
                 </CTAButton>
               </div>
             </div>
-            
+
             {/* Right side: Image/Icon */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end lg:items-start z-10">
               {product.icon === "Car" ? (

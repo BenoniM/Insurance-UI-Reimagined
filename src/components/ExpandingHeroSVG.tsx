@@ -79,83 +79,80 @@ const ExpandingHeroSVG = ({
       const viewportDiagonal = Math.sqrt(
         window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight
       );
-      const clearDist = (viewportDiagonal * 50) / pxPerUnit;
+      const clearDist = (viewportDiagonal * 1.5) / pxPerUnit;
 
       // How far up the center image travels in SVG user-units
-      const centerMoveUp = isMobile ? 60 : 110;
+      const centerMoveUp = isMobile ? 90 : 300;
       const centerScaleTo = 0.62;
 
       // Center layer (Layer_1) sits at tx=309, w=766 → its center is at 692 in SVG coords.
-      // Canvas center is 1075/2 = 537.5. We need to shift it left by (692 - 537.5) = 154.5 units
-      // so it lands exactly in the middle of the viewport.
+      // Canvas center is 1075/2 = 537.5. Shift to center, then nudge right by 60 units.
       const centerLayerData = layers.find(l => l.isCenter)!;
       const centerLayerCX = centerLayerData.tx + centerLayerData.w / 2; // 692
-      const offsetToCenter = canvasCenterX - centerLayerCX; // -(154.5) → shift left
+      const rightNudge = 75; // shift slightly right after centering
+      const offsetToCenter = canvasCenterX - centerLayerCX + rightNudge;
 
-      let isTextVisible = false;
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: wrapperRef.current,
-          start: "top top",
-          end: "+=90%",
-          scrub: 0.6,
-          onUpdate: (self) => {
-            const p = self.progress;
-            if (p >= 0.65 && !isTextVisible) {
-              isTextVisible = true;
-              gsap.set(textRef.current, { pointerEvents: "auto" });
-              gsap.fromTo(
-                textEls,
-                { opacity: 0, y: 30 },
-                { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", stagger: 0.12, overwrite: true }
-              );
-            } else if (p < 0.65 && isTextVisible) {
-              isTextVisible = false;
-              gsap.set(textRef.current, { pointerEvents: "none" });
-              gsap.to(textEls, { opacity: 0, y: 20, duration: 0.4, ease: "power2.out", overwrite: true });
-            }
-          },
-        },
-      });
-
+      // Pre-resolve all DOM elements so we don't query inside onUpdate
+      type LayerEl = { el: Element; isCenter: boolean; dx: number; dy: number; len: number };
+      const layerEls: LayerEl[] = [];
       layers.forEach(layer => {
         const el = svgContainerRef.current?.querySelector(layer.id);
         if (!el) return;
+        const layerCX = layer.tx + layer.w / 2;
+        const layerCY = layer.ty + layer.h / 2;
+        const dx = layerCX - canvasCenterX;
+        const dy = layerCY - canvasCenterY;
+        const len = Math.sqrt(dx * dx + dy * dy) || 1;
+        layerEls.push({ el, isCenter: !!layer.isCenter, dx, dy, len });
+      });
 
-        if (layer.isCenter) {
-          // Center image: move up, shrink, and shift to exact horizontal center
-          tl.to(
-            el,
-            {
-              x: offsetToCenter,
-              y: -centerMoveUp,
-              scale: centerScaleTo,
-              ease: "power2.inOut",
-              duration: 0.8,
-            },
-            0
-          );
-        } else {
-          // Side images: scatter outward off screen
-          const layerCenterX = layer.tx + layer.w / 2;
-          const layerCenterY = layer.ty + layer.h / 2;
-          const dx = layerCenterX - canvasCenterX;
-          const dy = layerCenterY - canvasCenterY;
-          const len = Math.sqrt(dx * dx + dy * dy) || 1;
+      // Ease function — power2.inOut computed manually so it runs in onUpdate
+      const easeInOut = (t: number) =>
+        t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 
-          tl.to(
-            el,
-            {
-              x: (dx / len) * clearDist,
-              y: (dy / len) * clearDist,
-              scale: 1.8,
-              ease: "power2.inOut",
-              duration: 0.9,
-            },
-            0
-          );
-        }
+      let isTextVisible = false;
+
+      ScrollTrigger.create({
+        trigger: wrapperRef.current,
+        start: "top top",
+        end: "+=90%",
+        scrub: 0.4,
+        onUpdate: (self) => {
+          const p = self.progress;
+          const e = easeInOut(p); // single eased value drives ALL layers
+
+          // ── Apply transforms to every layer in one pass ─────────────────
+          layerEls.forEach(({ el, isCenter, dx, dy, len }) => {
+            if (isCenter) {
+              gsap.set(el, {
+                x: e * offsetToCenter,
+                y: e * -centerMoveUp,
+                scale: 1 + e * (centerScaleTo - 1),
+              });
+            } else {
+              gsap.set(el, {
+                x: e * (dx / len) * clearDist,
+                y: e * (dy / len) * clearDist,
+                scale: 1 + e * 0.8, // 1 → 1.8
+              });
+            }
+          });
+
+          // ── Text reveal ──────────────────────────────────────────────────
+          if (p >= 0.65 && !isTextVisible) {
+            isTextVisible = true;
+            gsap.set(textRef.current, { pointerEvents: "auto" });
+            gsap.fromTo(
+              textEls,
+              { opacity: 0, y: 30 },
+              { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", stagger: 0.12, overwrite: true }
+            );
+          } else if (p < 0.65 && isTextVisible) {
+            isTextVisible = false;
+            gsap.set(textRef.current, { pointerEvents: "none" });
+            gsap.to(textEls, { opacity: 0, y: 20, duration: 0.4, ease: "power2.out", overwrite: true });
+          }
+        },
       });
     },
     { scope: wrapperRef, dependencies: [] }
@@ -192,12 +189,12 @@ const ExpandingHeroSVG = ({
           }}
         />
 
-        {/* Text block — sits in normal flow at the bottom half of the viewport */}
+        {/* Text block — lifted up so image + text sit in the upper-middle zone */}
         <div
           ref={textRef}
           style={{
             position: "absolute",
-            bottom: "6%",
+            bottom: "22%",
             left: 0,
             right: 0,
             display: "flex",
