@@ -1,14 +1,13 @@
 import { useRef, useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { motion, useScroll, useTransform } from "framer-motion";
+import CTAButton from "@/components/CTAButton";
 
-import ExpandingHero from "@/components/ExpandingHero";
 import ScrollReveal from "@/components/ScrollReveal";
 import AboutMilestones from "@/components/AboutMilestones";
 import { Shield, Users, Award, Target, ChevronDown } from "lucide-react";
-import aboutHero from "@/assets/hero-about.jpg";
-import aboutHero2 from "@/assets/hero-about-2.jpg";
-import heroHome2 from "@/assets/hero-home-2.jpg";
+import aboutHeroImage from "@/assets/AboutHero/Gemini_Generated_Image_2oe8jt2oe8jt2oe8 (1).png";
 
 import {
   Carousel,
@@ -87,24 +86,59 @@ const leadership = [
 
 const AboutPage = () => {
   const [expandedLeader, setExpandedLeader] = useState<number | null>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end end"],
+  });
+
+  const textOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 0, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.8, 1], [0, -50, -50]);
+  const textPointer = useTransform(scrollYProgress, (v) => (v > 0.8 ? "none" : "auto"));
+  // Image peeks up more at first, then scrolls to 0vh
+  const imageY = useTransform(scrollYProgress, [0, 1], ["55vh", "0vh"]);
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <ExpandingHero
-        images={[
-          "https://images.pexels.com/photos/8124412/pexels-photo-8124412.jpeg",
-          "https://images.pexels.com/photos/7979460/pexels-photo-7979460.jpeg",
-          "https://images.pexels.com/photos/9488846/pexels-photo-9488846.jpeg",
-          "https://images.pexels.com/photos/8124247/pexels-photo-8124247.jpeg",
-        ]}
-        badge="ABOUT WASS"
-        headline={'Ethiopia\'s Trusted <span class="text-primary">Insurance Partner</span>'}
-        subtitle="WASS Insurance is under formation with a principal aim of providing the best health focused insurance policy."
-        ctaLabel="Get a Free Quote"
-        ctaHref="/quote"
-      />
+      <div ref={heroRef} className="relative h-[200vh]">
+        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-background">
+          <motion.div
+            className="flex flex-col items-center text-center z-30 px-4 w-full relative"
+            style={{ opacity: textOpacity, y: textY, pointerEvents: textPointer }}
+          >
+            <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+              ABOUT WASS
+            </div>
+            <h1
+              className="text-4xl md:text-6xl font-bold tracking-tight mb-6 max-w-4xl"
+              dangerouslySetInnerHTML={{
+                __html: 'Ethiopia\'s Trusted <span class="text-[#288A69]">Insurance Partner</span>',
+              }}
+            />
+            <p className="text-xl text-muted-foreground max-w-2xl mb-8">
+              WASS Insurance is under formation with a principal aim of providing
+              the best health focused insurance policy.
+            </p>
+            <CTAButton href="/quote" size="lg">
+              Get a Free Quote
+            </CTAButton>
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-0 w-full z-40 flex justify-center"
+            style={{ y: imageY }}
+          >
+            <img
+              src={aboutHeroImage}
+              alt="WASS Hero"
+              className="w-full h-auto object-cover max-h-[85vh]"
+            />
+          </motion.div>
+        </div>
+      </div>
 
       {/* ── STATS ─────────────────────────────────────────────────── */}
       <section className="w-full min-h-16 py-4 bg-gray-50 border-y border-gray-100 flex items-center justify-center relative z-10">

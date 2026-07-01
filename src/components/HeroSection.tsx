@@ -63,8 +63,8 @@ const HeroSection = () => {
         className="container mx-auto px-4 lg:px-8 relative z-10 flex flex-col items-center text-center"
       >
         <div className="max-w-3xl mx-auto flex flex-col items-center pb-20">
-          <h1 className="hero-headline opacity-0 font-hero text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] text-gray-800 font-medium tracking-wide capitalize">
-            Reimagining <span className="hero-highlight text-primary">insurance</span> <span className="inline-block">for Ethiopian families</span>
+          <h1 className="hero-headline opacity-0 font-hero text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-secondary font-medium tracking-wide capitalize">
+            Reimagining <span className="hero-highlight text-primary">insurance</span> <span className="inline-block pt-2">for Ethiopian families</span>
           </h1>
 
           <p className="hero-subtext opacity-0 mt-6 text-xl md:text-2xl text-gray-600 max-w-2xl leading-relaxed capitalize">
