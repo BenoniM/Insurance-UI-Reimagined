@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ExpandingHero from "@/components/ExpandingHero";
+import ExpandingHeroSVG from "@/components/ExpandingHeroSVG";
 import GivebackSection from "@/components/GivebackSection";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useEffect, useState, useRef } from "react";
@@ -208,13 +208,7 @@ const GivebackPage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <ExpandingHero
-        images={[
-          "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=1600&q=80",
-          "https://images.pexels.com/photos/12431091/pexels-photo-12431091.jpeg",
-          "https://images.pexels.com/photos/9353491/pexels-photo-9353491.jpeg",
-          "https://images.pexels.com/photos/14896176/pexels-photo-14896176.jpeg",
-        ]}
+      <ExpandingHeroSVG
         badge="GIVEBACK"
         headline={'Insurance That <span class="text-primary">Gives Back</span>'}
         subtitle="Earn rewards for healthy living and a claims-free year. WASS puts people first."
@@ -293,7 +287,7 @@ const GivebackPage = () => {
               </div>
 
               {/* Col 3: Image */}
-              <div className="w-full md:w-[25%] flex justify-center mt-12 md:mt-0">
+              <div className="w-full md:w-[5%] flex justify-center mt-12 md:mt-0">
                 <div className="relative w-full max-w-[280px] aspect-[1/1] shrink-0 rounded-xl overflow-hidden bg-accent/20 transition-all duration-500 shadow-2xl">
                   {causeBreakdown.map((c, i) => (
                     <img
@@ -329,88 +323,88 @@ const GivebackPage = () => {
         </div>
       </section>
 
-{/* FIELD UPDATES — Lemonade-style 4-column icon row */}
-<section className="py-10 md:py-16 px-6 md:px-12 lg:px-24 border-t border-border" style={{ background: "hsl(var(--surface))" }}>
-  <ScrollReveal>
-    <div className="mb-10 flex flex-col items-center text-center">
-      <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">FIELD UPDATES</p>
-      <h2 className="font-heading font-bold text-3xl md:text-4xl capitalize text-foreground" style={{ letterSpacing: "-0.025em" }}>
-        Recent impact updates.
-      </h2>
-    </div>
-  </ScrollReveal>
-
-  <div className="max-w-6xl mx-auto">
-    <div className="grid grid-cols-4 gap-6">
-      {[
-        {
-          icon: "/src/assets/FieldUpdates/Water-Conservation--Streamline-Milano.png",
-          date: "March 2026",
-          title: "Water access for Bishoftu villages",
-          body: "Three solar-powered wells came online, serving 2,100 people who previously walked 6km daily for clean water.",
-        },
-        {
-          icon: "/src/assets/FieldUpdates/School-Bus--Streamline-Milano.png",
-          date: "January 2026",
-          title: "School supply drive — Addis Ababa",
-          body: "Distributed 4,200 backpacks, notebooks, and uniforms to children entering Grade 1 across 18 public schools.",
-        },
-        {
-          icon: "/src/assets/FieldUpdates/Ambulance--Streamline-Milano.png",
-          date: "November 2025",
-          title: "Mobile clinic launches in Hawassa",
-          body: "WASS Giveback funded a fully-equipped mobile health unit reaching 6 villages monthly with maternal care.",
-        },
-        {
-          icon: "/src/assets/FieldUpdates/Relief-2--Streamline-Milano.png",
-          date: "September 2025",
-          title: "Flood relief — Afar region",
-          body: "Emergency disbursement of 480,000 ETB delivered tents, food, and medical supplies within 72 hours.",
-        },
-      ].map((item, i) => (
-        <ScrollReveal key={item.title} delay={i * 0.07}>
-          <div className="flex flex-col items-center text-center gap-4">
-            {/* Circle icon container */}
-            <div
-              style={{
-                width: "140px",
-                height: "140px",
-                borderRadius: "50%",
-                background: "hsl(220 14% 93%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              <img
-                src={item.icon}
-                alt={item.title}
-                style={{ width: "68px", height: "68px", objectFit: "contain" }}
-              />
-            </div>
-
-            {/* Date badge */}
-            <span className="text-xs font-bold tracking-wider text-primary uppercase">{item.date}</span>
-
-            {/* Title */}
-            <h3
-              className="font-heading font-bold text-foreground leading-tight"
-              style={{ fontSize: "clamp(0.95rem, 1.4vw, 1.15rem)", letterSpacing: "-0.02em" }}
-            >
-              {item.title}
-            </h3>
-
-            {/* Body */}
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              {item.body}
-            </p>
+      {/* FIELD UPDATES — Lemonade-style 4-column icon row */}
+      <section className="py-10 md:py-16 px-6 md:px-12 lg:px-24 border-t border-border" style={{ background: "hsl(var(--surface))" }}>
+        <ScrollReveal>
+          <div className="mb-10 flex flex-col items-center text-center">
+            <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">FIELD UPDATES</p>
+            <h2 className="font-heading font-bold text-3xl md:text-4xl capitalize text-foreground" style={{ letterSpacing: "-0.025em" }}>
+              Recent impact updates.
+            </h2>
           </div>
         </ScrollReveal>
-      ))}
-    </div>
-  </div>
-</section>
+
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-4 gap-6">
+            {[
+              {
+                icon: "/src/assets/FieldUpdates/Water-Conservation--Streamline-Milano.png",
+                date: "March 2026",
+                title: "Water access for Bishoftu villages",
+                body: "Three solar-powered wells came online, serving 2,100 people who previously walked 6km daily for clean water.",
+              },
+              {
+                icon: "/src/assets/FieldUpdates/School-Bus--Streamline-Milano.png",
+                date: "January 2026",
+                title: "School supply drive — Addis Ababa",
+                body: "Distributed 4,200 backpacks, notebooks, and uniforms to children entering Grade 1 across 18 public schools.",
+              },
+              {
+                icon: "/src/assets/FieldUpdates/Ambulance--Streamline-Milano.png",
+                date: "November 2025",
+                title: "Mobile clinic launches in Hawassa",
+                body: "WASS Giveback funded a fully-equipped mobile health unit reaching 6 villages monthly with maternal care.",
+              },
+              {
+                icon: "/src/assets/FieldUpdates/Relief-2--Streamline-Milano.png",
+                date: "September 2025",
+                title: "Flood relief — Afar region",
+                body: "Emergency disbursement of 480,000 ETB delivered tents, food, and medical supplies within 72 hours.",
+              },
+            ].map((item, i) => (
+              <ScrollReveal key={item.title} delay={i * 0.07}>
+                <div className="flex flex-col items-center text-center gap-4">
+                  {/* Circle icon container */}
+                  <div
+                    style={{
+                      width: "140px",
+                      height: "140px",
+                      borderRadius: "50%",
+                      background: "hsl(220 14% 93%)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <img
+                      src={item.icon}
+                      alt={item.title}
+                      style={{ width: "68px", height: "68px", objectFit: "contain" }}
+                    />
+                  </div>
+
+                  {/* Date badge */}
+                  <span className="text-xs font-bold tracking-wider text-primary uppercase">{item.date}</span>
+
+                  {/* Title */}
+                  <h3
+                    className="font-heading font-bold text-foreground leading-tight"
+                    style={{ fontSize: "clamp(0.95rem, 1.4vw, 1.15rem)", letterSpacing: "-0.02em" }}
+                  >
+                    {item.title}
+                  </h3>
+
+                  {/* Body */}
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {item.body}
+                  </p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* TRANSPARENCY — header on white */}
       <section className="py-10 px-6 md:px-12 lg:px-24 border-t border-border bg-background">
@@ -421,7 +415,7 @@ const GivebackPage = () => {
                 TRANSPARENCY
               </p>
               <h2
-                className="font-heading font-bold text-3xl md:text-4xl text-foreground"
+                className="font-heading font-bold text-3xl md:text-4xl text-foreground capitalize"
                 style={{ letterSpacing: "-0.025em" }}
               >
                 How we keep ourselves honest.
@@ -432,21 +426,19 @@ const GivebackPage = () => {
       </section>
 
       {/* TRANSPARENCY — 3-col × 2-row editorial grid with parallax images */}
-      <section className="bg-secondary px-12">
+      <section className="bg-secondary px-12 pb-12">
         {/* 3 × 2 Panel Grid */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gridTemplateRows: "auto auto",
+            gap: "2rem",
           }}
         >
           {transparencyPanels.map((p, i) => (
             <div
               key={p.n}
               style={{
-                borderLeft: i % 3 !== 0 ? "1px solid hsl(201 65% 20%)" : "none",
-                borderTop: i >= 3 ? "1px solid hsl(201 65% 20%)" : "none",
                 display: "flex",
                 flexDirection: "column",
               }}
@@ -546,7 +538,9 @@ const GivebackPage = () => {
               </div>
 
               {/* Parallax image */}
-              <ParallaxImage src={p.image} alt={p.title} />
+              <div style={{ borderRadius: "1.5rem", overflow: "hidden" }}>
+                <ParallaxImage src={p.image} alt={p.title} />
+              </div>
             </div>
           ))}
         </div>

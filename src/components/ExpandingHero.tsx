@@ -84,8 +84,8 @@ const ExpandingHero = ({
             yPercent: yPct,
           });
 
-          // Overlay darkens as it expands
-          gsap.set(overlayRef.current, { opacity: Math.min(p * 1.2, 0.55) });
+          // Overlay darkens as it expands with a dark bluish/greenish gradient
+          gsap.set(overlayRef.current, { opacity: Math.min(p * 1.8, 0.85) });
 
           // Reveal/Hide text based on progress
           if (p >= 0.45 && !isTextVisible) {
@@ -168,7 +168,7 @@ const ExpandingHero = ({
             style={{
               position: "absolute",
               inset: 0,
-              background: "rgba(0,0,0,0.45)",
+              background: "linear-gradient(135deg, hsl(201 78% 12%), hsl(160 60% 15%))",
               zIndex: 1,
             }}
           />

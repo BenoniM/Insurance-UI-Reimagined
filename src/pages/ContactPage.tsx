@@ -93,10 +93,10 @@ const ContactPage = () => (
     <Navbar />
     <ExpandingHero
       images={[
-        "https://images.pexels.com/photos/5386491/pexels-photo-5386491.jpeg",
-        "https://images.pexels.com/photos/8204351/pexels-photo-8204351.jpeg",
-        "https://images.pexels.com/photos/8204325/pexels-photo-8204325.jpeg",
-        "https://images.pexels.com/photos/33507830/pexels-photo-33507830.jpeg",
+        "https://images.pexels.com/photos/37976850/pexels-photo-37976850.jpeg",
+        "https://images.pexels.com/photos/14038572/pexels-photo-14038572.jpeg",
+        "https://images.pexels.com/photos/7709217/pexels-photo-7709217.jpeg",
+        "https://images.pexels.com/photos/13817351/pexels-photo-13817351.jpeg",
       ]}
       badge="CONTACT US"
       headline={'Let\'s <span class="text-primary">Talk</span>'}

@@ -199,9 +199,9 @@ const ClaimsPage = () => {
 
     <ExpandingHero
       images={[
-        "https://images.pexels.com/photos/27745581/pexels-photo-27745581.jpeg",
+        "https://images.pexels.com/photos/10341357/pexels-photo-10341357.jpeg",
         "https://images.pexels.com/photos/29899813/pexels-photo-29899813.jpeg",
-        "https://images.pexels.com/photos/28914932/pexels-photo-28914932.jpeg",
+        "https://images.pexels.com/photos/261679/pexels-photo-261679.jpeg",
         "https://images.pexels.com/photos/12955837/pexels-photo-12955837.jpeg",
       ]}
       badge="CLAIMS"

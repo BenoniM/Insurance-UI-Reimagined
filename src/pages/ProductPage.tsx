@@ -587,7 +587,7 @@ const CoverageAndExclusions = ({
   t: (key: string) => string;
 }) => {
   return (
-    <div className="bg-[hsl(201,78%,14%)] w-full rounded-3xl overflow-hidden drop-shadow-xl grid grid-cols-1 lg:grid-cols-2 text-white">
+    <div className="bg-[hsl(201,78%,20%)] w-full rounded-3xl overflow-hidden drop-shadow-xl grid grid-cols-1 lg:grid-cols-2 text-white">
       {/* WHAT'S COVERED COLUMN */}
       <div className="p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-white/10">
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_2fr] gap-6 xl:gap-8">
@@ -611,7 +611,7 @@ const CoverageAndExclusions = ({
       </div>
 
       {/* EXCLUSIONS COLUMN */}
-      <div className="p-8 lg:p-12">
+      <div className="p-8 lg:p-12 bg-[hsl(160,78%,20%)]">
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_2fr] gap-6 xl:gap-8">
           <div>
             <h3 className="text-xs font-bold tracking-[0.15em] uppercase text-white/60">
