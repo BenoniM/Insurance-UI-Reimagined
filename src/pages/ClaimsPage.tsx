@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SectionWrapper from "@/components/SectionWrapper";
 import CTAButton from "@/components/CTAButton";
-import ExpandingHero from "@/components/ExpandingHero";
+import ClaimsHeroAnimation from "@/components/ClaimsHeroAnimation";
 import ScrollReveal from "@/components/ScrollReveal";
 import { FileText, CheckCircle, AlertTriangle, ArrowRight } from "lucide-react";
 
@@ -197,22 +197,10 @@ const ClaimsPage = () => {
   <div className="min-h-screen">
     <Navbar />
 
-    <ExpandingHero
-      images={[
-        "https://images.pexels.com/photos/10341357/pexels-photo-10341357.jpeg",
-        "https://images.pexels.com/photos/29899813/pexels-photo-29899813.jpeg",
-        "https://images.pexels.com/photos/261679/pexels-photo-261679.jpeg",
-        "https://images.pexels.com/photos/12955837/pexels-photo-12955837.jpeg",
-      ]}
-      badge="CLAIMS"
-      headline={'Fast, Fair <span class="text-primary">Claims Processing</span>'}
-      subtitle="We handle your claims with speed and transparency — so you can focus on what matters."
-      ctaLabel="File a Claim"
-      ctaHref="/claims/new"
-    />
+    <ClaimsHeroAnimation />
 
     {/* Claims Process Steps */}
-    <div className="py-12 md:py-20 bg-card border-y border-border overflow-hidden">
+    <div className="py-12 md:py-20 bg-card border-b border-border overflow-hidden">
       <ScrollReveal>
         <div className="text-center mb-10 md:mb-16 px-4">
           <span className="section-badge mb-3 inline-block">STEP BY STEP</span>
