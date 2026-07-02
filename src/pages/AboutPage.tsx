@@ -7,7 +7,7 @@ import CTAButton from "@/components/CTAButton";
 import ScrollReveal from "@/components/ScrollReveal";
 import AboutMilestones from "@/components/AboutMilestones";
 import { Shield, Users, Award, Target, ChevronDown } from "lucide-react";
-import aboutHeroImage from "@/assets/AboutHero/Gemini_Generated_Image_2oe8jt2oe8jt2oe8 (1).png";
+import aboutHeroImage from "@/assets/AboutHero/Gemini_Generated_Image_67dphh67dphh67dp-Photoroom.png";
 
 import {
   Carousel,
@@ -104,12 +104,13 @@ const AboutPage = () => {
       <Navbar />
 
       <div ref={heroRef} className="relative h-[200vh]">
-        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-background">
+        <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
+          {/* Text Content */}
           <motion.div
-            className="flex flex-col items-center text-center z-30 px-4 w-full relative"
+            className="absolute inset-0 flex flex-col items-center justify-center text-center z-30 px-4 pb-[15vh]"
             style={{ opacity: textOpacity, y: textY, pointerEvents: textPointer }}
           >
-            <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+            <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6 mt-16">
               ABOUT WASS
             </div>
             <h1
@@ -127,14 +128,15 @@ const AboutPage = () => {
             </CTAButton>
           </motion.div>
 
+          {/* Hero Image */}
           <motion.div
-            className="absolute bottom-0 w-full z-40 flex justify-center"
-            style={{ y: imageY }}
+            className="absolute bottom-0 w-[108vw] left-1/2 z-40 flex flex-col justify-end"
+            style={{ y: imageY, x: "-50%" }}
           >
             <img
               src={aboutHeroImage}
               alt="WASS Hero"
-              className="w-full h-auto object-cover max-h-[85vh]"
+              className="w-full h-auto"
             />
           </motion.div>
         </div>

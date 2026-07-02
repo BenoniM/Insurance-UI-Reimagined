@@ -149,70 +149,70 @@ const GivebackPage = () => {
   }, []);
 
   useEffect(() => {
-  const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < 768;
 
-  // Mobile: keep IntersectionObserver, since rows aren't pinned/scroll-driven there.
-  if (isMobile) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute("data-index"));
-            setActiveIndex(index);
-          }
-        });
-      },
-      { threshold: 0.5 }
+    // Mobile: keep IntersectionObserver, since rows aren't pinned/scroll-driven there.
+    if (isMobile) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const index = Number(entry.target.getAttribute("data-index"));
+              setActiveIndex(index);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      const triggers = containerRef.current?.querySelectorAll(".cause-row-mobile");
+      triggers?.forEach((child) => observer.observe(child));
+      return () => observer.disconnect();
+    }
+
+    // Desktop: derive activeIndex from scroll position directly, every frame.
+    // This is robust to fast/back-and-forth scrolling, unlike IntersectionObserver
+    // entries, which can be skipped or fire out of order between animation frames
+    // when the user scrolls quickly.
+    const triggers = Array.from(
+      containerRef.current?.querySelectorAll<HTMLElement>(".cause-trigger") ?? []
     );
-    const triggers = containerRef.current?.querySelectorAll(".cause-row-mobile");
-    triggers?.forEach((child) => observer.observe(child));
-    return () => observer.disconnect();
-  }
+    if (triggers.length === 0) return;
 
-  // Desktop: derive activeIndex from scroll position directly, every frame.
-  // This is robust to fast/back-and-forth scrolling, unlike IntersectionObserver
-  // entries, which can be skipped or fire out of order between animation frames
-  // when the user scrolls quickly.
-  const triggers = Array.from(
-    containerRef.current?.querySelectorAll<HTMLElement>(".cause-trigger") ?? []
-  );
-  if (triggers.length === 0) return;
+    let rafId: number | null = null;
 
-  let rafId: number | null = null;
+    const computeActiveIndex = () => {
+      rafId = null;
+      const viewCenter = window.innerHeight / 2;
 
-  const computeActiveIndex = () => {
-    rafId = null;
-    const viewCenter = window.innerHeight / 2;
+      let closestIndex = 0;
+      let closestDistance = Infinity;
 
-    let closestIndex = 0;
-    let closestDistance = Infinity;
+      triggers.forEach((el, i) => {
+        const rect = el.getBoundingClientRect();
+        const elCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(elCenter - viewCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = i;
+        }
+      });
 
-    triggers.forEach((el, i) => {
-      const rect = el.getBoundingClientRect();
-      const elCenter = rect.top + rect.height / 2;
-      const distance = Math.abs(elCenter - viewCenter);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = i;
-      }
-    });
+      setActiveIndex(closestIndex);
+    };
 
-    setActiveIndex(closestIndex);
-  };
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(computeActiveIndex);
+    };
 
-  const onScroll = () => {
-    if (rafId !== null) return;
-    rafId = requestAnimationFrame(computeActiveIndex);
-  };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    computeActiveIndex();
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  computeActiveIndex();
-
-  return () => {
-    window.removeEventListener("scroll", onScroll);
-    if (rafId !== null) cancelAnimationFrame(rafId);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -435,7 +435,9 @@ const GivebackPage = () => {
       </section>
 
       {/* TRANSPARENCY — 3-col × 2-row editorial grid with parallax images */}
-      <section className="bg-secondary px-12 pb-12">
+      <section className="px-12 pb-12" style={{
+        background: "linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.85) 50%, hsl(var(--secondary)) 100%)",
+      }}>
         {/* 3 × 2 Panel Grid */}
         <div
           style={{
@@ -453,7 +455,7 @@ const GivebackPage = () => {
               }}
             >
               {/* Text card */}
-              <div className="bg-secondary"
+              <div
                 style={{
                   padding: "2.25rem 2rem 2rem",
                   display: "flex",
