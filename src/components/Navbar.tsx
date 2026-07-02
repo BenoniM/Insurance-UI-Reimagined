@@ -11,6 +11,8 @@ const products = [
   { label: { en: "Health Insurance", am: "የጤና ኢንሹራንስ" }, href: "/products/health-insurance" },
   { label: { en: "Motor Insurance", am: "የመኪና ኢንሹራንስ" }, href: "/products/motor-insurance" },
   { label: { en: "Property Insurance", am: "የንብረት ኢንሹራንስ" }, href: "/products/property-insurance" },
+  { label: { en: "Business Insurance", am: "የንግድ ኢንሹራንስ" }, href: "/products/business-insurance" },
+  { label: { en: "Investment Insurance", am: "የመዋዕለ ንዋይ ኢንሹራንስ" }, href: "/products/investment-insurance" },
 ];
 
 const Navbar = () => {

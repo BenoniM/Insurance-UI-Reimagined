@@ -140,6 +140,15 @@ const GivebackPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    const timer = setTimeout(() => window.scrollTo(0, 0), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
   const isMobile = window.innerWidth < 768;
 
   // Mobile: keep IntersectionObserver, since rows aren't pinned/scroll-driven there.
@@ -287,8 +296,8 @@ const GivebackPage = () => {
               </div>
 
               {/* Col 3: Image */}
-              <div className="w-full md:w-[5%] flex justify-center mt-12 md:mt-0">
-                <div className="relative w-full max-w-[280px] aspect-[1/1] shrink-0 rounded-xl overflow-hidden bg-accent/20 transition-all duration-500 shadow-2xl">
+              <div className="w-full md:w-[20%] flex justify-center mt-12 md:mt-0">
+                <div className="relative w-full max-w-[380px] aspect-[4/3] shrink-0 rounded-2xl overflow-hidden bg-accent/20 transition-all duration-500 shadow-2xl">
                   {causeBreakdown.map((c, i) => (
                     <img
                       key={c.title}

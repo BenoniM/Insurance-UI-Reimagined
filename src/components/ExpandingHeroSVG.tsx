@@ -66,12 +66,12 @@ const ExpandingHeroSVG = ({
         gsap.set(el, { svgOrigin: `${cx} ${cy}` });
       });
 
-      // Initial state: text hidden
-      gsap.set(textRef.current, { pointerEvents: "none" });
+      // Initial state: text visible
+      gsap.set(textRef.current, { pointerEvents: "auto" });
       const textEls = textRef.current.querySelectorAll<HTMLElement>(
         ".eh-badge, .eh-headline, .eh-subtitle, .eh-cta"
       );
-      gsap.set(textEls, { opacity: 0, y: 30 });
+      gsap.set(textEls, { opacity: 1, y: 0 });
 
       // Distance to scatter side images off screen
       const containerRect = svgContainerRef.current.getBoundingClientRect();
@@ -82,7 +82,7 @@ const ExpandingHeroSVG = ({
       const clearDist = (viewportDiagonal * 1.5) / pxPerUnit;
 
       // How far up the center image travels in SVG user-units
-      const centerMoveUp = isMobile ? 90 : 300;
+      const centerMoveUp = isMobile ? 70 : 250;
       const centerScaleTo = 0.62;
 
       // Center layer (Layer_1) sits at tx=309, w=766 → its center is at 692 in SVG coords.
@@ -110,7 +110,29 @@ const ExpandingHeroSVG = ({
       const easeInOut = (t: number) =>
         t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 
-      let isTextVisible = false;
+      let isTextVisible = true;
+
+      const updatePositions = (p: number) => {
+        const e = 1 - easeInOut(p);
+        layerEls.forEach(({ el, isCenter, dx, dy, len }) => {
+          if (isCenter) {
+            gsap.set(el, {
+              x: e * offsetToCenter,
+              y: e * -centerMoveUp,
+              scale: 1 + e * (centerScaleTo - 1),
+            });
+          } else {
+            gsap.set(el, {
+              x: e * (dx / len) * clearDist,
+              y: e * (dy / len) * clearDist,
+              scale: 1 + e * 0.8,
+            });
+          }
+        });
+      };
+
+      // Set initial dispersed state
+      updatePositions(0);
 
       ScrollTrigger.create({
         trigger: wrapperRef.current,
@@ -119,38 +141,17 @@ const ExpandingHeroSVG = ({
         scrub: 0.4,
         onUpdate: (self) => {
           const p = self.progress;
-          const e = easeInOut(p); // single eased value drives ALL layers
-
-          // ── Apply transforms to every layer in one pass ─────────────────
-          layerEls.forEach(({ el, isCenter, dx, dy, len }) => {
-            if (isCenter) {
-              gsap.set(el, {
-                x: e * offsetToCenter,
-                y: e * -centerMoveUp,
-                scale: 1 + e * (centerScaleTo - 1),
-              });
-            } else {
-              gsap.set(el, {
-                x: e * (dx / len) * clearDist,
-                y: e * (dy / len) * clearDist,
-                scale: 1 + e * 0.8, // 1 → 1.8
-              });
-            }
-          });
+          updatePositions(p);
 
           // ── Text reveal ──────────────────────────────────────────────────
-          if (p >= 0.65 && !isTextVisible) {
-            isTextVisible = true;
-            gsap.set(textRef.current, { pointerEvents: "auto" });
-            gsap.fromTo(
-              textEls,
-              { opacity: 0, y: 30 },
-              { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", stagger: 0.12, overwrite: true }
-            );
-          } else if (p < 0.65 && isTextVisible) {
+          if (p > 0.15 && isTextVisible) {
             isTextVisible = false;
             gsap.set(textRef.current, { pointerEvents: "none" });
-            gsap.to(textEls, { opacity: 0, y: 20, duration: 0.4, ease: "power2.out", overwrite: true });
+            gsap.to(textEls, { opacity: 0, y: 30, duration: 0.4, ease: "power2.out", overwrite: true });
+          } else if (p <= 0.15 && !isTextVisible) {
+            isTextVisible = true;
+            gsap.set(textRef.current, { pointerEvents: "auto" });
+            gsap.to(textEls, { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", stagger: 0.12, overwrite: true });
           }
         },
       });
@@ -194,7 +195,7 @@ const ExpandingHeroSVG = ({
           ref={textRef}
           style={{
             position: "absolute",
-            bottom: "22%",
+            bottom: "15%",
             left: 0,
             right: 0,
             display: "flex",

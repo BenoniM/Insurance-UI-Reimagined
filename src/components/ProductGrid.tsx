@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { supabase } from "@/integrations/supabase/client";
+import { getActiveProducts } from "@/data/products";
 import SectionWrapper from "./SectionWrapper";
 import ScrollReveal from "./ScrollReveal";
 
@@ -10,27 +9,24 @@ import imgLife from "@/assets/Coverage/Life-Coverage-01.svg";
 import imgNetWorth from "@/assets/Coverage/Net-Worth--Streamline-Milano-01.svg";
 import imgCar from "@/assets/Coverage/Speed-Go-Fast-4--Streamline-Milano-01.svg";
 
+// TODO: swap in dedicated "Streamline Milano" style icons for Business
+// (briefcase) and Investment (growth/plane) once available in
+// src/assets/Coverage/. Reusing existing icons as placeholders for now.
+const imgBusiness = imgNetWorth;
+const imgInvestment = imgLife;
+
 const imageMap: Record<string, string> = {
   Heart: imgLife,
   Car: imgCar,
   Home: imgNetWorth,
   Shield: imgHospital,
+  Briefcase: imgBusiness,
+  Plane: imgInvestment,
 };
 
 const ProductGrid = () => {
   const { t, lang } = useLanguage();
-  const [products, setProducts] = useState<any[]>([]);
-
-  useEffect(() => {
-    supabase
-      .from("products")
-      .select("*")
-      .eq("active", true)
-      .order("sort_order")
-      .then(({ data }) => {
-        if (data) setProducts(data);
-      });
-  }, []);
+  const products = getActiveProducts();
 
   return (
     <SectionWrapper id="products" className="bg-slate-50/50 py-8 md:py-12">

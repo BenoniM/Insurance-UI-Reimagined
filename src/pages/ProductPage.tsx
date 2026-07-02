@@ -5,7 +5,7 @@ import {
   CheckCircle, XCircle, Star, Clock, Users, Phone,
   ArrowRight, ArrowLeft,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { getProductBySlug } from "@/data/products";
 import { useLanguage } from "@/i18n/LanguageContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -13,7 +13,6 @@ import SectionWrapper from "@/components/SectionWrapper";
 import CTAButton from "@/components/CTAButton";
 import PageHero from "@/components/PageHero";
 import ScrollReveal from "@/components/ScrollReveal";
-import { Skeleton } from "@/components/ui/skeleton";
 import { trackProductView } from "@/components/AnalyticsProvider";
 import heroProducts from "@/assets/hero-products.jpg";
 import heroProducts2 from "@/assets/hero-products-2.jpg";
@@ -28,6 +27,18 @@ import videoMotor from "@/assets/Products/magnific_use-the-provided-image-as_9Rl
 import videoLife from "@/assets/Products/magnific_use-the-provided-image-as_kLfa5HX16B.mp4";
 import videoHealth from "@/assets/Products/magnific_use-the-provided-image-as_ohccbjt829.mp4";
 import videoProperty from "@/assets/Products/magnific_animate-this-reference-im_ubooflmQLD.mp4";
+import videoBusinessAsset from "@/assets/Products/magnific_use-the-uploaded-illustra_5xa8Xi6Kxe.mp4";
+import videoInvestmentAsset from "@/assets/Products/magnific_use-the-uploaded-illustra_PiskgtX42C.mp4";
+
+// TODO: replace these placeholder assignments with dedicated Business/Investment
+// assets once available (drop new files into src/assets/Products/ and import
+// them above, then point these at the new imports). Reusing existing assets
+// in the meantime so the page renders correctly instead of silently falling
+// back to the Property visuals.
+const imgBusiness = imgNetWorth;
+const imgInvestment = imgHospital;
+const videoBusiness = videoBusinessAsset;
+const videoInvestment = videoInvestmentAsset;
 
 const SlowVideo = ({ src, className }: { src: string; className?: string }) => {
   const ref = useRef<HTMLVideoElement>(null);
@@ -53,6 +64,8 @@ const productImagesMap: Record<string, string> = {
   Car: imgCar,
   Home: imgNetWorth,
   Shield: imgHospital,
+  Briefcase: imgBusiness,
+  Plane: imgInvestment,
 };
 
 const productColorMap: Record<string, string> = {
@@ -60,6 +73,8 @@ const productColorMap: Record<string, string> = {
   Car: "bg-emerald-500/10",
   Home: "bg-blue-500/10",
   Shield: "bg-teal-500/10",
+  Briefcase: "bg-amber-500/10",
+  Plane: "bg-violet-500/10",
 };
 
 const productFilterMap: Record<string, string> = {
@@ -67,6 +82,8 @@ const productFilterMap: Record<string, string> = {
   Car: "invert(58%) sepia(58%) saturate(452%) hue-rotate(113deg) brightness(97%) contrast(92%)",
   Home: "invert(41%) sepia(74%) saturate(3821%) hue-rotate(207deg) brightness(101%) contrast(98%)",
   Shield: "invert(56%) sepia(87%) saturate(389%) hue-rotate(124deg) brightness(94%) contrast(92%)",
+  Briefcase: "invert(65%) sepia(60%) saturate(1400%) hue-rotate(10deg) brightness(98%) contrast(94%)",
+  Plane: "invert(48%) sepia(45%) saturate(2200%) hue-rotate(235deg) brightness(94%) contrast(96%)",
 };
 
 const iconMap: Record<string, typeof Heart> = { Heart, Car, Home, Briefcase, Plane, Shield };
@@ -180,12 +197,12 @@ const TestimonialCard = ({
     </p>
     <div className="flex gap-0.5 mt-4">
       {[...Array(5)].map((_, j) => (
-        <svg key={j} viewBox="0 0 20 20" className="w-3.5 h-3.5">
+        <svg key={j} viewBox="0 0 24 24" className="w-4 h-4">
           <polygon
-            points="10,1.5 12.2,7.2 18.5,7.6 13.9,11.6 15.5,17.8 10,14.4 4.5,17.8 6.1,11.6 1.5,7.6 7.8,7.2"
+            points="12,2 15,9 22,9 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9 9,9"
             fill="hsl(160 55% 45%)"
             stroke="hsl(160 55% 45%)"
-            strokeWidth="1"
+            strokeWidth="2.5"
             strokeLinejoin="round"
           />
         </svg>
@@ -640,8 +657,7 @@ const CoverageAndExclusions = ({
 const ProductPage = () => {
   const { slug } = useParams();
   const { lang, t } = useLanguage();
-  const [product, setProduct] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const product = getProductBySlug(slug);
 
   const isGreenCTA = slug === "property" || slug === "health";
 
@@ -650,37 +666,8 @@ const ProductPage = () => {
     : "bg-primary text-white hover:bg-primary/90";
 
   useEffect(() => {
-    if (!slug) return;
-    setLoading(true);
-    supabase
-      .from("products")
-      .select("*")
-      .eq("slug", slug)
-      .eq("active", true)
-      .single()
-      .then(({ data }) => {
-        setProduct(data);
-        setLoading(false);
-        if (data) trackProductView(data.slug);
-      });
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen">
-        <Navbar />
-        <section className="pt-28 pb-16 bg-white">
-          <div className="container mx-auto px-4 lg:px-8 max-w-3xl space-y-4">
-            <Skeleton className="h-14 w-14 rounded-xl" />
-            <Skeleton className="h-12 w-3/4" />
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-2/3" />
-          </div>
-        </section>
-        <Footer />
-      </div>
-    );
-  }
+    if (product) trackProductView(product.slug);
+  }, [product]);
 
   if (!product) {
     return (
@@ -754,6 +741,16 @@ const ProductPage = () => {
               ) : product.icon === "Shield" ? (
                 <SlowVideo
                   src={videoHealth}
+                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
+                />
+              ) : product.icon === "Briefcase" ? (
+                <SlowVideo
+                  src={videoBusiness}
+                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
+                />
+              ) : product.icon === "Plane" ? (
+                <SlowVideo
+                  src={videoInvestment}
                   className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
                 />
               ) : (

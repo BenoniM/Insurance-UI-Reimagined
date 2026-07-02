@@ -55,8 +55,8 @@ const SLOT = 125; // width per star in viewBox units
 
 // Generate star polygon points for a star centered at (cx, 50)
 function starPoints(cx: number): string {
-  const outerR = 44;
-  const innerR = 18;
+  const outerR = 40;
+  const innerR = 16;
   const pts: string[] = [];
   for (let i = 0; i < 5; i++) {
     const outerAngle = (i * 72 - 90) * (Math.PI / 180);
@@ -136,7 +136,7 @@ const FiveStars = () => {
             points={star.points}
             fill="hsl(160 10% 88%)"
             stroke="hsl(160 10% 88%)"
-            strokeWidth="8"
+            strokeWidth="12"
             strokeLinejoin="round"
             strokeLinecap="round"
           />
@@ -145,7 +145,7 @@ const FiveStars = () => {
             points={star.points}
             fill="hsl(160 55% 45%)"
             stroke="hsl(160 55% 45%)"
-            strokeWidth="8"
+            strokeWidth="12"
             strokeLinejoin="round"
             strokeLinecap="round"
             clipPath={`url(#${star.clipId})`}
@@ -180,12 +180,12 @@ const TestimonialCard = ({
     <p className="text-[hsl(200,10%,35%)] text-sm leading-relaxed flex-1">{tm.quote[lang]}</p>
     <div className="flex gap-0.5 mt-4">
       {[...Array(5)].map((_, j) => (
-        <svg key={j} viewBox="0 0 20 20" className="w-3.5 h-3.5">
+        <svg key={j} viewBox="0 0 24 24" className="w-4 h-4">
           <polygon
-            points="10,1.5 12.2,7.2 18.5,7.6 13.9,11.6 15.5,17.8 10,14.4 4.5,17.8 6.1,11.6 1.5,7.6 7.8,7.2"
+            points="12,2 15,9 22,9 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9 9,9"
             fill="hsl(160 55% 45%)"
             stroke="hsl(160 55% 45%)"
-            strokeWidth="1"
+            strokeWidth="2.5"
             strokeLinejoin="round"
           />
         </svg>
