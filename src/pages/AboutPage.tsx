@@ -103,7 +103,38 @@ const AboutPage = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <div ref={heroRef} className="relative h-[200vh]">
+      {/* ── MOBILE HERO (static, no scroll animation) ── */}
+      <div className="block md:hidden bg-background pt-56 pb-0 overflow-hidden">
+        <div className="flex flex-col items-center text-center px-4">
+          <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+            ABOUT WASS
+          </div>
+          <h1
+            className="text-4xl font-bold tracking-tight mb-6"
+            dangerouslySetInnerHTML={{
+              __html: 'Ethiopia\'s Trusted <span class="text-[#288A69]">Insurance Partner</span>',
+            }}
+          />
+          <p className="text-lg text-muted-foreground mb-8">
+            WASS Insurance is under formation with a principal aim of providing
+            the best health focused insurance policy.
+          </p>
+          <CTAButton href="/quote" size="lg">
+            Get a Free Quote
+          </CTAButton>
+        </div>
+        {/* Image bleeds full width outside all horizontal padding */}
+        <div className="w-screen mt-12">
+          <img
+            src={aboutHeroImage}
+            alt="WASS Hero"
+            className="w-full h-auto"
+          />
+        </div>
+      </div>
+
+      {/* ── DESKTOP HERO (scroll-animated) ── */}
+      <div ref={heroRef} className="relative h-[200vh] hidden md:block">
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
           {/* Text Content */}
           <motion.div
@@ -128,7 +159,7 @@ const AboutPage = () => {
             </CTAButton>
           </motion.div>
 
-          {/* Hero Image */}
+          {/* Hero Image — desktop scroll-animated */}
           <motion.div
             className="absolute bottom-0 w-[108vw] left-1/2 z-40 flex flex-col justify-end"
             style={{ y: imageY, x: "-50%" }}
