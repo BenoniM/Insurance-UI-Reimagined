@@ -142,7 +142,7 @@ const ValueProps = () => {
 
         {/* ── HEADER ── */}
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pointer-events-none select-none"
+          className="absolute inset-0 flex flex-col items-center justify-start pt-[15vh] md:justify-center md:pt-0 text-center px-6 pointer-events-none select-none"
           style={{
             filter: `blur(${headerBlur}px)`,
             transform: `scale(${headerScale})`,

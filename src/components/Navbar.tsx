@@ -52,6 +52,18 @@ const Navbar = () => {
     setAccountsOpen(false);
   }, [location]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [mobileOpen]);
+
   useGSAP(() => {
     gsap.from(navRef.current, {
       y: -30,
@@ -220,13 +232,15 @@ const Navbar = () => {
                       visibility: productsOpen ? "visible" : "hidden",
                     }}
                   >
-                    {products.map((p) => (
+                    {products.map((p) => {
+                      const isActive = location.pathname === p.href;
+                      return (
                       <Link
                         key={p.href}
                         to={p.href}
-                        className="flex items-center justify-between px-4 py-3.5 transition-all duration-150 w-full"
+                        className="flex items-center justify-between px-4 py-3.5 transition-all duration-150 w-full group"
                         style={{
-                          color: "hsl(201 78% 20%)",
+                          color: isActive ? "hsl(160,55%,45%)" : "hsl(201 78% 20%)",
                           fontFamily: "var(--font-heading)",
                           fontSize: "14px",
                           fontWeight: 600,
@@ -235,10 +249,17 @@ const Navbar = () => {
                           (e.currentTarget as HTMLElement).style.color = "hsl(160 55% 38%)";
                         }}
                         onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.color = "hsl(201 78% 20%)";
+                          (e.currentTarget as HTMLElement).style.color = isActive ? "hsl(160,55%,45%)" : "hsl(201 78% 20%)";
                         }}
                       >
-                        <span>{p.label[lang]}</span>
+                        <span className="relative inline-block">
+                          {p.label[lang]}
+                          <span 
+                            className={`absolute -bottom-0.5 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
+                              isActive ? "w-full" : "w-0"
+                            }`}
+                          />
+                        </span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="14"
@@ -254,7 +275,8 @@ const Navbar = () => {
                           <path d="M9 18l6-6-6-6" />
                         </svg>
                       </Link>
-                    ))}
+                    );
+                    })}
                   </div>
                 </div>
               ) : (
@@ -501,46 +523,89 @@ const Navbar = () => {
       </nav>
 
       {/* ─── MOBILE NAVBAR ──────────────────────────────────────────── */}
+      {/* Mobile Overlay Backdrop */}
+      <div 
+        className={`fixed inset-0 z-40 lg:hidden transition-all duration-400 ease-in-out ${
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        style={{
+          background: "rgba(11, 63, 91, 0.4)", // Primary color with opacity
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+        }}
+        onClick={() => setMobileOpen(false)}
+      />
+
       <nav 
-        className={`fixed top-0 left-0 right-0 z-50 lg:hidden px-4 py-3 transition-transform duration-300 ease-in-out ${
-          hidden && !mobileOpen ? "-translate-y-full" : "translate-y-0"
+        className={`fixed top-0 left-0 right-0 z-50 lg:hidden px-4 py-4 transition-transform duration-300 ease-in-out ${
+          hidden && !mobileOpen ? "-translate-y-[120px]" : "translate-y-0"
         }`}
       >
-        <div
-          className="flex items-center justify-between h-14 px-4 rounded-2xl transition-all duration-400"
+        <div 
+          className="relative flex items-center w-full gap-0 transition-all duration-300"
           style={{
-            background: scrolled
-              ? "rgba(255,255,255,0.98)"
-              : "rgba(255,255,255,0.92)",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
-            boxShadow: scrolled
-              ? "0 12px 40px rgba(0,0,0,0.2)"
-              : "0 8px 24px rgba(0,0,0,0.15)",
-            border: "1.5px solid rgba(255,255,255,0.9)",
+            filter: scrolled 
+              ? "drop-shadow(0 16px 40px rgba(0,0,0,0.2))" 
+              : "drop-shadow(0 12px 32px rgba(0,0,0,0.15))",
           }}
         >
-          <Link to="/" className="flex items-center gap-2">
-            <img src="/images/wass-logo.svg" alt="WASS Insurance" className="h-8 w-auto" />
-          </Link>
-
-          <div className="flex items-center gap-2">
-            <a
-              href="/quote"
-              className="px-4 py-2 text-xs font-bold rounded-xl text-white"
+          {/* ── LEFT PILL: Logo ── */}
+          <div
+            className="relative flex items-center shrink-0 flex-1"
+            style={{
+              zIndex: 2,
+              background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,1)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              borderRadius: "16px",
+              height: "64px",
+              padding: "0 24px",
+              boxShadow: "none",
+              border: "none",
+            }}
+          >
+            {/* Bridge to Right */}
+            <svg
+              className="absolute left-full top-1/2 -translate-y-1/2 pointer-events-none"
               style={{
-                background: location.pathname === "/quote" ? "linear-gradient(135deg, hsl(205,65%,48%), hsl(201,78%,35%))" : "linear-gradient(135deg, hsl(160,55%,35%), hsl(160,55%,45%))",
+                height: "90%",
+                width: "12px",
+                marginLeft: "-6px",
+                zIndex: -1,
+                overflow: "visible",
               }}
+              viewBox="0 0 12 64"
+              preserveAspectRatio="none"
             >
-              {t("nav.getQuote")}
-            </a>
+              <path d="M 0,0 Q 6,28 12,0 L 12,64 Q 6,36 0,64 Z" fill={scrolled ? "rgba(255,255,255,0.98)" : "white"} />
+            </svg>
+            <Link to="/" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
+              <img src="/images/wass-logo.svg" alt="WASS Insurance" className="h-10 w-auto" />
+            </Link>
+          </div>
+
+          {/* ── RIGHT PILL: Hamburger ── */}
+          <div
+            className="relative flex items-center justify-center shrink-0"
+            style={{
+              zIndex: 2,
+              background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,1)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              borderRadius: "16px",
+              height: "64px",
+              padding: "0 20px",
+              boxShadow: "none",
+              border: "none",
+            }}
+          >
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="p-2 rounded-xl transition-colors"
               style={{ color: "hsl(201 78% 20%)" }}
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
           </div>
         </div>
@@ -548,22 +613,23 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {mobileOpen && (
           <div
-            className="mt-2 rounded-2xl overflow-hidden"
+            className="mt-3 rounded-2xl overflow-hidden"
             style={{
               background: "rgba(255,255,255,0.98)",
               backdropFilter: "blur(20px)",
               boxShadow: "0 16px 48px rgba(0,0,0,0.12)",
-              border: "1.5px solid rgba(255,255,255,0.9)",
+              border: "none",
               animation: "slideDown 0.2s ease-out",
             }}
           >
             <div className="flex flex-col p-3 gap-1">
+              {/* --- NAV LINKS --- */}
               {navLinks.map((link) =>
                 link.hasDropdown ? (
                   <div key={link.label}>
                     <button
                       onClick={() => setProductsOpen(!productsOpen)}
-                      className="group flex items-center justify-between w-full px-4 py-3 text-sm font-semibold rounded-xl transition-colors"
+                      className="group flex items-center justify-between w-full px-4 py-3 text-base font-semibold rounded-xl transition-colors"
                       style={{
                         color: location.pathname.startsWith(link.href) ? "hsl(160,55%,45%)" : "hsl(201 78% 20%)",
                       }}
@@ -585,17 +651,27 @@ const Navbar = () => {
                     {productsOpen && (
                       <div className="ml-4 pl-4 py-1 flex flex-col gap-1"
                         style={{ borderLeft: "2px solid hsl(160 55% 45% / 0.2)" }}>
-                        {products.map((p) => (
+                        {products.map((p) => {
+                          const isActive = location.pathname === p.href;
+                          return (
                           <Link
                             key={p.href}
                             to={p.href}
-                            className="block py-2 text-sm rounded-lg px-2 transition-colors"
-                            style={{ color: "hsl(201 78% 30%)" }}
+                            className="block py-2 text-base rounded-lg px-2 transition-colors group"
+                            style={{ color: isActive ? "hsl(160,55%,45%)" : "hsl(201 78% 30%)" }}
                             onClick={() => setMobileOpen(false)}
                           >
-                            {p.label[lang]}
+                            <span className="relative inline-block">
+                              {p.label[lang]}
+                              <span 
+                                className={`absolute -bottom-0.5 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
+                                  isActive ? "w-full" : "w-0"
+                                }`}
+                              />
+                            </span>
                           </Link>
-                        ))}
+                        );
+                        })}
                       </div>
                     )}
                   </div>
@@ -603,7 +679,7 @@ const Navbar = () => {
                   <Link
                     key={link.label}
                     to={link.href}
-                    className="group block px-4 py-3 text-sm font-semibold rounded-xl transition-colors"
+                    className="group block px-4 py-3 text-base font-semibold rounded-xl transition-colors"
                     style={{
                       color: location.pathname.startsWith(link.href) ? "hsl(160,55%,45%)" : "hsl(201 78% 20%)",
                     }}
@@ -621,16 +697,20 @@ const Navbar = () => {
                 )
               )}
 
+              {/* --- ACCOUNT SECTION --- */}
               <div
-                className="my-1"
-                style={{ height: "1px", background: "hsl(201 78% 20% / 0.08)" }}
+                className="my-2 mx-2"
+                style={{ height: "1px", background: "hsl(201 78% 20% / 0.15)" }}
               />
 
               {user ? (
-                <>
+                <div className="flex flex-col gap-1 rounded-xl p-1" style={{ background: "rgba(11, 63, 91, 0.03)" }}>
+                  <div className="px-3 pt-2 pb-1 text-xs font-bold uppercase tracking-wider" style={{ color: "hsl(201 78% 40%)" }}>
+                    {(user as any).user_metadata?.full_name || (user as any).user_metadata?.name || (user as any).displayName || user.email?.split("@")[0] || "Account"}
+                  </div>
                   <Link
                     to="/dashboard"
-                    className="px-4 py-3 text-sm font-semibold rounded-xl"
+                    className="px-3 py-2.5 text-base font-semibold rounded-lg"
                     style={{ color: "hsl(160 55% 38%)" }}
                     onClick={() => setMobileOpen(false)}
                   >
@@ -638,7 +718,7 @@ const Navbar = () => {
                   </Link>
                   <Link
                     to="/payments"
-                    className="px-4 py-3 text-sm font-semibold rounded-xl"
+                    className="px-3 py-2.5 text-base font-semibold rounded-lg"
                     style={{ color: "hsl(201 78% 20%)" }}
                     onClick={() => setMobileOpen(false)}
                   >
@@ -647,7 +727,7 @@ const Navbar = () => {
                   {isAdmin && (
                     <Link
                       to="/admin"
-                      className="px-4 py-3 text-sm font-semibold rounded-xl"
+                      className="px-3 py-2.5 text-base font-semibold rounded-lg"
                       style={{ color: "hsl(201 78% 20%)" }}
                       onClick={() => setMobileOpen(false)}
                     >
@@ -656,30 +736,46 @@ const Navbar = () => {
                   )}
                   <button
                     onClick={() => { signOut(); setMobileOpen(false); }}
-                    className="flex items-center gap-2 px-4 py-3 text-sm font-semibold rounded-xl text-left"
-                    style={{ color: "hsl(0 80% 50%)" }}
+                    className="flex items-center gap-2 px-3 py-2.5 text-base font-semibold rounded-lg text-left mt-1"
+                    style={{ color: "hsl(0 80% 50%)"}}
                   >
                     {t("auth.logout")}
                   </button>
-                </>
+                </div>
               ) : (
                 <Link
                   to="/auth"
-                  className="px-4 py-3 text-sm font-semibold rounded-xl"
-                  style={{ color: "hsl(160 55% 38%)" }}
+                  className="px-4 py-3 text-base font-semibold rounded-xl text-center mx-1 border-2 border-dashed"
+                  style={{ color: "hsl(160 55% 38%)", borderColor: "hsl(160 55% 38% / 0.3)" }}
                   onClick={() => setMobileOpen(false)}
                 >
                   {t("nav.login")}
                 </Link>
               )}
 
-              <button
-                onClick={toggleLang}
-                className="flex items-center justify-center gap-2 px-4 py-3 text-sm rounded-xl"
-                style={{ color: "hsl(201 78% 30%)" }}
-              >
-                {lang === "en" ? "አማርኛ" : "English"}
-              </button>
+              {/* --- BOTTOM ROW (Get Quote & Language) --- */}
+              <div className="flex items-center gap-2 mt-2 pt-2 mx-1" style={{ borderTop: "1px solid hsl(201 78% 20% / 0.08)" }}>
+                <a
+                  href="/quote"
+                  className="flex-1 text-center px-4 py-3 text-base font-bold rounded-xl text-white transition-transform hover:scale-[1.02]"
+                  style={{
+                    background: location.pathname === "/quote" ? "linear-gradient(135deg, hsl(205,65%,48%), hsl(201,78%,35%))" : "linear-gradient(135deg, hsl(160,55%,35%), hsl(160,55%,45%))",
+                    boxShadow: "0 4px 12px rgba(40, 138, 105, 0.20)",
+                  }}
+                >
+                  {t("nav.getQuote")}
+                </a>
+                <button
+                  onClick={toggleLang}
+                  className="flex items-center justify-center px-4 py-3 text-base font-bold rounded-xl transition-transform hover:scale-[1.02]"
+                  style={{ 
+                    color: "hsl(201 78% 20%)",
+                    background: "rgba(11, 63, 91, 0.06)",
+                  }}
+                >
+                  {lang === "en" ? "አማርኛ" : "EN"}
+                </button>
+              </div>
             </div>
           </div>
         )}

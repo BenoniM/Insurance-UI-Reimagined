@@ -122,8 +122,8 @@ const ContactPage = () => (
 
     {/* Contact Information Cards */}
     <SectionWrapper className="bg-accent/10">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-4">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+        <div className="grid md:grid-cols-3 gap-8">
           
           <ScrollReveal>
             <div className="rounded-xl border border-border bg-background overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">

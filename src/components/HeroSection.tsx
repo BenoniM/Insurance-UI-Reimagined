@@ -84,7 +84,7 @@ const HeroSection = () => {
       </div>
 
       {/* Side Images */}
-      <div className="hero-images opacity-0 absolute inset-x-0 bottom-16 pointer-events-none z-0 flex justify-center">
+      <div className="hero-images opacity-0 absolute inset-x-0 bottom-28 sm:bottom-32 md:bottom-16 pointer-events-none z-0 flex justify-center">
         <div className="container mx-auto relative w-full h-[25vh] sm:h-[30vh] md:h-[40vh] lg:h-[45vh]">
           <img
             src={homeLeft}
@@ -102,25 +102,25 @@ const HeroSection = () => {
           <img
             src={homeRight}
             alt="House illustration right"
-            className="absolute bottom-0 -right-[2vw] lg:-right-[7vw] w-auto h-[150%] lg:h-[150%] max-w-[60vw] object-contain object-right-bottom"
+            className="absolute -bottom-2 -right-[2vw] lg:-right-[7vw] w-auto h-[150%] lg:h-[150%] max-w-[60vw] object-contain object-right-bottom"
             style={{ filter: "sepia(1) hue-rotate(180deg) saturate(1.5) opacity(0.9)" }}
           />
           <img
             src={personRight}
             alt="Person with dog right"
-            className="absolute bottom-2 right-[4vw] lg:-right-[2vw] w-auto h-[100%] lg:h-[100%] max-w-[45vw] object-contain object-right-bottom z-10"
+            className="absolute right-[4vw] lg:-right-[2vw] w-auto h-[100%] lg:h-[100%] max-w-[45vw] object-contain object-right-bottom z-10"
             style={{ filter: "sepia(1) hue-rotate(90deg) saturate(1.5) opacity(0.9)" }}
           />
         </div>
       </div>
 
       {/* Trust Badges Strip (Numbers) */}
-      <div className="trust-strip opacity-0 absolute bottom-0 left-0 w-full h-16 bg-gray-50 border-t border-gray-100 flex items-center justify-center z-10 overflow-hidden">
-        <div className="container mx-auto px-4 flex justify-center items-center gap-x-8 md:gap-x-16 gap-y-2 opacity-70">
+      <div className="trust-strip opacity-0 absolute bottom-0 left-0 w-full min-h-[4rem] py-3 md:py-0 md:h-16 bg-gray-50 border-t border-gray-100 flex items-center justify-center z-10">
+        <div className="container mx-auto px-4 grid grid-cols-2 md:flex md:flex-row justify-items-center justify-center items-center gap-x-4 gap-y-3 md:gap-x-16 opacity-70">
           {trustBadges.map((badge, i) => (
             <div key={i} className="group flex items-baseline gap-1.5 whitespace-nowrap opacity-80 hover:opacity-100 transition-all cursor-default font-hero">
-              <span className="text-lg md:text-xl font-bold tracking-tight text-gray-500 group-hover:text-[#288A69] transition-colors">{badge.value}</span>
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-400 group-hover:text-[#288A69]/80 transition-colors font-sans">{badge.label}</span>
+              <span className="text-lg sm:text-xl md:text-xl font-bold tracking-tight text-gray-500 group-hover:text-[#288A69] transition-colors">{badge.value}</span>
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-400 group-hover:text-[#288A69]/80 transition-colors font-sans">{badge.label}</span>
             </div>
           ))}
         </div>

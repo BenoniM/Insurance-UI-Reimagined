@@ -11,6 +11,8 @@ const Footer = () => {
     { label: { en: "Health Insurance", am: "የጤና ኢንሹራንስ" }, href: "/products/health-insurance" },
     { label: { en: "Motor Insurance", am: "የመኪና ኢንሹራንስ" }, href: "/products/motor-insurance" },
     { label: { en: "Property Insurance", am: "የንብረት ኢንሹራንስ" }, href: "/products/property-insurance" },
+    { label: { en: "Business Insurance", am: "የንግድ ኢንሹራንስ" }, href: "/products/business-insurance" },
+    { label: { en: "Investment Insurance", am: "የመዋዕለ ንዋይ ኢንሹራንስ" }, href: "/products/investment-insurance" },
   ];
 
   return (
@@ -48,8 +50,8 @@ const Footer = () => {
 
           {/* Footer Navigation Section */}
           <div className="w-full bg-[hsl(201,78%,20%)] rounded-3xl px-8 lg:px-12 pt-12 pb-8 relative z-10">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
-              <div className="lg:col-span-2">
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-10">
+              <div className="col-span-2 lg:col-span-2">
                 <Link to="/" className="inline-block mb-4">
                   <img src="/images/wass-logo.svg" alt="WASS Insurance" className="h-10 w-auto brightness-0 invert" />
                 </Link>
@@ -67,7 +69,7 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h4 className="font-heading text-sm font-semibold text-white mb-4">{t("footer.products")}</h4>
                 <ul className="space-y-2.5">
                   {footerProducts.map((item) => (
@@ -78,7 +80,7 @@ const Footer = () => {
                 </ul>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h4 className="font-heading text-sm font-semibold text-white mb-4">{t("footer.claims")}</h4>
                 <ul className="space-y-2.5">
                   <li><Link to="/claims" className="text-sm text-white/50 hover:text-white transition-colors">{t("footer.fileClaim")}</Link></li>
@@ -87,7 +89,7 @@ const Footer = () => {
                 </ul>
               </div>
 
-              <div>
+              <div className="col-span-2 sm:col-span-1">
                 <h4 className="font-heading text-sm font-semibold text-white mb-4">{t("footer.company")}</h4>
                 <ul className="space-y-2.5">
                   <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors">{t("footer.aboutUs")}</Link></li>
