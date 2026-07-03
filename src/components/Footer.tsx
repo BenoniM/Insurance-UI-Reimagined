@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import CTAButton from "./CTAButton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 
 const Footer = () => {
   const { t, lang } = useLanguage();
@@ -18,15 +19,15 @@ const Footer = () => {
   return (
     <footer className="w-full bg-white pb-6 pt-10 lg:pt-16">
       <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8">
-        
+
         {/* Unified CTA & Footer Container */}
         <div className="flex flex-col items-center w-full mx-auto drop-shadow-xl">
-          
+
           {/* CTA Section */}
           <div className="w-full bg-[hsl(201,78%,20%)] rounded-3xl p-8 lg:p-12 relative z-10 overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/5 pointer-events-none" />
             <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-white/5 pointer-events-none" />
-            
+
             <div className="text-left relative z-10 max-w-2xl">
               <h2 className="qupe-heading text-2xl md:text-3xl lg:text-4xl text-white mb-3">
                 Protect What Matters Most
@@ -36,12 +37,12 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-4 relative z-10 shrink-0">
-               <a href="/quote" className="bg-primary text-primary-foreground border-none shadow-md font-semibold px-8 py-3 rounded-xl">
-                 Get a Quote
-               </a>
-               <a href="/contact" className="bg-white text-black border-none shadow-md font-semibold px-8 py-3 rounded-xl">
-                 Contact Us
-               </a>
+              <a href="/quote" className="bg-primary text-primary-foreground border-none shadow-md font-semibold px-8 py-3 rounded-xl">
+                Get a Quote
+              </a>
+              <a href="/contact" className="bg-white text-black border-none shadow-md font-semibold px-8 py-3 rounded-xl">
+                Contact Us
+              </a>
             </div>
           </div>
 
@@ -69,7 +70,8 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="col-span-1">
+              {/* Desktop view for links */}
+              <div className="hidden lg:block col-span-1">
                 <h4 className="font-heading text-sm font-semibold text-white mb-4">{t("footer.products")}</h4>
                 <ul className="space-y-2.5">
                   {footerProducts.map((item) => (
@@ -80,7 +82,7 @@ const Footer = () => {
                 </ul>
               </div>
 
-              <div className="col-span-1">
+              <div className="hidden lg:block col-span-1">
                 <h4 className="font-heading text-sm font-semibold text-white mb-4">{t("footer.claims")}</h4>
                 <ul className="space-y-2.5">
                   <li><Link to="/claims" className="text-sm text-white/50 hover:text-white transition-colors">{t("footer.fileClaim")}</Link></li>
@@ -89,7 +91,7 @@ const Footer = () => {
                 </ul>
               </div>
 
-              <div className="col-span-2 sm:col-span-1">
+              <div className="hidden lg:block col-span-1">
                 <h4 className="font-heading text-sm font-semibold text-white mb-4">{t("footer.company")}</h4>
                 <ul className="space-y-2.5">
                   <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors">{t("footer.aboutUs")}</Link></li>
@@ -98,6 +100,54 @@ const Footer = () => {
                   <li><Link to="/blog" className="text-sm text-white/50 hover:text-white transition-colors">{t("nav.blog")}</Link></li>
                   <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors">{t("footer.careers")}</Link></li>
                 </ul>
+              </div>
+
+              {/* Mobile Accordion view for links */}
+              <div className="col-span-2 lg:hidden w-full">
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="products" className="border-white/10">
+                    <AccordionTrigger className="text-white hover:no-underline font-heading text-sm font-semibold py-4">
+                      {t("footer.products")}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <ul className="space-y-3 pb-2 pt-2">
+                        {footerProducts.map((item) => (
+                          <li key={item.href}>
+                            <Link to={item.href} className="text-sm text-white/50 hover:text-white transition-colors block">{item.label[lang]}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="claims" className="border-white/10">
+                    <AccordionTrigger className="text-white hover:no-underline font-heading text-sm font-semibold py-4">
+                      {t("footer.claims")}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <ul className="space-y-3 pb-2 pt-2">
+                        <li><Link to="/claims" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.fileClaim")}</Link></li>
+                        <li><Link to="/dashboard" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.trackClaim")}</Link></li>
+                        <li><Link to="/claims" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.requiredDocs")}</Link></li>
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="company" className="border-white/10 border-b-0">
+                    <AccordionTrigger className="text-white hover:no-underline font-heading text-sm font-semibold py-4">
+                      {t("footer.company")}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <ul className="space-y-3 pb-2 pt-2">
+                        <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.aboutUs")}</Link></li>
+                        <li><Link to="/giveback" className="text-sm text-white/50 hover:text-white transition-colors block">{lang === "am" ? "ጊቨባክ" : "Giveback"}</Link></li>
+                        <li><Link to="/contact" className="text-sm text-white/50 hover:text-white transition-colors block">{t("nav.contact")}</Link></li>
+                        <li><Link to="/blog" className="text-sm text-white/50 hover:text-white transition-colors block">{t("nav.blog")}</Link></li>
+                        <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.careers")}</Link></li>
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
             </div>
 

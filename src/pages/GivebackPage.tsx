@@ -149,25 +149,6 @@ const GivebackPage = () => {
   }, []);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-
-    // Mobile: keep IntersectionObserver, since rows aren't pinned/scroll-driven there.
-    if (isMobile) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const index = Number(entry.target.getAttribute("data-index"));
-              setActiveIndex(index);
-            }
-          });
-        },
-        { threshold: 0.5 }
-      );
-      const triggers = containerRef.current?.querySelectorAll(".cause-row-mobile");
-      triggers?.forEach((child) => observer.observe(child));
-      return () => observer.disconnect();
-    }
 
     // Desktop: derive activeIndex from scroll position directly, every frame.
     // This is robust to fast/back-and-forth scrolling, unlike IntersectionObserver
@@ -229,20 +210,20 @@ const GivebackPage = () => {
       <GivebackSection />
 
       {/* 2026 ALLOCATION — Pinned scroll showcase */}
-      <section className="relative bg-background h-auto md:h-[280vh]" ref={containerRef}>
-        {/* Invisible Triggers (Desktop Only) */}
-        <div className="hidden md:flex absolute top-0 left-0 w-full h-full flex-col pointer-events-none">
+      <section className="relative bg-background h-[280vh]" ref={containerRef}>
+        {/* Invisible Triggers */}
+        <div className="flex absolute top-0 left-0 w-full h-full flex-col pointer-events-none">
           <div className="h-[20vh]" />
           {causeBreakdown.map((_, i) => (
-            <div key={i} data-index={i} className="cause-trigger w-full h-[60vh]" />
+            <div key={i} className="cause-trigger w-full h-[60vh]" />
           ))}
         </div>
 
         {/* Sticky Visual Content */}
-        <div className="md:sticky md:top-0 md:h-screen w-full flex items-center justify-center overflow-hidden py-12 md:py-0">
+        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-12 md:py-0">
           <div className="w-full max-w-[90rem] mx-auto px-6 relative">
             {/* Section Header */}
-            <div className="md:absolute md:-top-[16vh] w-full left-0 mb-8 md:mb-0 flex justify-center text-center">
+            <div className="absolute top-4 md:-top-[16vh] w-full left-0 flex justify-center text-center">
               <ScrollReveal>
                 <div className="flex flex-col items-center">
                   <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">2026 ALLOCATION</p>
@@ -253,7 +234,7 @@ const GivebackPage = () => {
               </ScrollReveal>
             </div>
 
-            <div className="flex flex-col md:flex-row items-center justify-between w-full">
+            <div className="flex flex-col md:flex-row items-center justify-between w-full mt-24 md:mt-0">
               {/* Col 1: Percentage */}
               <div className="hidden md:flex flex-col w-[15%]">
                 <p className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] mb-2">Allocated</p>
@@ -266,7 +247,7 @@ const GivebackPage = () => {
               </div>
 
               {/* Col 2: Titles */}
-              <div className="w-full md:w-[40%] flex flex-col justify-center items-start gap-2 md:gap-1 z-10">
+              <div className="order-2 md:order-none w-full md:w-[40%] flex flex-col justify-center items-start gap-2 md:gap-1 z-10">
                 {causeBreakdown.map((c, i) => {
                   const isActive = activeIndex === i;
                   const activeColor = i % 2 === 0 ? "hsl(var(--primary))" : "hsl(160 55% 55%)";
@@ -278,7 +259,7 @@ const GivebackPage = () => {
                       onMouseEnter={() => setActiveIndex(i)}
                       className="cause-row-mobile font-heading font-bold transition-all duration-500 whitespace-nowrap cursor-pointer py-4 md:py-0"
                       style={{
-                        fontSize: "clamp(2.5rem, 5vw, 5.5rem)",
+                        fontSize: "clamp(1.6rem, 7vw, 5.5rem)",
                         lineHeight: "1.05",
                         letterSpacing: "-0.02em",
                         color: isActive ? activeColor : "hsl(var(--foreground))",
@@ -296,7 +277,7 @@ const GivebackPage = () => {
               </div>
 
               {/* Col 3: Image */}
-              <div className="w-full md:w-[20%] flex justify-center mt-12 md:mt-0">
+              <div className="order-first md:order-none w-full md:w-[20%] flex justify-center mt-6 md:mt-0">
                 <div className="relative w-full max-w-[380px] aspect-[4/3] shrink-0 rounded-2xl overflow-hidden bg-accent/20 transition-all duration-500 shadow-2xl">
                   {causeBreakdown.map((c, i) => (
                     <img
@@ -311,8 +292,8 @@ const GivebackPage = () => {
               </div>
 
               {/* Col 4: Description */}
-              <div className="w-full md:w-[20%] text-center md:text-left mt-8 md:mt-0 md:pl-6">
-                <div className="relative w-full min-h-[80px]">
+              <div className="w-full md:w-[20%] text-center md:text-left mt-4 md:mt-0 md:pl-6">
+                <div className="relative w-full min-h-[60px] md:min-h-[80px]">
                   {causeBreakdown.map((c, i) => (
                     <p
                       key={c.title}
@@ -344,7 +325,7 @@ const GivebackPage = () => {
         </ScrollReveal>
 
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               {
                 icon: "/src/assets/FieldUpdates/Water-Conservation--Streamline-Milano.png",
@@ -435,15 +416,14 @@ const GivebackPage = () => {
       </section>
 
       {/* TRANSPARENCY — 3-col × 2-row editorial grid with parallax images */}
-      <section className="px-12 pb-12" style={{
+      <section className="px-4 sm:px-8 md:px-12 pb-8 md:pb-12" style={{
         background: "linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.85) 50%, hsl(var(--secondary)) 100%)",
       }}>
-        {/* 3 × 2 Panel Grid */}
+        {/* 3 × 2 Panel Grid — 1 col on mobile, 2 on tablet, 3 on desktop */}
         <div
+          className="grid gap-6 md:gap-8"
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "2rem",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
           }}
         >
           {transparencyPanels.map((p, i) => (

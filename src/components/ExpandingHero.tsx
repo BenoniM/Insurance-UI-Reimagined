@@ -44,50 +44,61 @@ const ExpandingHero = ({
     () => {
       if (!wrapperRef.current || !cardRef.current || !textRef.current) return;
 
-      // Initial state — card centred, rounded, 60% × 70vh
+      // Viewport height in px so we can drive height via transform scale instead of layout
+      const vh = window.innerHeight;
+
+      // Initial state — card centred, rounded, 60% wide × 70vh tall
+      // Use transform-based positioning (x/y) instead of top/left to stay on GPU
       gsap.set(cardRef.current, {
         width: "60%",
-        height: "70vh",
+        height: "94vh",            // fixed height; we'll use scaleY to simulate shrink
         borderRadius: "1.5rem",
         xPercent: -50,
         left: "50%",
-        top: "50%",
-        yPercent: -50,
+        top: "3%",                 // final resting top — also fixed
         position: "absolute",
+        scaleY: (70 / 94),         // start at 70/94 of full height
+        transformOrigin: "center center",
+        yPercent: 0,
+        // start card translated up so it appears vertically centred at 70vh
+        y: -(vh * (94 - 70) / 100 / 2),
       });
 
       gsap.set(overlayRef.current, { opacity: 0 });
 
-      // Keep track of text visibility purely in GSAP to avoid React state closure issues
       let isTextVisible = false;
 
-      // Scroll-driven expansion
       ScrollTrigger.create({
         trigger: wrapperRef.current,
         start: "top top",
         end: "+=100%",
-        scrub: 0.6,
+        scrub: 1,                  // tighter scrub = more responsive feel
         onUpdate: (self) => {
-          const p = self.progress; // 0 → 1
+          const p = self.progress;  // 0 → 1
 
-          const w = 60 + (94 - 60) * p; // 60% → 94%
-          const h = 70 + (94 - 70) * p; // 70vh → 94vh
-          const r = 1.5 + (2 - 1.5) * p; // 1.5rem → 2rem
-          const top = 50 - 47 * p; // 50% → 3% (tighter but still has air)
-          const yPct = -50 + 50 * p; // -50% → 0%
+          // Interpolate scale: from (70/94) to 1
+          const scaleY = (70 / 94) + (1 - 70 / 94) * p;
+
+          // Translate up to offset the scale so card stays anchored to its final top edge
+          const yOffset = -(vh * (94 - 70) / 100 / 2) * (1 - p);
+
+          // Width: 60% → 94%
+          const w = 60 + 34 * p;
+
+          // Border radius: 1.5rem → 0.5rem (visually flatten as it expands)
+          const r = 1.5 - 1 * p;
 
           gsap.set(cardRef.current, {
             width: `${w}%`,
-            height: `${h}vh`,
+            scaleY,
+            y: yOffset,
             borderRadius: `${r}rem`,
-            top: `${top}%`,
-            yPercent: yPct,
           });
 
-          // Overlay darkens as it expands with a dark bluish/greenish gradient
+          // Overlay opacity
           gsap.set(overlayRef.current, { opacity: Math.min(p * 1.8, 0.85) });
 
-          // Reveal/Hide text based on progress
+          // Text reveal / hide
           if (p >= 0.45 && !isTextVisible) {
             isTextVisible = true;
             gsap.set(textRef.current, { pointerEvents: "auto" });
@@ -140,7 +151,7 @@ const ExpandingHero = ({
           style={{
             position: "absolute",
             overflow: "hidden",
-            willChange: "width, height, border-radius, top",
+            willChange: "transform",
           }}
         >
           {/* Crossfading images */}
@@ -150,6 +161,8 @@ const ExpandingHero = ({
               src={src}
               alt=""
               loading={idx === 0 ? "eager" : "lazy"}
+              decoding="async"
+              fetchPriority={idx === 0 ? "high" : "low"}
               style={{
                 position: "absolute",
                 inset: 0,
@@ -158,6 +171,7 @@ const ExpandingHero = ({
                 objectFit: "cover",
                 opacity: idx === currentIndex ? 1 : 0,
                 transition: "opacity 1.2s ease-in-out",
+                willChange: "opacity",
               }}
             />
           ))}

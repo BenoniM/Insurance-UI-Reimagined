@@ -68,17 +68,7 @@ const GivebackSection = () => {
       {/* Backdrop accent */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[hsl(160,55%,45%)/0.04] to-transparent" />
 
-      <div className="text-center -mb-4 md:-mb-16 relative z-20">
-        <ScrollReveal>
-          <span className="section-badge mb-4 inline-block">WASS GIVEBACK</span>
-          <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
-            Insurance with a <span className="text-primary">Bigger Purpose</span>
-          </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-lg">
-            Traditional insurers profit by paying out as little as possible. We flipped the model — what we don't pay in claims gets returned to causes our customers care about. Honesty is built into how we work.
-          </p>
-        </ScrollReveal>
-      </div>
+
 
       {/* Steps Scroll Showcase */}
       <div className="relative h-[250vh]" ref={stepsContainerRef}>
@@ -90,8 +80,23 @@ const GivebackSection = () => {
           ))}
         </div>
 
-        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-8 md:py-0 z-10">
-          <div className="w-full max-w-[85rem] mx-auto relative px-6 md:px-8">
+        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden py-8 md:py-0 z-10">
+          <div className="text-center mb-8 md:mb-16 relative z-20 px-4 mt-8 md:mt-0">
+            <ScrollReveal>
+              <span className="section-badge mb-3 md:mb-4 inline-block">WASS GIVEBACK</span>
+              <h2 className="qupe-heading text-3xl md:text-5xl text-foreground mt-2 md:mt-4">
+                Insurance with a <span className="text-primary">Bigger Purpose</span>
+              </h2>
+              <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-base md:text-lg hidden md:block">
+                Traditional insurers profit by paying out as little as possible. We flipped the model — what we don't pay in claims gets returned to causes our customers care about. Honesty is built into how we work.
+              </p>
+              <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-sm md:hidden">
+                What we don't pay in claims gets returned to causes our customers care about.
+              </p>
+            </ScrollReveal>
+          </div>
+
+          <div className="w-full max-w-[85rem] mx-auto relative px-6 md:px-8 shrink-0">
             <div className="flex flex-col divide-y divide-border/60">
               {steps.map((step, i) => {
                 const isActive = activeStepIndex === i;

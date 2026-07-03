@@ -59,7 +59,7 @@ const ContactBlock = () => {
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           
           {/* Left Column */}
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col h-full min-w-0">
             <ScrollReveal>
               <span className="section-badge mb-6 inline-block">CONTACT</span>
               <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4 mb-8 md:mb-12">
@@ -70,8 +70,8 @@ const ContactBlock = () => {
             </ScrollReveal>
             
             {/* Map */}
-            <ScrollReveal delay={0.1} className="flex-grow flex flex-col">
-              <div className="w-full flex-grow min-h-[300px] rounded-md overflow-hidden mb-8 opacity-90 contrast-125 filter grayscale-[50%]">
+            <ScrollReveal delay={0.1} className="lg:flex-grow lg:flex lg:flex-col w-full">
+              <div className="w-full h-[300px] lg:h-auto lg:flex-grow rounded-md overflow-hidden mb-8 opacity-90 contrast-125 filter grayscale-[50%]">
                 <iframe 
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.5!2d38.7636!3d9.0054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMDAnMTkuNCJOIDM4wrA0NSc0OS4wIkU!5e0!3m2!1sen!2set!4v1" 
                   width="100%" 

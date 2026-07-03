@@ -41,16 +41,24 @@ const HoverBranchList = () => {
         {branches.map((branch, i) => (
           <div
             key={branch.city}
-            onMouseEnter={() => setHoveredIndex(i)}
+            onPointerEnter={(e) => {
+              if (e.pointerType === 'mouse') setHoveredIndex(i);
+            }}
+            onClick={() => setHoveredIndex(hoveredIndex === i ? null : i)}
             className={`group relative flex flex-col md:flex-row md:items-center justify-between py-6 border-b transition-colors cursor-pointer px-4 ${hoveredIndex === i ? 'border-primary' : 'border-primary/20'} hover:bg-muted/10`}
           >
-            <div className="flex flex-col mb-2 md:mb-0">
+            <div className="flex flex-col mb-2 md:mb-0 w-full md:w-auto">
                <h3 className={`text-base md:text-lg font-heading font-medium transition-colors ${hoveredIndex === i ? 'text-primary' : 'text-foreground'}`}>
                  {branch.city}
                </h3>
                <p className="text-xs md:text-sm text-muted-foreground mt-1">{branch.address}</p>
+               
+               {/* Mobile Image (Accordion style) */}
+               <div className={`md:hidden w-full overflow-hidden transition-all duration-300 ease-in-out ${hoveredIndex === i ? 'max-h-[250px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+                 <img src={branch.img} alt={branch.city} className="w-full h-[200px] object-cover rounded-xl shadow-md" />
+               </div>
             </div>
-            <div className="text-left md:text-right">
+            <div className="text-left md:text-right mt-2 md:mt-0">
                <span className="text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors">{branch.phone}</span>
             </div>
           </div>
@@ -93,10 +101,10 @@ const ContactPage = () => (
     <Navbar />
     <ExpandingHero
       images={[
-        "https://images.pexels.com/photos/37976850/pexels-photo-37976850.jpeg",
-        "https://images.pexels.com/photos/14038572/pexels-photo-14038572.jpeg",
-        "https://images.pexels.com/photos/7709217/pexels-photo-7709217.jpeg",
-        "https://images.pexels.com/photos/13817351/pexels-photo-13817351.jpeg",
+        "https://images.pexels.com/photos/37976850/pexels-photo-37976850.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
+        "https://images.pexels.com/photos/14038572/pexels-photo-14038572.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
+        "https://images.pexels.com/photos/7709217/pexels-photo-7709217.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
+        "https://images.pexels.com/photos/13817351/pexels-photo-13817351.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
       ]}
       badge="CONTACT US"
       headline={'Let\'s <span class="text-primary">Talk</span>'}

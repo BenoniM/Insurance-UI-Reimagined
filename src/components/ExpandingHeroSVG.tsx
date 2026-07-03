@@ -82,7 +82,7 @@ const ExpandingHeroSVG = ({
       const clearDist = (viewportDiagonal * 1.5) / pxPerUnit;
 
       // How far up the center image travels in SVG user-units
-      const centerMoveUp = isMobile ? 70 : 250;
+      const centerMoveUp = isMobile ? 200 : 250;
       const centerScaleTo = 0.62;
 
       // Center layer (Layer_1) sits at tx=309, w=766 → its center is at 692 in SVG coords.
@@ -178,14 +178,13 @@ const ExpandingHeroSVG = ({
         {/* SVG illustration — centered, slightly smaller than viewport */}
         <div
           ref={svgContainerRef}
+          className="w-[125%] sm:w-[110%] md:w-[90%] h-[125%] sm:h-[110%] md:h-[90%]"
           dangerouslySetInnerHTML={{ __html: svgContent }}
           style={{
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "90%",
-            height: "90%",
             pointerEvents: "none",
           }}
         />
