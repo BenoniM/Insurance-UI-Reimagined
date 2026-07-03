@@ -44,24 +44,14 @@ const ExpandingHero = ({
     () => {
       if (!wrapperRef.current || !cardRef.current || !textRef.current) return;
 
-      // Viewport height in px so we can drive height via transform scale instead of layout
-      const vh = window.innerHeight;
-
       // Initial state — card centred, rounded, 60% wide × 70vh tall
-      // Use transform-based positioning (x/y) instead of top/left to stay on GPU
+      // The sticky container uses flex centering, so we only manage width/height/radius here.
       gsap.set(cardRef.current, {
         width: "60%",
-        height: "94vh",            // fixed height; we'll use scaleY to simulate shrink
+        height: "70vh",            // start at 70vh; animate to 94vh
         borderRadius: "1.5rem",
-        xPercent: -50,
-        left: "50%",
-        top: "3%",                 // final resting top — also fixed
-        position: "absolute",
-        scaleY: (70 / 94),         // start at 70/94 of full height
+        position: "relative",
         transformOrigin: "center center",
-        yPercent: 0,
-        // start card translated up so it appears vertically centred at 70vh
-        y: -(vh * (94 - 70) / 100 / 2),
       });
 
       gsap.set(overlayRef.current, { opacity: 0 });
@@ -76,11 +66,8 @@ const ExpandingHero = ({
         onUpdate: (self) => {
           const p = self.progress;  // 0 → 1
 
-          // Interpolate scale: from (70/94) to 1
-          const scaleY = (70 / 94) + (1 - 70 / 94) * p;
-
-          // Translate up to offset the scale so card stays anchored to its final top edge
-          const yOffset = -(vh * (94 - 70) / 100 / 2) * (1 - p);
+          // Height: 70vh → 94vh
+          const h = 70 + 24 * p;
 
           // Width: 60% → 94%
           const w = 60 + 34 * p;
@@ -90,8 +77,7 @@ const ExpandingHero = ({
 
           gsap.set(cardRef.current, {
             width: `${w}%`,
-            scaleY,
-            y: yOffset,
+            height: `${h}vh`,
             borderRadius: `${r}rem`,
           });
 
@@ -143,6 +129,9 @@ const ExpandingHero = ({
           height: "100vh",
           overflow: "hidden",
           background: "hsl(var(--background))",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         {/* The expanding card */}
