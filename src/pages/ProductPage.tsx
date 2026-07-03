@@ -5,6 +5,8 @@ import {
   CheckCircle, XCircle, Star, Clock, Users, Phone,
   ArrowRight, ArrowLeft,
 } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import { getProductBySlug } from "@/data/products";
 import { useLanguage } from "@/i18n/LanguageContext";
 import Navbar from "@/components/Navbar";
@@ -368,7 +370,54 @@ const TOTAL = whyChooseUs.length;
 const CLONED = [...whyChooseUs, ...whyChooseUs, ...whyChooseUs];
 const STRIP_HEIGHT = "calc(58vh + 146px)";
 
-const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
+const KeyBenefitsSpotlightMobile = ({ name }: { name: string }) => {
+  const [emblaRef] = useEmblaCarousel(
+    { loop: true, align: "center" },
+    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+  );
+
+  return (
+    <section className="pt-8 md:hidden overflow-hidden w-full max-w-[1800px] mx-auto">
+      <ScrollReveal>
+        <div className="text-center mb-8 px-4">
+          <span className="section-badge mb-4 inline-block">KEY BENEFITS</span>
+          <h2 className="qupe-heading text-3xl text-foreground mt-4">
+            Why Choose <span className="text-primary">{name}</span>
+          </h2>
+        </div>
+      </ScrollReveal>
+
+      <div className="overflow-hidden w-full pl-4" ref={emblaRef}>
+        <div className="flex touch-pan-y" style={{ marginLeft: "-1rem" }}>
+          {whyChooseUs.map((item, i) => (
+            <div key={i} className="flex-[0_0_85%] min-w-0 pl-4">
+              <div className="bg-[hsl(152,48%,78%)] rounded-[14px] p-4 flex flex-col h-full shadow-[0_12px_30px_-10px_rgba(0,0,0,0.2)]">
+                <div className="w-full h-48 rounded-lg overflow-hidden mb-4">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-heading font-semibold text-foreground text-lg mb-2 leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="h-12" />
+    </section>
+  );
+};
+
+const KeyBenefitsSpotlightDesktop = ({ name }: { name: string }) => {
   const [activeIndex, setActiveIndex] = useState(TOTAL);
   const [animated, setAnimated] = useState(true);
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -422,7 +471,7 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
   const EASE = "cubic-bezier(0.33, 1.4, 0.45, 1)";
 
   return (
-    <section className="pt-8 md:pt-12 overflow-hidden w-full max-w-[1800px] mx-auto">
+    <section className="hidden md:block pt-8 md:pt-12 overflow-hidden w-full max-w-[1800px] mx-auto">
       <ScrollReveal>
         <div className="text-center mb-12 px-4 lg:px-8">
           <span className="section-badge mb-4 inline-block">KEY BENEFITS</span>
@@ -589,6 +638,15 @@ const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
 
       <div style={{ height: "100px" }} />
     </section>
+  );
+};
+
+const KeyBenefitsSpotlight = ({ name }: { name: string }) => {
+  return (
+    <>
+      <KeyBenefitsSpotlightMobile name={name} />
+      <KeyBenefitsSpotlightDesktop name={name} />
+    </>
   );
 };
 

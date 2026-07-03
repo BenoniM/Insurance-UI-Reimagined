@@ -82,7 +82,7 @@ const ClaimsHeroAnimation = () => {
             key="text-content"
             initial="hidden"
             animate="visible"
-            className="relative z-50 flex flex-col items-center text-center px-4 max-w-3xl"
+            className="relative z-20 flex flex-col items-center text-center px-4 max-w-3xl"
             variants={{
               hidden: { opacity: 0, scale: 0.5, filter: "blur(10px)" },
               visible: { 
@@ -123,7 +123,7 @@ const ClaimsHeroAnimation = () => {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 15 } }
               }}
-              className="text-foreground/80 font-medium text-lg md:text-xl mb-8 max-w-2xl"
+              className="text-foreground/80 font-medium text-xl md:text-2xl mb-10 max-w-2xl leading-relaxed"
             >
               We handle your claims with speed and transparency — so you can focus on what matters.
             </motion.p>
@@ -136,7 +136,7 @@ const ClaimsHeroAnimation = () => {
               className="flex justify-center gap-4"
             >
               <Link to="/claims/new">
-                <CTAButton>File a Claim</CTAButton>
+                <CTAButton size="lg">File a Claim</CTAButton>
               </Link>
             </motion.div>
           </motion.div>
