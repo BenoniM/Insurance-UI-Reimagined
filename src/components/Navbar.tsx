@@ -5,15 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
-
-const products = [
-  { label: { en: "Life Insurance", am: "የህይወት ኢንሹራንስ" }, href: "/products/life-insurance" },
-  { label: { en: "Health Insurance", am: "የጤና ኢንሹራንስ" }, href: "/products/health-insurance" },
-  { label: { en: "Motor Insurance", am: "የመኪና ኢንሹራንስ" }, href: "/products/motor-insurance" },
-  { label: { en: "Property Insurance", am: "የንብረት ኢንሹራንስ" }, href: "/products/property-insurance" },
-  { label: { en: "Business Insurance", am: "የንግድ ኢንሹራንስ" }, href: "/products/business-insurance" },
-  { label: { en: "Investment Insurance", am: "የመዋዕለ ንዋይ ኢንሹራንስ" }, href: "/products/investment-insurance" },
-];
+import { navCategories, type NavSubcategory } from "@/data/products";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -221,62 +213,69 @@ const Navbar = () => {
 
                   {/* Products Dropdown */}
                   <div
-                    className="absolute top-[100%] left-0 w-full mt-[2px] py-4 transition-all duration-200 origin-top flex flex-col items-center"
+                    className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-[2px] py-6 px-8 transition-all duration-200 origin-top grid grid-cols-12 gap-8"
                     style={{
+                      width: "calc(100vw - 48px)",
+                      maxWidth: "850px",
                       background: "rgba(255,255,255,1)",
-                      borderRadius: "12px",
+                      borderRadius: "16px",
                       boxShadow: "0 16px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06)",
                       border: "none",
                       opacity: productsOpen ? 1 : 0,
-                      transform: productsOpen ? "scaleY(1)" : "scaleY(0.92)",
+                      transform: productsOpen ? "scaleY(1) translateX(-50%)" : "scaleY(0.92) translateX(-50%)",
                       visibility: productsOpen ? "visible" : "hidden",
                     }}
                   >
-                    {products.map((p) => {
-                      const isActive = location.pathname === p.href;
-                      return (
-                      <Link
-                        key={p.href}
-                        to={p.href}
-                        className="flex items-center justify-between px-4 py-3.5 transition-all duration-150 w-full group"
-                        style={{
-                          color: isActive ? "hsl(160,55%,45%)" : "hsl(201 78% 20%)",
-                          fontFamily: "var(--font-heading)",
-                          fontSize: "14px",
-                          fontWeight: 600,
-                        }}
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.color = "hsl(160 55% 38%)";
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.color = isActive ? "hsl(160,55%,45%)" : "hsl(201 78% 20%)";
-                        }}
-                      >
-                        <span className="relative inline-block">
-                          {p.label[lang]}
-                          <span 
-                            className={`absolute -bottom-0.5 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
-                              isActive ? "w-full" : "w-0"
-                            }`}
-                          />
-                        </span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          style={{ flexShrink: 0, opacity: 0.5 }}
-                        >
-                          <path d="M9 18l6-6-6-6" />
-                        </svg>
-                      </Link>
-                    );
-                    })}
+                    {navCategories.map((category) => (
+                      <div key={category.slug} className={`flex flex-col text-left ${category.slug === 'general-insurance' ? 'col-span-6' : 'col-span-3'}`}>
+                        <h3 className="font-heading font-bold text-[hsl(160,55%,45%)] text-[13px] uppercase tracking-wider mb-5 border-b border-gray-100 pb-3">
+                          {lang === "en" ? category.label : category.label_am}
+                        </h3>
+                        <div className={category.slug === 'general-insurance' ? "grid grid-cols-2 gap-x-4 gap-y-5" : "flex flex-col gap-4"}>
+                          {category.subcategories.map((sub) => {
+                            const isActive = sub.href ? location.pathname === sub.href : sub.children?.some(c => location.pathname === c.href);
+                            return (
+                              <div key={sub.label} className="flex flex-col gap-1.5">
+                                {sub.href ? (
+                                  <Link
+                                    to={sub.href}
+                                    className="font-semibold text-[13px] transition-colors"
+                                    style={{ color: isActive ? "hsl(160,55%,45%)" : "hsl(201,78%,20%)" }}
+                                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "hsl(160,55%,45%)"; }}
+                                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? "hsl(160,55%,45%)" : "hsl(201,78%,20%)"; }}
+                                  >
+                                    {lang === "en" ? sub.label : sub.label_am}
+                                  </Link>
+                                ) : (
+                                  <>
+                                    <span className="font-semibold text-[13px] text-[hsl(201,78%,20%)]">
+                                      {lang === "en" ? sub.label : sub.label_am}
+                                    </span>
+                                    <div className="flex flex-col pl-3 border-l-2 border-gray-100 gap-1 mt-1">
+                                      {sub.children?.map(child => {
+                                        const isChildActive = location.pathname === child.href;
+                                        return (
+                                          <Link
+                                            key={child.href}
+                                            to={child.href}
+                                            className="text-[12px] transition-colors py-0.5"
+                                            style={{ color: isChildActive ? "hsl(160,55%,45%)" : "hsl(200,10%,40%)" }}
+                                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "hsl(160,55%,45%)"; }}
+                                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isChildActive ? "hsl(160,55%,45%)" : "hsl(200,10%,40%)"; }}
+                                          >
+                                            {lang === "en" ? child.label : child.label_am}
+                                          </Link>
+                                        );
+                                      })}
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ) : (
@@ -649,29 +648,50 @@ const Navbar = () => {
                       />
                     </button>
                     {productsOpen && (
-                      <div className="ml-4 pl-4 py-1 flex flex-col gap-1"
+                      <div className="ml-4 pl-4 py-2 flex flex-col gap-4 text-left"
                         style={{ borderLeft: "2px solid hsl(160 55% 45% / 0.2)" }}>
-                        {products.map((p) => {
-                          const isActive = location.pathname === p.href;
-                          return (
-                          <Link
-                            key={p.href}
-                            to={p.href}
-                            className="block py-2 text-base rounded-lg px-2 transition-colors group"
-                            style={{ color: isActive ? "hsl(160,55%,45%)" : "hsl(201 78% 30%)" }}
-                            onClick={() => setMobileOpen(false)}
-                          >
-                            <span className="relative inline-block">
-                              {p.label[lang]}
-                              <span 
-                                className={`absolute -bottom-0.5 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
-                                  isActive ? "w-full" : "w-0"
-                                }`}
-                              />
-                            </span>
-                          </Link>
-                        );
-                        })}
+                        {navCategories.map((category) => (
+                          <div key={category.slug} className="flex flex-col gap-2">
+                            <h4 className="text-xs font-bold text-[hsl(160,55%,45%)] uppercase tracking-wider">
+                              {lang === "en" ? category.label : category.label_am}
+                            </h4>
+                            <div className="flex flex-col gap-3">
+                              {category.subcategories.map((sub) => (
+                                <div key={sub.label} className="flex flex-col gap-1 ml-2">
+                                  {sub.href ? (
+                                    <Link
+                                      to={sub.href}
+                                      className="text-sm font-semibold transition-colors"
+                                      style={{ color: location.pathname === sub.href ? "hsl(160,55%,45%)" : "hsl(201,78%,30%)" }}
+                                      onClick={() => setMobileOpen(false)}
+                                    >
+                                      {lang === "en" ? sub.label : sub.label_am}
+                                    </Link>
+                                  ) : (
+                                    <>
+                                      <span className="text-sm font-semibold text-[hsl(201,78%,30%)]">
+                                        {lang === "en" ? sub.label : sub.label_am}
+                                      </span>
+                                      <div className="flex flex-col pl-3 border-l border-gray-200 gap-2 mt-1">
+                                        {sub.children?.map(child => (
+                                          <Link
+                                            key={child.href}
+                                            to={child.href}
+                                            className="text-xs transition-colors"
+                                            style={{ color: location.pathname === child.href ? "hsl(160,55%,45%)" : "hsl(200,10%,40%)" }}
+                                            onClick={() => setMobileOpen(false)}
+                                          >
+                                            {lang === "en" ? child.label : child.label_am}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     )}
                   </div>

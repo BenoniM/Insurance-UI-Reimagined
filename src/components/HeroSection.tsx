@@ -64,11 +64,11 @@ const HeroSection = () => {
       >
         <div className="max-w-3xl mx-auto flex flex-col items-center pb-20">
           <h1 className="hero-headline opacity-0 font-hero text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-secondary font-medium tracking-wide capitalize">
-            Reimagining <span className="hero-highlight text-primary">insurance</span> <span className="inline-block pt-2">for Ethiopian families</span>
+            Your Tomorrow. <span className="hero-highlight text-primary">Protected!</span>
           </h1>
 
           <p className="hero-subtext opacity-0 mt-6 text-xl md:text-2xl text-gray-600 max-w-2xl leading-relaxed capitalize">
-            Fewer forms, faster payouts, and a fairer model.
+            Innovative Insurance Solutions for Individuals, Families, Businesses, and Communities Across Ethiopia.
           </p>
 
           <div className="hero-cta opacity-0 mt-10">
@@ -77,7 +77,7 @@ const HeroSection = () => {
               variant="primary"
               size="lg"
             >
-              {t("hero.getQuote")}
+              Get a Quote
             </CTAButton>
           </div>
         </div>

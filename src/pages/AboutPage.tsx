@@ -6,7 +6,12 @@ import CTAButton from "@/components/CTAButton";
 
 import ScrollReveal from "@/components/ScrollReveal";
 import AboutMilestones from "@/components/AboutMilestones";
-import { Shield, Users, Award, Target, ChevronDown } from "lucide-react";
+import { 
+  Shield, Users, Heart, ChevronDown, CheckCircle, Activity, 
+  MapPin, Laptop, Factory, HeartPulse, Leaf, Building2, 
+  Landmark, Globe, Truck, FileText, PieChart, BookOpen, 
+  Briefcase, Scale, ArrowRight, FileDown 
+} from "lucide-react";
 import aboutHeroImage from "@/assets/AboutHero/Gemini_Generated_Image_67dphh67dphh67dp-Photoroom.png";
 
 import {
@@ -29,27 +34,21 @@ const stats = [
 const values = [
   {
     icon: Shield,
-    title: "Provide",
+    title: "Integrity",
     description:
-      "Provide the best health focused insurance policy for every client we serve.",
+      "We uphold the highest standards of honesty and transparency in all our actions.",
   },
   {
     icon: Users,
-    title: "Maximize",
+    title: "Customer Focus",
     description:
-      "Maximize the return to shareholders investment through efficient insurance services provision.",
+      "We put our customers at the center of everything we do, ensuring exceptional service.",
   },
   {
-    icon: Award,
-    title: "Reverse",
+    icon: Heart,
+    title: "Community",
     description:
-      "Reverses the traditional insurance model — putting health and people first in every decision.",
-  },
-  {
-    icon: Target,
-    title: "Many More",
-    description:
-      "Different other insurance business lines to meet the diverse needs of our clients.",
+      "We are committed to the well-being and development of the communities we serve.",
   },
 ];
 
@@ -82,6 +81,33 @@ const leadership = [
       "Overseeing project operations and ensuring the company's formation milestones are achieved on time.",
     bio: "አቶ አማረ ሃበ የአደራጅ ኮሚቴው አባልና የፕሮጀክት ሥራ አስኪያጅ ከአዲስ አበባ ዩኒቨርስቲ በኢኮኖሚክስ ቢ.ኤ. ስኮትላንድ ከሚገኘው ከግላሰጎው ዩኒቨርስቲ ከዲቨሎፕመንት ፖሊሲ ድኀረ ዲግሪ ዲፕሎማ/ Post Graduate Diploma እና እንግሊዝ አገር ከሚገኘው ኬንት ዩኒቨርስቲ በዲቨሎፕመንት ኢኮኖሚክስ የማስተርስ ዲግሪ እንዲሁም ከዩኒቲ ዩኒቨርስቲ በሕግ ዲግሪ በእጅግ በጣም ከፍተኛ ማዕረግ ያጠናቀቁ ሲሆን በአዲስ አበባ ዩኒቨርስቲ በስነ-ልቦና ትምህርት ክፍል የሥነ ልቦና አማካሪነት/Counseling Psychology/ በማስተርስ ዲግሪ የመመረቂያ ጽሁፍ ይቀራቸዋል፡፡ በስራ ልምድም በኢኮኖሚ ፕላን ኢኮኖሚክስት የዋጋ ጥናት ፖሊሲ ኢንስቲትዩት ማኔጂንግ ዳይሬክተር፣ በንግድ ሚኒስቴር የውጭ ንግድ ማስፋፊያ መምሪያ ኃላፊ እንዲሁም የአንዱ የመድኃኒት አስመጪና አከፋፋይ አክሲዮን ማህበር በዋና ሥራ አስኪያጅነት ለ8 ዓመታት ሰርተዋል፡፡ ከዚህ በተጨማሪ በሶስት የመንግስት የልማት ድርጅቶች የሥራ አመራር ቦርድ ሰብሳቢ በአራቱ ደግሞ የሥራ አመራር ቦርድ አባል ሆነው የሰሩ ሲሆን በአዲስ አበባ ንግድ ምክር ቤት በቦርድ አባልነት አገልግለዋል፡፡ ላለፉት 7 ዓመታትም የዘመን ባንክ የቦርድ ሊቀመንበርና (3 ዓመት) የቦርድ አባል (3 ዓመት ከ7 ወር) ያገለገሉ ሲሆን በቅርቡ ተቋቁሞ የኢንሹራንስ ኢንዱስትውን የተቀላቀለው የዘመን ኢንሹራንስ አክሲዮን ማህበር የአደራጅ ኮሚቴው ሰብሳቢና አስተባባሪ ሆነው አገልግለዋል፡፡",
   },
+];
+
+const SME_FEATURES = [
+  { text: "Comprehensive Coverage", icon: Shield },
+  { text: "Dedicated Relationship Management", icon: Users },
+  { text: "Fast Claims Settlement", icon: Activity },
+  { text: "National Network", icon: MapPin },
+  { text: "Digital Services", icon: Laptop },
+];
+
+const INDUSTRIES = [
+  { name: "Manufacturing", icon: Factory },
+  { name: "Healthcare", icon: HeartPulse },
+  { name: "Agriculture", icon: Leaf },
+  { name: "Construction", icon: Building2 },
+  { name: "Financial Institutions", icon: Landmark },
+  { name: "NGOs", icon: Globe },
+  { name: "Logistics", icon: Truck },
+];
+
+const CORPORATE_INFO = [
+  { name: "Annual Reports", icon: PieChart },
+  { name: "Financial Statements", icon: FileText },
+  { name: "Corporate Profile", icon: BookOpen },
+  { name: "Board of Directors", icon: Users },
+  { name: "Executive Management", icon: Briefcase },
+  { name: "Governance Framework", icon: Scale },
 ];
 
 const AboutPage = () => {
@@ -194,10 +220,9 @@ const AboutPage = () => {
 
             <div className="about-zone-1">
               <ScrollReveal animation="fadeLeft">
-                <span className="about-eyebrow">WHY CHOOSE US</span>
+                <span className="about-eyebrow">WHO WE ARE</span>
                 <h2 className="about-huge-title">
-                  Why You Should Choose <br className="hidden lg:block" />
-                  <span className="text-primary">WASS Insurance</span>
+                  Who We Are
                 </h2>
               </ScrollReveal>
               <ScrollReveal animation="fadeUp" delay={0.1}>
@@ -215,22 +240,18 @@ const AboutPage = () => {
             <div className="about-zone-2">
               <ScrollReveal animation="fadeRight" delay={0.2}>
                 <p>
-                  WASS Insurance is under formation with a principal aim of
-                  providing the best health focused insurance policy and other
-                  insurance business, and maximize the return to shareholders
-                  investment through efficient insurance services provision.
+                  <strong>Who We Are</strong><br />
+                  Wass Insurance S.C. is a customer-focused insurance company committed to delivering innovative, reliable, and accessible insurance solutions that protect individuals, businesses, and communities throughout Ethiopia.
                 </p>
+                <br />
                 <p>
-                  We reverse the traditional insurance model — putting health,
-                  people, and community first. Our approach combines deep local
-                  expertise with a commitment to transparency, reliability, and
-                  accessibility for every Ethiopian.
+                  <strong>Vision</strong><br />
+                  To become Ethiopia's most trusted and digitally enabled insurance company.
                 </p>
+                <br />
                 <p>
-                  From comprehensive health coverage to motor, property, and
-                  commercial insurance, WASS is building a network of partners
-                  and services designed to protect Ethiopian families and
-                  businesses for generations.
+                  <strong>Mission</strong><br />
+                  To provide affordable, innovative, and customer-centric insurance solutions that create peace of mind and long-term value.
                 </p>
               </ScrollReveal>
             </div>
@@ -272,6 +293,100 @@ const AboutPage = () => {
                 </div>
               </ScrollReveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CORPORATE & SME SOLUTIONS ───────────────────────────── */}
+      <section className="py-20 bg-background border-b border-border overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-accent/20 rounded-l-full blur-3xl -z-10" />
+        <div className="about-container-full">
+          <ScrollReveal>
+            <div className="text-center mb-16">
+              <span className="about-eyebrow about-eyebrow--centered">BUSINESS SOLUTIONS</span>
+              <h2 className="about-section-heading">
+                Corporate & <span className="text-primary">SME Solutions</span>
+              </h2>
+              <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
+                Tailored insurance solutions to protect and grow your enterprise, no matter the scale or industry.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Why choose us */}
+            <ScrollReveal animation="fadeRight">
+              <div className="bg-card border border-border p-8 md:p-10 rounded-3xl shadow-sm">
+                <h3 className="text-2xl font-heading font-bold mb-8 text-foreground">Why Businesses Choose Wass</h3>
+                <div className="space-y-6">
+                  {SME_FEATURES.map((feature, idx) => (
+                    <div key={idx} className="flex items-center gap-4 group">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
+                        <feature.icon className="w-5 h-5" />
+                      </div>
+                      <span className="text-base font-semibold text-foreground">{feature.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Industries Covered */}
+            <ScrollReveal animation="fadeLeft" delay={0.1}>
+              <div>
+                <h3 className="text-2xl font-heading font-bold mb-8 text-foreground">Industries Covered</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {INDUSTRIES.map((industry, idx) => (
+                    <div key={idx} className="flex flex-col items-center justify-center p-6 border border-border rounded-2xl hover:border-primary hover:bg-accent/30 transition-all cursor-default text-center group bg-card shadow-sm hover:shadow-md">
+                      <industry.icon className="w-8 h-8 text-muted-foreground group-hover:text-primary mb-3 transition-colors" />
+                      <span className="text-sm font-semibold text-foreground leading-tight">{industry.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── INVESTOR & CORPORATE GOVERNANCE ──────────────────────── */}
+      <section className="py-20 bg-accent/30 border-b border-border overflow-hidden">
+        <div className="about-container-full">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+            <div className="lg:col-span-5">
+              <ScrollReveal animation="fadeRight">
+                <span className="about-eyebrow">INVESTOR RELATIONS</span>
+                <h2 className="about-section-heading">
+                  Investor & Corporate <span className="text-primary">Governance</span>
+                </h2>
+                <p className="mt-4 text-muted-foreground text-base md:text-lg mb-8">
+                  We are committed to transparency, accountability, and creating long-term value for our shareholders through robust governance practices.
+                </p>
+                <CTAButton variant="outline" className="w-fit">
+                  View Full Investor Profile
+                </CTAButton>
+              </ScrollReveal>
+            </div>
+            
+            <div className="lg:col-span-7">
+              <ScrollReveal animation="fadeLeft" delay={0.1}>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {CORPORATE_INFO.map((info, idx) => (
+                    <div key={idx} className="flex items-center p-5 bg-card border border-border rounded-xl hover:shadow-md hover:border-primary/50 transition-all cursor-pointer group">
+                      <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center text-muted-foreground group-hover:text-primary mr-4 shrink-0 transition-colors">
+                        <info.icon className="w-6 h-6" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-foreground text-base">{info.name}</h4>
+                        <span className="text-xs text-muted-foreground mt-1 flex items-center gap-1 group-hover:text-primary transition-colors">
+                          Learn More <ArrowRight className="w-3 h-3" />
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
@@ -608,7 +723,7 @@ const AboutPage = () => {
   .about-values-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 1024px) {
-  .about-values-grid { grid-template-columns: repeat(4, 1fr); }
+  .about-values-grid { grid-template-columns: repeat(3, 1fr); }
 }
         .about-value-card {
   padding: 2.5rem 2rem;

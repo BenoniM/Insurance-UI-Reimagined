@@ -1,5 +1,5 @@
 import React, { useRef, useState, MouseEvent } from "react";
-import { Calculator, FileText, MapPin, Phone } from "lucide-react";
+import { Calculator, FileText, MapPin, Phone, ShoppingCart } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import ScrollReveal from "./ScrollReveal";
 
@@ -83,9 +83,9 @@ const TiltCard = ({ action }: { action: any }) => {
           <h3 className="text-white font-heading font-medium text-sm sm:text-lg sm:max-w-[60%] text-center sm:text-left leading-tight drop-shadow-md">
             {action.label}
           </h3>
-          <span className="text-white/90 text-xs sm:text-sm font-medium sm:whitespace-nowrap text-center sm:text-left drop-shadow-md">
+          {/* <span className="text-white/90 text-xs sm:text-sm font-medium sm:whitespace-nowrap text-center sm:text-left drop-shadow-md">
             {action.description}
-          </span>
+          </span> */}
         </div>
 
         <div className="flex justify-start sm:justify-start px-4 sm:px-6 pb-4 sm:pb-6">
@@ -107,36 +107,36 @@ const QuickActions = () => {
   const actions = [
     {
       icon: Calculator,
-      label: t("quick.getQuote"),
-      description: t("quick.instantEstimate"),
+      label: "Get a Quote",
+      description: "Get an instant estimate",
       href: "/quote",
       image: imgQuote,
       hoverColor: "#2983C4",
       iconColor: "green", // 1st
     },
     {
-      icon: FileText,
-      label: t("quick.fileClaim"),
-      description: t("quick.startClaim"),
-      href: "/claims",
-      image: imgFile,
+      icon: ShoppingCart,
+      label: "Buy Insurance",
+      description: "Explore our insurance plans",
+      href: "/products",
+      image: imgBranch,
       hoverColor: "#34B288",
       iconColor: "blue", // 2nd
     },
     {
-      icon: MapPin,
-      label: t("quick.findBranch"),
-      description: t("quick.nearestOffice"),
-      href: "/contact#branches",
-      image: imgBranch,
+      icon: FileText,
+      label: "Report a Claim",
+      description: "Start your claim process",
+      href: "/claims/new",
+      image: imgFile,
       hoverColor: "#34B288",
       iconColor: "blue", // 3rd
     },
     {
       icon: Phone,
-      label: t("quick.callNow"),
-      description: "+251 11 123 4567",
-      href: "tel:+251111234567",
+      label: "Contact Us",
+      description: "Get in touch with our team",
+      href: "/contact",
       image: imgCall,
       hoverColor: "#2983C4",
       iconColor: "green", // 4th
