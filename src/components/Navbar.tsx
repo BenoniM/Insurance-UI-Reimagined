@@ -71,6 +71,7 @@ const Navbar = () => {
     { label: t("nav.about"), href: "/about" },
     { label: t("nav.claims"), href: "/claims" },
     { label: lang === "am" ? "ጊቨባክ" : "Giveback", href: "/giveback" },
+    { label: t("nav.news"), href: "/news" },
     { label: t("nav.contact"), href: "/contact" },
   ];
 
@@ -429,6 +430,7 @@ const Navbar = () => {
                   {user ? (
                     <>
                       <DropdownItem to="/dashboard" label={t("nav.dashboard")} />
+                      <DropdownItem to="/wifa" label="WIFA Agent" />
                       <DropdownItem to="/payments" label="Payments" />
                       {isAdmin && (
                         <DropdownItem to="/admin" label="Admin Panel" />
@@ -735,6 +737,14 @@ const Navbar = () => {
                     onClick={() => setMobileOpen(false)}
                   >
                     {t("nav.dashboard")}
+                  </Link>
+                  <Link
+                    to="/wifa"
+                    className="px-3 py-2.5 text-base font-semibold rounded-lg"
+                    style={{ color: "hsl(201 78% 20%)" }}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    WIFA Agent
                   </Link>
                   <Link
                     to="/payments"

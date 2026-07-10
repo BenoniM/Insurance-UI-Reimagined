@@ -134,7 +134,7 @@ const Footer = () => {
                   <li><Link to="/about" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("footer.aboutUs")}</Link></li>
                   <li><Link to="/giveback" className="text-[13px] text-white/50 hover:text-white transition-colors">{lang === "am" ? "ጊቨባክ" : "Giveback"}</Link></li>
                   <li><Link to="/contact" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("nav.contact")}</Link></li>
-                  <li><Link to="/blog" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("nav.blog")}</Link></li>
+                  <li><Link to="/news" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("nav.news")}</Link></li>
                   <li><Link to="/about" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("footer.careers")}</Link></li>
                 </ul>
               </div>
@@ -188,7 +188,7 @@ const Footer = () => {
                         <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.aboutUs")}</Link></li>
                         <li><Link to="/giveback" className="text-sm text-white/50 hover:text-white transition-colors block">{lang === "am" ? "ጊቨባክ" : "Giveback"}</Link></li>
                         <li><Link to="/contact" className="text-sm text-white/50 hover:text-white transition-colors block">{t("nav.contact")}</Link></li>
-                        <li><Link to="/blog" className="text-sm text-white/50 hover:text-white transition-colors block">{t("nav.blog")}</Link></li>
+                        <li><Link to="/news" className="text-sm text-white/50 hover:text-white transition-colors block">{t("nav.news")}</Link></li>
                         <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.careers")}</Link></li>
                       </ul>
                     </AccordionContent>

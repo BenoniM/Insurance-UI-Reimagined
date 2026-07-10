@@ -17,6 +17,7 @@ import ClaimsPage from "./pages/ClaimsPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import BlogPage from "./pages/BlogPage";
+import NewsArticlePage from "./pages/NewsArticlePage";
 import AuthPage from "./pages/AuthPage";
 import QuotePage from "./pages/QuotePage";
 import DashboardPage from "./pages/DashboardPage";
@@ -26,6 +27,7 @@ import NewClaimPage from "./pages/NewClaimPage";
 import ClaimDetailsPage from "./pages/ClaimDetailsPage";
 import PaymentPage from "./pages/PaymentPage";
 import PaymentsPage from "./pages/PaymentsPage";
+import WifaPage from "./pages/WifaPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -70,7 +72,10 @@ const AnimatedRoutes = () => {
       <Route path="/claims" element={<PageTransition><ClaimsPage /></PageTransition>} />
       <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
       <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+      <Route path="/news" element={<PageTransition><BlogPage /></PageTransition>} />
+      <Route path="/news/:slug" element={<PageTransition><NewsArticlePage /></PageTransition>} />
       <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
+      <Route path="/blog/:slug" element={<PageTransition><NewsArticlePage /></PageTransition>} />
       <Route path="/auth" element={<PageTransition><AuthPage /></PageTransition>} />
       <Route path="/quote" element={<PageTransition><QuotePage /></PageTransition>} />
       <Route path="/dashboard" element={<PageTransition><DashboardPage /></PageTransition>} />
@@ -80,6 +85,7 @@ const AnimatedRoutes = () => {
       <Route path="/claims/:id" element={<PageTransition><ClaimDetailsPage /></PageTransition>} />
       <Route path="/payments" element={<PageTransition><PaymentsPage /></PageTransition>} />
       <Route path="/payments/new" element={<PageTransition><PaymentPage /></PageTransition>} />
+      <Route path="/wifa" element={<PageTransition><WifaPage /></PageTransition>} />
       <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
     </Routes>
   );

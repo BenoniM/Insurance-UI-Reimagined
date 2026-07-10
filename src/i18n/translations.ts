@@ -6,12 +6,14 @@ export const translations = {
   "nav.claims": { en: "Claims", am: "ጥያቄዎች" },
   "nav.about": { en: "About", am: "ስለ እኛ" },
   "nav.contact": { en: "Contact", am: "ያግኙን" },
-  "nav.blog": { en: "Blog", am: "ብሎግ" },
+  "nav.blog": { en: "News", am: "News" },
   "nav.getQuote": { en: "Get Quote", am: "ዋጋ ያግኙ" },
   "nav.login": { en: "Login", am: "ግባ" },
   "nav.dashboard": { en: "Dashboard", am: "ዳሽቦርድ" },
   "nav.switchLang": { en: "EN | አማ", am: "አማ | EN" },
   "nav.switchToAm": { en: "🌐 Switch to አማርኛ", am: "🌐 Switch to English" },
+
+  "nav.news": { en: "News", am: "News" },
 
   // Hero
   "hero.headline": { en: "Forget everything you know about", am: "ስለ ኢንሹራንስ" },

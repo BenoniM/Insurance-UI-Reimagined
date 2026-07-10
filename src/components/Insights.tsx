@@ -117,15 +117,15 @@ const Insights = () => {
   ];
 
   return (
-    <SectionWrapper id="blog" className="bg-white">
+    <SectionWrapper id="news" className="bg-white">
       <div className="text-center mb-16">
         <ScrollReveal>
-          <span className="section-badge mb-6 inline-block">INSIGHTS & RESOURCES</span>
+          <span className="section-badge mb-6 inline-block">NEWS & INSIGHTS</span>
           <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
-            Insurance Knowledge <span className="text-primary">Hub</span>
+            Latest News <span className="text-primary">& Insights</span>
           </h2>
           <p className="mt-5 text-muted-foreground max-w-xl mx-auto text-lg">
-            Expert tips, industry updates, and guides to help you make informed insurance decisions in Ethiopia.
+            Company announcements, industry updates, awareness articles, and CSR activities from WASS Insurance.
           </p>
         </ScrollReveal>
       </div>
@@ -133,7 +133,7 @@ const Insights = () => {
       <div className="grid md:grid-cols-3 gap-5">
         {articles.map((article, i) => (
           <ScrollReveal key={article.slug} animation="fadeUp" delay={i * 0.08}>
-            <Link to={`/blog/${article.slug}`} className="group block h-full">
+            <Link to={`/news/${article.slug}`} className="group block h-full">
               <div className="insights-card relative h-full flex flex-col overflow-hidden">
                 {/* Decorative animated pattern, behind content */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">

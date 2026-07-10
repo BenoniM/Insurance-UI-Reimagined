@@ -450,6 +450,57 @@ export type Database = {
           },
         ]
       }
+      wifa_applications: {
+        Row: {
+          business_name: string | null
+          city: string
+          created_at: string
+          email: string
+          experience_level: string
+          full_name: string
+          id: string
+          motivation: string
+          phone: string
+          region: string | null
+          sales_channels: string[]
+          status: Database["public"]["Enums"]["wifa_application_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          business_name?: string | null
+          city: string
+          created_at?: string
+          email: string
+          experience_level: string
+          full_name: string
+          id?: string
+          motivation: string
+          phone: string
+          region?: string | null
+          sales_channels?: string[]
+          status?: Database["public"]["Enums"]["wifa_application_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          business_name?: string | null
+          city?: string
+          created_at?: string
+          email?: string
+          experience_level?: string
+          full_name?: string
+          id?: string
+          motivation?: string
+          phone?: string
+          region?: string | null
+          sales_channels?: string[]
+          status?: Database["public"]["Enums"]["wifa_application_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -494,6 +545,11 @@ export type Database = {
       payment_status: "pending" | "confirmed" | "failed" | "refunded"
       policy_status: "active" | "expired" | "cancelled" | "pending"
       quote_status: "draft" | "submitted" | "quoted" | "accepted" | "expired"
+      wifa_application_status:
+        | "submitted"
+        | "under_review"
+        | "approved"
+        | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
