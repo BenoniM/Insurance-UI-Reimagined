@@ -1,4 +1,4 @@
-import { Camera, Megaphone, Newspaper } from "lucide-react";
+import { BriefcaseBusiness, Camera, FileText, Landmark, Megaphone, Newspaper } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SectionWrapper from "@/components/SectionWrapper";
@@ -30,6 +30,87 @@ const mediaPageContent = {
 
 type MediaPageKind = keyof typeof mediaPageContent;
 
+const announcementSections = [
+  {
+    title: "Bid",
+    icon: FileText,
+    description: "Procurement notices, tender invitations, bid clarifications, and award announcements from WASS Insurance.",
+    items: [
+      {
+        title: "Invitation to bid for digital claims support services",
+        meta: "Open bid",
+        detail: "Qualified vendors are invited to submit proposals for customer support, document handling, and claims workflow services.",
+      },
+      {
+        title: "Office equipment and branch supplies procurement",
+        meta: "Vendor notice",
+        detail: "Registered suppliers may submit sealed bids for office equipment, stationery, and branch operational materials.",
+      },
+    ],
+  },
+  {
+    title: "Vacancy",
+    icon: BriefcaseBusiness,
+    description: "Career opportunities, internship announcements, and recruitment notices across WASS branches and digital teams.",
+    items: [
+      {
+        title: "Claims Officer",
+        meta: "Addis Ababa",
+        detail: "Support claim intake, document review, customer follow-up, and settlement coordination.",
+      },
+      {
+        title: "Digital Sales & Channel Support Associate",
+        meta: "Hybrid",
+        detail: "Assist WIA agents, brokers, and online customers with quote, policy, and payment workflows.",
+      },
+    ],
+  },
+  {
+    title: "Industry Updates",
+    icon: Landmark,
+    description: "Insurance market updates, regulatory news, risk trends, and sector insights relevant to customers and partners.",
+    items: [
+      {
+        title: "New digital service standards for insurance customers",
+        meta: "Industry note",
+        detail: "A short update on faster online service expectations for policy, claims, payment, and complaint handling.",
+      },
+      {
+        title: "Medical and motor insurance demand continues to grow",
+        meta: "Market insight",
+        detail: "WASS highlights customer trends shaping healthcare, mobility, and business protection needs.",
+      },
+    ],
+  },
+];
+
+const AnnouncementsContent = () => (
+  <SectionWrapper>
+    <div className="grid gap-6 lg:grid-cols-3">
+      {announcementSections.map((section, index) => (
+        <ScrollReveal key={section.title} delay={index * 0.08}>
+          <div className="h-full rounded-lg border border-gray-100 bg-white p-6 shadow-sm">
+            <section.icon className="mb-5 h-8 w-8 text-[hsl(160,55%,45%)]" />
+            <h2 className="font-heading text-2xl font-bold text-[hsl(201,78%,20%)]">{section.title}</h2>
+            <p className="mt-3 text-sm leading-relaxed text-gray-600">{section.description}</p>
+            <div className="mt-6 space-y-4">
+              {section.items.map((item) => (
+                <article key={item.title} className="rounded-lg border border-gray-100 bg-[hsl(201,78%,98%)] p-4">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[hsl(160,55%,35%)]">
+                    {item.meta}
+                  </span>
+                  <h3 className="mt-2 font-heading text-base font-bold text-[hsl(201,78%,20%)]">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600">{item.detail}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      ))}
+    </div>
+  </SectionWrapper>
+);
+
 const MediaPage = ({ kind }: { kind: MediaPageKind }) => {
   const content = mediaPageContent[kind];
   const Icon = content.icon;
@@ -51,20 +132,24 @@ const MediaPage = ({ kind }: { kind: MediaPageKind }) => {
         </div>
       </section>
 
-      <SectionWrapper>
-        <ScrollReveal>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {content.items.map((item) => (
-              <div key={item} className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
-                <Icon className="mb-4 h-7 w-7 text-[hsl(160,55%,45%)]" />
-                <h2 className="font-heading text-lg font-bold text-[hsl(201,78%,20%)]">
-                  {item}
-                </h2>
-              </div>
-            ))}
-          </div>
-        </ScrollReveal>
-      </SectionWrapper>
+      {kind === "announcements" ? (
+        <AnnouncementsContent />
+      ) : (
+        <SectionWrapper>
+          <ScrollReveal>
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              {content.items.map((item) => (
+                <div key={item} className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
+                  <Icon className="mb-4 h-7 w-7 text-[hsl(160,55%,45%)]" />
+                  <h2 className="font-heading text-lg font-bold text-[hsl(201,78%,20%)]">
+                    {item}
+                  </h2>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </SectionWrapper>
+      )}
       <Footer />
     </div>
   );
