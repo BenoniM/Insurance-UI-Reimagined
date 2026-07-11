@@ -23,11 +23,12 @@ import QuotePage from "./pages/QuotePage";
 import DashboardPage from "./pages/DashboardPage";
 import AdminPage from "./pages/AdminPage";
 import GivebackPage from "./pages/GivebackPage";
+import MediaPage from "./pages/MediaPage";
+import ChannelPage from "./pages/ChannelPage";
 import NewClaimPage from "./pages/NewClaimPage";
 import ClaimDetailsPage from "./pages/ClaimDetailsPage";
 import PaymentPage from "./pages/PaymentPage";
 import PaymentsPage from "./pages/PaymentsPage";
-import WifaPage from "./pages/WifaPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -81,11 +82,15 @@ const AnimatedRoutes = () => {
       <Route path="/dashboard" element={<PageTransition><DashboardPage /></PageTransition>} />
       <Route path="/admin" element={<PageTransition><AdminPage /></PageTransition>} />
       <Route path="/giveback" element={<PageTransition><GivebackPage /></PageTransition>} />
+      <Route path="/announcements" element={<PageTransition><MediaPage kind="announcements" /></PageTransition>} />
+      <Route path="/gallery" element={<PageTransition><MediaPage kind="gallery" /></PageTransition>} />
+      <Route path="/articles" element={<PageTransition><MediaPage kind="articles" /></PageTransition>} />
+      <Route path="/channels/wia" element={<PageTransition><ChannelPage kind="wia" /></PageTransition>} />
+      <Route path="/channels/broker-portal" element={<PageTransition><ChannelPage kind="broker" /></PageTransition>} />
       <Route path="/claims/new" element={<PageTransition><NewClaimPage /></PageTransition>} />
       <Route path="/claims/:id" element={<PageTransition><ClaimDetailsPage /></PageTransition>} />
       <Route path="/payments" element={<PageTransition><PaymentsPage /></PageTransition>} />
       <Route path="/payments/new" element={<PageTransition><PaymentPage /></PageTransition>} />
-      <Route path="/wifa" element={<PageTransition><WifaPage /></PageTransition>} />
       <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
     </Routes>
   );

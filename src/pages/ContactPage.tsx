@@ -4,7 +4,7 @@ import ContactBlock from "@/components/ContactBlock";
 import ExpandingHero from "@/components/ExpandingHero";
 import SectionWrapper from "@/components/SectionWrapper";
 import ScrollReveal from "@/components/ScrollReveal";
-import { MapPin, Clock, Shield, Phone } from "lucide-react";
+import { ClipboardList, Lightbulb, MessageSquareWarning, Search, Star } from "lucide-react";
 import { useState, useRef } from "react";
 
 const branches = [
@@ -96,6 +96,101 @@ const HoverBranchList = () => {
   );
 };
 
+const complaintFeedbackItems = [
+  {
+    title: "Complaint Form",
+    description: "Submit service, policy, claims, or payment complaints for formal review.",
+    icon: MessageSquareWarning,
+  },
+  {
+    title: "Suggestion Box",
+    description: "Share ideas that can improve our products, branches, digital services, or customer experience.",
+    icon: Lightbulb,
+  },
+  {
+    title: "Customer Satisfaction Survey",
+    description: "Rate your recent experience and help us measure how well WASS is serving you.",
+    icon: Star,
+  },
+  {
+    title: "Complaint Tracking",
+    description: "Use your complaint reference number to check review status and next steps.",
+    icon: Search,
+  },
+];
+
+const ComplaintFeedbackSection = () => (
+  <SectionWrapper className="bg-white">
+    <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+      <ScrollReveal>
+        <div className="max-w-3xl mb-10">
+          <span className="section-badge mb-4 inline-block">COMPLAINT & FEEDBACK</span>
+          <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
+            Tell us how we can <span className="text-primary">serve you better</span>
+          </h2>
+          <p className="mt-4 text-muted-foreground">
+            Submit complaints, send suggestions, complete satisfaction surveys, or track an existing complaint from one place.
+          </p>
+        </div>
+      </ScrollReveal>
+
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {complaintFeedbackItems.map((item, index) => (
+          <ScrollReveal key={item.title} delay={index * 0.06}>
+            <div className="h-full rounded-xl border border-border bg-background p-5 shadow-sm transition-all hover:border-primary/50 hover:shadow-md">
+              <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <item.icon className="h-5 w-5" />
+              </div>
+              <h3 className="font-heading text-lg font-bold text-foreground">{item.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+
+      <div className="mt-8 grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <ScrollReveal>
+          <div className="rounded-2xl border border-border bg-accent/20 p-6">
+            <div className="flex items-center gap-3">
+              <ClipboardList className="h-5 w-5 text-primary" />
+              <h3 className="font-heading text-xl font-bold text-foreground">Complaint Form</h3>
+            </div>
+            <div className="mt-5 grid gap-3 md:grid-cols-2">
+              <input className="rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary" placeholder="Full name" />
+              <input className="rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary" placeholder="Email or phone" />
+              <select className="rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary">
+                <option>Complaint type</option>
+                <option>Policy service</option>
+                <option>Claims service</option>
+                <option>Payment issue</option>
+                <option>Branch experience</option>
+              </select>
+              <input className="rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary" placeholder="Policy / claim number optional" />
+              <textarea className="md:col-span-2 min-h-28 rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary" placeholder="Describe your complaint or feedback" />
+            </div>
+            <button className="mt-5 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90">
+              Submit Feedback
+            </button>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.1}>
+          <div className="h-full rounded-2xl border border-border bg-[hsl(201,78%,20%)] p-6 text-white">
+            <h3 className="font-heading text-xl font-bold">Track a complaint</h3>
+            <p className="mt-3 text-sm leading-relaxed text-white/70">
+              Enter your complaint reference number to follow status updates from submission to resolution.
+            </p>
+            <input className="mt-5 w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/45 outline-none focus:border-white/50" placeholder="Complaint reference number" />
+            <button className="mt-4 w-full rounded-xl bg-white px-6 py-3 text-sm font-bold text-[hsl(201,78%,20%)] transition-colors hover:bg-white/90">
+              Track Complaint
+            </button>
+          </div>
+        </ScrollReveal>
+      </div>
+    </div>
+  </SectionWrapper>
+);
+
 const ContactPage = () => (
   <div className="min-h-screen">
     <Navbar />
@@ -184,6 +279,8 @@ const ContactPage = () => (
         </div>
       </div>
     </SectionWrapper>
+
+    <ComplaintFeedbackSection />
 
     <div className="relative z-10"><ContactBlock /></div>
     <Footer />

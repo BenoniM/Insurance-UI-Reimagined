@@ -12,6 +12,8 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const [mediaOpen, setMediaOpen] = useState(false);
+  const [channelsOpen, setChannelsOpen] = useState(false);
   const [accountsOpen, setAccountsOpen] = useState(false);
   const [hoveredLeft, setHoveredLeft] = useState(false);
   const [hoveredRight, setHoveredRight] = useState(false);
@@ -41,6 +43,8 @@ const Navbar = () => {
   useEffect(() => {
     setMobileOpen(false);
     setProductsOpen(false);
+    setMediaOpen(false);
+    setChannelsOpen(false);
     setAccountsOpen(false);
   }, [location]);
 
@@ -66,12 +70,25 @@ const Navbar = () => {
     });
   }, []);
 
+  const mediaLinks = [
+    { label: "News", href: "/news" },
+    { label: "CSR", href: "/giveback" },
+    { label: "Announcements", href: "/announcements" },
+    { label: "Gallery", href: "/gallery" },
+    { label: "Articles", href: "/articles" },
+  ];
+
+  const channelLinks = [
+    { label: "WIA", href: "/channels/wia" },
+    { label: "Broker Portal", href: "/channels/broker-portal" },
+  ];
+
   const navLinks = [
     { label: t("nav.about"), href: "/about" },
     { label: t("nav.products"), href: "/products", hasDropdown: true },
     { label: t("nav.claims"), href: "/claims" },
-    { label: lang === "am" ? "ጊቨባክ" : "Giveback", href: "/giveback" },
-    { label: t("nav.news"), href: "/news" },
+    { label: "Channels", href: "/channels/wia", mediaItems: channelLinks },
+    { label: "Media", href: "/news", mediaItems: mediaLinks },
     { label: t("nav.contact"), href: "/contact" },
   ];
 
@@ -287,7 +304,77 @@ const Navbar = () => {
                     })}
                   </div>
                 </div>
-              ) : (
+              ) : link.mediaItems ? (() => {
+                const simpleMenuOpen = link.label === "Channels" ? channelsOpen : mediaOpen;
+                const setSimpleMenuOpen = link.label === "Channels" ? setChannelsOpen : setMediaOpen;
+                const simpleMenuActive = link.mediaItems.some((item) => location.pathname.startsWith(item.href));
+                return (
+                <div
+                  key={link.label}
+                  className="h-full flex items-center group relative"
+                  onMouseEnter={() => setSimpleMenuOpen(true)}
+                  onMouseLeave={() => setSimpleMenuOpen(false)}
+                >
+                  <button
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                      padding: "8px 16px",
+                      fontSize: "14px",
+                      fontWeight: 600,
+                      fontFamily: "var(--font-heading)",
+                      whiteSpace: "nowrap",
+                      color: simpleMenuOpen || simpleMenuActive ? "hsl(160,55%,45%)" : "rgb(11, 63, 91)",
+                      background: "transparent",
+                      border: "none",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <span className="relative inline-block">
+                        {link.label}
+                        <span
+                          className={`absolute -bottom-1 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
+                          simpleMenuActive ? "w-full" : "w-0 group-hover:w-full"
+                        }`}
+                      />
+                    </span>
+                    <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${simpleMenuOpen ? "rotate-180" : ""}`} />
+                  </button>
+
+                  <div
+                    className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-[2px] min-w-[210px] py-2 transition-all duration-200 origin-top flex flex-col"
+                    style={{
+                      background: "rgba(255,255,255,1)",
+                      borderRadius: "12px",
+                      boxShadow: "0 16px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06)",
+                      border: "1px solid rgba(0,0,0,0.04)",
+                      opacity: simpleMenuOpen ? 1 : 0,
+                      transform: simpleMenuOpen ? "scaleY(1) translateX(-50%)" : "scaleY(0.92) translateX(-50%)",
+                      visibility: simpleMenuOpen ? "visible" : "hidden",
+                    }}
+                  >
+                    {link.mediaItems.map((item) => {
+                      const isActive = location.pathname.startsWith(item.href);
+                      return (
+                        <Link
+                          key={item.href}
+                          to={item.href}
+                          className="px-4 py-3 text-sm font-semibold transition-colors"
+                          style={{ color: isActive ? "hsl(160,55%,45%)" : "hsl(201,78%,20%)" }}
+                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "hsl(160,55%,45%)"; }}
+                          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? "hsl(160,55%,45%)" : "hsl(201,78%,20%)"; }}
+                        >
+                          {item.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+                );
+              })() : (
                 <div key={link.label} className="h-full flex items-center group">
                   <Link
                     to={link.href}
@@ -438,7 +525,6 @@ const Navbar = () => {
                   {user ? (
                     <>
                       <DropdownItem to="/dashboard" label={t("nav.dashboard")} />
-                      <DropdownItem to="/wifa" label="WIFA Agent" />
                       <DropdownItem to="/payments" label="Payments" />
                       {isAdmin && (
                         <DropdownItem to="/admin" label="Admin Panel" />
@@ -705,7 +791,50 @@ const Navbar = () => {
                       </div>
                     )}
                   </div>
-                ) : (
+                ) : link.mediaItems ? (() => {
+                  const simpleMenuOpen = link.label === "Channels" ? channelsOpen : mediaOpen;
+                  const setSimpleMenuOpen = link.label === "Channels" ? setChannelsOpen : setMediaOpen;
+                  const simpleMenuActive = link.mediaItems.some((item) => location.pathname.startsWith(item.href));
+                  return (
+                  <div key={link.label}>
+                    <button
+                      onClick={() => setSimpleMenuOpen(!simpleMenuOpen)}
+                      className="group flex items-center justify-between w-full px-4 py-3 text-base font-semibold rounded-xl transition-colors"
+                      style={{
+                        color: simpleMenuActive ? "hsl(160,55%,45%)" : "hsl(201 78% 20%)",
+                      }}
+                    >
+                      <span className="relative inline-block">
+                        {link.label}
+                        <span
+                          className={`absolute -bottom-1 left-0 h-[3px] bg-[hsl(160,55%,45%)] rounded-full transition-all duration-300 ease-out ${
+                            simpleMenuActive ? "w-full" : "w-0 group-hover:w-full"
+                          }`}
+                        />
+                      </span>
+                      <ChevronDown className={`w-4 h-4 transition-transform ${simpleMenuOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    {simpleMenuOpen && (
+                      <div
+                        className="ml-4 pl-4 py-2 flex flex-col gap-2 text-left"
+                        style={{ borderLeft: "2px solid hsl(160 55% 45% / 0.2)" }}
+                      >
+                        {link.mediaItems.map((item) => (
+                          <Link
+                            key={item.href}
+                            to={item.href}
+                            className="text-sm font-semibold transition-colors py-1"
+                            style={{ color: location.pathname.startsWith(item.href) ? "hsl(160,55%,45%)" : "hsl(201,78%,30%)" }}
+                            onClick={() => setMobileOpen(false)}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  );
+                })() : (
                   <Link
                     key={link.label}
                     to={link.href}
@@ -745,14 +874,6 @@ const Navbar = () => {
                     onClick={() => setMobileOpen(false)}
                   >
                     {t("nav.dashboard")}
-                  </Link>
-                  <Link
-                    to="/wifa"
-                    className="px-3 py-2.5 text-base font-semibold rounded-lg"
-                    style={{ color: "hsl(201 78% 20%)" }}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    WIFA Agent
                   </Link>
                   <Link
                     to="/payments"

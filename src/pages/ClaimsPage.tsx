@@ -8,7 +8,8 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { 
   FileText, CheckCircle, AlertTriangle, ArrowRight,
   Smartphone, Laptop, CreditCard, ShieldCheck, Download,
-  User, Car, Activity, Home, Plane, FileDown
+  User, Car, Activity, Home, Plane, FileDown, Mail, KeyRound,
+  RefreshCw, Edit3, Eye, PhoneCall, HelpCircle, ClipboardList
 } from "lucide-react";
 
 // Matches the ProcessSteps border treatment
@@ -194,64 +195,80 @@ const faqs = [
   { q: "Do I need a police report?", a: "A police report is required for theft, traffic accidents, and third-party liability claims. For other types of claims, it depends on the nature of the incident." },
 ];
 
+const customerPortalServices = [
+  { name: "Request Quote", icon: FileText, href: "/quote" },
+  { name: "Buy Insurance", icon: ShieldCheck, href: "/quote" },
+  { name: "Renew Policies", icon: RefreshCw, href: "/dashboard" },
+  { name: "Pay Premium", icon: CreditCard, href: "/payments" },
+  { name: "Download Policies", icon: Download, href: "/dashboard" },
+  { name: "Download Proposal Forms", icon: FileDown, href: "/claims#claim-forms" },
+  { name: "Request Policy Amendment", icon: Edit3, href: "/contact" },
+  { name: "View Claims", icon: Eye, href: "/dashboard" },
+];
+
 const DigitalServices = () => {
   return (
-    <div className="py-12 md:py-20 bg-background overflow-hidden">
+    <div className="py-12 md:py-20 bg-background overflow-hidden" id="customer-portal">
       <ScrollReveal>
         <div className="text-center mb-10 md:mb-16 px-4">
-          <span className="section-badge mb-3 inline-block">DIGITAL SERVICES</span>
+          <span className="section-badge mb-3 inline-block">DIGITAL CUSTOMER SERVICES PORTAL</span>
           <h2 className="qupe-heading text-3xl md:text-5xl lg:text-6xl text-foreground mt-2">
-            Online & <span className="text-primary">Mobile</span>
+            Online <span className="text-primary">Services</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
-            Access your insurance anywhere, anytime through our digital platforms.
+            Login with your email to manage policies, payments, quotes, documents, amendments, and claims in one place.
           </p>
         </div>
       </ScrollReveal>
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 grid md:grid-cols-2 gap-8">
-        {/* Online Services */}
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-8">
         <ScrollReveal animation="fadeLeft">
+          <div className="bg-card border border-border rounded-3xl p-8 h-full shadow-sm">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <KeyRound className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-heading font-bold">Login</h3>
+                <p className="text-sm text-muted-foreground">Customer email access</p>
+              </div>
+            </div>
+            <label htmlFor="customer-service-email" className="text-sm font-semibold text-foreground">
+              Email
+            </label>
+            <div className="relative mt-2">
+              <Mail className="absolute left-3 top-1/2 w-4 h-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                id="customer-service-email"
+                type="email"
+                placeholder="customer@example.com"
+                className="w-full rounded-xl border border-border bg-background py-3 pl-10 pr-4 text-sm outline-none transition-colors focus:border-primary"
+              />
+            </div>
+            <CTAButton href="/auth?redirect=/dashboard" className="mt-5 w-full justify-center">
+              Continue to Portal
+            </CTAButton>
+            <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+              Customers can request quotes, buy insurance, renew policies, pay premiums, download documents, request amendments, and view claims.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* Online Services */}
+        <ScrollReveal animation="fadeRight" delay={0.1}>
           <div className="bg-card border border-border rounded-3xl p-8 hover:border-primary/50 transition-colors h-full">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <Laptop className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-2xl font-heading font-bold">Online Services</h3>
+              <h3 className="text-2xl font-heading font-bold">Customers can</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { name: "Buy Insurance Online", icon: ShieldCheck },
-                { name: "Policy Renewal", icon: Activity },
-                { name: "Premium Payment", icon: CreditCard },
-                { name: "Claims Tracking", icon: FileText },
-                { name: "Download Certificates", icon: Download },
-                { name: "Customer Portal", icon: User },
-              ].map((service) => (
-                <div key={service.name} className="flex items-center gap-3 p-3 rounded-xl hover:bg-accent/50 transition-colors cursor-pointer border border-transparent hover:border-border">
+              {customerPortalServices.map((service) => (
+                <a key={service.name} href={service.href} className="flex items-center gap-3 p-3 rounded-xl hover:bg-accent/50 transition-colors cursor-pointer border border-transparent hover:border-border">
                   <service.icon className="w-5 h-5 text-primary shrink-0" />
                   <span className="text-sm font-medium">{service.name}</span>
-                </div>
+                </a>
               ))}
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* Mobile Services */}
-        <ScrollReveal animation="fadeRight" delay={0.1}>
-          <div className="bg-primary text-primary-foreground rounded-3xl p-8 h-full relative overflow-hidden flex flex-col justify-center shadow-xl">
-            <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -left-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-            <div className="relative z-10 flex flex-col h-full justify-center items-start">
-              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-6 backdrop-blur-sm border border-white/30">
-                <Smartphone className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-3xl md:text-4xl font-heading font-bold mb-4 text-white">Mobile Services</h3>
-              <p className="text-primary-foreground/90 text-base md:text-lg mb-8 leading-relaxed max-w-md">
-                Experience seamless insurance management on the go. Download our mobile app to file claims, check policy status, and get roadside assistance instantly.
-              </p>
-              <CTAButton variant="outline" className="w-fit bg-white/10 text-white border-white/30 hover:bg-white hover:text-primary hover:border-white">
-                Download App
-              </CTAButton>
             </div>
           </div>
         </ScrollReveal>
@@ -260,85 +277,56 @@ const DigitalServices = () => {
   );
 };
 
+const claimsCenterItems = [
+  { title: "Report Claims", description: "Start a new claim submission.", icon: AlertTriangle, href: "/claims/new" },
+  { title: "Track Claims", description: "View submitted claim status.", icon: Eye, href: "/dashboard" },
+  { title: "Claim Procedure", description: "See the step-by-step process.", icon: ClipboardList, href: "#claim-procedure" },
+  { title: "Required Documents", description: "Prepare documents before filing.", icon: FileText, href: "#required-documents" },
+  { title: "Download Claims Forms", description: "Get motor, medical, property, and travel forms.", icon: FileDown, href: "#claim-forms" },
+  { title: "Emergency Contacts", description: "Reach urgent support quickly.", icon: PhoneCall, href: "#emergency-contacts" },
+  { title: "Frequently Asked Questions", description: "Read common claims answers.", icon: HelpCircle, href: "#claims-faq" },
+];
+
 const ClaimsCenter = () => {
   return (
-    <div className="py-12 md:py-20 bg-accent/30 overflow-hidden border-t border-border border-b">
+    <div className="py-12 md:py-20 bg-accent/30 overflow-hidden border-t border-border border-b" id="digital-claims-center">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-10 md:mb-16">
-            <span className="section-badge mb-3 inline-block">CLAIMS CENTER</span>
+            <span className="section-badge mb-3 inline-block">DIGITAL CLAIMS CENTER</span>
             <h2 className="qupe-heading text-3xl md:text-5xl lg:text-6xl text-foreground mt-2">
-              Submit & <span className="text-primary">Track</span>
+              Report & <span className="text-primary">Track</span>
             </h2>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
-              Report your claim quickly and easily. Choose the type of claim to begin the process.
+              Everything customers need to report claims, track progress, understand procedures, prepare documents, and contact emergency support.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
-          {/* Quick Claim Reporting */}
-          <ScrollReveal animation="fadeUp" delay={0}>
-            <div className="bg-card border border-border rounded-3xl p-6 md:p-8 h-full shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-heading font-bold mb-6 flex items-center gap-2">
-                <Activity className="w-5 h-5 text-primary" />
-                Quick Claim Reporting
-              </h3>
-              <div className="space-y-6 relative before:absolute before:inset-0 before:ml-[13px] before:-translate-x-px before:h-full before:w-[2px] before:bg-gradient-to-b before:from-primary/50 before:via-border before:to-transparent">
-                {[
-                  { step: "1", title: "Notify us", desc: "Via app, web, or phone" },
-                  { step: "2", title: "Submit Documents", desc: "Upload required forms" },
-                  { step: "3", title: "Receive Settlement", desc: "Direct to your account" },
-                ].map((item) => (
-                  <div key={item.step} className="relative flex items-start gap-4">
-                    <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold z-10 shrink-0 shadow-md">
-                      {item.step}
-                    </div>
-                    <div className="pt-0.5">
-                      <h4 className="font-bold text-foreground text-base">{item.title}</h4>
-                      <p className="text-sm text-muted-foreground mt-0.5">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {claimsCenterItems.map((item, index) => (
+            <ScrollReveal key={item.title} animation="fadeUp" delay={index * 0.04}>
+              <a href={item.href} className="group block h-full bg-card border border-border rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-primary/50 transition-all">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  <item.icon className="w-5 h-5 text-primary group-hover:text-current" />
+                </div>
+                <h3 className="font-heading font-bold text-lg text-foreground">{item.title}</h3>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{item.description}</p>
+              </a>
+            </ScrollReveal>
+          ))}
+        </div>
 
-          {/* Submit a Claim Types */}
+        <div id="claim-forms" className="mt-8">
           <ScrollReveal animation="fadeUp" delay={0.1}>
-            <div className="bg-card border border-border rounded-3xl p-6 md:p-8 h-full shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-heading font-bold mb-6 flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-primary" />
-                Submit a Claim
-              </h3>
-              <div className="grid grid-cols-2 gap-3 md:gap-4">
-                {[
-                  { name: "Motor Claims", icon: Car },
-                  { name: "Medical Claims", icon: Activity },
-                  { name: "Property Claims", icon: Home },
-                  { name: "Travel Claims", icon: Plane },
-                ].map((type) => (
-                  <div key={type.name} className="flex flex-col items-center justify-center p-4 rounded-xl border border-border hover:border-primary hover:bg-primary/5 transition-all cursor-pointer text-center group bg-background">
-                    <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
-                      <type.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                    </div>
-                    <span className="text-xs md:text-sm font-bold text-foreground">{type.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Attached Forms */}
-          <ScrollReveal animation="fadeUp" delay={0.2}>
-            <div className="bg-card border border-border rounded-3xl p-6 md:p-8 h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-card border border-border rounded-3xl p-6 md:p-8 shadow-sm">
               <h3 className="text-xl font-heading font-bold mb-2 flex items-center gap-2">
                 <FileDown className="w-5 h-5 text-primary" />
-                Attached Forms
+                Download Claims Forms
               </h3>
-              <p className="text-sm text-muted-foreground mb-6">Download all claim forms and requirements.</p>
+              <p className="text-sm text-muted-foreground mb-6">Download claim forms and requirements by claim type.</p>
               
-              <div className="space-y-3 flex-1 flex flex-col justify-center">
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
                 {[
                   "Motor Claim Form.pdf",
                   "Medical Claim Form.pdf",
@@ -375,8 +363,10 @@ const ClaimsPage = () => {
 
     <ClaimsHeroAnimation />
 
+    <ClaimsCenter />
+
     {/* Claims Process Steps */}
-    <div className="py-12 md:py-20 bg-card border-b border-border overflow-hidden">
+    <div id="claim-procedure" className="py-12 md:py-20 bg-card border-b border-border overflow-hidden">
       <ScrollReveal>
         <div className="text-center mb-10 md:mb-16 px-4">
           <span className="section-badge mb-3 inline-block">STEP BY STEP</span>
@@ -439,7 +429,7 @@ const ClaimsPage = () => {
     </div>
 
     {/* Required Documents */}
-    <SectionWrapper className="bg-accent/30">
+    <SectionWrapper id="required-documents" className="bg-accent/30">
       <div className="max-w-5xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-12">
@@ -458,7 +448,39 @@ const ClaimsPage = () => {
       </div>
     </SectionWrapper>
 
-    <ClaimsCenter />
+    <section id="emergency-contacts" className="py-10 md:py-14 bg-white">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <ScrollReveal>
+          <div className="rounded-3xl bg-[hsl(201,78%,20%)] p-6 md:p-8 text-white shadow-xl">
+            <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+              <div>
+                <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                  Emergency Contacts
+                </span>
+                <h2 className="mt-4 qupe-heading text-2xl md:text-4xl text-white">
+                  24/7 claims assistance
+                </h2>
+                <p className="mt-3 text-sm md:text-base leading-relaxed text-white/75">
+                  For urgent claims, accidents, medical emergencies, or immediate support, contact WASS before authorizing repairs or major expenses.
+                </p>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {[
+                  { label: "Claims Hotline", value: "+251 11 123 4567" },
+                  { label: "Emergency Support", value: "+251 91 000 0000" },
+                  { label: "Email", value: "claims@wass.co" },
+                ].map((contact) => (
+                  <div key={contact.label} className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                    <p className="text-xs uppercase tracking-wider text-white/55">{contact.label}</p>
+                    <p className="mt-2 text-sm font-bold text-white">{contact.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
 
     {/* Important Notice */}
     <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8 my-8 lg:my-12">
@@ -496,7 +518,7 @@ const ClaimsPage = () => {
     <DigitalServices />
 
     {/* FAQ — ProcessSteps-style two-column accordion */}
-    <section className="pt-6 pb-20 overflow-hidden bg-accent/30">
+    <section id="claims-faq" className="pt-6 pb-20 overflow-hidden bg-accent/30">
       <div className="flex flex-col lg:flex-row w-full">
 
         {/* ── LEFT column ── */}

@@ -79,6 +79,138 @@ const productColorMap: Record<string, string> = {
   Plane: "bg-violet-500/10",
 };
 
+const medicalInsuranceProducts = [
+  {
+    slug: "individual-medical-insurance",
+    title: "Individual Medical Insurance",
+    description: "Comprehensive medical coverage for a single person.",
+    listTitle: "Plans",
+    items: [
+      "Bronze Plan - Essential healthcare cover",
+      "Silver Plan - Enhanced outpatient and specialist cover",
+      "Gold Plan - Comprehensive inpatient and outpatient cover",
+      "Platinum Plan - Premium healthcare cover",
+      "Executive Plan - VIP healthcare and international benefits",
+    ],
+  },
+  {
+    slug: "family-medical-insurance",
+    title: "Family Medical Insurance",
+    description: "Healthcare protection for the insured member, spouse, and children under one policy.",
+    listTitle: "Plans",
+    items: ["Family Bronze", "Family Silver", "Family Gold", "Family Platinum", "Family Executive"],
+    secondaryTitle: "Optional Benefits",
+    secondaryItems: ["Maternity Cover", "Child Wellness & Vaccination", "Chronic Disease Management"],
+  },
+  {
+    slug: "corporate-medical-insurance",
+    title: "Corporate Medical Insurance",
+    description: "Customized healthcare solutions for organizations and their employees.",
+    listTitle: "Plans",
+    items: [
+      "SME Health Plan (Small & Medium Businesses)",
+      "Corporate Bronze",
+      "Corporate Silver",
+      "Corporate Gold",
+      "Corporate Platinum",
+      "Corporate Executive",
+    ],
+    secondaryTitle: "Optional Benefits",
+    secondaryItems: ["Executive Health Cover", "Annual Medical Checkups", "Employee Wellness Programs", "Occupational Health Services"],
+  },
+  {
+    slug: "specialized-medical-insurance",
+    title: "Specialized Medical Insurance",
+    description: "Targeted solutions for specific healthcare needs.",
+    listTitle: "Products",
+    items: [
+      "Maternal & Child Health Insurance",
+      "Senior Citizen Health Insurance",
+      "Student Health Insurance",
+      "Chronic Disease Care Plan",
+      "Travel Medical Insurance",
+      "Micro Health Insurance",
+    ],
+  },
+];
+
+const MedicalInsuranceProductsSection = ({ currentSlug }: { currentSlug: string }) => (
+  <section className="py-10 md:py-14 bg-[hsl(201,78%,98%)]">
+    <div className="container mx-auto px-4 lg:px-8">
+      <ScrollReveal>
+        <div className="max-w-3xl mb-10">
+          <span className="section-badge mb-4 inline-block">WASS MEDICAL INSURANCE PRODUCTS</span>
+          <h2 className="qupe-heading text-3xl md:text-4xl text-foreground">
+            Medical Insurance
+          </h2>
+          <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">
+            Wass Medical Insurance provides affordable, comprehensive, and premium healthcare solutions for Individuals,
+            Families, and Organizations, ensuring access to quality healthcare whenever it is needed.
+          </p>
+        </div>
+      </ScrollReveal>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+        {medicalInsuranceProducts.map((item) => {
+          const isCurrent = currentSlug === item.slug;
+          return (
+            <article
+              key={item.slug}
+              className={`rounded-lg border bg-white p-5 shadow-sm transition-all duration-200 ${
+                isCurrent
+                  ? "border-[hsl(160,55%,45%)] shadow-[0_16px_40px_rgba(40,138,105,0.16)]"
+                  : "border-gray-100 hover:border-[hsl(160,55%,45%)] hover:shadow-md"
+              }`}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="font-heading text-lg font-bold text-[hsl(201,78%,20%)]">
+                  {item.title}
+                </h3>
+                {isCurrent && (
+                  <span className="rounded-full bg-[hsl(160,55%,45%)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                    Current
+                  </span>
+                )}
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-gray-600">{item.description}</p>
+
+              <div className="mt-5">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[hsl(160,55%,35%)]">
+                  {item.listTitle}
+                </h4>
+                <ul className="mt-3 space-y-2">
+                  {item.items.map((listItem) => (
+                    <li key={listItem} className="flex gap-2 text-sm leading-snug text-gray-700">
+                      <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-[hsl(160,55%,45%)]" />
+                      <span>{listItem}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {item.secondaryItems && (
+                <div className="mt-5 border-t border-gray-100 pt-4">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[hsl(201,78%,28%)]">
+                    {item.secondaryTitle}
+                  </h4>
+                  <ul className="mt-3 space-y-2">
+                    {item.secondaryItems.map((listItem) => (
+                      <li key={listItem} className="flex gap-2 text-sm leading-snug text-gray-700">
+                        <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-[hsl(201,78%,38%)]" />
+                        <span>{listItem}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
 const productFilterMap: Record<string, string> = {
   Heart: "invert(53%) sepia(48%) saturate(3020%) hue-rotate(167deg) brightness(98%) contrast(92%)",
   Car: "invert(58%) sepia(58%) saturate(452%) hue-rotate(113deg) brightness(97%) contrast(92%)",
@@ -823,6 +955,10 @@ const ProductPage = () => {
       </section>
 
       <KeyBenefitsSpotlight name={name} />
+
+      {product.category_slug === "medical-insurance" && (
+        <MedicalInsuranceProductsSection currentSlug={product.slug} />
+      )}
 
       {/* Coverage & Exclusions */}
       <section className="py-8 md:py-12 w-full">

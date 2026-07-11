@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import CTAButton from '@/components/CTAButton';
 
 import img1 from '@/assets/ClaimsHero/Gemini_Generated_Image_1dzsmg1dzsmg1dzs-Photoroom.png';
@@ -135,9 +134,9 @@ const ClaimsHeroAnimation = () => {
               }}
               className="flex justify-center gap-4"
             >
-              <Link to="/claims/new">
+              <a href="#digital-claims-center">
                 <CTAButton size="lg">File a Claim</CTAButton>
-              </Link>
+              </a>
             </motion.div>
           </motion.div>
         )}
