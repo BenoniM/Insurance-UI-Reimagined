@@ -67,8 +67,8 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { label: t("nav.products"), href: "/products", hasDropdown: true },
     { label: t("nav.about"), href: "/about" },
+    { label: t("nav.products"), href: "/products", hasDropdown: true },
     { label: t("nav.claims"), href: "/claims" },
     { label: lang === "am" ? "ጊቨባክ" : "Giveback", href: "/giveback" },
     { label: t("nav.news"), href: "/news" },
@@ -227,16 +227,20 @@ const Navbar = () => {
                       visibility: productsOpen ? "visible" : "hidden",
                     }}
                   >
-                    {navCategories.map((category) => (
-                      <div key={category.slug} className={`flex flex-col text-left ${category.slug === 'general-insurance' ? 'col-span-6' : 'col-span-3'}`}>
+                    {navCategories.map((category) => {
+                      const isGeneralInsurance = category.slug === "general-insurance";
+                      return (
+                      <div key={category.slug} className={`flex flex-col text-left ${isGeneralInsurance ? 'col-span-6' : 'col-span-3'}`}>
                         <h3 className="font-heading font-bold text-[hsl(160,55%,45%)] text-[13px] uppercase tracking-wider mb-5 border-b border-gray-100 pb-3">
                           {lang === "en" ? category.label : category.label_am}
                         </h3>
-                        <div className={category.slug === 'general-insurance' ? "grid grid-cols-2 gap-x-4 gap-y-5" : "flex flex-col gap-4"}>
+                        <div className={isGeneralInsurance ? "grid grid-cols-2 gap-x-4 gap-y-3" : "flex flex-col gap-4"}>
                           {category.subcategories.map((sub) => {
+                            const hasChildren = Boolean(sub.children?.length);
                             const isActive = sub.href ? location.pathname === sub.href : sub.children?.some(c => location.pathname === c.href);
+                            const collapseChildren = isGeneralInsurance && hasChildren;
                             return (
-                              <div key={sub.label} className="flex flex-col gap-1.5">
+                              <div key={sub.label} className={`flex flex-col ${collapseChildren ? "group/general-sub gap-0" : "gap-1.5"}`}>
                                 {sub.href ? (
                                   <Link
                                     to={sub.href}
@@ -249,10 +253,13 @@ const Navbar = () => {
                                   </Link>
                                 ) : (
                                   <>
-                                    <span className="font-semibold text-[13px] text-[hsl(201,78%,20%)]">
-                                      {lang === "en" ? sub.label : sub.label_am}
+                                    <span className="flex items-center justify-between gap-2 font-semibold text-[13px] text-[hsl(201,78%,20%)] cursor-default transition-colors group-hover/general-sub:text-[hsl(160,55%,45%)]">
+                                      <span>{lang === "en" ? sub.label : sub.label_am}</span>
+                                      {collapseChildren && (
+                                        <ChevronDown className="w-3 h-3 shrink-0 transition-transform duration-200 group-hover/general-sub:rotate-180" />
+                                      )}
                                     </span>
-                                    <div className="flex flex-col pl-3 border-l-2 border-gray-100 gap-1 mt-1">
+                                    <div className={`${collapseChildren ? "max-h-0 opacity-0 mt-0 overflow-hidden transition-all duration-200 group-hover/general-sub:max-h-80 group-hover/general-sub:opacity-100 group-hover/general-sub:mt-2" : "mt-1"} flex flex-col pl-3 border-l-2 border-gray-100 gap-1`}>
                                       {sub.children?.map(child => {
                                         const isChildActive = location.pathname === child.href;
                                         return (
@@ -276,7 +283,8 @@ const Navbar = () => {
                           })}
                         </div>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               ) : (
