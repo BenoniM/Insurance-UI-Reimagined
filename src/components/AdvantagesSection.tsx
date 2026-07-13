@@ -50,7 +50,7 @@ const AdvantagesSection = () => {
             <p className="text-coral font-heading text-sm font-semibold tracking-widest uppercase mb-3">
               Advantages
             </p>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
+            <h2 className="section-title text-foreground">
               Why Choose RiskGuard
             </h2>
           </ScrollReveal>

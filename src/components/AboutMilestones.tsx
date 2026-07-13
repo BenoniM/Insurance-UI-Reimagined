@@ -10,7 +10,7 @@ const AboutMilestones = () => {
           <span className="section-badge mb-4 inline-block uppercase">
             Milestones
           </span>
-          <h2 className="qupe-heading text-4xl md:text-5xl lg:text-6xl text-foreground">
+          <h2 className="section-title text-foreground">
             Our <span className="text-primary">Journey</span>
           </h2>
           <p className="mt-6 text-muted-foreground max-w-xl mx-auto text-lg leading-relaxed">

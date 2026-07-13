@@ -63,6 +63,14 @@
     --font-body: 'Inter', sans-serif;
     --font-hero: 'Merriweather', serif;
 
+    /* Shared typography scale */
+    --type-section-title: clamp(2rem, 3.2vw, 3rem);
+    --type-section-subtitle: 1.125rem;
+    --type-card-title: 1.125rem;
+    --type-body: 1rem;
+    --weight-heading: 700;
+    --weight-body: 400;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -112,6 +120,8 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
+    font-size: var(--type-body);
+    font-weight: var(--weight-body);
   }
 
   h1,
@@ -122,6 +132,7 @@
   h6 {
     font-family: var(--font-heading);
     letter-spacing: -0.02em;
+    font-weight: var(--weight-heading);
   }
 
   .font-hero {
@@ -143,7 +154,8 @@
   }
 
   .qupe-heading {
-    @apply font-heading font-bold tracking-tight;
+    @apply font-heading tracking-tight;
+    font-weight: var(--weight-heading) !important;
   }
 
   .section-header {
@@ -151,11 +163,31 @@
   }
 
   .section-title {
-    @apply qupe-heading text-[clamp(1.8rem,3vw,2.8rem)] md:text-[clamp(2.1rem,4vw,3.2rem)] font-bold tracking-tight text-foreground;
+    @apply qupe-heading tracking-tight text-foreground;
+    font-size: var(--type-section-title) !important;
+    line-height: 1.15;
+    font-weight: var(--weight-heading) !important;
   }
 
   .section-description {
-    @apply mt-4 md:mt-5 text-base md:text-lg leading-relaxed text-muted-foreground max-w-2xl mx-auto;
+    @apply mt-4 md:mt-5 leading-relaxed text-muted-foreground max-w-2xl mx-auto;
+    font-size: var(--type-section-subtitle) !important;
+    font-weight: var(--weight-body) !important;
+  }
+
+  /* Use these for section-level headings and copy that do not use the
+     section-title/section-description pair. */
+  .section-heading {
+    @apply font-heading tracking-tight text-foreground;
+    font-size: var(--type-section-title) !important;
+    line-height: 1.15;
+    font-weight: var(--weight-heading) !important;
+  }
+
+  .section-body {
+    @apply leading-relaxed text-muted-foreground;
+    font-size: var(--type-body) !important;
+    font-weight: var(--weight-body) !important;
   }
 
   .section-light {

@@ -60,7 +60,7 @@ const ProcessSteps = () => {
         >
           <ScrollReveal>
             <span className="section-badge mb-5 inline-block">HOW IT WORKS</span>
-            <h2 className="qupe-heading text-4xl md:text-[2.75rem] text-foreground mt-3 leading-tight">
+            <h2 className="section-title text-foreground mt-3 leading-tight">
               {t("process.title")}
             </h2>
             <p className="mt-4 text-muted-foreground text-base leading-relaxed max-w-xs">

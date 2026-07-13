@@ -492,8 +492,8 @@ const AboutPage = () => {
         /* ─── Section headings ──────────────────────────────── */
         .about-section-heading {
           font-family: var(--font-heading, inherit);
-          font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-          font-weight: 700;
+          font-size: var(--type-section-title);
+          font-weight: var(--weight-heading);
           line-height: 1.15;
           color: hsl(var(--foreground));
           margin: 0 0 1rem;
@@ -506,7 +506,8 @@ const AboutPage = () => {
           color: hsl(var(--muted-foreground));
           max-width: 36rem;
           line-height: 1.65;
-          font-size: 0.9375rem;
+          font-size: var(--type-body);
+          font-weight: var(--weight-body);
         }
 
         /* ─── Divider ────────────────────────────────────────── */
@@ -545,8 +546,8 @@ const AboutPage = () => {
         
         .about-huge-title {
           font-family: var(--font-heading, inherit);
-          font-size: clamp(2rem, 3.5vw, 3.25rem);
-          font-weight: 800;
+          font-size: var(--type-section-title);
+          font-weight: var(--weight-heading);
           line-height: 1.08;
           color: hsl(var(--foreground));
           margin: 0;
@@ -554,7 +555,8 @@ const AboutPage = () => {
         }
 
         .about-zone-2 p {
-          font-size: 1.05rem;
+          font-size: var(--type-body);
+          font-weight: var(--weight-body);
           color: hsl(var(--muted-foreground));
           line-height: 1.75;
           margin-bottom: 1.25rem;

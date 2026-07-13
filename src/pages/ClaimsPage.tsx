@@ -212,7 +212,7 @@ const DigitalServices = () => {
       <ScrollReveal>
         <div className="text-center mb-10 md:mb-16 px-4">
           <span className="section-badge mb-3 inline-block">DIGITAL CUSTOMER SERVICES PORTAL</span>
-          <h2 className="qupe-heading text-3xl md:text-5xl lg:text-6xl text-foreground mt-2">
+          <h2 className="section-title text-foreground mt-2">
             Online <span className="text-primary">Services</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
@@ -294,7 +294,7 @@ const ClaimsCenter = () => {
         <ScrollReveal>
           <div className="text-center mb-10 md:mb-16">
             <span className="section-badge mb-3 inline-block">DIGITAL CLAIMS CENTER</span>
-            <h2 className="qupe-heading text-3xl md:text-5xl lg:text-6xl text-foreground mt-2">
+            <h2 className="section-title text-foreground mt-2">
               Report & <span className="text-primary">Track</span>
             </h2>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
@@ -370,7 +370,7 @@ const ClaimsPage = () => {
       <ScrollReveal>
         <div className="text-center mb-10 md:mb-16 px-4">
           <span className="section-badge mb-3 inline-block">STEP BY STEP</span>
-          <h2 className="qupe-heading text-3xl md:text-5xl lg:text-6xl text-foreground mt-2">
+            <h2 className="section-title text-foreground mt-2">
             Claims <span className="text-primary">Process</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">Our streamlined 5-step process ensures your claim is handled quickly, fairly, and transparently.</p>
@@ -434,7 +434,7 @@ const ClaimsPage = () => {
         <ScrollReveal>
           <div className="text-center mb-12">
             <span className="section-badge mb-4 inline-block">DOCUMENTATION</span>
-            <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
+            <h2 className="section-title text-foreground mt-4">
               Required <span className="text-primary">Documents</span>
             </h2>
             <p className="mt-4 text-muted-foreground max-w-xl mx-auto">Prepare these documents before filing your claim to ensure fast processing.</p>
@@ -447,40 +447,6 @@ const ClaimsPage = () => {
         </div>
       </div>
     </SectionWrapper>
-
-    <section id="emergency-contacts" className="py-10 md:py-14 bg-white">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
-        <ScrollReveal>
-          <div className="rounded-3xl bg-[hsl(201,78%,20%)] p-6 md:p-8 text-white shadow-xl">
-            <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-              <div>
-                <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider">
-                  Emergency Contacts
-                </span>
-                <h2 className="mt-4 qupe-heading text-2xl md:text-4xl text-white">
-                  24/7 claims assistance
-                </h2>
-                <p className="mt-3 text-sm md:text-base leading-relaxed text-white/75">
-                  For urgent claims, accidents, medical emergencies, or immediate support, contact WASS before authorizing repairs or major expenses.
-                </p>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-3">
-                {[
-                  { label: "Claims Hotline", value: "+251 11 123 4567" },
-                  { label: "Emergency Support", value: "+251 91 000 0000" },
-                  { label: "Email", value: "claims@wass.co" },
-                ].map((contact) => (
-                  <div key={contact.label} className="rounded-2xl border border-white/10 bg-white/10 p-4">
-                    <p className="text-xs uppercase tracking-wider text-white/55">{contact.label}</p>
-                    <p className="mt-2 text-sm font-bold text-white">{contact.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
 
     {/* Important Notice */}
     <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8 my-8 lg:my-12">

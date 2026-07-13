@@ -227,7 +227,7 @@ const GivebackPage = () => {
               <ScrollReveal>
                 <div className="flex flex-col items-center">
                   <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">2026 ALLOCATION</p>
-                  <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground" style={{ letterSpacing: "-0.025em" }}>
+                  <h2 className="section-title text-foreground" style={{ letterSpacing: "-0.025em" }}>
                     Where the money went.
                   </h2>
                 </div>
@@ -318,7 +318,7 @@ const GivebackPage = () => {
         <ScrollReveal>
           <div className="mb-10 flex flex-col items-center text-center">
             <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">FIELD UPDATES</p>
-            <h2 className="font-heading font-bold text-3xl md:text-4xl capitalize text-foreground" style={{ letterSpacing: "-0.025em" }}>
+            <h2 className="section-title capitalize text-foreground" style={{ letterSpacing: "-0.025em" }}>
               Recent impact updates.
             </h2>
           </div>

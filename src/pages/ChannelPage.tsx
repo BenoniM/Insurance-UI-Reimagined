@@ -135,7 +135,7 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
           <ScrollReveal>
             <div className="mb-8 max-w-3xl">
               <span className="section-badge mb-4 inline-block">BECOME A WIA AGENT</span>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">
+              <h2 className="section-title text-foreground">
                 Build your insurance business with WASS
               </h2>
             </div>
@@ -162,7 +162,7 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
         <ScrollReveal>
           <div className="mb-8 max-w-3xl">
             <span className="section-badge mb-4 inline-block">PORTAL CAPABILITIES</span>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="section-title text-foreground">
               What users can do
             </h2>
           </div>

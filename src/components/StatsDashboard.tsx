@@ -119,7 +119,7 @@ const StatsDashboard = () => {
             <div className="flex flex-col justify-between py-4">
               <ScrollReveal>
                 <span className="section-badge mb-6 inline-block">PERFORMANCE</span>
-                <h2 className="qupe-heading text-4xl md:text-5xl text-foreground leading-tight tracking-tight mt-2">
+                <h2 className="section-title text-foreground leading-tight tracking-tight mt-2">
                   Protecting Ethiopia<br className="hidden md:block"/><span className="text-primary"> With Proven Results</span>
                 </h2>
                 <p className="mt-8 text-slate-500 text-lg leading-relaxed max-w-lg font-medium">

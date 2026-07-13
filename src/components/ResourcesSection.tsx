@@ -36,7 +36,7 @@ const ResourcesSection = () => {
             <p className="text-coral font-heading text-sm font-semibold tracking-widest uppercase mb-3">
               Resources
             </p>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-hero-foreground">
+            <h2 className="section-title text-hero-foreground">
               Latest Insights
             </h2>
           </ScrollReveal>

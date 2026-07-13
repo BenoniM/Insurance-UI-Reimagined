@@ -62,7 +62,7 @@ const ContactBlock = () => {
           <div className="flex flex-col h-full min-w-0">
             <ScrollReveal>
               <span className="section-badge mb-6 inline-block">CONTACT</span>
-              <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4 mb-8 md:mb-12">
+              <h2 className="section-title text-foreground mt-4 mb-8 md:mb-12">
                 Get in Touch
                 <br />
                 <span className="text-primary">We're Here to Help</span>

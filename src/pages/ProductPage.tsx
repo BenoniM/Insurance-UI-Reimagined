@@ -180,7 +180,7 @@ const MedicalInsuranceProductsSection = ({ currentSlug }: { currentSlug: string 
       <ScrollReveal>
         <div className="max-w-3xl mb-10">
           <span className="section-badge mb-4 inline-block">WASS MEDICAL INSURANCE PRODUCTS</span>
-          <h2 className="qupe-heading text-3xl md:text-4xl text-foreground">
+          <h2 className="section-title text-foreground">
             Medical Insurance
           </h2>
           <p className="mt-4 text-base md:text-lg leading-relaxed text-gray-600">

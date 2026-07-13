@@ -207,7 +207,7 @@ const Testimonials = () => {
         <div className="text-center mb-10">
           <ScrollReveal>
             <span className="section-badge mb-6 inline-block">CLIENT STORIES</span>
-            <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
+            <h2 className="section-title text-foreground mt-4">
               Trusted by <span className="text-primary">Thousands</span> of
               <br />Ethiopian Families &amp; Businesses
             </h2>

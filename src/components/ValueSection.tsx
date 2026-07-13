@@ -10,7 +10,7 @@ const ValueSection = () => {
             <p className="text-coral font-heading text-sm font-semibold tracking-widest uppercase mb-3">
               How RiskGuard Delivers Value
             </p>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-hero-foreground">
+            <h2 className="section-title text-hero-foreground">
               Actionable Intelligence
             </h2>
             <p className="mt-4 text-hero-muted max-w-2xl mx-auto font-body">

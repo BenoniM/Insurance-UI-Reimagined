@@ -153,7 +153,7 @@ const ValueProps = () => {
           <span className="section-badge mb-6 inline-block pointer-events-auto">
             A NEW KIND OF INSURANCE
           </span>
-          <h2 className="qupe-heading text-4xl md:text-5xl lg:text-6xl text-foreground mt-4 max-w-3xl leading-tight">
+          <h2 className="section-title text-foreground mt-4 max-w-3xl leading-tight">
             Insurance That's{" "}
             <span className="text-primary">Instant, Honest &amp; Caring</span>
           </h2>
