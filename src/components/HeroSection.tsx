@@ -4,10 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useRef } from "react";
 import CTAButton from "./CTAButton";
-import homeLeft from "@/assets/Hero/HomeLeft.svg";
-import carLeft from "@/assets/Hero/CarLeft.svg";
-import homeRight from "@/assets/Hero/HomeRight.svg";
-import personRight from "@/assets/Hero/PersonRight.svg";
+import heroImage from "@/assets/Hero/magnific_you-will-receive-a-refere_kLFGvVr16B.png";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -83,35 +80,15 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Side Images */}
-      <div className="hero-images opacity-0 absolute inset-x-0 bottom-28 sm:bottom-32 md:bottom-16 pointer-events-none z-0 flex justify-center">
-        <div className="container mx-auto relative w-full h-[25vh] sm:h-[30vh] md:h-[40vh] lg:h-[45vh]">
-          <img
-            src={homeLeft}
-            alt="House illustration left"
-            className="absolute bottom-0 -left-[2vw] lg:-left-[7vw] w-auto h-[130%] lg:h-[130%] max-w-[60vw] object-contain object-left-bottom"
-            style={{ filter: "sepia(1) hue-rotate(180deg) saturate(1.5) opacity(0.9)" }}
-          />
-          <img
-            src={carLeft}
-            alt="Car illustration left"
-            className="absolute -bottom-2 left-[4vw] lg:-left-[5vw] w-auto h-[65%] lg:h-[65%] max-w-[45vw] object-contain object-left-bottom z-10"
-            style={{ filter: "sepia(1) hue-rotate(90deg) saturate(1.5) opacity(0.9)" }}
-          />
-
-          <img
-            src={homeRight}
-            alt="House illustration right"
-            className="absolute -bottom-2 -right-[2vw] lg:-right-[7vw] w-auto h-[150%] lg:h-[150%] max-w-[60vw] object-contain object-right-bottom"
-            style={{ filter: "sepia(1) hue-rotate(180deg) saturate(1.5) opacity(0.9)" }}
-          />
-          <img
-            src={personRight}
-            alt="Person with dog right"
-            className="absolute right-[4vw] lg:-right-[2vw] w-auto h-[100%] lg:h-[100%] max-w-[45vw] object-contain object-right-bottom z-10"
-            style={{ filter: "sepia(1) hue-rotate(90deg) saturate(1.5) opacity(0.9)" }}
-          />
-        </div>
+      {/* Background Image */}
+      <div className="hero-images opacity-0 absolute inset-0 pointer-events-none z-0">
+        <img
+          src={heroImage}
+          alt="Hero background"
+          className="w-full h-full object-cover object-top"
+        />
+        {/* Subtle overlay to help text readability over the image */}
+        <div className="absolute inset-0 bg-white/20"></div>
       </div>
 
       {/* Trust Badges Strip (Numbers) */}

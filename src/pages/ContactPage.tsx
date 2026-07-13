@@ -3,6 +3,9 @@ import Footer from "@/components/Footer";
 import ContactBlock from "@/components/ContactBlock";
 import ExpandingHero from "@/components/ExpandingHero";
 import SectionWrapper from "@/components/SectionWrapper";
+import contactHero1 from "@/assets/ContactHero/ChatGPT Image Jul 10, 2026, 09_02_04 AM (2).png";
+import contactHero2 from "@/assets/ContactHero/ChatGPT Image Jul 10, 2026, 09_38_55 AM (2).png";
+import contactHero3 from "@/assets/ContactHero/ChatGPT Image Jul 10, 2026, 09_38_56 AM (3).png";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ClipboardList, Lightbulb, MessageSquareWarning, Search, Star } from "lucide-react";
 import { useState, useRef } from "react";
@@ -196,10 +199,9 @@ const ContactPage = () => (
     <Navbar />
     <ExpandingHero
       images={[
-        "https://images.pexels.com/photos/37976850/pexels-photo-37976850.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
-        "https://images.pexels.com/photos/14038572/pexels-photo-14038572.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
-        "https://images.pexels.com/photos/7709217/pexels-photo-7709217.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
-        "https://images.pexels.com/photos/13817351/pexels-photo-13817351.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
+        contactHero1,
+        contactHero2,
+        contactHero3,
       ]}
       badge="CONTACT US"
       headline={'Let\'s <span class="text-primary">Talk</span>'}
