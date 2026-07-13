@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { getActiveProducts } from "@/data/products";
+import { getActiveProducts, Product } from "@/data/products";
 import SectionWrapper from "./SectionWrapper";
 import ScrollReveal from "./ScrollReveal";
 
@@ -24,9 +24,22 @@ const imageMap: Record<string, string> = {
   Plane: imgInvestment,
 };
 
-const ProductGrid = () => {
+const ProductGrid = ({ limit = 8 }: { limit?: number } = {}) => {
   const { t, lang } = useLanguage();
-  const products = getActiveProducts();
+  
+  const allProducts = getActiveProducts();
+  const seenTypes = new Set<string>();
+  const diverseProducts: Product[] = [];
+  
+  for (const p of allProducts) {
+    if (!seenTypes.has(p.subcategory)) {
+      seenTypes.add(p.subcategory);
+      diverseProducts.push(p);
+    }
+    if (diverseProducts.length >= limit) break;
+  }
+  
+  const products = diverseProducts;
 
   return (
     <SectionWrapper id="products" className="bg-slate-50/50 py-8 md:py-12">
@@ -46,7 +59,7 @@ const ProductGrid = () => {
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto">
         {products.map((product, i) => {
-          const name = lang === "am" && product.name_am ? product.name_am : product.name;
+          const name = lang === "am" && product.subcategory_am ? product.subcategory_am : product.subcategory;
           const desc = lang === "am" && product.short_description_am ? product.short_description_am : product.short_description;
           const imgSrc = imageMap[product.icon] || imgHospital;
 
