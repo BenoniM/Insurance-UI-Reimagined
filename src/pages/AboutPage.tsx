@@ -187,7 +187,7 @@ const AboutPage = () => {
 
           {/* Hero Image — desktop scroll-animated */}
           <motion.div
-            className="absolute bottom-0 w-[108vw] left-1/2 z-40 flex flex-col justify-end"
+            className="absolute bottom-0 w-[108vw] left-1/2 z-20 flex flex-col justify-end"
             style={{ y: imageY, x: "-50%" }}
           >
             <img
