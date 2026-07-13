@@ -231,14 +231,14 @@ const Navbar = () => {
 
                   {/* Products Dropdown */}
                   <div
-                    className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-[2px] py-6 px-8 transition-all duration-200 origin-top grid grid-cols-12 gap-8"
+                    className="absolute top-[calc(100%+4px)] left-1/2 -translate-x-1/2 mt-[2px] py-6 px-6 transition-all duration-200 origin-top grid grid-cols-12 gap-8 md:gap-9 lg:gap-12"
                     style={{
-                      width: "calc(100vw - 48px)",
-                      maxWidth: "850px",
+                      width: "min(1000px, calc(100vw - 56px))",
+                      maxWidth: "1000px",
                       background: "rgba(255,255,255,1)",
-                      borderRadius: "16px",
-                      boxShadow: "0 16px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06)",
-                      border: "none",
+                      borderRadius: "20px",
+                      boxShadow: "0 20px 60px rgba(0,0,0,0.14), 0 6px 18px rgba(0,0,0,0.08)",
+                      border: "1px solid rgba(15, 23, 42, 0.06)",
                       opacity: productsOpen ? 1 : 0,
                       transform: productsOpen ? "scaleY(1) translateX(-50%)" : "scaleY(0.92) translateX(-50%)",
                       visibility: productsOpen ? "visible" : "hidden",
@@ -247,59 +247,67 @@ const Navbar = () => {
                     {navCategories.map((category) => {
                       const isGeneralInsurance = category.slug === "general-insurance";
                       return (
-                      <div key={category.slug} className={`flex flex-col text-left ${isGeneralInsurance ? 'col-span-6' : 'col-span-3'}`}>
-                        <h3 className="font-heading font-bold text-[hsl(160,55%,45%)] text-[13px] uppercase tracking-wider mb-5 border-b border-gray-100 pb-3">
-                          {lang === "en" ? category.label : category.label_am}
-                        </h3>
-                        <div className={isGeneralInsurance ? "grid grid-cols-2 gap-x-4 gap-y-3" : "flex flex-col gap-4"}>
-                          {category.subcategories.map((sub) => {
-                            const hasChildren = Boolean(sub.children?.length);
-                            const isActive = sub.href ? location.pathname === sub.href : sub.children?.some(c => location.pathname === c.href);
-                            const collapseChildren = isGeneralInsurance && hasChildren;
-                            return (
-                              <div key={sub.label} className={`flex flex-col ${collapseChildren ? "group/general-sub gap-0" : "gap-1.5"}`}>
-                                {sub.href ? (
-                                  <Link
-                                    to={sub.href}
-                                    className="font-semibold text-[13px] transition-colors"
-                                    style={{ color: isActive ? "hsl(160,55%,45%)" : "hsl(201,78%,20%)" }}
-                                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "hsl(160,55%,45%)"; }}
-                                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? "hsl(160,55%,45%)" : "hsl(201,78%,20%)"; }}
-                                  >
-                                    {lang === "en" ? sub.label : sub.label_am}
-                                  </Link>
-                                ) : (
-                                  <>
-                                    <span className="flex items-center justify-between gap-2 font-semibold text-[13px] text-[hsl(201,78%,20%)] cursor-default transition-colors group-hover/general-sub:text-[hsl(160,55%,45%)]">
+                        <div
+                          key={category.slug}
+                          className={`flex flex-col text-left ${isGeneralInsurance ? "col-span-12 lg:col-span-6" : "col-span-12 sm:col-span-6 lg:col-span-3"} ${!isGeneralInsurance ? "lg:border-l lg:border-gray-100 lg:pl-10" : ""}`}
+                        >
+                          <h3 className="font-heading font-bold text-[hsl(160,55%,45%)] text-[13px] uppercase tracking-[0.24em] mb-4 border-b border-gray-100 pb-3">
+                            {lang === "en" ? category.label : category.label_am}
+                          </h3>
+                          <div className={isGeneralInsurance ? "grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3" : "flex flex-col gap-3"}>
+                            {category.subcategories.map((sub) => {
+                              const hasChildren = Boolean(sub.children?.length);
+                              const isActive = sub.href
+                                ? location.pathname === sub.href ||
+                                  location.pathname.startsWith(`${sub.href}/`) ||
+                                  sub.children?.some((c) => location.pathname === (c.href ?? ""))
+                                : sub.children?.some((c) => location.pathname === (c.href ?? ""));
+                              const collapseChildren = isGeneralInsurance && hasChildren;
+                              return (
+                                <div key={sub.label} className={`flex flex-col ${collapseChildren ? "group/general-sub gap-1" : "gap-1.5"}`}>
+                                  {sub.href ? (
+                                    <Link
+                                      to={sub.href}
+                                      className="relative font-semibold text-[13px] transition-colors flex items-center justify-between gap-2 py-1"
+                                      style={{ color: isActive ? "hsl(160,55%,45%)" : "hsl(201,78%,20%)" }}
+                                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "hsl(160,55%,45%)"; }}
+                                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? "hsl(160,55%,45%)" : "hsl(201,78%,20%)"; }}
+                                    >
+                                      <span className="relative inline-flex items-center">
+                                        <span>{lang === "en" ? sub.label : sub.label_am}</span>
+                                        <span
+                                          className={`absolute -bottom-[2px] left-0 h-[2px] rounded-full bg-[hsl(160,55%,45%)] transition-all duration-200 ${isActive ? "w-full" : "w-0"}`}
+                                        />
+                                      </span>
+                                      {collapseChildren && (
+                                        <ChevronDown className="w-3 h-3 shrink-0 transition-transform duration-200 group-hover/general-sub:rotate-180" />
+                                      )}
+                                    </Link>
+                                  ) : (
+                                    <span className="relative flex items-center justify-between gap-2 font-semibold text-[13px] text-[hsl(201,78%,20%)] cursor-default transition-colors group-hover/general-sub:text-[hsl(160,55%,45%)] py-1">
                                       <span>{lang === "en" ? sub.label : sub.label_am}</span>
                                       {collapseChildren && (
                                         <ChevronDown className="w-3 h-3 shrink-0 transition-transform duration-200 group-hover/general-sub:rotate-180" />
                                       )}
                                     </span>
+                                  )}
+                                  {hasChildren && (
                                     <div className={`${collapseChildren ? "max-h-0 opacity-0 mt-0 overflow-hidden transition-all duration-200 group-hover/general-sub:max-h-80 group-hover/general-sub:opacity-100 group-hover/general-sub:mt-2" : "mt-1"} flex flex-col pl-3 border-l-2 border-gray-100 gap-1`}>
-                                      {sub.children?.map(child => {
-                                        const isChildActive = location.pathname === child.href;
-                                        return (
-                                          <Link
-                                            key={child.href}
-                                            to={child.href}
-                                            className="text-[12px] transition-colors py-0.5"
-                                            style={{ color: isChildActive ? "hsl(160,55%,45%)" : "hsl(200,10%,40%)" }}
-                                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "hsl(160,55%,45%)"; }}
-                                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isChildActive ? "hsl(160,55%,45%)" : "hsl(200,10%,40%)"; }}
-                                          >
-                                            {lang === "en" ? child.label : child.label_am}
-                                          </Link>
-                                        );
-                                      })}
+                                      {sub.children?.map((child) => (
+                                        <span
+                                          key={child.label}
+                                          className="text-[12px] py-0.5 text-[hsl(200,10%,50%)] cursor-default select-none"
+                                        >
+                                          {lang === "en" ? child.label : child.label_am}
+                                        </span>
+                                      ))}
                                     </div>
-                                  </>
-                                )}
-                              </div>
-                            );
-                          })}
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
                       );
                     })}
                   </div>
@@ -754,6 +762,7 @@ const Navbar = () => {
                             <div className="flex flex-col gap-3">
                               {category.subcategories.map((sub) => (
                                 <div key={sub.label} className="flex flex-col gap-1 ml-2">
+                                  {/* Parent: clickable Link if it has href */}
                                   {sub.href ? (
                                     <Link
                                       to={sub.href}
@@ -764,24 +773,22 @@ const Navbar = () => {
                                       {lang === "en" ? sub.label : sub.label_am}
                                     </Link>
                                   ) : (
-                                    <>
-                                      <span className="text-sm font-semibold text-[hsl(201,78%,30%)]">
-                                        {lang === "en" ? sub.label : sub.label_am}
-                                      </span>
-                                      <div className="flex flex-col pl-3 border-l border-gray-200 gap-2 mt-1">
-                                        {sub.children?.map(child => (
-                                          <Link
-                                            key={child.href}
-                                            to={child.href}
-                                            className="text-xs transition-colors"
-                                            style={{ color: location.pathname === child.href ? "hsl(160,55%,45%)" : "hsl(200,10%,40%)" }}
-                                            onClick={() => setMobileOpen(false)}
-                                          >
-                                            {lang === "en" ? child.label : child.label_am}
-                                          </Link>
-                                        ))}
-                                      </div>
-                                    </>
+                                    <span className="text-sm font-semibold text-[hsl(201,78%,30%)]">
+                                      {lang === "en" ? sub.label : sub.label_am}
+                                    </span>
+                                  )}
+                                  {/* Children: non-clickable labels */}
+                                  {sub.children && (
+                                    <div className="flex flex-col pl-3 border-l border-gray-200 gap-2 mt-1">
+                                      {sub.children?.map(child => (
+                                        <span
+                                          key={child.label}
+                                          className="text-xs text-[hsl(200,10%,50%)] cursor-default select-none"
+                                        >
+                                          {lang === "en" ? child.label : child.label_am}
+                                        </span>
+                                      ))}
+                                    </div>
                                   )}
                                 </div>
                               ))}

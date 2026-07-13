@@ -28,7 +28,7 @@ export interface Product {
 export interface NavLeaf {
   label: string;
   label_am: string;
-  href: string;
+  href?: string; // optional — children shown in dropdown are non-clickable labels
 }
 
 export interface NavSubcategory {
@@ -1278,6 +1278,29 @@ const flattenProducts = (): Product[] => {
           subcategory_slug: sub.slug,
         });
       } else if (sub.children) {
+        // Add a parent overview product so /products/{sub.slug} renders a page
+        const firstChild = sub.children[0];
+        out.push({
+          slug: sub.slug,
+          name: sub.name,
+          name_am: sub.name_am,
+          icon: sub.icon,
+          active: true,
+          sort_order: order++,
+          category: category.name,
+          category_slug: category.slug,
+          subcategory: sub.name,
+          subcategory_slug: sub.slug,
+          short_description: `Explore our range of ${sub.name} products tailored to your needs.`,
+          short_description_am: `ለፍላጎቶችዎ የተዘጋጁ የ${sub.name_am} ምርቶቻችንን ያስሱ።`,
+          full_description: `We offer a comprehensive suite of ${sub.name} solutions. ${sub.children.map((c) => c.name).join(", ")} — choose the cover that fits your situation best.`,
+          full_description_am: `${sub.children.map((c) => c.name_am).join("፣ ")} — ለፍላጎቶችዎ ተስማሚ የሆነውን ሽፋን ይምረጡ።`,
+          coverage_list: sub.children.map((c) => c.name),
+          exclusions: firstChild?.exclusions ?? [],
+          pricing_rules: firstChild?.pricing_rules ?? { base_rate: 0 },
+          cta_text: "Get a Quote",
+        });
+        // Also add each child product
         for (const child of sub.children) {
           out.push({
             ...child,
@@ -1309,13 +1332,16 @@ const buildNavTree = (): NavCategory[] =>
           href: `/products/${sub.slug}`,
         };
       }
+      // Subcategories with children get their OWN page href;
+      // children are displayed in the dropdown but are NOT clickable.
       return {
         label: sub.name,
         label_am: sub.name_am,
+        href: `/products/${sub.slug}`,
         children: (sub.children ?? []).map((child) => ({
           label: child.name,
           label_am: child.name_am,
-          href: `/products/${child.slug}`,
+          // No href — children are non-clickable labels in the nav
         })),
       };
     }),

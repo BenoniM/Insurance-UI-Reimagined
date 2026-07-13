@@ -117,23 +117,7 @@ const SlowVideo = ({ src, className }: { src: string; className?: string }) => {
   );
 };
 
-const productImagesMap: Record<string, string> = {
-  Heart: imgLife,
-  Car: imgCar,
-  Home: imgNetWorth,
-  Shield: imgHospital,
-  Briefcase: imgBusiness,
-  Plane: imgInvestment,
-};
 
-const productColorMap: Record<string, string> = {
-  Heart: "bg-sky-500/10",
-  Car: "bg-emerald-500/10",
-  Home: "bg-blue-500/10",
-  Shield: "bg-teal-500/10",
-  Briefcase: "bg-amber-500/10",
-  Plane: "bg-violet-500/10",
-};
 
 const medicalInsuranceProducts = [
   {
@@ -267,14 +251,7 @@ const MedicalInsuranceProductsSection = ({ currentSlug }: { currentSlug: string 
   </section>
 );
 
-const productFilterMap: Record<string, string> = {
-  Heart: "invert(53%) sepia(48%) saturate(3020%) hue-rotate(167deg) brightness(98%) contrast(92%)",
-  Car: "invert(58%) sepia(58%) saturate(452%) hue-rotate(113deg) brightness(97%) contrast(92%)",
-  Home: "invert(41%) sepia(74%) saturate(3821%) hue-rotate(207deg) brightness(101%) contrast(98%)",
-  Shield: "invert(56%) sepia(87%) saturate(389%) hue-rotate(124deg) brightness(94%) contrast(92%)",
-  Briefcase: "invert(65%) sepia(60%) saturate(1400%) hue-rotate(10deg) brightness(98%) contrast(94%)",
-  Plane: "invert(48%) sepia(45%) saturate(2200%) hue-rotate(235deg) brightness(94%) contrast(96%)",
-};
+
 
 const iconMap: Record<string, typeof Heart> = { Heart, Car, Home, Briefcase, Plane, Shield };
 
