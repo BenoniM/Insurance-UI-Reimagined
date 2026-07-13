@@ -9,19 +9,34 @@ import imgLife from "@/assets/Coverage/Life-Coverage-01.svg";
 import imgNetWorth from "@/assets/Coverage/Net-Worth--Streamline-Milano-01.svg";
 import imgCar from "@/assets/Coverage/Speed-Go-Fast-4--Streamline-Milano-01.svg";
 
-// TODO: swap in dedicated "Streamline Milano" style icons for Business
-// (briefcase) and Investment (growth/plane) once available in
-// src/assets/Coverage/. Reusing existing icons as placeholders for now.
-const imgBusiness = imgNetWorth;
-const imgInvestment = imgLife;
+// PNGs (new representative images)
+import imgEngineering from "@/assets/Coverage/Engineering.png";
+import imgGeneralAccident from "@/assets/Coverage/General-Accident.png";
+import imgLiability from "@/assets/Coverage/Liability.png";
+import imgMarine from "@/assets/Coverage/Marine.png";
+import imgPecuniary from "@/assets/Coverage/Pecuniary.png";
+import imgPolitical from "@/assets/Coverage/Political.png";
+import imgTransit from "@/assets/Coverage/Transit.png";
+
+const subcategoryImageMap: Record<string, string> = {
+  "motor-insurance": imgCar,
+  "property-insurance": imgNetWorth,
+  "marine-cargo-insurance": imgMarine,
+  "goods-in-transit": imgTransit,
+  "engineering-insurance": imgEngineering,
+  "pecuniary-insurance": imgPecuniary,
+  "liability-insurance": imgLiability,
+  "general-accident-insurance": imgGeneralAccident,
+  "political-violence-terrorism": imgPolitical,
+};
 
 const imageMap: Record<string, string> = {
   Heart: imgLife,
   Car: imgCar,
   Home: imgNetWorth,
   Shield: imgHospital,
-  Briefcase: imgBusiness,
-  Plane: imgInvestment,
+  Briefcase: imgNetWorth,
+  Plane: imgLife,
 };
 
 const ProductGrid = ({ limit = 8 }: { limit?: number } = {}) => {
@@ -61,7 +76,9 @@ const ProductGrid = ({ limit = 8 }: { limit?: number } = {}) => {
         {products.map((product, i) => {
           const name = lang === "am" && product.subcategory_am ? product.subcategory_am : product.subcategory;
           const desc = lang === "am" && product.short_description_am ? product.short_description_am : product.short_description;
-          const imgSrc = imageMap[product.icon] || imgHospital;
+          
+          const imgSrc = subcategoryImageMap[product.subcategory_slug] || imageMap[product.icon] || imgHospital;
+          const isSvg = imgSrc.includes(".svg");
 
           return (
             <ScrollReveal key={product.slug} animation="fadeUp" delay={i * 0.08}>
@@ -74,19 +91,19 @@ const ProductGrid = ({ limit = 8 }: { limit?: number } = {}) => {
                 ][i % 4]} rounded-[24px] p-6 md:p-12 flex flex-col items-center text-center shadow-sm hover:shadow-2xl transition-all duration-400 h-full`}>
                   
                   {/* Image */}
-                  <div className="h-32 w-32 mb-6 flex items-center justify-center">
+                  <div className="h-48 w-48 mb-6 flex items-center justify-center">
                     <img 
                       src={imgSrc} 
                       alt={name} 
                       className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500 ease-out" 
-                      style={{
+                      style={isSvg ? {
                         filter: [
                           "invert(40%) sepia(55%) saturate(3200%) hue-rotate(167deg) brightness(75%) contrast(105%)", // bluish icon on greenish bg
                           "invert(43%) sepia(95%) saturate(420%) hue-rotate(124deg) brightness(72%) contrast(105%)", // greenish icon on bluish bg
                           "invert(20%) sepia(90%) saturate(4500%) hue-rotate(207deg) brightness(55%) contrast(120%)", // bluish icon on greenish bg, extra dark
                           "invert(45%) sepia(65%) saturate(500%) hue-rotate(113deg) brightness(75%) contrast(105%)", // greenish icon on bluish bg
                         ][i % 4]
-                      }}
+                      } : undefined}
                     />
                   </div>
                   
