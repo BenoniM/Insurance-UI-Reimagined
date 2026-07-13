@@ -77,8 +77,8 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
       <Navbar />
       <section className="pt-32 pb-14 bg-[hsl(201,78%,98%)]">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <div className="flex flex-col items-center text-center lg:items-center lg:text-center">
+          <div className="flex flex-col items-center">
+            <div className="flex w-full max-w-4xl flex-col items-center text-center">
               <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
                 {content.badge}
               </span>
@@ -99,7 +99,7 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
               )}
             </div>
 
-            <div id="portal" className="rounded-lg border border-gray-100 bg-white p-6 shadow-[0_20px_60px_rgba(11,63,91,0.10)]">
+            <div id="portal" className="mt-10 w-full max-w-2xl rounded-lg border border-gray-100 bg-white p-6 shadow-[0_20px_60px_rgba(11,63,91,0.10)]">
               <div className="mb-5 flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[hsl(160,55%,45%)] text-white">
                   <KeyRound className="h-5 w-5" />

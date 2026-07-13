@@ -112,7 +112,7 @@ const StatsDashboard = () => {
   return (
     <div ref={sectionRef}>
       <SectionWrapper className="bg-white py-12 md:py-16">
-        <div className="container mx-auto max-w-[1400px] px-4 lg:px-8">
+        <div className="container mx-auto px-4 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-stretch">
             
             {/* Left Column: Text & Graph */}

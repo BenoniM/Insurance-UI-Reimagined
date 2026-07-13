@@ -35,7 +35,7 @@ const HoverBranchList = () => {
 
   return (
     <div 
-      className="relative max-w-[1400px] mx-auto w-full mt-12"
+      className="relative max-w-[1800px] mx-auto w-full mt-12"
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setHoveredIndex(null)}
@@ -124,7 +124,7 @@ const complaintFeedbackItems = [
 
 const ComplaintFeedbackSection = () => (
   <SectionWrapper className="bg-white">
-    <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+    <div className="max-w-[1800px] mx-auto px-4 lg:px-8">
       <ScrollReveal>
         <div className="section-header mb-10">
           <span className="section-badge mb-4 inline-block">COMPLAINT & FEEDBACK</span>
@@ -227,7 +227,7 @@ const ContactPage = () => (
 
     {/* Contact Information Cards */}
     <SectionWrapper className="bg-accent/10">
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+      <div className="max-w-[1800px] mx-auto px-4 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8">
           
           <ScrollReveal>

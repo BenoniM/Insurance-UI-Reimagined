@@ -772,6 +772,18 @@ const AboutPage = () => {
           padding: 6rem 0;
           border-bottom: 1px solid hsl(var(--border));
         }
+        .about-leadership-section .about-container {
+          width: 100%;
+          max-width: 1800px;
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        @media (min-width: 1024px) {
+          .about-leadership-section .about-container {
+            padding-left: 2rem;
+            padding-right: 2rem;
+          }
+        }
         .about-leadership-list { border-top: 1px solid hsl(var(--border)); }
         .about-leader-row {
           display: flex;

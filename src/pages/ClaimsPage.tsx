@@ -220,7 +220,7 @@ const DigitalServices = () => {
           </p>
         </div>
       </ScrollReveal>
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-8">
+      <div className="max-w-[1800px] mx-auto px-4 lg:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-8">
         <ScrollReveal animation="fadeLeft">
           <div className="bg-card border border-border rounded-3xl p-8 h-full shadow-sm">
             <div className="flex items-center gap-4 mb-6">
@@ -290,7 +290,7 @@ const claimsCenterItems = [
 const ClaimsCenter = () => {
   return (
     <div className="py-12 md:py-20 bg-accent/30 overflow-hidden border-t border-border border-b" id="digital-claims-center">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
+      <div className="max-w-[1800px] mx-auto px-4 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-10 md:mb-16">
             <span className="section-badge mb-3 inline-block">DIGITAL CLAIMS CENTER</span>
@@ -380,7 +380,7 @@ const ClaimsPage = () => {
         {steps.map((step, i) => (
           <ScrollReveal key={step.number} delay={i * 0.05}>
             <div className="group border-t border-border transition-colors duration-300 hover:bg-primary cursor-default">
-              <div className="grid grid-cols-1 lg:grid-cols-12 w-full max-w-[1400px] mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-12 w-full max-w-[1800px] mx-auto">
                 {/* Left Column (50%) */}
                 <div className="lg:col-span-6 p-6 md:p-8 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-border group-hover:border-primary-foreground/20 transition-colors">
                   <span className="text-sm font-bold text-foreground group-hover:text-primary-foreground/80 mb-6 md:mb-10 block transition-colors uppercase tracking-widest">

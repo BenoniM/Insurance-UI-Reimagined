@@ -39,7 +39,7 @@ const GivebackSection = () => {
             {/* Impact callout */}
       <ScrollReveal delay={0.2}>
         <div
-          className="my-8 md:my-10 max-w-[85rem] mx-auto rounded-3xl p-8 md:p-10 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(201,78%,18%)] text-white shadow-xl relative overflow-hidden hover:scale-[1.005] transition-transform duration-300 md:mx-8"
+          className="my-8 md:my-10 max-w-[1800px] mx-auto rounded-3xl p-8 md:p-10 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(201,78%,18%)] text-white shadow-xl relative overflow-hidden hover:scale-[1.005] transition-transform duration-300 md:mx-8"
         >
           <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-primary/15" />
           <div className="absolute -bottom-12 -left-12 w-40 h-40 rounded-full bg-white/5" />
@@ -96,7 +96,7 @@ const GivebackSection = () => {
             </ScrollReveal>
           </div>
 
-          <div className="w-full max-w-[85rem] mx-auto relative px-6 md:px-8 shrink-0">
+          <div className="w-full max-w-[1800px] mx-auto relative px-6 md:px-8 shrink-0">
             <div className="flex flex-col divide-y divide-border/60">
               {steps.map((step, i) => {
                 const isActive = activeStepIndex === i;

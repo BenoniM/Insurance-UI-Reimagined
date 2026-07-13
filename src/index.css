@@ -146,6 +146,12 @@
 }
 
 @layer components {
+  /* Shared page width: matches the footer shell. */
+  .container {
+    width: 100%;
+    max-width: 1800px !important;
+  }
+
   .section-badge {
     @apply inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase;
     color: hsl(var(--primary));

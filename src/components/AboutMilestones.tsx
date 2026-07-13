@@ -5,7 +5,7 @@ import video2025 from "@/assets/Journey/magnific-2025.mp4";
 const AboutMilestones = () => {
   return (
     <section className="py-24 bg-white relative">
-      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <span className="section-badge mb-4 inline-block uppercase">
             Milestones

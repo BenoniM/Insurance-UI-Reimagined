@@ -145,7 +145,7 @@ const QuickActions = () => {
 
   return (
     <section className="relative z-20 px-2 sm:px-4 lg:px-8 py-8 md:py-10">
-      <div className="w-full mx-auto max-w-[1400px]">
+      <div className="w-full mx-auto max-w-[1800px]">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
           {actions.map((action, i) => (
             <ScrollReveal key={action.label} animation="scaleUp" delay={i * 0.06}>

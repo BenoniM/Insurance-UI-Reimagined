@@ -221,7 +221,7 @@ const GivebackPage = () => {
 
         {/* Sticky Visual Content */}
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-12 md:py-0">
-          <div className="w-full max-w-[90rem] mx-auto px-6 relative">
+          <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8 relative">
             {/* Section Header */}
             <div className="absolute top-4 md:-top-[16vh] w-full left-0 flex justify-center text-center">
               <ScrollReveal>

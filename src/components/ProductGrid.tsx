@@ -72,7 +72,7 @@ const ProductGrid = ({ limit = 8 }: { limit?: number } = {}) => {
         </ScrollReveal>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1800px] mx-auto">
         {products.map((product, i) => {
           const name = lang === "am" && product.subcategory_am ? product.subcategory_am : product.subcategory;
           const desc = lang === "am" && product.short_description_am ? product.short_description_am : product.short_description;
