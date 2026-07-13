@@ -146,6 +146,18 @@
     @apply font-heading font-bold tracking-tight;
   }
 
+  .section-header {
+    @apply mx-auto flex flex-col items-center text-center max-w-3xl;
+  }
+
+  .section-title {
+    @apply qupe-heading text-[clamp(1.8rem,3vw,2.8rem)] md:text-[clamp(2.1rem,4vw,3.2rem)] font-bold tracking-tight text-foreground;
+  }
+
+  .section-description {
+    @apply mt-4 md:mt-5 text-base md:text-lg leading-relaxed text-muted-foreground max-w-2xl mx-auto;
+  }
+
   .section-light {
     background: hsl(var(--surface));
   }

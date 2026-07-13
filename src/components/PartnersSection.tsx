@@ -25,14 +25,14 @@ export default function PartnersSection() {
         
         {/* Header Section */}
         <div 
-          className="text-center mb-16 ps-anim-up" 
+          className="section-header mb-16 ps-anim-up" 
           style={{ opacity: 0, transform: "translateY(20px)" }}
         >
           <span className="section-badge mb-6 inline-block">OUR PARTNERS</span>
-          <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
+          <h2 className="section-title mt-4">
             Backed By <span className="text-primary">Industry Leaders</span>
           </h2>
-          <p className="mt-5 text-muted-foreground max-w-xl mx-auto text-lg">
+          <p className="section-description max-w-xl">
             We collaborate with the most reliable enterprises, financial institutions, and health networks across Ethiopia to bring you comprehensive coverage and absolute peace of mind.
           </p>
         </div>

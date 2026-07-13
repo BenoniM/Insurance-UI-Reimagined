@@ -267,13 +267,13 @@ const AboutPage = () => {
       <section className="about-values-section">
         <div className="about-container">
           <ScrollReveal>
-            <div className="about-section-header">
+            <div className="section-header about-section-header">
               <span className="about-eyebrow about-eyebrow--light">
                 OUR VALUES
               </span>
-              <h2 className="about-section-heading about-section-heading--light">
+              <h2 className="section-title text-white">
                 What Drives Us{" "}
-                <span className="about-heading-accent">Every Day</span>
+                <span className="text-primary">Every Day</span>
               </h2>
             </div>
           </ScrollReveal>
@@ -395,12 +395,12 @@ const AboutPage = () => {
       <section className="about-leadership-section">
         <div className="about-container">
           <ScrollReveal>
-            <div className="about-section-header">
+            <div className="section-header about-section-header">
               <span className="about-eyebrow">LEADERSHIP</span>
-              <h2 className="about-section-heading">
+              <h2 className="section-title">
                 Founding <span className="text-primary">Committee</span>
               </h2>
-              <p className="about-section-sub">
+              <p className="section-description about-section-sub">
                 Led by experienced professionals committed to building
                 Ethiopia's premier health-focused insurance company.
               </p>

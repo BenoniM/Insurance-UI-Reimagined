@@ -58,15 +58,15 @@ const ProductGrid = ({ limit = 8 }: { limit?: number } = {}) => {
 
   return (
     <SectionWrapper id="products" className="bg-slate-50/50 py-8 md:py-12">
-      <div className="text-center mb-16">
+      <div className="section-header mb-16">
         <ScrollReveal>
           <span className="section-badge mb-6 inline-block">INSURANCE SOLUTIONS</span>
-          <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
+          <h2 className="section-title mt-4">
             Comprehensive Coverage for
             <br />
             <span className="text-primary">Every Need</span>
           </h2>
-          <p className="mt-5 text-muted-foreground max-w-2xl mx-auto text-lg">
+          <p className="section-description">
             From life and health to motor and property — we offer tailored insurance products designed to protect what matters most to Ethiopian families and businesses.
           </p>
         </ScrollReveal>

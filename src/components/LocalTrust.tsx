@@ -96,14 +96,14 @@ export default function LocalTrust() {
         className="sticky top-0 h-screen overflow-hidden flex flex-col"
       >
         {/* ── HEADER ── */}
-        <div className="pt-16 pb-8 text-center px-4">
+        <div className="section-header pt-16 pb-8 px-4">
           <span className="section-badge mb-4 inline-block">LOCAL ADVANTAGE</span>
-          <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-3">
+          <h2 className="section-title mt-3">
             {t("local.title")}{" "}
             <span className="text-primary">{t("local.titleHighlight")}</span>
             {t("local.titleEnd") ? ` ${t("local.titleEnd")}` : ""}
           </h2>
-          <p className="mt-3 text-muted-foreground max-w-xl mx-auto text-base">
+          <p className="section-description mt-3 max-w-xl">
             Proudly local. Rigorously compliant. Built for every corner of Ethiopia.
           </p>
         </div>

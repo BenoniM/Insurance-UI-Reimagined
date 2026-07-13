@@ -123,13 +123,13 @@ const Insights = () => {
 
   return (
     <SectionWrapper id="news" className="bg-white">
-      <div className="text-center mb-16">
+      <div className="section-header mb-16">
         <ScrollReveal>
           <span className="section-badge mb-6 inline-block">NEWS & INSIGHTS</span>
-          <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
+          <h2 className="section-title mt-4">
             Latest News <span className="text-primary">& Insights</span>
           </h2>
-          <p className="mt-5 text-muted-foreground max-w-xl mx-auto text-lg">
+          <p className="section-description max-w-xl">
             Company announcements, industry updates, awareness articles, and CSR activities from WASS Insurance.
           </p>
         </ScrollReveal>

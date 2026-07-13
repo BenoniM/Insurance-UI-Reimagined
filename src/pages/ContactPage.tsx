@@ -126,12 +126,12 @@ const ComplaintFeedbackSection = () => (
   <SectionWrapper className="bg-white">
     <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
       <ScrollReveal>
-        <div className="max-w-3xl mb-10">
+        <div className="section-header mb-10">
           <span className="section-badge mb-4 inline-block">COMPLAINT & FEEDBACK</span>
-          <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
+          <h2 className="section-title mt-4">
             Tell us how we can <span className="text-primary">serve you better</span>
           </h2>
-          <p className="mt-4 text-muted-foreground">
+          <p className="section-description">
             Submit complaints, send suggestions, complete satisfaction surveys, or track an existing complaint from one place.
           </p>
         </div>
@@ -213,12 +213,12 @@ const ContactPage = () => (
     {/* Branch Network */}
     <SectionWrapper>
       <ScrollReveal>
-        <div className="text-center mb-4">
+        <div className="section-header mb-4">
           <span className="section-badge mb-4 inline-block" id="branches">OUR BRANCHES</span>
-          <h2 className="qupe-heading text-3xl md:text-4xl text-foreground mt-4">
+          <h2 className="section-title mt-4">
             Find a <span className="text-primary">Branch Near You</span>
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">Visit any of our 12 branch offices across Ethiopia for in-person assistance.</p>
+          <p className="section-description max-w-xl">Visit any of our 12 branch offices across Ethiopia for in-person assistance.</p>
         </div>
       </ScrollReveal>
       

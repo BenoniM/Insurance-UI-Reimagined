@@ -110,12 +110,12 @@ const BlogPage = () => {
       <SectionWrapper id="latest-news">
         <div className="mb-10">
           <ScrollReveal>
-            <div className="max-w-3xl mb-8">
+            <div className="section-header mb-8">
               <span className="section-badge mb-4 inline-block">LATEST NEWS</span>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">
+              <h2 className="section-title">
                 News & Insights
               </h2>
-              <p className="text-muted-foreground mt-3">
+              <p className="section-description">
                 Follow WASS Insurance updates and learn more about the ideas shaping smarter protection for Ethiopian families and businesses.
               </p>
             </div>

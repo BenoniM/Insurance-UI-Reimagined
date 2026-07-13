@@ -73,13 +73,13 @@ const FAQSection = () => {
   return (
     <SectionWrapper>
       <div className="max-w-3xl mx-auto bg-white">
-        <div className="text-center mb-16">
+        <div className="section-header mb-16">
           <ScrollReveal>
             <span className="section-badge mb-6 inline-block">FAQ</span>
-            <h2 className="qupe-heading text-4xl md:text-5xl text-foreground mt-4">
+            <h2 className="section-title mt-4">
               Common <span className="text-primary">Questions</span>
             </h2>
-            <p className="mt-5 text-muted-foreground max-w-xl mx-auto text-lg">
+            <p className="section-description max-w-xl">
               Everything you need to know about our insurance products, claims process, and coverage options.
             </p>
           </ScrollReveal>
