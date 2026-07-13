@@ -1,20 +1,32 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SectionWrapper from "@/components/SectionWrapper";
-import ExpandingHero from "@/components/ExpandingHero";
 import ScrollReveal from "@/components/ScrollReveal";
+import CTAButton from "@/components/CTAButton";
 import { ArrowRight, Building2, HandHeart, Landmark, Newspaper, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/i18n/LanguageContext";
-import heroBlog from "@/assets/hero-blog.jpg";
+import newsIcon1 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_13.png";
+import newsIcon2 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_13.png";
+import newsIcon3 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_14.png";
+import newsIcon4 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_14.png";
+import newsIcon5 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_15.png";
+import newsIcon6 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_15.png";
+import newsIcon7 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_16.png";
+import newsIcon8 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_16.png";
 
-const newsHeroImages = [
-  heroBlog,
-  "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
-  "https://images.pexels.com/photos/3182773/pexels-photo-3182773.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
-  "https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=1280&q=60",
+const newsHeroIcons = [newsIcon1, newsIcon2, newsIcon3, newsIcon4, newsIcon5, newsIcon6, newsIcon7, newsIcon8];
+const newsHeroPositions = [
+  "left-[3%] top-[19%] h-20 w-20 md:h-28 md:w-28",
+  "left-[14%] top-[55%] h-16 w-16 md:h-24 md:w-24",
+  "left-[28%] top-[10%] h-14 w-14 md:h-20 md:w-20",
+  "left-[31%] bottom-[9%] h-14 w-14 md:h-20 md:w-20",
+  "right-[3%] top-[20%] h-20 w-20 md:h-28 md:w-28",
+  "right-[14%] top-[55%] h-16 w-16 md:h-24 md:w-24",
+  "right-[28%] top-[10%] h-14 w-14 md:h-20 md:w-20",
+  "right-[31%] bottom-[9%] h-14 w-14 md:h-20 md:w-20",
 ];
 
 const newsCategories = [
@@ -98,14 +110,30 @@ const BlogPage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <ExpandingHero
-        images={newsHeroImages}
-        badge="NEWS & INSIGHTS"
-        headline={'Latest <span class="text-primary">News</span>'}
-        subtitle="Company announcements, industry updates, insurance awareness articles, and CSR activities from WASS Insurance."
-        ctaLabel="Explore News"
-        ctaHref="/news#latest-news"
-      />
+      <section className="relative flex min-h-screen overflow-hidden bg-white">
+        <style>{`
+          @keyframes news-image-fade {
+            0%, 100% { opacity: 0; transform: scale(.78) translateY(10px); }
+            18%, 64% { opacity: .72; transform: scale(1) translateY(0); }
+            82% { opacity: 0; transform: scale(.9) translateY(-8px); }
+          }
+          .news-hero-image { animation: news-image-fade 12s ease-in-out infinite; }
+          @media (prefers-reduced-motion: reduce) { .news-hero-image { animation: none; opacity: .5; } }
+        `}</style>
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          {newsHeroIcons.map((image, index) => (
+            <img key={image} src={image} alt="" className={`news-hero-image absolute object-contain ${newsHeroPositions[index]}`} style={{ animationDelay: `${index * -1.5}s` }} />
+          ))}
+        </div>
+        <div className="container relative z-10 mx-auto flex min-h-screen items-center justify-center px-4 py-24 lg:px-8">
+          <div className="flex max-w-3xl flex-col items-center text-center">
+            <span className="mb-6 inline-flex items-center rounded-full border border-transparent bg-[#288A69]/10 px-2.5 py-0.5 text-xs font-semibold text-[#288A69]">NEWS & INSIGHTS</span>
+            <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-[hsl(201,78%,20%)] md:text-6xl">Latest News</h1>
+            <p className="mt-6 max-w-2xl text-xl leading-relaxed text-gray-600">Company announcements, industry updates, insurance awareness articles, and CSR activities from WASS Insurance.</p>
+            <CTAButton href="#latest-news" className="mt-8" size="lg">Explore News</CTAButton>
+          </div>
+        </div>
+      </section>
 
       <SectionWrapper id="latest-news">
         <div className="mb-10">

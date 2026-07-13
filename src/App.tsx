@@ -25,6 +25,8 @@ import AdminPage from "./pages/AdminPage";
 import GivebackPage from "./pages/GivebackPage";
 import MediaPage from "./pages/MediaPage";
 import ChannelPage from "./pages/ChannelPage";
+import AgentApplicationPage from "./pages/AgentApplicationPage";
+import PartnerPortalPage from "./pages/PartnerPortalPage";
 import NewClaimPage from "./pages/NewClaimPage";
 import ClaimDetailsPage from "./pages/ClaimDetailsPage";
 import PaymentPage from "./pages/PaymentPage";
@@ -87,6 +89,9 @@ const AnimatedRoutes = () => {
       <Route path="/articles" element={<PageTransition><MediaPage kind="articles" /></PageTransition>} />
       <Route path="/channels/wia" element={<PageTransition><ChannelPage kind="wia" /></PageTransition>} />
       <Route path="/channels/broker-portal" element={<PageTransition><ChannelPage kind="broker" /></PageTransition>} />
+      <Route path="/agents/apply" element={<PageTransition><AgentApplicationPage /></PageTransition>} />
+      <Route path="/portal/wia" element={<PageTransition><PartnerPortalPage kind="wia" /></PageTransition>} />
+      <Route path="/portal/broker" element={<PageTransition><PartnerPortalPage kind="broker" /></PageTransition>} />
       <Route path="/claims/new" element={<PageTransition><NewClaimPage /></PageTransition>} />
       <Route path="/claims/:id" element={<PageTransition><ClaimDetailsPage /></PageTransition>} />
       <Route path="/payments" element={<PageTransition><PaymentsPage /></PageTransition>} />

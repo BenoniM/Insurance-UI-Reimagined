@@ -225,34 +225,25 @@ const AboutPage = () => {
                   Who We Are
                 </h2>
               </ScrollReveal>
-              <ScrollReveal animation="fadeUp" delay={0.1}>
-                <div className="about-story-image-wrap mt-8 lg:mt-12">
-                  <img
-                    src="https://images.pexels.com/photos/7971363/pexels-photo-7971363.jpeg"
-                    alt="WASS Insurance team"
-                    className="about-story-image"
-                    loading="lazy"
-                  />
-                </div>
-              </ScrollReveal>
             </div>
 
             <div className="about-zone-2">
               <ScrollReveal animation="fadeRight" delay={0.2}>
-                <p>
-                  <strong>Who We Are</strong><br />
+                <div className="about-story-copy-grid">
+                <p className="about-story-intro">
                   Wass Insurance S.C. is a customer-focused insurance company committed to delivering innovative, reliable, and accessible insurance solutions that protect individuals, businesses, and communities throughout Ethiopia.
                 </p>
-                <br />
-                <p>
-                  <strong>Vision</strong><br />
-                  To become Ethiopia's most trusted and digitally enabled insurance company.
-                </p>
-                <br />
-                <p>
-                  <strong>Mission</strong><br />
-                  To provide affordable, innovative, and customer-centric insurance solutions that create peace of mind and long-term value.
-                </p>
+                <div className="about-story-pillars">
+                  <div className="about-story-pillar">
+                    <strong>Mission</strong>
+                    <p>To provide affordable, innovative, and customer-centric insurance solutions that create peace of mind and long-term value.</p>
+                  </div>
+                  <div className="about-story-pillar">
+                    <strong>Vision</strong>
+                    <p>To become Ethiopia's most trusted and digitally enabled insurance company.</p>
+                  </div>  
+                </div>
+                </div>
               </ScrollReveal>
             </div>
 
@@ -523,26 +514,70 @@ const AboutPage = () => {
         .about-story-section {
           padding: 6rem 0;
         }
-        .about-story-layout {
-          display: flex;
-          flex-direction: column;
-          gap: 2rem;
-        }
-        @media (min-width: 1024px) {
-          .about-story-layout {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 4rem;
-            align-items: start;
-          }
-          .about-zone-1 {
-            grid-column: 1 / 7;
-          }
-          .about-zone-2 {
-            grid-column: 8 / 13;
-            padding-top: 2.5rem;
-          }
-        }
+         .about-story-layout {
+           display: flex;
+           flex-direction: column;
+           gap: 3rem;
+         }
+         @media (min-width: 1024px) {
+           .about-story-layout {
+             gap: 3.5rem;
+           }
+           .about-zone-1 {
+             text-align: center;
+           }
+           .about-zone-2 {
+             width: 100%;
+           }
+         }
+
+         .about-zone-1 {
+           text-align: center;
+         }
+         .about-story-copy-grid {
+           max-width: 1040px;
+           margin: 0 auto;
+           text-align: center;
+         }
+         .about-story-intro {
+           max-width: 760px;
+           margin: 0 auto 3.5rem !important;
+           font-size: clamp(1.05rem, 1.8vw, 1.35rem) !important;
+           line-height: 1.7 !important;
+         }
+         .about-story-pillars {
+           display: grid;
+           grid-template-columns: 1fr;
+           gap: 2rem;
+         }
+         @media (min-width: 768px) {
+           .about-story-pillars {
+             grid-template-columns: repeat(2, 1fr);
+             gap: 0;
+           }
+           .about-story-pillar + .about-story-pillar {
+             border-left: 1px solid hsl(var(--border));
+           }
+         }
+         .about-story-pillar {
+           padding: 0 2.5rem;
+         }
+         .about-story-pillar strong {
+           display: block;
+           margin-bottom: 0.75rem;
+           color: hsl(var(--foreground));
+           font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+           font-weight: 700;
+           line-height: 1;
+           letter-spacing: -0.05em;
+           text-transform: uppercase;
+         }
+         .about-story-pillar p {
+           margin: 0;
+           color: hsl(var(--muted-foreground));
+           font-size: var(--type-body);
+           line-height: 1.65;
+         }
         
         .about-huge-title {
           font-family: var(--font-heading, inherit);
@@ -564,23 +599,6 @@ const AboutPage = () => {
         .about-zone-2 p:last-child {
           margin-bottom: 0;
         }
-
-        .about-story-image-wrap {
-          overflow: hidden;
-          width: 100%;
-          max-width: 440px;
-          aspect-ratio: 4/3;
-          border-radius: 0.5rem;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-        }
-        .about-story-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          transition: transform 0.5s ease;
-        }
-        .about-story-image-wrap:hover .about-story-image { transform: scale(1.02); }
 
         /* ─── TIMELINE ───────────────────────────────────────── */
         .tl-section {

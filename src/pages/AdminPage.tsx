@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Shield, FileText, CreditCard, Users, BarChart3, Tag, MessageSquare, UserCheck } from "lucide-react";
+import { Shield, FileText, CreditCard, Users, BarChart3, Tag, MessageSquare, UserCheck, ClipboardCheck } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/contexts/AuthContext";
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
-type AdminTab = "overview" | "policies" | "claims" | "payments" | "leads";
+type AdminTab = "overview" | "policies" | "claims" | "payments" | "leads" | "agent-applications";
 
 const AdminPage = () => {
   const { user, isAdmin, loading: authLoading } = useAuth();
@@ -22,6 +22,7 @@ const AdminPage = () => {
   const [payments, setPayments] = useState<any[]>([]);
   const [leads, setLeads] = useState<any[]>([]);
   const [agents, setAgents] = useState<any[]>([]);
+  const [agentApplications, setAgentApplications] = useState<any[]>([]);
   const [claimNotes, setClaimNotes] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
 
@@ -36,12 +37,13 @@ const AdminPage = () => {
 
   const loadData = async () => {
     setLoading(true);
-    const [policiesRes, claimsRes, paymentsRes, leadsRes, agentsRes] = await Promise.all([
+    const [policiesRes, claimsRes, paymentsRes, leadsRes, agentsRes, applicationsRes] = await Promise.all([
       supabase.from("policies").select("*, products(name), profiles!policies_user_id_fkey(full_name)").order("created_at", { ascending: false }),
       supabase.from("claims").select("*, policies(policy_number), profiles!claims_user_id_fkey(full_name, user_id)").order("created_at", { ascending: false }),
       supabase.from("payments").select("*").order("created_at", { ascending: false }),
       supabase.from("leads").select("*").order("created_at", { ascending: false }),
       supabase.from("user_roles").select("user_id, profiles!inner(full_name)").in("role", ["agent", "admin"]),
+      supabase.from("wifa_applications").select("*").order("created_at", { ascending: false }),
     ]);
 
     const p = policiesRes.data || [];
@@ -54,6 +56,7 @@ const AdminPage = () => {
     setPayments(pay);
     setLeads(l);
     setAgents(agentsRes.data || []);
+    setAgentApplications(applicationsRes.data || []);
     setStats({
       policies: p.length,
       claims: c.length,
@@ -86,6 +89,12 @@ const AdminPage = () => {
     else { toast({ title: "Lead updated" }); loadData(); }
   };
 
+  const updateAgentApplication = async (applicationId: string, status: "submitted" | "under_review" | "approved" | "rejected") => {
+    const { error } = await supabase.from("wifa_applications").update({ status }).eq("id", applicationId);
+    if (error) toast({ title: "Error", description: error.message, variant: "destructive" });
+    else { toast({ title: "Agent application updated" }); loadData(); }
+  };
+
   if (authLoading || !isAdmin) return null;
 
   const statCards = [
@@ -101,6 +110,7 @@ const AdminPage = () => {
     { key: "claims", label: "Claims", icon: FileText },
     { key: "payments", label: "Payments", icon: CreditCard },
     { key: "leads", label: "Leads", icon: Tag },
+    { key: "agent-applications", label: "Agent Applications", icon: ClipboardCheck },
   ];
 
   return (
@@ -297,6 +307,40 @@ const AdminPage = () => {
                     </div>
                   ))}
                   {leads.length === 0 && <p className="text-center text-muted-foreground py-8">No leads yet</p>}
+                </div>
+              )}
+
+              {/* WIA agent applications */}
+              {tab === "agent-applications" && (
+                <div className="space-y-4">
+                  {agentApplications.map((application) => (
+                    <div key={application.id} className="rounded-xl border border-border bg-card p-6">
+                      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+                        <div>
+                          <h2 className="font-heading font-bold text-foreground">{application.full_name}</h2>
+                          <p className="mt-1 text-sm text-muted-foreground">{application.email} · {application.phone}</p>
+                          <p className="mt-1 text-sm text-muted-foreground">{application.city}{application.region ? `, ${application.region}` : ""}{application.business_name ? ` · ${application.business_name}` : ""}</p>
+                        </div>
+                        <select
+                          value={application.status}
+                          onChange={(event) => updateAgentApplication(application.id, event.target.value as "submitted" | "under_review" | "approved" | "rejected")}
+                          className="rounded-lg border border-border bg-background px-3 py-2 text-sm"
+                          aria-label={`Application status for ${application.full_name}`}
+                        >
+                          <option value="submitted">Submitted</option>
+                          <option value="under_review">Under review</option>
+                          <option value="approved">Approved</option>
+                          <option value="rejected">Rejected</option>
+                        </select>
+                      </div>
+                      <div className="mt-4 grid gap-3 border-t border-border pt-4 text-sm md:grid-cols-2">
+                        <p><span className="font-medium">Experience:</span> {application.experience_level.replaceAll("_", " ")}</p>
+                        <p><span className="font-medium">Submitted:</span> {new Date(application.created_at).toLocaleDateString()}</p>
+                        <p className="md:col-span-2"><span className="font-medium">Motivation:</span> {application.motivation}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {agentApplications.length === 0 && <p className="py-8 text-center text-muted-foreground">No WIA applications yet</p>}
                 </div>
               )}
             </>

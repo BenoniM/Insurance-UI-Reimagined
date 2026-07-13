@@ -47,11 +47,12 @@ const getProductMedia = (
 ): { type: "video" | "image"; src: string } => {
   // 1. Check exact slug matches first
   switch (slug) {
+    case "marine-cargo-insurance":
+    case "marine-cargo-air-sea":
     case "marine-hull":
+      return { type: "image", src: imgMarine };
     case "aviation-insurance":
       return { type: "image", src: imgAviation };
-    case "marine-cargo-air-sea":
-      return { type: "image", src: imgMarine };
     case "goods-in-transit":
       return { type: "image", src: imgTransit };
     case "travel-medical-insurance":
