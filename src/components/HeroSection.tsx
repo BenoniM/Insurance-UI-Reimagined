@@ -60,15 +60,18 @@ const HeroSection = () => {
         className="container mx-auto px-4 lg:px-8 relative z-10 flex flex-col items-center text-center"
       >
         <div className="max-w-3xl mx-auto flex flex-col items-center pb-20">
-          <h1 className="hero-headline opacity-0 font-hero text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-secondary font-medium tracking-wide capitalize">
+          <span className="hero-badge inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+            INSURANCE FOR EVERY TOMORROW
+          </span>
+          <h1 className="hero-headline opacity-0 text-4xl md:text-6xl font-bold tracking-tight text-secondary max-w-4xl leading-tight">
             Your Tomorrow. <span className="hero-highlight text-primary">Protected!</span>
           </h1>
 
-          <p className="hero-subtext opacity-0 mt-6 text-xl md:text-2xl text-gray-600 max-w-2xl leading-relaxed capitalize">
+          <p className="hero-subtext opacity-0 mt-6 text-xl text-gray-600 max-w-2xl leading-relaxed">
             Innovative Insurance Solutions for Individuals, Families, Businesses, and Communities Across Ethiopia.
           </p>
 
-          <div className="hero-cta opacity-0 mt-10">
+          <div className="hero-cta opacity-0 mt-8 flex justify-center">
             <CTAButton
               href="/quote"
               variant="primary"

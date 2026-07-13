@@ -102,7 +102,7 @@ const ClaimsHeroAnimation = () => {
                 hidden: { opacity: 0, y: 40 },
                 visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 14 } }
               }}
-              className="section-badge mb-5 inline-block"
+              className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6"
             >
               CLAIMS
             </motion.span>
@@ -112,7 +112,7 @@ const ClaimsHeroAnimation = () => {
                 hidden: { opacity: 0, y: 40 },
                 visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 14 } }
               }}
-              className="qupe-heading text-4xl md:text-6xl text-foreground mb-6 tracking-tight"
+              className="text-4xl md:text-6xl font-bold tracking-tight mb-6 max-w-4xl text-center"
             >
               Fast, Fair <span className="text-primary">Claims Processing</span>
             </motion.h1>
@@ -122,7 +122,7 @@ const ClaimsHeroAnimation = () => {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 15 } }
               }}
-              className="text-foreground/80 font-medium text-xl md:text-2xl mb-10 max-w-2xl leading-relaxed"
+              className="text-xl text-muted-foreground max-w-2xl mb-8 leading-relaxed text-center"
             >
               We handle your claims with speed and transparency — so you can focus on what matters.
             </motion.p>

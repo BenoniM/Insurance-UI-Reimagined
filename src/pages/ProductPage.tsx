@@ -920,17 +920,17 @@ const ProductPage = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
             {/* Left side: Text */}
-            <div className="w-full lg:w-1/2 flex flex-col items-start text-left z-10">
-              <span className="section-badge mb-6 inline-block">
+            <div className="w-full lg:w-1/2 flex flex-col items-center text-center z-10">
+              <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
                 {product.slug.replace(/-/g, " ").toUpperCase()}
               </span>
-              <h1 className="font-hero text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] text-gray-800 font-medium tracking-wide capitalize">
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1] text-gray-800 max-w-3xl">
                 {name}
               </h1>
-              <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-xl leading-relaxed">
+              <p className="mt-6 text-xl text-gray-600 max-w-xl leading-relaxed">
                 {description || "Comprehensive coverage tailored to your needs."}
               </p>
-              <div className="flex flex-wrap gap-4 mt-10">
+              <div className="flex flex-wrap justify-center gap-4 mt-10">
                 <a
                   href="/quote"
                   className={`inline-flex items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-base font-heading font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-white shadow-lg ${product?.name === "Property Insurance" ||
@@ -962,7 +962,7 @@ const ProductPage = () => {
                   return (
                     <SlowVideo
                       src={media.src}
-                      className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
+                      className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-darken -mt-8 lg:-mt-16"
                     />
                   );
                 } else {
@@ -970,7 +970,7 @@ const ProductPage = () => {
                     <img
                       src={media.src}
                       alt={name}
-                      className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
+                      className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-darken -mt-8 lg:-mt-16"
                     />
                   );
                 }

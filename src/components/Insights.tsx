@@ -22,6 +22,11 @@ const Insights = () => {
   }, []);
 
   const accentColor = "hsl(201 78% 23%)";
+  const cardBackgrounds = [
+    "bg-[hsl(160,40%,90%)]",
+    "bg-[hsl(201,78%,92%)]",
+    "bg-[hsl(205,65%,88%)]",
+  ];
 
   // Three distinct animated decorative patterns, cycled by card index, all bottom-right
   const patterns = [
@@ -134,7 +139,7 @@ const Insights = () => {
         {articles.map((article, i) => (
           <ScrollReveal key={article.slug} animation="fadeUp" delay={i * 0.08}>
             <Link to={`/news/${article.slug}`} className="group block h-full">
-              <div className="insights-card relative h-full flex flex-col overflow-hidden">
+              <div className={`insights-card relative h-full flex flex-col overflow-hidden ${cardBackgrounds[i % cardBackgrounds.length]}`}>
                 {/* Decorative animated pattern, behind content */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
                   {patterns[i % patterns.length]}

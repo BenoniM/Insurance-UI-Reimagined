@@ -1,15 +1,58 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Send, ShieldCheck, Lock, Cookie } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { useLanguage } from "@/i18n/LanguageContext";
 import CTAButton from "./CTAButton";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 import { navCategories } from "@/data/products";
 
+type PolicyKey = "terms" | "privacy" | "cookies";
+
 const Footer = () => {
   const { t, lang } = useLanguage();
+  const [activePolicy, setActivePolicy] = useState<PolicyKey | null>(null);
+
+  const policyContent: Record<PolicyKey, { title: string; eyebrow: string; summary: string; points: string[]; icon: typeof ShieldCheck }> = {
+    terms: {
+      title: "Terms of Service",
+      eyebrow: "Protection Promise",
+      summary: "These terms outline how our insurance services, claims support, and digital access are provided to you with clarity and care.",
+      points: [
+        "You agree to use our portal and services for legitimate insurance, claims, and policy support needs.",
+        "Coverage, premiums, and claims outcomes remain subject to policy terms and underwriting approval.",
+        "Our team may update service guidance, documentation, and support workflows as needed.",
+      ],
+      icon: ShieldCheck,
+    },
+    privacy: {
+      title: "Privacy Policy",
+      eyebrow: "Private & Protected",
+      summary: "We safeguard your personal and policy information and use it only to support secure insurance services.",
+      points: [
+        "We collect only the information needed to process quotes, policies, claims, and account access.",
+        "Your data is protected with secure systems and restricted internal access.",
+        "You can request review or update of your personal details through your account or support team.",
+      ],
+      icon: Lock,
+    },
+    cookies: {
+      title: "Cookie Policy",
+      eyebrow: "Digital Comfort",
+      summary: "Cookies help us remember your preferences and improve your experience while browsing our insurance portal.",
+      points: [
+        "We use cookies to keep your session, language preference, and recent activity consistent.",
+        "These tools help us improve navigation, quotations, and support journeys.",
+        "You can manage or disable cookies in your browser settings at any time.",
+      ],
+      icon: Cookie,
+    },
+  };
+
+  const activePolicyData = activePolicy ? policyContent[activePolicy] : null;
 
   return (
+    <>
     <footer className="w-full bg-white pb-6 pt-10 lg:pt-16">
       <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8">
 
@@ -205,15 +248,66 @@ const Footer = () => {
                 </p>
               </div>
               <div className="flex gap-6">
-                <a href="#" className="text-xs text-white/30 hover:text-white transition-colors">{t("footer.terms")}</a>
-                <a href="#" className="text-xs text-white/30 hover:text-white transition-colors">{t("footer.privacy")}</a>
-                <a href="#" className="text-xs text-white/30 hover:text-white transition-colors">{t("footer.cookies")}</a>
+                <button type="button" onClick={() => setActivePolicy("terms")} className="text-xs text-white/30 hover:text-white transition-colors">{t("footer.terms")}</button>
+                <button type="button" onClick={() => setActivePolicy("privacy")} className="text-xs text-white/30 hover:text-white transition-colors">{t("footer.privacy")}</button>
+                <button type="button" onClick={() => setActivePolicy("cookies")} className="text-xs text-white/30 hover:text-white transition-colors">{t("footer.cookies")}</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </footer>
+
+    {activePolicyData && (
+      <div
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-[hsl(201,78%,20%)]/70 px-4 py-6 backdrop-blur-sm"
+        onClick={() => setActivePolicy(null)}
+      >
+        <div
+          className="w-full max-w-lg rounded-[28px] border border-white/20 bg-white p-6 shadow-[0_30px_90px_rgba(11,63,91,0.24)]"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <span className="inline-flex items-center rounded-full bg-[hsl(160,55%,45%)]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-[hsl(160,55%,45%)]">
+                {activePolicyData.eyebrow}
+              </span>
+              <h3 className="mt-3 text-2xl font-semibold text-[hsl(201,78%,20%)]">
+                {activePolicyData.title}
+              </h3>
+            </div>
+            <button
+              type="button"
+              onClick={() => setActivePolicy(null)}
+              className="rounded-full border border-gray-200 p-2 text-gray-500 transition-colors hover:border-[hsl(160,55%,45%)] hover:text-[hsl(160,55%,45%)]"
+              aria-label="Close policy details"
+            >
+              ×
+            </button>
+          </div>
+
+          <div className="mt-5 rounded-2xl bg-[hsl(201,78%,98%)] p-4 text-sm leading-relaxed text-gray-600">
+            <p>{activePolicyData.summary}</p>
+          </div>
+
+          <div className="mt-5 space-y-3">
+            {activePolicyData.points.map((point) => (
+              <div key={point} className="flex gap-3 rounded-2xl border border-gray-100 bg-white p-3 shadow-sm">
+                <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[hsl(160,55%,45%)]/10 text-[hsl(160,55%,45%)]">
+                  <activePolicyData.icon className="h-4 w-4" />
+                </div>
+                <p className="text-sm leading-relaxed text-gray-600">{point}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-dashed border-[hsl(160,55%,45%)] bg-[hsl(160,55%,97%)] p-4 text-sm text-gray-600">
+            Need a hand? Contact our support team for a human explanation of any policy detail.
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 

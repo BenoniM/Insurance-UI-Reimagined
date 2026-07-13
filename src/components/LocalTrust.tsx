@@ -7,21 +7,21 @@ const slides = [
     title: "Multilingual Support",
     description:
       "Services available in Amharic, English, and Oromifa — so every Ethiopian family can understand their coverage.",
-    img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80",
+    img: "https://images.pexels.com/photos/37535096/pexels-photo-37535096.jpeg",
     imgAlt: "Team collaborating around a table",
   },
   {
     title: "Flexible Payments",
     description:
       "Pay via bank transfer, Telebirr, CBE Birr, or cash at any branch. We meet you where you are.",
-    img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+    img: "https://images.pexels.com/photos/11363562/pexels-photo-11363562.jpeg",
     imgAlt: "Mobile payment on a smartphone",
   },
   {
     title: "Nationwide Coverage",
     description:
       "Branches across Addis Ababa, regional capitals, and growing. Protection wherever life takes you.",
-    img: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
+    img: "https://images.pexels.com/photos/35368834/pexels-photo-35368834.jpeg",
     imgAlt: "Ethiopian cityscape at dusk",
   },
   {

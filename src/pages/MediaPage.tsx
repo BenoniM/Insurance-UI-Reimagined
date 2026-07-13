@@ -120,12 +120,14 @@ const MediaPage = ({ kind }: { kind: MediaPageKind }) => {
       <Navbar />
       <section className="pt-32 pb-12 bg-[hsl(201,78%,98%)]">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl">
-            <span className="section-badge mb-5 inline-block">{content.badge}</span>
-            <h1 className="font-hero text-4xl md:text-6xl text-[hsl(201,78%,20%)]">
+          <div className="mx-auto max-w-3xl flex flex-col items-center text-center">
+            <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+              {content.badge}
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl">
               {content.title}
             </h1>
-            <p className="mt-5 text-lg leading-relaxed text-gray-600">
+            <p className="text-xl leading-relaxed text-gray-600 max-w-2xl">
               {content.intro}
             </p>
           </div>
