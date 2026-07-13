@@ -405,7 +405,7 @@ const GivebackPage = () => {
                 TRANSPARENCY
               </p>
               <h2
-                className="font-heading font-bold text-3xl md:text-4xl text-foreground capitalize"
+                className="section-title text-foreground capitalize"
                 style={{ letterSpacing: "-0.025em" }}
               >
                 How we keep ourselves honest.
@@ -417,14 +417,15 @@ const GivebackPage = () => {
 
       {/* TRANSPARENCY — 3-col × 2-row editorial grid with parallax images */}
       <section className="px-4 sm:px-8 md:px-12 pb-8 md:pb-12" style={{
-        background: "linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.85) 50%, hsl(var(--secondary)) 100%)",
+        background: `
+          radial-gradient(circle at 12% 18%, hsl(var(--teal) / 0.42) 0%, transparent 32%),
+          radial-gradient(circle at 88% 82%, hsl(var(--sky) / 0.4) 0%, transparent 34%),
+          linear-gradient(135deg, hsl(201 78% 12%) 0%, hsl(var(--navy)) 42%, hsl(201 70% 18%) 68%, hsl(var(--teal-dark)) 100%)
+        `,
       }}>
-        {/* 3 × 2 Panel Grid — 1 col on mobile, 2 on tablet, 3 on desktop */}
+        {/* 3 × 2 Panel Grid — never more than three panels per row */}
         <div
-          className="grid gap-6 md:gap-8"
-          style={{
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
-          }}
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3"
         >
           {transparencyPanels.map((p, i) => (
             <div
@@ -432,6 +433,7 @@ const GivebackPage = () => {
               style={{
                 display: "flex",
                 flexDirection: "column",
+                height: "100%",
               }}
             >
               {/* Text card */}
@@ -441,6 +443,8 @@ const GivebackPage = () => {
                   display: "flex",
                   flexDirection: "column",
                   gap: "0.85rem",
+                  flex: 1,
+                  minHeight: "280px",
                 }}
               >
                 <span
