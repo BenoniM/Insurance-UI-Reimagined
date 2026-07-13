@@ -21,26 +21,82 @@ import heroProducts2 from "@/assets/hero-products-2.jpg";
 import NoSmoking from "@/assets/Pricing/No-Smoking--Streamline-Milano.png";
 import Coverage from "@/assets/Pricing/Stack-Of-Money-2--Streamline-Milano.png";
 import Term from "@/assets/Pricing/Work-Deadline-2--Streamline-Milano.png";
-import imgHospital from "@/assets/Products/Gemini_Generated_Image_6wjalo6wjalo6wja-Photoroom.png";
-import imgLife from "@/assets/Products/Gemini_Generated_Image_oq6fqfoq6fqfoq6f-Photoroom.png";
-import imgNetWorth from "@/assets/Products/Gemini_Generated_Image_onpwheonpwheonpw-Photoroom.png";
-import imgCar from "@/assets/Products/Gemini_Generated_Image_cmkms6cmkms6cmkm-Photoroom.png";
-import videoMotor from "@/assets/Products/magnific_use-the-provided-image-as_9RllHD3NYZ.mp4";
-import videoLife from "@/assets/Products/magnific_use-the-provided-image-as_kLfa5HX16B.mp4";
-import videoHealth from "@/assets/Products/magnific_use-the-provided-image-as_ohccbjt829.mp4";
-import videoProperty from "@/assets/Products/magnific_animate-this-reference-im_ubooflmQLD.mp4";
-import videoBusinessAsset from "@/assets/Products/magnific_use-the-uploaded-illustra_5xa8Xi6Kxe.mp4";
-import videoInvestmentAsset from "@/assets/Products/magnific_use-the-uploaded-illustra_PiskgtX42C.mp4";
+import videoMotor from "@/assets/Products/motor.mp4";
+import videoLife from "@/assets/Products/family.mp4";
+import videoHealth from "@/assets/Products/health.mp4";
+import videoProperty from "@/assets/Products/property.mp4";
+import videoEngineering from "@/assets/Products/enginnering.mp4";
+import videoPecuniary from "@/assets/Products/pecuniary.mp4";
 
-// TODO: replace these placeholder assignments with dedicated Business/Investment
-// assets once available (drop new files into src/assets/Products/ and import
-// them above, then point these at the new imports). Reusing existing assets
-// in the meantime so the page renders correctly instead of silently falling
-// back to the Property visuals.
-const imgBusiness = imgNetWorth;
-const imgInvestment = imgHospital;
-const videoBusiness = videoBusinessAsset;
-const videoInvestment = videoInvestmentAsset;
+import imgAviation from "@/assets/Products/aviation-Photoroom.png";
+import imgMarine from "@/assets/Products/marine-Photoroom.png";
+import imgTravel from "@/assets/Products/travel-Photoroom.png";
+import imgTransit from "@/assets/Products/transit-Photoroom.png";
+import imgGeneralAccident from "@/assets/Products/general-accident-Photoroom.png";
+import imgGlass from "@/assets/Products/glass-Photoroom.png";
+import imgAllRisk from "@/assets/Products/all-risk-Photoroom.png";
+import imgHorticulture from "@/assets/Products/horticulture-Photoroom.png";
+import imgLiability from "@/assets/Products/liabiity-Photoroom.png";
+import imgPolitics from "@/assets/Products/politics.png";
+
+const getProductMedia = (
+  slug: string,
+  subcategorySlug: string,
+  categorySlug: string,
+  icon: string
+): { type: "video" | "image"; src: string } => {
+  // 1. Check exact slug matches first
+  switch (slug) {
+    case "marine-hull":
+    case "aviation-insurance":
+      return { type: "image", src: imgAviation };
+    case "marine-cargo-air-sea":
+      return { type: "image", src: imgMarine };
+    case "goods-in-transit":
+      return { type: "image", src: imgTransit };
+    case "travel-medical-insurance":
+    case "travel-insurance":
+      return { type: "image", src: imgTravel };
+    case "political-violence-terrorism":
+      return { type: "image", src: imgPolitics };
+    case "all-risk-insurance":
+      return { type: "image", src: imgAllRisk };
+    case "plate-glass-insurance":
+      return { type: "image", src: imgGlass };
+    case "horticulture-insurance":
+    case "livestock-insurance":
+      return { type: "image", src: imgHorticulture };
+  }
+
+  // 2. Check subcategory or category matches
+  if (subcategorySlug === "motor-insurance" || icon === "Car") {
+    return { type: "video", src: videoMotor };
+  }
+  if (subcategorySlug === "property-insurance" || icon === "Home") {
+    return { type: "video", src: videoProperty };
+  }
+  if (subcategorySlug === "engineering-insurance") {
+    return { type: "video", src: videoEngineering };
+  }
+  if (subcategorySlug === "pecuniary-insurance") {
+    return { type: "video", src: videoPecuniary };
+  }
+  if (subcategorySlug === "liability-insurance") {
+    return { type: "image", src: imgLiability };
+  }
+  if (subcategorySlug === "general-accident-insurance") {
+    return { type: "image", src: imgGeneralAccident };
+  }
+  if (subcategorySlug === "family-medical-insurance" || slug.startsWith("family-")) {
+    return { type: "video", src: videoLife };
+  }
+  if (categorySlug === "medical-insurance" || icon === "Shield" || icon === "Heart") {
+    return { type: "video", src: videoHealth };
+  }
+
+  // Fallback
+  return { type: "video", src: videoProperty };
+};
 
 const SlowVideo = ({ src, className }: { src: string; className?: string }) => {
   const ref = useRef<HTMLVideoElement>(null);
@@ -918,37 +974,30 @@ const ProductPage = () => {
 
             {/* Right side: Image/Icon */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end lg:items-start z-10">
-              {product.icon === "Car" ? (
-                <SlowVideo
-                  src={videoMotor}
-                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
-                />
-              ) : product.icon === "Heart" ? (
-                <SlowVideo
-                  src={videoLife}
-                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
-                />
-              ) : product.icon === "Shield" ? (
-                <SlowVideo
-                  src={videoHealth}
-                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
-                />
-              ) : product.icon === "Briefcase" ? (
-                <SlowVideo
-                  src={videoBusiness}
-                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
-                />
-              ) : product.icon === "Plane" ? (
-                <SlowVideo
-                  src={videoInvestment}
-                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
-                />
-              ) : (
-                <SlowVideo
-                  src={videoProperty}
-                  className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
-                />
-              )}
+              {(() => {
+                const media = getProductMedia(
+                  product.slug,
+                  product.subcategory_slug,
+                  product.category_slug,
+                  product.icon
+                );
+                if (media.type === "video") {
+                  return (
+                    <SlowVideo
+                      src={media.src}
+                      className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
+                    />
+                  );
+                } else {
+                  return (
+                    <img
+                      src={media.src}
+                      alt={name}
+                      className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-multiply mix-blend-darken -mt-8 lg:-mt-16"
+                    />
+                  );
+                }
+              })()}
             </div>
           </div>
         </div>
