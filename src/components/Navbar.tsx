@@ -22,6 +22,9 @@ const Navbar = () => {
   const location = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
+  const productsCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mediaCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const channelsCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -71,8 +74,8 @@ const Navbar = () => {
   }, []);
 
   const mediaLinks = [
-    { label: "News", href: "/news" },
     { label: "CSR", href: "/giveback" },
+    { label: "News", href: "/news" },
     { label: "Announcements", href: "/announcements" },
     { label: "Gallery", href: "/gallery" },
     { label: "Articles", href: "/articles" },
@@ -189,8 +192,13 @@ const Navbar = () => {
                 <div
                   key={link.label}
                   className="h-full flex items-center group"
-                  onMouseEnter={() => setProductsOpen(true)}
-                  onMouseLeave={() => setProductsOpen(false)}
+                  onMouseEnter={() => {
+                    if (productsCloseTimer.current) clearTimeout(productsCloseTimer.current);
+                    setProductsOpen(true);
+                  }}
+                  onMouseLeave={() => {
+                    productsCloseTimer.current = setTimeout(() => setProductsOpen(false), 350);
+                  }}
                 >
                   <button
                     style={{
@@ -231,7 +239,13 @@ const Navbar = () => {
 
                   {/* Products Dropdown */}
                   <div
-                    className="absolute top-[calc(100%+4px)] left-1/2 -translate-x-1/2 mt-[2px] py-6 px-6 transition-all duration-200 origin-top grid grid-cols-12 gap-8 md:gap-9 lg:gap-12"
+                    className="absolute top-[calc(100%+4px)] left-1/2 -translate-x-1/2 py-6 px-6 transition-all duration-200 origin-top grid grid-cols-12 gap-8 md:gap-9 lg:gap-12"
+                    onMouseEnter={() => {
+                      if (productsCloseTimer.current) clearTimeout(productsCloseTimer.current);
+                    }}
+                    onMouseLeave={() => {
+                      productsCloseTimer.current = setTimeout(() => setProductsOpen(false), 350);
+                    }}
                     style={{
                       width: "min(1000px, calc(100vw - 56px))",
                       maxWidth: "1000px",
@@ -320,8 +334,22 @@ const Navbar = () => {
                 <div
                   key={link.label}
                   className="h-full flex items-center group relative"
-                  onMouseEnter={() => setSimpleMenuOpen(true)}
-                  onMouseLeave={() => setSimpleMenuOpen(false)}
+                  onMouseEnter={() => {
+                    if (link.label === "Channels") {
+                      if (channelsCloseTimer.current) clearTimeout(channelsCloseTimer.current);
+                      setChannelsOpen(true);
+                    } else {
+                      if (mediaCloseTimer.current) clearTimeout(mediaCloseTimer.current);
+                      setMediaOpen(true);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (link.label === "Channels") {
+                      channelsCloseTimer.current = setTimeout(() => setChannelsOpen(false), 350);
+                    } else {
+                      mediaCloseTimer.current = setTimeout(() => setMediaOpen(false), 350);
+                    }
+                  }}
                 >
                   <button
                     style={{
@@ -353,7 +381,21 @@ const Navbar = () => {
                   </button>
 
                   <div
-                    className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-[2px] min-w-[210px] py-2 transition-all duration-200 origin-top flex flex-col"
+                    className="absolute top-[100%] left-1/2 -translate-x-1/2 min-w-[210px] py-2 transition-all duration-200 origin-top flex flex-col"
+                    onMouseEnter={() => {
+                      if (link.label === "Channels") {
+                        if (channelsCloseTimer.current) clearTimeout(channelsCloseTimer.current);
+                      } else {
+                        if (mediaCloseTimer.current) clearTimeout(mediaCloseTimer.current);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (link.label === "Channels") {
+                        channelsCloseTimer.current = setTimeout(() => setChannelsOpen(false), 350);
+                      } else {
+                        mediaCloseTimer.current = setTimeout(() => setMediaOpen(false), 350);
+                      }
+                    }}
                     style={{
                       background: "rgba(255,255,255,1)",
                       borderRadius: "12px",

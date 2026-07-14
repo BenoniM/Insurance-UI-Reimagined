@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import SectionWrapper from "@/components/SectionWrapper";
 import ScrollReveal from "@/components/ScrollReveal";
 import CTAButton from "@/components/CTAButton";
+import NewsHeroAnimation from "@/components/NewsHeroAnimation";
 import { ArrowRight, Building2, HandHeart, Landmark, Newspaper, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
@@ -110,30 +111,7 @@ const BlogPage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <section className="relative flex min-h-screen overflow-hidden bg-white">
-        <style>{`
-          @keyframes news-image-fade {
-            0%, 100% { opacity: 0; transform: scale(.78) translateY(10px); }
-            18%, 64% { opacity: .72; transform: scale(1) translateY(0); }
-            82% { opacity: 0; transform: scale(.9) translateY(-8px); }
-          }
-          .news-hero-image { animation: news-image-fade 12s ease-in-out infinite; }
-          @media (prefers-reduced-motion: reduce) { .news-hero-image { animation: none; opacity: .5; } }
-        `}</style>
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          {newsHeroIcons.map((image, index) => (
-            <img key={image} src={image} alt="" className={`news-hero-image absolute object-contain ${newsHeroPositions[index]}`} style={{ animationDelay: `${index * -1.5}s` }} />
-          ))}
-        </div>
-        <div className="container relative z-10 mx-auto flex min-h-screen items-center justify-center px-4 py-24 lg:px-8">
-          <div className="flex max-w-3xl flex-col items-center text-center">
-            <span className="mb-6 inline-flex items-center rounded-full border border-transparent bg-[#288A69]/10 px-2.5 py-0.5 text-xs font-semibold text-[#288A69]">NEWS & INSIGHTS</span>
-            <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-[hsl(201,78%,20%)] md:text-6xl">Latest News</h1>
-            <p className="mt-6 max-w-2xl text-xl leading-relaxed text-gray-600">Company announcements, industry updates, insurance awareness articles, and CSR activities from WASS Insurance.</p>
-            <CTAButton href="#latest-news" className="mt-8" size="lg">Explore News</CTAButton>
-          </div>
-        </div>
-      </section>
+      <NewsHeroAnimation />
 
       <SectionWrapper id="latest-news">
         <div className="mb-10">

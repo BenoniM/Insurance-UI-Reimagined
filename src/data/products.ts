@@ -148,7 +148,28 @@ const catalogue: RawCategory[] = [
           },
         ],
       },
-      // 2. Property Insurance
+      // 2. Political Violence and Terrorism (leaf)
+      {
+        name: "Political Violence and Terrorism (PVT)",
+        name_am: "የፖለቲካ ሁከት እና ሽብርተኝነት ኢንሹራንስ",
+        slug: "political-violence-terrorism",
+        icon: "Shield",
+        leaf: {
+          name: "Political Violence and Terrorism (PVT)",
+          name_am: "የፖለቲካ ሁከት እና ሽብርተኝነት ኢንሹራንስ",
+          short_description: "Covers property damage and business interruption caused by riot, strike, or terrorism.",
+          short_description_am: "በሁከት፣ በአድማ ወይም በሽብር ምክንያት ለሚደርስ ጉዳት ይሸፍናል።",
+          full_description:
+            "Fills the gap left by standard property policies, covering physical damage and resulting business interruption caused by riot, civil commotion, strikes, malicious damage, and acts of terrorism.",
+          full_description_am:
+            "በተለመደው የንብረት ፖሊሲ ያልተሸፈኑ ከሁከት፣ ከአድማ እና ከሽብር ጥቃት የሚደርሱ ጉዳቶችን ይሸፍናል።",
+          coverage_list: ["Riot and civil commotion damage", "Strike-related damage", "Malicious damage", "Terrorism physical damage", "Resulting business interruption"],
+          exclusions: ["War between named states", "Nuclear risks", "Confiscation by government authority", "Cyberterrorism without physical damage"],
+          pricing_rules: { base_rate: 5000 },
+          cta_text: "Get a Quote",
+        },
+      },
+      // 3. Property Insurance
       {
         name: "Property Insurance",
         name_am: "የንብረት ኢንሹራንስ",
@@ -687,27 +708,6 @@ const catalogue: RawCategory[] = [
             cta_text: "Cover Your Team",
           },
         ],
-      },
-      // 9. Political Violence and Terrorism (leaf)
-      {
-        name: "Political Violence and Terrorism (PVT)",
-        name_am: "የፖለቲካ ሁከት እና ሽብርተኝነት ኢንሹራንስ",
-        slug: "political-violence-terrorism",
-        icon: "Shield",
-        leaf: {
-          name: "Political Violence and Terrorism (PVT)",
-          name_am: "የፖለቲካ ሁከት እና ሽብርተኝነት ኢንሹራንስ",
-          short_description: "Covers property damage and business interruption caused by riot, strike, or terrorism.",
-          short_description_am: "በሁከት፣ በአድማ ወይም በሽብር ምክንያት ለሚደርስ ጉዳት ይሸፍናል።",
-          full_description:
-            "Fills the gap left by standard property policies, covering physical damage and resulting business interruption caused by riot, civil commotion, strikes, malicious damage, and acts of terrorism.",
-          full_description_am:
-            "በተለመደው የንብረት ፖሊሲ ያልተሸፈኑ ከሁከት፣ ከአድማ እና ከሽብር ጥቃት የሚደርሱ ጉዳቶችን ይሸፍናል።",
-          coverage_list: ["Riot and civil commotion damage", "Strike-related damage", "Malicious damage", "Terrorism physical damage", "Resulting business interruption"],
-          exclusions: ["War between named states", "Nuclear risks", "Confiscation by government authority", "Cyberterrorism without physical damage"],
-          pricing_rules: { base_rate: 5000 },
-          cta_text: "Get a Quote",
-        },
       },
     ],
   },

@@ -34,6 +34,8 @@ import wiaIcon5 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/gre
 import wiaIcon6 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_06.png";
 import wiaIcon7 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_07.png";
 import wiaIcon8 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_08.png";
+import wiaHeroBg from "@/assets/ChannelsHero/ChatGPT Image Jul 14, 2026, 11_07_50 AM.png";
+import brokerHeroBg from "@/assets/ChannelsHero/ChatGPT Image Jul 14, 2026, 11_01_40 AM.png";
 
 const sharedPortalActions = [
   "Request Quote",
@@ -110,7 +112,14 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <section className="relative flex min-h-screen overflow-hidden bg-white">
-
+        {/* Background image per channel */}
+        <img
+          src={kind === "wia" ? wiaHeroBg : brokerHeroBg}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ transform: kind === "wia" ? "translateY(5%)" : "translateY(15%)" }}
+        />
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 lg:px-8">
           <div className="flex min-h-screen flex-1 flex-col items-center justify-center px-0 py-24 text-center">
             <div className="flex w-full max-w-4xl flex-col items-center">
