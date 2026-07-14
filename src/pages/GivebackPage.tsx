@@ -5,6 +5,10 @@ import GivebackSection from "@/components/GivebackSection";
 import ScrollReveal from "@/components/ScrollReveal";
 import CTAButton from "@/components/CTAButton";
 import csrHeroImage from "@/assets/CsrHero/ChatGPT Image Jul 14, 2026, 10_23_32 AM.webp";
+import fieldUpdateAmbulance from "@/assets/FieldUpdates/Ambulance--Streamline-Milano.png";
+import fieldUpdateRelief from "@/assets/FieldUpdates/Relief-2--Streamline-Milano.png";
+import fieldUpdateSchoolBus from "@/assets/FieldUpdates/School-Bus--Streamline-Milano.png";
+import fieldUpdateWater from "@/assets/FieldUpdates/Water-Conservation--Streamline-Milano.png";
 import { useEffect, useState, useRef } from "react";
 import {
   Heart,
@@ -349,25 +353,25 @@ const GivebackPage = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               {
-                icon: "/src/assets/FieldUpdates/Water-Conservation--Streamline-Milano.png",
+                icon: fieldUpdateWater,
                 date: "March 2026",
                 title: "Water access for Bishoftu villages",
                 body: "Three solar-powered wells came online, serving 2,100 people who previously walked 6km daily for clean water.",
               },
               {
-                icon: "/src/assets/FieldUpdates/School-Bus--Streamline-Milano.png",
+                icon: fieldUpdateSchoolBus,
                 date: "January 2026",
                 title: "School supply drive — Addis Ababa",
                 body: "Distributed 4,200 backpacks, notebooks, and uniforms to children entering Grade 1 across 18 public schools.",
               },
               {
-                icon: "/src/assets/FieldUpdates/Ambulance--Streamline-Milano.png",
+                icon: fieldUpdateAmbulance,
                 date: "November 2025",
                 title: "Mobile clinic launches in Hawassa",
                 body: "WASS Giveback funded a fully-equipped mobile health unit reaching 6 villages monthly with maternal care.",
               },
               {
-                icon: "/src/assets/FieldUpdates/Relief-2--Streamline-Milano.png",
+                icon: fieldUpdateRelief,
                 date: "September 2025",
                 title: "Flood relief — Afar region",
                 body: "Emergency disbursement of 480,000 ETB delivered tents, food, and medical supplies within 72 hours.",

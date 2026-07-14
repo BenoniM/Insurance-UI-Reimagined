@@ -119,9 +119,9 @@ const AboutPage = () => {
     offset: ["start start", "end end"],
   });
 
-  const textOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 0, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.8, 1], [0, -50, -50]);
-  const textPointer = useTransform(scrollYProgress, (v) => (v > 0.8 ? "none" : "auto"));
+  const textOpacity = useTransform(scrollYProgress, [0, 0.9, 1], [1, 0, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.9, 1], [0, -50, -50]);
+  const textPointer = useTransform(scrollYProgress, (v) => (v > 0.9 ? "none" : "auto"));
   // Image peeks up more at first, then scrolls to 0vh
   const imageY = useTransform(scrollYProgress, [0, 1], ["55vh", "0vh"]);
 
@@ -157,13 +157,16 @@ const AboutPage = () => {
             loop
             muted
             playsInline
+            onLoadedMetadata={(event) => {
+              event.currentTarget.playbackRate = 0.7;
+            }}
             className="w-full h-auto"
           />
         </div>
       </div>
 
       {/* ── DESKTOP HERO (scroll-animated) ── */}
-      <div ref={heroRef} className="relative h-[200vh] hidden md:block">
+      <div ref={heroRef} className="relative h-[280vh] hidden md:block">
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#FBFAFA]">
           {/* Text Content */}
           <motion.div
@@ -199,6 +202,9 @@ const AboutPage = () => {
               loop
               muted
               playsInline
+              onLoadedMetadata={(event) => {
+                event.currentTarget.playbackRate = 0.7;
+              }}
               className="w-full h-auto"
             />
           </motion.div>
@@ -234,23 +240,105 @@ const AboutPage = () => {
             </div>
 
             <div className="about-zone-2">
-              <ScrollReveal animation="fadeRight" delay={0.2}>
-                <div className="about-story-copy-grid">
-                <p className="about-story-intro">
-                  Wass Insurance S.C. is a customer-focused insurance company committed to delivering innovative, reliable, and accessible insurance solutions that protect individuals, businesses, and communities throughout Ethiopia.
-                </p>
+              <div className="about-story-copy-grid">
+                <ScrollReveal animation="fadeRight" delay={0.2}>
+                  <p className="about-story-intro">
+                    Wass Insurance S.C. is a customer-focused insurance company committed to delivering innovative, reliable, and accessible insurance solutions that protect individuals, businesses, and communities throughout Ethiopia.
+                  </p>
+                </ScrollReveal>
+
                 <div className="about-story-pillars">
-                  <div className="about-story-pillar">
-                    <strong>Mission</strong>
-                    <p>To provide affordable, innovative, and customer-centric insurance solutions that create peace of mind and long-term value.</p>
-                  </div>
-                  <div className="about-story-pillar">
-                    <strong>Vision</strong>
-                    <p>To become Ethiopia's most trusted and digitally enabled insurance company.</p>
-                  </div>  
+                  <motion.article
+                    className="about-story-card about-story-card--mission"
+                    initial={{ opacity: 0, x: -42, rotate: -1.5 }}
+                    whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+                    viewport={{ once: true, amount: 0.35 }}
+                    transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ scale: 1.03, y: -6 }}
+                  >
+                    <div className="about-story-card-pattern" aria-hidden="true">
+                      <svg
+                        className="about-story-ripple"
+                        viewBox="0 0 100 100"
+                        fill="none"
+                      >
+                        <circle cx="80" cy="80" r="6" stroke="currentColor" strokeWidth="1.5" opacity="0.35">
+                          <animate attributeName="r" from="6" to="50" dur="3s" repeatCount="indefinite" />
+                          <animate attributeName="opacity" from="0.35" to="0" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="80" cy="80" r="6" stroke="currentColor" strokeWidth="1.5" opacity="0.35">
+                          <animate attributeName="r" from="6" to="50" dur="3s" begin="1s" repeatCount="indefinite" />
+                          <animate attributeName="opacity" from="0.35" to="0" dur="3s" begin="1s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="80" cy="80" r="6" stroke="currentColor" strokeWidth="1.5" opacity="0.35">
+                          <animate attributeName="r" from="6" to="50" dur="3s" begin="2s" repeatCount="indefinite" />
+                          <animate attributeName="opacity" from="0.35" to="0" dur="3s" begin="2s" repeatCount="indefinite" />
+                        </circle>
+                      </svg>
+                    </div>
+                    <div className="about-story-card-content">
+                      <h3>Mission</h3>
+                      <p className="about-story-card-desc">
+                        To provide affordable, innovative, and customer-centric insurance solutions that create peace of mind and long-term value.
+                      </p>
+                    </div>
+                  </motion.article>
+
+                  <motion.article
+                    className="about-story-card about-story-card--vision"
+                    initial={{ opacity: 0, y: 46, scale: 0.92 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true, amount: 0.35 }}
+                    transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    whileHover={{ scale: 1.03, rotate: 0.35 }}
+                  >
+                    <div className="about-story-card-pattern" aria-hidden="true">
+                      <svg
+                        className="about-story-dots"
+                        viewBox="0 0 80 80"
+                        fill="none"
+                      >
+                        {Array.from({ length: 5 }).map((_, row) =>
+                          Array.from({ length: 5 }).map((_, col) => {
+                            const delay = (row + col) * 0.15;
+                            return (
+                              <circle
+                                key={`${row}-${col}`}
+                                cx={8 + col * 16}
+                                cy={8 + row * 16}
+                                r="2.2"
+                                fill="currentColor"
+                                opacity="0.25"
+                              >
+                                <animate
+                                  attributeName="opacity"
+                                  values="0.1;0.55;0.1"
+                                  dur="2.4s"
+                                  begin={`${delay}s`}
+                                  repeatCount="indefinite"
+                                />
+                                <animate
+                                  attributeName="r"
+                                  values="1.4;2.6;1.4"
+                                  dur="2.4s"
+                                  begin={`${delay}s`}
+                                  repeatCount="indefinite"
+                                />
+                              </circle>
+                            );
+                          })
+                        )}
+                      </svg>
+                    </div>
+                    <div className="about-story-card-content">
+                      <h3>Vision</h3>
+                      <p className="about-story-card-desc">
+                        To become Ethiopia's most trusted and digitally enabled insurance company.
+                      </p>
+                    </div>
+                  </motion.article>
                 </div>
-                </div>
-              </ScrollReveal>
+              </div>
             </div>
 
           </div>
@@ -296,7 +384,6 @@ const AboutPage = () => {
 
       {/* ── CORPORATE & SME SOLUTIONS ───────────────────────────── */}
       <section className="py-20 bg-background border-b border-border overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-accent/20 rounded-l-full blur-3xl -z-10" />
         <div className="about-container-full">
           <ScrollReveal>
             <div className="text-center mb-16">
@@ -313,15 +400,15 @@ const AboutPage = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Why choose us */}
             <ScrollReveal animation="fadeRight">
-              <div className="bg-card border border-border p-8 md:p-10 rounded-3xl shadow-sm">
-                <h3 className="text-2xl font-heading font-bold mb-8 text-foreground">Why Businesses Choose Wass</h3>
+              <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/15 border border-emerald-200/80 p-8 md:p-10 rounded-3xl shadow-lg shadow-emerald-900/5">
+                <h3 className="text-2xl font-heading font-bold mb-8 text-emerald-950">Why Businesses Choose Wass</h3>
                 <div className="space-y-6">
                   {SME_FEATURES.map((feature, idx) => (
                     <div key={idx} className="flex items-center gap-4 group">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-emerald-600/15 flex items-center justify-center text-emerald-700 group-hover:bg-emerald-600 group-hover:text-white transition-colors shrink-0">
                         <feature.icon className="w-5 h-5" />
                       </div>
-                      <span className="text-base font-semibold text-foreground">{feature.text}</span>
+                      <span className="text-base font-semibold text-emerald-950">{feature.text}</span>
                     </div>
                   ))}
                 </div>
@@ -331,12 +418,19 @@ const AboutPage = () => {
             {/* Industries Covered */}
             <ScrollReveal animation="fadeLeft" delay={0.1}>
               <div>
-                <h3 className="text-2xl font-heading font-bold mb-8 text-foreground">Industries Covered</h3>
+                <h3 className="text-2xl font-heading font-bold mb-8 text-sky-950">Industries Covered</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {INDUSTRIES.map((industry, idx) => (
-                    <div key={idx} className="flex flex-col items-center justify-center p-6 border border-border rounded-2xl hover:border-primary hover:bg-accent/30 transition-all cursor-default text-center group bg-card shadow-sm hover:shadow-md">
-                      <industry.icon className="w-8 h-8 text-muted-foreground group-hover:text-primary mb-3 transition-colors" />
-                      <span className="text-sm font-semibold text-foreground leading-tight">{industry.name}</span>
+                    <div
+                      key={idx}
+                      className={`flex flex-col items-center justify-center p-6 border rounded-2xl transition-all cursor-default text-center group shadow-sm hover:shadow-md ${
+                        idx % 2 === 0
+                          ? "bg-sky-500/10 border-sky-200 hover:bg-sky-500/20 hover:border-sky-400"
+                          : "bg-teal-500/10 border-teal-200 hover:bg-teal-500/20 hover:border-teal-400"
+                      }`}
+                    >
+                      <industry.icon className={`w-8 h-8 mb-3 transition-colors ${idx % 2 === 0 ? "text-sky-700 group-hover:text-sky-900" : "text-teal-700 group-hover:text-teal-900"}`} />
+                      <span className="text-sm font-semibold text-slate-800 leading-tight">{industry.name}</span>
                     </div>
                   ))}
                 </div>
@@ -347,50 +441,57 @@ const AboutPage = () => {
       </section>
 
       {/* ── INVESTOR & CORPORATE GOVERNANCE ──────────────────────── */}
-      <section className="py-20 bg-accent/30 border-b border-border overflow-hidden">
-        <div className="about-container-full">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-            <div className="lg:col-span-5">
-              <ScrollReveal animation="fadeRight">
-                <span className="about-eyebrow">INVESTOR RELATIONS</span>
-                <h2 className="about-section-heading">
-                  Investor & Corporate <span className="text-primary">Governance</span>
-                </h2>
-                <p className="mt-4 text-muted-foreground text-base md:text-lg mb-8">
-                  We are committed to transparency, accountability, and creating long-term value for our shareholders through robust governance practices.
-                </p>
-                <CTAButton variant="outline" className="w-fit">
-                  View Full Investor Profile
-                </CTAButton>
-              </ScrollReveal>
-            </div>
-            
-            <div className="lg:col-span-7">
-              <ScrollReveal animation="fadeLeft" delay={0.1}>
-                <div className="grid sm:grid-cols-2 gap-4">
+      <section className="bg-white border-b border-border">
+        <div className="about-container-full py-5 md:py-7">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5 items-stretch">
+            <ScrollReveal animation="fadeRight">
+              <div className="claims-featured-img relative z-10 rounded-3xl overflow-hidden h-full !min-h-[250px] md:!min-h-[270px]">
+                <div className="absolute inset-0 -z-10 pointer-events-none rounded-3xl overflow-hidden">
+                  <div className="claims-featured-overlay" />
+                  <div className="claims-featured-pattern" />
+                </div>
+                <div className="claims-featured-img-content relative z-10 gap-3 p-5 md:p-6">
+                  <span className="claims-featured-tag rounded-full">Investor Relations</span>
+                  <h2 className="claims-featured-title !text-[clamp(1.45rem,2vw,1.95rem)]">
+                    Investor & Corporate <span className="claims-featured-title-accent">Governance</span>
+                  </h2>
+                  <p className="claims-featured-desc !leading-relaxed">
+                    We are committed to transparency, accountability, and creating long-term value for our shareholders through robust governance practices.
+                  </p>
+                  <CTAButton variant="outline" className="w-fit border-white/30 !text-white hover:!border-white/60 hover:!bg-white/10">
+                    View Full Investor Profile
+                  </CTAButton>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal animation="fadeLeft" delay={0.1}>
+              <div className="claims-docs-panel rounded-3xl p-5 md:p-6 h-full">
+                <h3 className="claims-docs-title">Corporate Information</h3>
+                <div className="claims-docs-list !gap-2">
                   {CORPORATE_INFO.map((info, idx) => (
-                    <div key={idx} className="flex items-center p-5 bg-card border border-border rounded-xl hover:shadow-md hover:border-primary/50 transition-all cursor-pointer group">
-                      <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center text-muted-foreground group-hover:text-primary mr-4 shrink-0 transition-colors">
-                        <info.icon className="w-6 h-6" />
+                    <div key={idx} className="claims-docs-item rounded-xl px-3 py-2.5 group cursor-pointer transition-colors hover:bg-teal-500/10">
+                      <div className="w-8 h-8 rounded-full bg-teal-500/10 text-teal-600 flex items-center justify-center shrink-0 group-hover:bg-teal-500/20 transition-colors">
+                        <info.icon className="w-4 h-4" />
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-foreground text-base">{info.name}</h4>
-                        <span className="text-xs text-muted-foreground mt-1 flex items-center gap-1 group-hover:text-primary transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-foreground text-sm">{info.name}</h4>
+                        <span className="text-xs text-muted-foreground mt-1 flex items-center gap-1 group-hover:text-teal-700 transition-colors">
                           Learn More <ArrowRight className="w-3 h-3" />
                         </span>
                       </div>
                     </div>
                   ))}
                 </div>
-              </ScrollReveal>
-            </div>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* ── LEADERSHIP ────────────────────────────────────────────── */}
       <section className="about-leadership-section">
-        <div className="about-container">
+        <div className="about-container-full">
           <ScrollReveal>
             <div className="section-header about-section-header">
               <span className="about-eyebrow">LEADERSHIP</span>
@@ -460,7 +561,7 @@ const AboutPage = () => {
 
         /* ─── Shared Layout ──────────────────────────────────── */
         .about-container {
-          max-width: 1120px;
+          max-width: 1300px;
           margin: 0 auto;
           padding: 0 2rem;
         }
@@ -518,7 +619,7 @@ const AboutPage = () => {
 
         /* ─── STORY ──────────────────────────────────────────── */
         .about-story-section {
-          padding: 6rem 0;
+          padding: 6rem 0 3.25rem;
         }
          .about-story-layout {
            display: flex;
@@ -554,34 +655,76 @@ const AboutPage = () => {
          .about-story-pillars {
            display: grid;
            grid-template-columns: 1fr;
-           gap: 2rem;
+           gap: 1.25rem;
          }
          @media (min-width: 768px) {
            .about-story-pillars {
              grid-template-columns: repeat(2, 1fr);
-             gap: 0;
-           }
-           .about-story-pillar + .about-story-pillar {
-             border-left: 1px solid hsl(var(--border));
+             gap: 1.25rem;
            }
          }
-         .about-story-pillar {
-           padding: 0 2.5rem;
+         .about-story-card {
+           position: relative;
+           min-height: 300px;
+           padding: 2rem;
+           border-radius: 1rem;
+           overflow: hidden;
+           text-align: left;
+           border: 1px solid transparent;
+           box-shadow: 0 18px 50px -35px hsl(var(--foreground) / 0.5);
+           transition: border-color 0.28s ease, box-shadow 0.28s ease;
+           will-change: transform;
          }
-         .about-story-pillar strong {
-           display: block;
-           margin-bottom: 0.75rem;
-           color: hsl(var(--foreground));
-           font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+         .about-story-card:hover {
+           border-color: hsl(var(--primary) / 0.18);
+           box-shadow: 0 24px 65px -36px hsl(var(--primary) / 0.45);
+         }
+         .about-story-card--mission {
+           background: hsl(160 40% 90%);
+         }
+         .about-story-card--vision {
+           background: hsl(201 78% 92%);
+         }
+         .about-story-card-pattern {
+           position: absolute;
+           inset: 0;
+           pointer-events: none;
+           overflow: hidden;
+           color: hsl(201 78% 23%);
+         }
+         .about-story-ripple {
+           position: absolute;
+           width: 9.5rem;
+           height: 9.5rem;
+           right: -1.75rem;
+           bottom: -1.75rem;
+         }
+         .about-story-dots {
+           position: absolute;
+           width: 8.75rem;
+           height: 8.75rem;
+           right: -1rem;
+           bottom: -1rem;
+         }
+         .about-story-card-content {
+           position: relative;
+           z-index: 1;
+           display: flex;
+           min-height: 236px;
+           flex-direction: column;
+         }
+         .about-story-card h3 {
+           margin: 0 auto 0 0;
+           font-family: var(--font-heading, inherit);
+           font-size: clamp(1.6rem, 3vw, 2.25rem);
            font-weight: 700;
-           line-height: 1;
-           letter-spacing: -0.05em;
-           text-transform: uppercase;
+           line-height: 1.05;
+           color: hsl(var(--foreground));
          }
-         .about-story-pillar p {
-           margin: 0;
+         .about-zone-2 .about-story-card-desc {
+           margin: 1.5rem 0 1.25rem;
            color: hsl(var(--muted-foreground));
-           font-size: var(--type-body);
+           font-size: 0.95rem;
            line-height: 1.65;
          }
         
@@ -795,18 +938,6 @@ const AboutPage = () => {
         .about-leadership-section {
           padding: 6rem 0;
           border-bottom: 1px solid hsl(var(--border));
-        }
-        .about-leadership-section .about-container {
-          width: 100%;
-          max-width: 1800px;
-          padding-left: 1rem;
-          padding-right: 1rem;
-        }
-        @media (min-width: 1024px) {
-          .about-leadership-section .about-container {
-            padding-left: 2rem;
-            padding-right: 2rem;
-          }
         }
         .about-leadership-list { border-top: 1px solid hsl(var(--border)); }
         .about-leader-row {

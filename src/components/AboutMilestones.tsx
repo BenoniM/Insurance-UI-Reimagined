@@ -1,10 +1,9 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import video2023 from "@/assets/Journey/magnific-2023.mp4";
-import video2025 from "@/assets/Journey/magnific-2025.mp4";
+import journeyPanorama from "@/assets/Journey/ChatGPT Image Jul 14, 2026, 12_39_47 PM.png";
 
 const AboutMilestones = () => {
   return (
-    <section className="py-24 bg-white relative">
+    <section className="pt-12 pb-24 bg-[#F5F3F4] relative">
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <span className="section-badge mb-4 inline-block uppercase">
@@ -18,42 +17,32 @@ const AboutMilestones = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* 2023 Video */}
-          <ScrollReveal animation="fadeUp" delay={0.1}>
-            <div className="flex flex-col items-center group">
-              <div className="w-full aspect-[21/9] overflow-hidden mb-6 relative flex items-center justify-center">
-                <video 
-                  src={video2023} 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
-                />
-              </div>
+        <ScrollReveal animation="fadeUp" delay={0.1}>
+          <div className="relative left-1/2 right-1/2 w-screen -mx-[50vw] px-4 md:px-8 lg:px-12">
+            <div className="overflow-hidden rounded-3xl">
+              <img
+                src={journeyPanorama}
+                alt="Oromia Insurance journey panorama"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <div className="relative left-1/2 right-1/2 mt-10 grid w-screen -mx-[50vw] grid-cols-1 gap-8 px-4 md:grid-cols-2 md:gap-12 md:px-8 lg:px-12">
+          <ScrollReveal animation="fadeUp" delay={0.15}>
+            <div className="text-center md:text-left">
               <h3 className="text-3xl font-bold mb-3 text-foreground font-hero">2023</h3>
-              <p className="text-muted-foreground text-center leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto md:mx-0">
                 Grew partner network to 200+ institutions, serving 50,000+ clients.
               </p>
             </div>
           </ScrollReveal>
 
-          {/* 2025 Video */}
           <ScrollReveal animation="fadeUp" delay={0.2}>
-            <div className="flex flex-col items-center group">
-              <div className="w-full aspect-[21/9] overflow-hidden mb-6 relative flex items-center justify-center">
-                <video 
-                  src={video2025} 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
-                />
-              </div>
+            <div className="text-center md:text-right">
               <h3 className="text-3xl font-bold mb-3 text-foreground font-hero">2025</h3>
-              <p className="text-muted-foreground text-center leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto md:mr-0">
                 12 branches nationwide, leading innovation in Ethiopian insurance.
               </p>
             </div>

@@ -5,6 +5,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { useRef } from "react";
 import CTAButton from "./CTAButton";
 import heroVideo from "@/assets/Hero/magnific_using-the-provided-vector_brEfd8T5Y2.mp4";
+import usePingPongVideo from "@/hooks/usePingPongVideo";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -12,6 +13,7 @@ const HeroSection = () => {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const heroVideoRef = usePingPongVideo(0.7);
 
   useGSAP(() => {
     if (!sectionRef.current) return;
@@ -21,27 +23,27 @@ const HeroSection = () => {
 
     tl.fromTo(".hero-headline",
       { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+      { opacity: 1, y: 0, duration: 1.25, ease: "power3.out" }
     )
       .fromTo(".hero-subtext",
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5 },
-        "-=0.4"
+        { opacity: 1, y: 0, duration: 0.85 },
+        "-=0.55"
       )
       .fromTo(".hero-cta",
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.4 },
-        "-=0.2"
+        { opacity: 1, y: 0, duration: 0.75 },
+        "-=0.3"
       )
       .fromTo(".hero-images",
         { opacity: 0 },
-        { opacity: 1, duration: 0.8 },
-        "-=0.4"
+        { opacity: 1, duration: 1.35 },
+        "-=0.55"
       )
       .fromTo(".trust-strip",
         { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.6 },
-        "-=0.4"
+        { opacity: 1, y: 0, duration: 0.9 },
+        "-=0.5"
       );
   }, { scope: sectionRef });
 
@@ -86,9 +88,9 @@ const HeroSection = () => {
       {/* Background Video */}
       <div className="hero-images opacity-0 absolute inset-0 pointer-events-none z-0">
         <video
+          ref={heroVideoRef}
           src={heroVideo}
           autoPlay
-          loop
           muted
           playsInline
           className="w-full h-full object-cover object-center"

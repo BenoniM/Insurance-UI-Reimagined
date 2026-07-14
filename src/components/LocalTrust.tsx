@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import MultiImg from "@/assets/Insights/e00d5838-0e91-4083-a6c8-e57942d59ab9.png";
 
 /* ─── slide data ─────────────────────────────────────────────── */
 const slides = [
@@ -7,7 +8,7 @@ const slides = [
     title: "Multilingual Support",
     description:
       "Services available in Amharic, English, and Oromifa — so every Ethiopian family can understand their coverage.",
-    img: "https://images.pexels.com/photos/37535096/pexels-photo-37535096.jpeg",
+    img: MultiImg,
     imgAlt: "Team collaborating around a table",
   },
   {

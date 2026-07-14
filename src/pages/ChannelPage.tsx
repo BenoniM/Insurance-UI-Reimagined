@@ -175,11 +175,11 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
       </section>
 
       {content.showBenefits && (
-        <SectionWrapper id="apply" className="bg-white">
+        <SectionWrapper id="apply" className="bg-[hsl(201,78%,98%)]">
           <ScrollReveal>
-            <div className="mb-8 max-w-3xl">
+            <div className="mb-8 max-w-3xl mx-auto text-center">
               <span className="section-badge mb-4 inline-block">BECOME A WIA AGENT</span>
-              <h2 className="section-title text-foreground">
+              <h2 className="section-title text-foreground capitalize">
                 Build your insurance business with WASS
               </h2>
             </div>
@@ -192,21 +192,23 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
               </div>
             ))}
           </div>
-          <div className="mt-8 rounded-lg border border-dashed border-[hsl(160,55%,45%)] bg-[hsl(160,55%,97%)] p-6">
-            <h3 className="font-heading text-xl font-bold text-[hsl(201,78%,20%)]">Online Agent Registration Form</h3>
-            <p className="mt-2 text-gray-600">
+          <div className="mt-8 rounded-lg border border-white/10 bg-[hsl(201,78%,20%)] p-6 text-center">
+            <h3 className="font-heading text-xl font-bold text-white">Online Agent Registration Form</h3>
+            <p className="mx-auto mt-2 max-w-2xl text-white/70">
               Use the application form to register interest. The WASS channels team will review your details and guide you through onboarding.
             </p>
-            <CTAButton href="/agents/apply" className="mt-5">Apply Now</CTAButton>
+            <CTAButton href="/agents/apply" className="mt-5 mx-auto bg-[hsl(160,55%,45%)] bg-none shadow-[0_14px_30px_hsl(160,55%,45%)/0.25] hover:bg-[hsl(160,55%,39%)] hover:opacity-100">
+              Apply Now
+            </CTAButton>
           </div>
         </SectionWrapper>
       )}
 
       <SectionWrapper className="bg-[hsl(201,78%,98%)]">
         <ScrollReveal>
-          <div className="mb-8 max-w-3xl">
+          <div className="mb-8 max-w-3xl mx-auto text-center">
             <span className="section-badge mb-4 inline-block">PORTAL CAPABILITIES</span>
-            <h2 className="section-title text-foreground">
+            <h2 className="section-title text-foreground capitalize">
               What users can do
             </h2>
           </div>

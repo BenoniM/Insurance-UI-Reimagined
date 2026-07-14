@@ -125,7 +125,7 @@ const ComplaintFeedbackSection = () => (
       <ScrollReveal>
         <div className="section-header mb-10">
           <span className="section-badge mb-4 inline-block">COMPLAINT & FEEDBACK</span>
-          <h2 className="section-title mt-4">
+          <h2 className="section-title mt-4 capitalize">
             Tell us how we can <span className="text-primary">serve you better</span>
           </h2>
           <p className="section-description">

@@ -208,7 +208,7 @@ const customerPortalServices = [
 
 const DigitalServices = () => {
   return (
-    <div className="py-12 md:py-20 bg-background overflow-hidden" id="customer-portal">
+    <div className="py-12 md:py-20 bg-[hsl(160,55%,97%)] overflow-hidden border-y border-[hsl(160,55%,45%)]/15" id="customer-portal">
       <ScrollReveal>
         <div className="text-center mb-10 md:mb-16 px-4">
           <span className="section-badge mb-3 inline-block">DIGITAL CUSTOMER SERVICES PORTAL</span>
@@ -222,7 +222,7 @@ const DigitalServices = () => {
       </ScrollReveal>
       <div className="max-w-[1800px] mx-auto px-4 lg:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-8">
         <ScrollReveal animation="fadeLeft">
-          <div className="bg-card border border-border rounded-3xl p-8 h-full shadow-sm">
+          <div className="bg-white border border-[hsl(160,55%,45%)]/20 rounded-3xl p-8 h-full shadow-sm">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <KeyRound className="w-6 h-6 text-primary" />
@@ -255,7 +255,7 @@ const DigitalServices = () => {
 
         {/* Online Services */}
         <ScrollReveal animation="fadeRight" delay={0.1}>
-          <div className="bg-card border border-border rounded-3xl p-8 hover:border-primary/50 transition-colors h-full">
+          <div className="bg-[hsl(201,78%,98%)] border border-[hsl(201,78%,23%)]/15 rounded-3xl p-8 hover:border-primary/50 transition-colors h-full">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <Laptop className="w-6 h-6 text-primary" />
@@ -289,7 +289,7 @@ const claimsCenterItems = [
 
 const ClaimsCenter = () => {
   return (
-    <div className="py-12 md:py-20 bg-accent/30 overflow-hidden border-t border-border border-b" id="digital-claims-center">
+    <div className="py-12 md:py-20 bg-[hsl(201,78%,97%)] overflow-hidden border-t border-[hsl(201,78%,23%)]/15 border-b" id="digital-claims-center">
       <div className="max-w-[1800px] mx-auto px-4 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-10 md:mb-16">
@@ -303,28 +303,28 @@ const ClaimsCenter = () => {
           </div>
         </ScrollReveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="flex flex-wrap justify-center gap-4">
           {claimsCenterItems.map((item, index) => (
-            <ScrollReveal key={item.title} animation="fadeUp" delay={index * 0.04}>
-              <a href={item.href} className="group block h-full bg-card border border-border rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-primary/50 transition-all">
-                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+            <ScrollReveal key={item.title} animation="fadeUp" delay={index * 0.04} className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]">
+              <a href={item.href} className={`group block h-full rounded-2xl border p-5 shadow-sm hover:shadow-md hover:border-primary/50 transition-all ${index % 2 === 0 ? "bg-white border-[hsl(160,55%,45%)]/20" : "bg-[hsl(160,55%,97%)] border-[hsl(201,78%,23%)]/15"}`}>
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors ${index >= 4 ? "mx-auto" : ""} ${index % 2 === 0 ? "bg-[hsl(160,55%,45%)]/10" : "bg-primary/10"}`}>
                   <item.icon className="w-5 h-5 text-primary group-hover:text-current" />
                 </div>
-                <h3 className="font-heading font-bold text-lg text-foreground">{item.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{item.description}</p>
+                <h3 className={`font-heading font-bold text-lg text-foreground ${index >= 4 ? "text-center" : ""}`}>{item.title}</h3>
+                <p className={`text-sm text-muted-foreground mt-2 leading-relaxed ${index >= 4 ? "text-center" : ""}`}>{item.description}</p>
               </a>
             </ScrollReveal>
           ))}
         </div>
 
-        <div id="claim-forms" className="mt-8">
+        <div id="claim-forms" className="mt-10">
           <ScrollReveal animation="fadeUp" delay={0.1}>
-            <div className="bg-card border border-border rounded-3xl p-6 md:p-8 shadow-sm">
-              <h3 className="text-xl font-heading font-bold mb-2 flex items-center gap-2">
-                <FileDown className="w-5 h-5 text-primary" />
+            <div className="w-full bg-[hsl(201,78%,20%)] border border-white/10 rounded-3xl p-6 md:p-8 shadow-sm text-center">
+              <h3 className="text-xl font-heading font-bold mb-2 flex items-center justify-center gap-2 text-white">
+                <FileDown className="w-5 h-5 text-white/90" />
                 Download Claims Forms
               </h3>
-              <p className="text-sm text-muted-foreground mb-6">Download claim forms and requirements by claim type.</p>
+              <p className="text-sm text-white/70 mb-6 max-w-xl mx-auto">Download claim forms and requirements by claim type.</p>
               
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
                 {[
@@ -333,15 +333,15 @@ const ClaimsCenter = () => {
                   "Property Claim Form.pdf",
                   "Travel Claim Form.pdf",
                 ].map((form) => (
-                  <div key={form} className="flex items-center justify-between p-3 rounded-xl border border-border bg-background hover:border-primary/50 hover:bg-primary/5 transition-colors cursor-pointer group">
+                  <div key={form} className="flex items-center justify-between p-3 rounded-xl border border-white/10 bg-white/8 hover:border-white/30 hover:bg-white/12 transition-colors cursor-pointer group">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shrink-0">
-                        <FileText className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                      <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                        <FileText className="w-4 h-4 text-white/65 group-hover:text-white transition-colors" />
                       </div>
-                      <span className="text-xs md:text-sm font-medium text-foreground truncate">{form}</span>
+                      <span className="text-xs md:text-sm font-medium text-white truncate">{form}</span>
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-accent/50 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      <Download className="w-3.5 h-3.5 text-muted-foreground group-hover:text-current" />
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:text-[hsl(201,78%,20%)] transition-colors">
+                      <Download className="w-3.5 h-3.5 text-white/65 group-hover:text-current" />
                     </div>
                   </div>
                 ))}
@@ -366,7 +366,7 @@ const ClaimsPage = () => {
     <ClaimsCenter />
 
     {/* Claims Process Steps */}
-    <div id="claim-procedure" className="py-12 md:py-20 bg-card border-b border-border overflow-hidden">
+    <div id="claim-procedure" className="py-12 md:py-20 bg-[#F5F3F4] border-b border-[hsl(201,78%,23%)]/15 overflow-hidden">
       <ScrollReveal>
         <div className="text-center mb-10 md:mb-16 px-4">
           <span className="section-badge mb-3 inline-block">STEP BY STEP</span>
@@ -429,7 +429,7 @@ const ClaimsPage = () => {
     </div>
 
     {/* Required Documents */}
-    <SectionWrapper id="required-documents" className="bg-accent/30">
+    <SectionWrapper id="required-documents" className="bg-white">
       <div className="max-w-5xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-12">
@@ -451,12 +451,12 @@ const ClaimsPage = () => {
     {/* Important Notice */}
     <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8 my-8 lg:my-12">
       <ScrollReveal>
-        <div className="w-full bg-[hsl(201,78%,20%)] rounded-3xl p-6 lg:p-8 relative overflow-hidden drop-shadow-xl">
+        <div className="w-full bg-[hsl(201,78%,20%)] rounded-3xl p-6 lg:p-8 relative overflow-hidden drop-shadow-xl text-center">
           <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/5 pointer-events-none" />
           <div className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full bg-white/5 pointer-events-none" />
 
           <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center justify-center gap-3 mb-5">
               <AlertTriangle className="w-6 h-6 text-white/90 shrink-0" />
               <h2 className="qupe-heading text-xl md:text-2xl text-white">
                 Important Notice
@@ -470,9 +470,9 @@ const ClaimsPage = () => {
                 "Keep all original documents — photocopies may delay your claim",
                 "False or exaggerated claims are subject to legal action under Ethiopian law",
               ].map((item) => (
-                <div key={item} className="flex items-start gap-2.5">
+                <div key={item} className="flex flex-col items-center gap-2.5">
                   <ArrowRight className="w-4 h-4 mt-0.5 shrink-0 text-white/60" />
-                  <p className="text-white/80 text-xs md:text-sm leading-relaxed">{item}</p>
+                  <p className="text-white/80 text-xs md:text-sm leading-relaxed max-w-xs">{item}</p>
                 </div>
               ))}
             </div>
@@ -484,7 +484,7 @@ const ClaimsPage = () => {
     <DigitalServices />
 
     {/* FAQ — ProcessSteps-style two-column accordion */}
-    <section id="claims-faq" className="pt-6 pb-20 overflow-hidden bg-accent/30">
+    <section id="claims-faq" className="pt-6 pb-20 overflow-hidden bg-[hsl(201,78%,98%)]">
       <div className="flex flex-col lg:flex-row w-full">
 
         {/* ── LEFT column ── */}
