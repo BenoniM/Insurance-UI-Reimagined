@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useRef } from "react";
 import CTAButton from "./CTAButton";
-import heroImage from "@/assets/Hero/magnific_you-will-receive-a-refere_kLFGvVr16B.png";
+import heroVideo from "@/assets/Hero/magnific_using-the-provided-vector_brEfd8T5Y2.mp4";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -83,14 +83,18 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Background Image */}
+      {/* Background Video */}
       <div className="hero-images opacity-0 absolute inset-0 pointer-events-none z-0">
-        <img
-          src={heroImage}
-          alt="Hero background"
-          className="w-full h-full object-cover object-top"
+        <video
+          src={heroVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover object-center"
+          style={{ transform: "translateY(10%)" }}
         />
-        {/* Subtle overlay to help text readability over the image */}
+        {/* Subtle overlay to help text readability */}
         <div className="absolute inset-0 bg-white/20"></div>
       </div>
 

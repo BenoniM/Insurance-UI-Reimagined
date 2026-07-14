@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 import ExpandingHeroSVG from "@/components/ExpandingHeroSVG";
 import GivebackSection from "@/components/GivebackSection";
 import ScrollReveal from "@/components/ScrollReveal";
+import CTAButton from "@/components/CTAButton";
+import csrHeroImage from "@/assets/CsrHero/ChatGPT Image Jul 14, 2026, 10_23_32 AM.png";
 import { useEffect, useState, useRef } from "react";
 import {
   Heart,
@@ -198,13 +200,30 @@ const GivebackPage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <ExpandingHeroSVG
-        badge="GIVEBACK"
-        headline={'Insurance That <span class="text-primary">Gives Back</span>'}
-        subtitle="Earn rewards for healthy living and a claims-free year. WASS puts people first."
-        ctaLabel="Learn More"
-        ctaHref="/quote"
-      />
+      <section className="relative h-screen flex items-center justify-center overflow-hidden px-4">
+        <div className="absolute inset-0 z-0">
+          <img
+            src={csrHeroImage}
+            alt="CSR Background"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto">
+          <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+            GIVEBACK
+          </span>
+          <h1 
+            className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl" 
+            dangerouslySetInnerHTML={{ __html: 'Insurance That <span class="text-[#288A69]">Gives Back</span>' }} 
+          />
+          <p className="text-xl text-muted-foreground max-w-2xl mb-8">
+            Earn rewards for healthy living and a claims-free year. WASS puts people first.
+          </p>
+          <CTAButton href="/quote" size="lg">
+            Learn More
+          </CTAButton>
+        </div>
+      </section>
 
       {/* How it works + causes + impact callout */}
       <GivebackSection />

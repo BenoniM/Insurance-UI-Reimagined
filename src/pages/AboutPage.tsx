@@ -12,7 +12,7 @@ import {
   Landmark, Globe, Truck, FileText, PieChart, BookOpen, 
   Briefcase, Scale, ArrowRight, FileDown 
 } from "lucide-react";
-import aboutHeroImage from "@/assets/AboutHero/Gemini_Generated_Image_67dphh67dphh67dp-Photoroom.png";
+import aboutHeroVideo from "@/assets/AboutHero/magnific_animate-the-provided-flat_tfdpVGumZJ.mp4";
 
 import {
   Carousel,
@@ -149,11 +149,14 @@ const AboutPage = () => {
             Get a Free Quote
           </CTAButton>
         </div>
-        {/* Image bleeds full width outside all horizontal padding */}
+        {/* Video bleeds full width outside all horizontal padding */}
         <div className="w-screen mt-12">
-          <img
-            src={aboutHeroImage}
-            alt="WASS Hero"
+          <video
+            src={aboutHeroVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
             className="w-full h-auto"
           />
         </div>
@@ -185,14 +188,17 @@ const AboutPage = () => {
             </CTAButton>
           </motion.div>
 
-          {/* Hero Image — desktop scroll-animated */}
+          {/* Hero Video — desktop scroll-animated */}
           <motion.div
             className="absolute bottom-0 w-[108vw] left-1/2 z-20 flex flex-col justify-end"
             style={{ y: imageY, x: "-50%" }}
           >
-            <img
-              src={aboutHeroImage}
-              alt="WASS Hero"
+            <video
+              src={aboutHeroVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
               className="w-full h-auto"
             />
           </motion.div>

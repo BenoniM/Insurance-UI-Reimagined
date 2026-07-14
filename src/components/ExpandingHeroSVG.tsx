@@ -203,28 +203,22 @@ const ExpandingHeroSVG = ({
             pointerEvents: "none",
           }}
         >
-          <div className="max-w-3xl mx-auto flex flex-col items-center text-center px-4">
-            <span
-              className="eh-badge inline-block mb-6 px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full bg-primary/20 text-primary border border-primary/30 backdrop-blur-md"
-            >
+          <div className="max-w-3xl flex flex-col items-center text-center px-4">
+            <span className="eh-badge inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6 mt-16">
               {badge}
             </span>
 
             <h1
-              className="eh-headline font-hero text-3xl sm:text-4xl lg:text-5xl leading-[1.1] font-medium tracking-wide capitalize"
-              style={{ color: "hsl(201 80% 20%)" }}
+              className="eh-headline text-4xl md:text-6xl font-bold tracking-tight mb-6 max-w-4xl text-[hsl(201,78%,20%)]"
               dangerouslySetInnerHTML={{ __html: headline }}
             />
 
-            <p
-              className="eh-subtitle mt-6 text-xl max-w-2xl leading-relaxed capitalize"
-              style={{ color: "hsl(201 50% 30%)" }}
-            >
+            <p className="eh-subtitle text-xl text-muted-foreground max-w-2xl mb-8">
               {subtitle}
             </p>
 
-            <div className="eh-cta mt-10">
-              <CTAButton href={ctaHref} variant="primary" size="lg">
+            <div className="eh-cta">
+              <CTAButton href={ctaHref} size="lg">
                 {ctaLabel}
               </CTAButton>
             </div>

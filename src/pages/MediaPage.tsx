@@ -11,6 +11,12 @@ import mediaIcon5 from "@/assets/ChannelsHero/separated_finance_icons_blue/finan
 import mediaIcon6 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_11.png";
 import mediaIcon7 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_12.png";
 import mediaIcon8 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_12.png";
+import ExpandingHero from "@/components/ExpandingHero";
+import ExpandingHeroSVG from "@/components/ExpandingHeroSVG";
+import contactHero1 from "@/assets/ContactHero/ChatGPT Image Jul 10, 2026, 09_02_04 AM (2).png";
+import contactHero2 from "@/assets/ContactHero/ChatGPT Image Jul 10, 2026, 09_38_55 AM (2).png";
+import contactHero3 from "@/assets/ContactHero/ChatGPT Image Jul 10, 2026, 09_38_56 AM (3).png";
+
 
 const mediaPageContent = {
   announcements: {
@@ -151,35 +157,58 @@ const MediaPage = ({ kind }: { kind: MediaPageKind }) => {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <section className="relative flex min-h-screen overflow-hidden bg-white">
-        <style>{`
-          @keyframes media-image-fade {
-            0%, 100% { opacity: 0; transform: scale(.78) translateY(10px); }
-            18%, 64% { opacity: .72; transform: scale(1) translateY(0); }
-            82% { opacity: 0; transform: scale(.9) translateY(-8px); }
-          }
-          .media-hero-image { animation: media-image-fade 12s ease-in-out infinite; }
-          @media (prefers-reduced-motion: reduce) { .media-hero-image { animation: none; opacity: .5; } }
-        `}</style>
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          {mediaHeroImages.map((image, index) => (
-            <img key={image} src={image} alt="" className={`media-hero-image absolute object-contain ${mediaHeroPositions[index]}`} style={{ animationDelay: `${index * -1.5}s` }} />
-          ))}
-        </div>
-        <div className="container relative z-10 mx-auto flex min-h-screen items-center justify-center px-4 py-24 lg:px-8">
-          <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-            <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
-              {content.badge}
-            </span>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl">
-              {content.title}
-            </h1>
-            <p className="text-xl leading-relaxed text-gray-600 max-w-2xl">
-              {content.intro}
-            </p>
+      {kind === "gallery" ? (
+        <ExpandingHero
+          images={[
+            contactHero1,
+            contactHero2,
+            contactHero3,
+          ]}
+          badge={content.badge}
+          headline={content.title}
+          subtitle={content.intro}
+          ctaLabel="Explore Moments"
+          ctaHref="#gallery-grid"
+        />
+      ) : kind === "announcements" ? (
+        <ExpandingHeroSVG
+          badge={content.badge}
+          headline={content.title}
+          subtitle={content.intro}
+          ctaLabel="View Updates"
+          ctaHref="#updates"
+        />
+      ) : (
+        <section className="relative flex min-h-screen overflow-hidden bg-white">
+          <style>{`
+            @keyframes media-image-fade {
+              0%, 100% { opacity: 0; transform: scale(.78) translateY(10px); }
+              18%, 64% { opacity: .72; transform: scale(1) translateY(0); }
+              82% { opacity: 0; transform: scale(.9) translateY(-8px); }
+            }
+            .media-hero-image { animation: media-image-fade 12s ease-in-out infinite; }
+            @media (prefers-reduced-motion: reduce) { .media-hero-image { animation: none; opacity: .5; } }
+          `}</style>
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            {mediaHeroImages.map((image, index) => (
+              <img key={image} src={image} alt="" className={`media-hero-image absolute object-contain ${mediaHeroPositions[index]}`} style={{ animationDelay: `${index * -1.5}s` }} />
+            ))}
           </div>
-        </div>
-      </section>
+          <div className="container relative z-10 mx-auto flex min-h-screen items-center justify-center px-4 py-24 lg:px-8">
+            <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+              <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+                {content.badge}
+              </span>
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl">
+                {content.title}
+              </h1>
+              <p className="text-xl leading-relaxed text-gray-600 max-w-2xl">
+                {content.intro}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {kind === "announcements" ? (
         <AnnouncementsContent />

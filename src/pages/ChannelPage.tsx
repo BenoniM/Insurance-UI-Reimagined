@@ -110,26 +110,7 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <section className="relative flex min-h-screen overflow-hidden bg-white">
-        <style>{`
-          @keyframes channel-image-fade {
-            0%, 100% { opacity: 0; transform: scale(.78) translateY(10px); }
-            18%, 64% { opacity: .72; transform: scale(1) translateY(0); }
-            82% { opacity: 0; transform: scale(.9) translateY(-8px); }
-          }
-          .channel-hero-image { animation: channel-image-fade 12s ease-in-out infinite; }
-          @media (prefers-reduced-motion: reduce) { .channel-hero-image { animation: none; opacity: .5; } }
-        `}</style>
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          {heroImages[kind].map((image, index) => (
-            <img
-              key={image}
-              src={image}
-              alt=""
-              className={`channel-hero-image absolute object-contain ${heroImagePositions[index]}`}
-              style={{ animationDelay: `${index * -1.5}s` }}
-            />
-          ))}
-        </div>
+
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 lg:px-8">
           <div className="flex min-h-screen flex-1 flex-col items-center justify-center px-0 py-24 text-center">
             <div className="flex w-full max-w-4xl flex-col items-center">

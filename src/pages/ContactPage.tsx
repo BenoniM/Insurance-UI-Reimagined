@@ -1,11 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactBlock from "@/components/ContactBlock";
-import ExpandingHero from "@/components/ExpandingHero";
 import SectionWrapper from "@/components/SectionWrapper";
-import contactHero1 from "@/assets/ContactHero/ChatGPT Image Jul 10, 2026, 09_02_04 AM (2).png";
-import contactHero2 from "@/assets/ContactHero/ChatGPT Image Jul 10, 2026, 09_38_55 AM (2).png";
-import contactHero3 from "@/assets/ContactHero/ChatGPT Image Jul 10, 2026, 09_38_56 AM (3).png";
+import contactHeroNew from "@/assets/ContactHero/ChatGPT Image Jul 14, 2026, 09_59_56 AM.png";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ClipboardList, Lightbulb, MessageSquareWarning, Search, Star } from "lucide-react";
 import { useState, useRef } from "react";
@@ -197,18 +194,36 @@ const ComplaintFeedbackSection = () => (
 const ContactPage = () => (
   <div className="min-h-screen">
     <Navbar />
-    <ExpandingHero
-      images={[
-        contactHero1,
-        contactHero2,
-        contactHero3,
-      ]}
-      badge="CONTACT US"
-      headline={'Let\'s <span class="text-primary">Talk</span>'}
-      subtitle="Our team is available 24/7 to answer questions, assist with claims, or help you find the right plan."
-      ctaLabel="Reach Out"
-      ctaHref="/contact"
-    />
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={contactHeroNew} 
+          alt="Contact Background" 
+          className="w-full h-full object-cover" 
+        />
+      </div>
+      
+      <div className="relative z-10 container mx-auto px-4 pt-20 pb-12 flex flex-col items-center text-center">
+        <ScrollReveal>
+          <div className="flex flex-col items-center">
+            <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+              CONTACT US
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl">
+              Let's <span className="text-[#288A69]">Talk</span>
+            </h1>
+            <p className="text-xl leading-relaxed text-gray-600 max-w-2xl mb-8">
+              Our team is available 24/7 to answer questions, assist with claims, or help you find the right plan.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <a href="#branches" className="w-full sm:w-auto rounded-xl bg-[#288A69] px-8 py-4 text-base font-bold text-white transition-all hover:bg-[#288A69]/90 hover:scale-105 hover:shadow-xl hover:shadow-[#288A69]/20 text-center">
+                Reach Out
+              </a>
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
 
     {/* Branch Network */}
     <SectionWrapper>
