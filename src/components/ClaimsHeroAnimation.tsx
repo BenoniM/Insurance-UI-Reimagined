@@ -5,7 +5,7 @@ import claimsBg from '@/assets/ClaimsHero/ChatGPT Image Jul 14, 2026, 10_45_52 A
 
 const ClaimsHeroAnimation = () => {
   return (
-    <div className="relative w-full h-screen min-h-[500px] overflow-hidden bg-background flex items-center justify-center">
+    <div className="relative w-full h-screen min-h-[500px] overflow-hidden bg-[#FBFAFA] flex items-center justify-center">
       {/* Background image */}
       <img
         src={claimsBg}

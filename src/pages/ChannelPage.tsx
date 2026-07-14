@@ -109,9 +109,9 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
   const content = channelContent[kind];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FBFAFA]">
       <Navbar />
-      <section className="relative flex min-h-screen overflow-hidden bg-white">
+      <section className="relative flex min-h-screen overflow-hidden bg-[#FBFAFA]">
         {/* Background image per channel */}
         <img
           src={kind === "wia" ? wiaHeroBg : brokerHeroBg}

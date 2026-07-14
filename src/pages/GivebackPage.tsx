@@ -200,7 +200,7 @@ const GivebackPage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <section className="relative h-screen flex items-center justify-center overflow-hidden px-4">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden px-4 bg-[#FBFAFA]">
         <div className="absolute inset-0 z-0">
           <img
             src={csrHeroImage}

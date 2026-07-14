@@ -194,7 +194,7 @@ const ComplaintFeedbackSection = () => (
 const ContactPage = () => (
   <div className="min-h-screen">
     <Navbar />
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#FBFAFA]">
       <div className="absolute inset-0 z-0">
         <img 
           src={contactHeroNew} 

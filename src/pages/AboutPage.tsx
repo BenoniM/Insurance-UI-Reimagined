@@ -126,11 +126,11 @@ const AboutPage = () => {
   const imageY = useTransform(scrollYProgress, [0, 1], ["55vh", "0vh"]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#FBFAFA]">
       <Navbar />
 
       {/* ── MOBILE HERO (static, no scroll animation) ── */}
-      <div className="block md:hidden bg-background pt-56 pb-0 overflow-hidden">
+      <div className="block md:hidden bg-[#FBFAFA] pt-56 pb-0 overflow-hidden">
         <div className="flex flex-col items-center text-center px-4">
           <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
             ABOUT WASS
@@ -164,7 +164,7 @@ const AboutPage = () => {
 
       {/* ── DESKTOP HERO (scroll-animated) ── */}
       <div ref={heroRef} className="relative h-[200vh] hidden md:block">
-        <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
+        <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#FBFAFA]">
           {/* Text Content */}
           <motion.div
             className="absolute inset-0 flex flex-col items-center justify-center text-center z-30 px-4 pb-[15vh]"
