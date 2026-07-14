@@ -109,7 +109,7 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
   const content = channelContent[kind];
 
   return (
-    <div className="min-h-screen bg-[#FBFAFA]">
+    <div className="min-h-screen overflow-x-clip bg-[#FBFAFA]">
       <Navbar />
       <section className="relative flex min-h-screen overflow-hidden bg-[#FBFAFA]">
         {/* Background image per channel */}

@@ -122,6 +122,7 @@
     font-family: var(--font-body);
     font-size: var(--type-body);
     font-weight: var(--weight-body);
+    overflow-x: clip;
   }
 
   h1,

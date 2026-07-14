@@ -202,7 +202,7 @@ const GivebackPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-clip">
       <Navbar />
       <section className="relative h-screen flex items-center justify-center overflow-hidden px-4 bg-[#FBFAFA]">
         <div className="absolute inset-0 z-0">
@@ -339,17 +339,17 @@ const GivebackPage = () => {
       </section>
 
       {/* FIELD UPDATES — Lemonade-style 4-column icon row */}
-      <section className="py-10 md:py-16 px-6 md:px-12 lg:px-24 border-t border-border" style={{ background: "hsl(var(--surface))" }}>
-        <ScrollReveal>
-          <div className="mb-10 flex flex-col items-center text-center">
-            <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">FIELD UPDATES</p>
-            <h2 className="section-title capitalize text-foreground" style={{ letterSpacing: "-0.025em" }}>
-              Recent impact updates.
-            </h2>
-          </div>
-        </ScrollReveal>
+      <section className="py-10 md:py-16 px-4 lg:px-8 border-t border-border" style={{ background: "hsl(var(--surface))" }}>
+        <div className="w-full max-w-[1800px] mx-auto">
+          <ScrollReveal>
+            <div className="mb-10 flex flex-col items-center text-center">
+              <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3">FIELD UPDATES</p>
+              <h2 className="section-title capitalize text-foreground" style={{ letterSpacing: "-0.025em" }}>
+                Recent impact updates.
+              </h2>
+            </div>
+          </ScrollReveal>
 
-        <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               {

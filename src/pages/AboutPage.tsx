@@ -126,7 +126,7 @@ const AboutPage = () => {
   const imageY = useTransform(scrollYProgress, [0, 1], ["55vh", "0vh"]);
 
   return (
-    <div className="min-h-screen bg-[#FBFAFA]">
+    <div className="min-h-screen overflow-x-clip bg-[#FBFAFA]">
       <Navbar />
 
       {/* ── MOBILE HERO (static, no scroll animation) ── */}

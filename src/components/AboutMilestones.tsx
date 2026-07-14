@@ -18,7 +18,7 @@ const AboutMilestones = () => {
         </div>
 
         <ScrollReveal animation="fadeUp" delay={0.1}>
-          <div className="relative left-1/2 right-1/2 w-screen -mx-[50vw] px-4 md:px-8 lg:px-12">
+          <div className="mx-auto w-full max-w-[1800px] px-0">
             <div className="overflow-hidden rounded-3xl">
               <img
                 src={journeyPanorama}
@@ -29,7 +29,7 @@ const AboutMilestones = () => {
           </div>
         </ScrollReveal>
 
-        <div className="relative left-1/2 right-1/2 mt-10 grid w-screen -mx-[50vw] grid-cols-1 gap-8 px-4 md:grid-cols-2 md:gap-12 md:px-8 lg:px-12">
+        <div className="mx-auto mt-10 grid w-full max-w-[1800px] grid-cols-1 gap-8 px-0 md:grid-cols-2 md:gap-12">
           <ScrollReveal animation="fadeUp" delay={0.15}>
             <div className="text-center md:text-left">
               <h3 className="text-3xl font-bold mb-3 text-foreground font-hero">2023</h3>

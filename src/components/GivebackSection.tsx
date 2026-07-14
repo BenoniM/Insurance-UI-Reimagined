@@ -39,7 +39,7 @@ const GivebackSection = () => {
             {/* Impact callout */}
       <ScrollReveal delay={0.2}>
         <div
-          className="my-8 md:my-10 max-w-[1800px] mx-auto rounded-3xl p-8 md:p-10 bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(201,78%,18%)] text-white shadow-xl relative overflow-hidden hover:scale-[1.005] transition-transform duration-300 md:mx-8"
+          className="relative mx-auto my-8 w-full max-w-[1800px] overflow-hidden rounded-3xl bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(201,78%,18%)] p-8 text-white shadow-xl md:my-10 md:p-10"
         >
           <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-primary/15" />
           <div className="absolute -bottom-12 -left-12 w-40 h-40 rounded-full bg-white/5" />
@@ -81,7 +81,7 @@ const GivebackSection = () => {
         </div>
 
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden py-8 md:py-0 z-10">
-          <div className="section-header mb-8 md:mb-16 relative z-20 px-4 mt-8 md:mt-0">
+          <div className="section-header mb-8 md:mb-16 relative z-20 px-4 mt-8 md:mt-0 w-full max-w-[1800px]">
             <ScrollReveal>
               <span className="section-badge mb-3 md:mb-4 inline-block">WASS GIVEBACK</span>
               <h2 className="section-title mt-2 md:mt-4">
@@ -96,7 +96,7 @@ const GivebackSection = () => {
             </ScrollReveal>
           </div>
 
-          <div className="w-full max-w-[1800px] mx-auto relative px-6 md:px-8 shrink-0">
+          <div className="mx-auto w-full max-w-[1800px] px-4 lg:px-8 shrink-0">
             <div className="flex flex-col divide-y divide-border/60">
               {steps.map((step, i) => {
                 const isActive = activeStepIndex === i;
