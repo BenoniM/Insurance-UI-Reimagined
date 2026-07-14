@@ -4,7 +4,7 @@ import ExpandingHeroSVG from "@/components/ExpandingHeroSVG";
 import GivebackSection from "@/components/GivebackSection";
 import ScrollReveal from "@/components/ScrollReveal";
 import CTAButton from "@/components/CTAButton";
-import csrHeroImage from "@/assets/CsrHero/ChatGPT Image Jul 14, 2026, 10_23_32 AM.png";
+import csrHeroImage from "@/assets/CsrHero/ChatGPT Image Jul 14, 2026, 10_23_32 AM.webp";
 import { useEffect, useState, useRef } from "react";
 import {
   Heart,
@@ -206,6 +206,8 @@ const GivebackPage = () => {
             src={csrHeroImage}
             alt="CSR Background"
             className="w-full h-full object-cover"
+            fetchPriority="high"
+            loading="eager"
           />
         </div>
         <div className="relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto">

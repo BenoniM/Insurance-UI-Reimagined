@@ -34,8 +34,8 @@ import wiaIcon5 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/gre
 import wiaIcon6 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_06.png";
 import wiaIcon7 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_07.png";
 import wiaIcon8 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_08.png";
-import wiaHeroBg from "@/assets/ChannelsHero/ChatGPT Image Jul 14, 2026, 11_07_50 AM.png";
-import brokerHeroBg from "@/assets/ChannelsHero/ChatGPT Image Jul 14, 2026, 11_01_40 AM.png";
+import wiaHeroBg from "@/assets/ChannelsHero/ChatGPT Image Jul 14, 2026, 11_07_50 AM.webp";
+import brokerHeroBg from "@/assets/ChannelsHero/ChatGPT Image Jul 14, 2026, 11_01_40 AM.webp";
 
 const sharedPortalActions = [
   "Request Quote",
@@ -118,7 +118,9 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          style={{ transform: kind === "wia" ? "translateY(5%)" : "translateY(15%)" }}
+          style={{ transform: kind === "wia" ? "translateY(6%)" : "translateY(15%)" }}
+          fetchPriority="high"
+          loading="eager"
         />
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 lg:px-8">
           <div className="flex min-h-screen flex-1 flex-col items-center justify-center px-0 py-24 text-center">
