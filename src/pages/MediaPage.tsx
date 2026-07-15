@@ -1,4 +1,5 @@
-import { BriefcaseBusiness, Camera, FileText, Landmark, Megaphone, Newspaper } from "lucide-react";
+import { useState, useMemo } from "react";
+import { BriefcaseBusiness, Camera, FileText, Landmark, Megaphone, Newspaper, Sparkles, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SectionWrapper from "@/components/SectionWrapper";
@@ -110,45 +111,294 @@ const announcementSections = [
   },
 ];
 
-const AnnouncementsContent = () => (
-  <>
+const articleSections = [
+  {
+    title: "Insurance Guides",
+    icon: FileText,
+    description: "Step-by-step guides on choosing the right coverage and understanding your policy.",
+    items: [
+      {
+        title: "How to choose the best car insurance",
+        meta: "Auto Insurance",
+        detail: "A comprehensive guide on evaluating comprehensive vs third-party insurance for your vehicle.",
+      },
+      {
+        title: "Understanding health insurance limits",
+        meta: "Health Insurance",
+        detail: "What you need to know about inpatient, outpatient, and specialized medical limits.",
+      },
+    ],
+  },
+  {
+    title: "Risk Awareness",
+    icon: Megaphone,
+    description: "Insights on identifying and mitigating risks in your personal and business life.",
+    items: [
+      {
+        title: "Fire safety for small businesses",
+        meta: "Business Protection",
+        detail: "Top 5 ways to prevent electrical and accidental fires in retail and office spaces.",
+      },
+      {
+        title: "Monsoon season driving tips",
+        meta: "Auto Safety",
+        detail: "How to navigate heavy rains and flooded roads safely this kiremt season.",
+      },
+    ],
+  },
+  {
+    title: "Claims Education",
+    icon: BriefcaseBusiness,
+    description: "Everything you need to know about filing a claim and getting settled fast.",
+    items: [
+      {
+        title: "What to do immediately after a car accident",
+        meta: "Claims Process",
+        detail: "A quick checklist of the necessary steps from calling traffic police to notifying your insurer.",
+      },
+      {
+        title: "Documenting property damage for quick claims",
+        meta: "Property Claims",
+        detail: "Learn the right way to take photos and prepare documentation to speed up your claim.",
+      },
+    ],
+  },
+  {
+    title: "Customer Protection Tips",
+    icon: Landmark,
+    description: "Learn how to safeguard your data, recognize fraud, and protect your family.",
+    items: [
+      {
+        title: "How to spot insurance fraud",
+        meta: "Security",
+        detail: "Common red flags and how WASS is leveraging technology to protect honest customers.",
+      },
+      {
+        title: "Keeping your personal data secure",
+        meta: "Privacy",
+        detail: "Our commitment to data privacy and steps you can take to secure your online interactions.",
+      },
+    ],
+  },
+];
 
-    {announcementSections.map((section, index) => {
-      const Icon = section.icon;
-      return (
-        <section key={section.title} className={index % 2 === 0 ? "bg-white" : "bg-[hsl(201,78%,98%)]"}>
-          <div className="container mx-auto px-4 py-12 md:px-8 md:py-16">
-            <ScrollReveal>
-              <div className="mb-7 flex max-w-3xl flex-col gap-4 md:flex-row md:items-start">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[hsl(160,55%,45%)] text-white">
-                  <Icon className="h-6 w-6" />
+const AnnouncementsContent = () => {
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+
+  const allItems = useMemo(() => {
+    return announcementSections.flatMap(section => 
+      section.items.map(item => ({
+        ...item,
+        category: section.title,
+        icon: section.icon,
+      }))
+    );
+  }, []);
+
+  const filteredItems = useMemo(() => {
+    if (activeCategory === "all") return allItems;
+    return allItems.filter(item => item.category === activeCategory);
+  }, [activeCategory, allItems]);
+
+  const getCategoryCounts = () => {
+    const counts: Record<string, number> = {};
+    announcementSections.forEach(section => {
+      counts[section.title] = section.items.length;
+    });
+    return counts;
+  };
+  const categoryCounts = getCategoryCounts();
+
+  return (
+    <SectionWrapper id="latest-announcements" className="bg-white py-16">
+      <div className="mb-10">
+        <ScrollReveal>
+          <div className="section-header mb-8">
+            <span className="section-badge mb-4 inline-block">LATEST UPDATES</span>
+            <h2 className="section-title">
+              Announcements
+            </h2>
+            <p className="section-description">
+              Official updates from WASS Insurance, including service launches, partnerships, branch news, and company notices.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="flex flex-wrap justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => setActiveCategory("all")}
+            className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all ${
+              activeCategory === "all"
+                ? "border-foreground bg-foreground text-background shadow-lg shadow-foreground/10"
+                : "border-border bg-card text-foreground hover:bg-muted"
+            }`}
+          >
+            <Sparkles className="w-4 h-4" />
+            All Announcements
+            <span className={`rounded-full px-2 py-0.5 text-[11px] ${activeCategory === "all" ? "bg-background/15" : "bg-muted text-muted-foreground"}`}>
+              {allItems.length}
+            </span>
+          </button>
+          
+          {announcementSections.map((section) => (
+            <button
+              key={section.title}
+              type="button"
+              onClick={() => setActiveCategory(section.title)}
+              className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all hover:-translate-y-0.5 ${
+                activeCategory === section.title
+                  ? "border-[hsl(160,55%,45%)] bg-[hsl(160,55%,45%)] text-white shadow-lg shadow-[hsl(160,55%,45%)]/20"
+                  : "border-border bg-card text-[hsl(160,55%,45%)] hover:bg-muted"
+              }`}
+            >
+              <section.icon className="w-4 h-4" />
+              {section.title}
+              <span className={`rounded-full px-2 py-0.5 text-[11px] ${activeCategory === section.title ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"}`}>
+                {categoryCounts[section.title] || 0}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {filteredItems.map((item, i) => {
+          const CategoryIcon = item.icon;
+          return (
+            <ScrollReveal key={item.title} animation="fadeUp" delay={i * 0.06}>
+              <div className="qupe-card h-full flex flex-col transition-all duration-300 hover:-translate-y-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-1 bg-[hsl(160,55%,96%)] text-[hsl(160,55%,35%)]">
+                    <CategoryIcon className="w-3.5 h-3.5" />
+                    {item.category}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-1 bg-muted/50 text-muted-foreground border border-border/50">
+                    {item.meta}
+                  </span>
                 </div>
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-[hsl(160,55%,35%)]">Announcements · {String(index + 1).padStart(2, "0")}</span>
-                  <h2 className="mt-2 font-heading text-3xl font-bold text-[hsl(201,78%,20%)]">{section.title}</h2>
-                  <p className="mt-2 max-w-2xl leading-relaxed text-gray-600">{section.description}</p>
-                </div>
+                <h3 className="font-heading font-semibold text-lg text-foreground mb-3 group-hover:text-primary transition-colors">{item.title}</h3>
+                <p className="text-sm text-muted-foreground mb-5 leading-relaxed flex-1">{item.detail}</p>
+                <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all cursor-pointer">
+                  View Details <ArrowRight className="w-3.5 h-3.5" />
+                </span>
               </div>
             </ScrollReveal>
-            <div className="grid gap-5 md:grid-cols-2">
-              {section.items.map((item, itemIndex) => (
-                <ScrollReveal key={item.title} delay={itemIndex * 0.08}>
-                  <article className="h-full rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-                    <span className="inline-flex rounded-full bg-[hsl(160,55%,96%)] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[hsl(160,55%,35%)]">
-                      {item.meta}
-                    </span>
-                    <h3 className="mt-4 font-heading text-xl font-bold text-[hsl(201,78%,20%)]">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-gray-600">{item.detail}</p>
-                  </article>
-                </ScrollReveal>
-              ))}
-            </div>
+          );
+        })}
+      </div>
+    </SectionWrapper>
+  );
+};
+
+const ArticlesContent = () => {
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+
+  const allItems = useMemo(() => {
+    return articleSections.flatMap(section => 
+      section.items.map(item => ({
+        ...item,
+        category: section.title,
+        icon: section.icon,
+      }))
+    );
+  }, []);
+
+  const filteredItems = useMemo(() => {
+    if (activeCategory === "all") return allItems;
+    return allItems.filter(item => item.category === activeCategory);
+  }, [activeCategory, allItems]);
+
+  const getCategoryCounts = () => {
+    const counts: Record<string, number> = {};
+    articleSections.forEach(section => {
+      counts[section.title] = section.items.length;
+    });
+    return counts;
+  };
+  const categoryCounts = getCategoryCounts();
+
+  return (
+    <SectionWrapper id="latest-articles" className="bg-white py-16">
+      <div className="mb-10">
+        <ScrollReveal>
+          <div className="section-header mb-8">
+            <span className="section-badge mb-4 inline-block">INSIGHTS & GUIDES</span>
+            <h2 className="section-title">
+              Articles
+            </h2>
+            <p className="section-description">
+              Insurance awareness articles, practical guides, and expert insights to help customers make confident protection decisions.
+            </p>
           </div>
-        </section>
-      );
-    })}
-  </>
-);
+        </ScrollReveal>
+
+        <div className="flex flex-wrap justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => setActiveCategory("all")}
+            className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all ${
+              activeCategory === "all"
+                ? "border-foreground bg-foreground text-background shadow-lg shadow-foreground/10"
+                : "border-border bg-card text-foreground hover:bg-muted"
+            }`}
+          >
+            <Sparkles className="w-4 h-4" />
+            All Articles
+            <span className={`rounded-full px-2 py-0.5 text-[11px] ${activeCategory === "all" ? "bg-background/15" : "bg-muted text-muted-foreground"}`}>
+              {allItems.length}
+            </span>
+          </button>
+          
+          {articleSections.map((section) => (
+            <button
+              key={section.title}
+              type="button"
+              onClick={() => setActiveCategory(section.title)}
+              className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all hover:-translate-y-0.5 ${
+                activeCategory === section.title
+                  ? "border-[hsl(160,55%,45%)] bg-[hsl(160,55%,45%)] text-white shadow-lg shadow-[hsl(160,55%,45%)]/20"
+                  : "border-border bg-card text-[hsl(160,55%,45%)] hover:bg-muted"
+              }`}
+            >
+              <section.icon className="w-4 h-4" />
+              {section.title}
+              <span className={`rounded-full px-2 py-0.5 text-[11px] ${activeCategory === section.title ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"}`}>
+                {categoryCounts[section.title] || 0}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {filteredItems.map((item, i) => {
+          const CategoryIcon = item.icon;
+          return (
+            <ScrollReveal key={item.title} animation="fadeUp" delay={i * 0.06}>
+              <div className="qupe-card h-full flex flex-col transition-all duration-300 hover:-translate-y-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-1 bg-[hsl(160,55%,96%)] text-[hsl(160,55%,35%)]">
+                    <CategoryIcon className="w-3.5 h-3.5" />
+                    {item.category}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-1 bg-muted/50 text-muted-foreground border border-border/50">
+                    {item.meta}
+                  </span>
+                </div>
+                <h3 className="font-heading font-semibold text-lg text-foreground mb-3 group-hover:text-primary transition-colors">{item.title}</h3>
+                <p className="text-sm text-muted-foreground mb-5 leading-relaxed flex-1">{item.detail}</p>
+                <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all cursor-pointer">
+                  Read Article <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </ScrollReveal>
+          );
+        })}
+      </div>
+    </SectionWrapper>
+  );
+};
 
 const MediaPage = ({ kind }: { kind: MediaPageKind }) => {
   const content = mediaPageContent[kind];
@@ -212,6 +462,8 @@ const MediaPage = ({ kind }: { kind: MediaPageKind }) => {
 
       {kind === "announcements" ? (
         <AnnouncementsContent />
+      ) : kind === "articles" ? (
+        <ArticlesContent />
       ) : (
         <SectionWrapper>
           <ScrollReveal>
