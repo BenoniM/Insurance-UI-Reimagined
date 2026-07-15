@@ -313,7 +313,145 @@ const catalogue: RawCategory[] = [
           cta_text: "Get a Quote",
         },
       },
-      // 5. Engineering Insurance
+      // 5. Liability Insurance
+      {
+        name: "Liability Insurance",
+        name_am: "የተጠያቂነት ኢንሹራንስ",
+        slug: "liability-insurance",
+        icon: "Shield",
+        children: [
+          {
+            slug: "liability-public",
+            name: "Public Liability",
+            name_am: "የህዝብ ተጠያቂነት ኢንሹራንስ",
+            short_description: "Covers claims from third parties injured or whose property is damaged on your premises.",
+            short_description_am: "በግቢዎ ላይ ለሚደርስ የሶስተኛ ወገን ጉዳት ወይም የንብረት ጉዳት ይሸፍናል።",
+            full_description:
+              "Protects your business against claims of injury or property damage suffered by members of the public as a result of your business operations or premises.",
+            full_description_am:
+              "ንግድዎ በስራው ወይም በግቢው ምክንያት በህዝብ ላይ ለሚደርስ ጉዳት ጥያቄዎችን ይጠብቃል።",
+            coverage_list: ["Third-party bodily injury claims", "Third-party property damage claims", "Legal defense costs", "Court attendance costs"],
+            exclusions: ["Employee injuries (see Workmen's Compensation)", "Intentional acts", "Contractual liability", "Professional advice errors"],
+            pricing_rules: { base_rate: 6000 },
+            cta_text: "Get a Quote",
+          },
+          {
+            slug: "liability-product",
+            name: "Product Liability",
+            name_am: "የምርት ተጠያቂነት ኢንሹራንስ",
+            short_description: "Covers claims arising from injury or damage caused by products you manufacture or sell.",
+            short_description_am: "በሚያመርቱት ወይም በሚሸጡት ምርት ምክንያት ለሚደርስ ጉዳት ጥያቄዎችን ይሸፍናል።",
+            full_description:
+              "For manufacturers, distributors, and retailers — covers legal liability for injury or property damage caused by a defect in a product once it has left your premises.",
+            full_description_am:
+              "ለአምራቾች እና ለችርቻሮ ንግዶች የተዘጋጀ፣ በምርት ችግር ምክንያት ለሚደርስ ጉዳት የህግ ተጠያቂነትን ይሸፍናል።",
+            coverage_list: ["Bodily injury from defective products", "Property damage from defective products", "Product recall costs (optional rider)", "Legal defense costs"],
+            exclusions: ["Known defects at time of sale", "Intentional misrepresentation", "Pure financial loss", "Products outside declared use"],
+            pricing_rules: { base_rate: 7500 },
+            cta_text: "Get a Quote",
+          },
+          {
+            slug: "liability-carriers",
+            name: "Carrier's Liability",
+            name_am: "የአጓጓዥ ተጠያቂነት ኢንሹራንስ",
+            short_description: "Covers a transporter's legal liability for goods lost or damaged in their care.",
+            short_description_am: "አጓጓዦችን ለተያዙ ዕቃዎች ጉዳት ተጠያቂነት ይሸፍናል።",
+            full_description:
+              "Protects freight operators and haulage companies against legal liability for loss or damage to customers' goods while under their care, custody, and control.",
+            full_description_am:
+              "የጭነት አጓጓዦችን ደንበኞቻቸው ላደራቸው ዕቃ ለሚደርስ ጉዳት ተጠያቂነት ይጠብቃል።",
+            coverage_list: ["Liability for goods lost in transit", "Liability for goods damaged in transit", "Legal defense costs", "Cover across declared routes"],
+            exclusions: ["Inherent vice of goods carried", "Inadequate packing by shipper", "Unlicensed or unauthorized carriers"],
+            pricing_rules: { base_rate: 4000 },
+            cta_text: "Get a Quote",
+          },
+          {
+            slug: "liability-directors-officers",
+            name: "Directors' & Officers' Liability",
+            name_am: "የዳይሬክተሮች እና ኃላፊዎች ተጠያቂነት ኢንሹራንስ",
+            short_description: "Protects company leadership from personal liability for management decisions.",
+            short_description_am: "የኩባንያ አመራሮችን ከግል ተጠያቂነት ይጠብቃል።",
+            full_description:
+              "Covers directors and senior officers against claims alleging wrongful acts, errors, or breaches of duty in the course of managing the company.",
+            full_description_am:
+              "ዳይሬክተሮችን እና ከፍተኛ ኃላፊዎችን ኩባንያውን በማስተዳደር ላይ ላደረጉት ውሳኔ ከሚነሳ ክስ ይጠብቃል።",
+            coverage_list: ["Defense costs for wrongful act claims", "Damages awarded against directors", "Regulatory investigation costs", "Employment practices claims (optional rider)"],
+            exclusions: ["Fraudulent or criminal acts", "Fines and penalties imposed by regulators", "Known claims before policy inception"],
+            pricing_rules: { base_rate: 15000 },
+            cta_text: "Get a Quote",
+          },
+          {
+            slug: "liability-professional-indemnity",
+            name: "Professional Indemnity",
+            name_am: "የሙያ ካሳ ኢንሹራንስ",
+            short_description: "Covers claims of negligence, errors, or omissions in professional services you provide.",
+            short_description_am: "በሙያ አገልግሎትዎ ውስጥ ለሚፈጠር ስህተት ወይም ግድፈት ካሳ ይሸፍናል።",
+            full_description:
+              "Essential for consultants, engineers, accountants, and other professionals — covers legal costs and damages if a client claims your advice, design, or service caused them financial loss.",
+            full_description_am:
+              "ለአማካሪዎች፣ ለምህንድስና ባለሙያዎች እና ለሂሳብ ባለሙያዎች የተዘጋጀ፣ በምክር ወይም አገልግሎት ምክንያት ለሚደርስ ኪሳራ ካሳ ይሸፍናል።",
+            coverage_list: ["Negligence claims", "Errors and omissions", "Legal defense costs", "Breach of professional duty", "Loss of documents"],
+            exclusions: ["Fraudulent or dishonest acts", "Bodily injury or property damage claims", "Fines and penalties", "Known claims before inception"],
+            pricing_rules: { base_rate: 9000 },
+            cta_text: "Get a Quote",
+          },
+          {
+            slug: "liability-workmens-compensation",
+            name: "Workmen's Compensation Insurance",
+            name_am: "የሠራተኛ ካሳ ኢንሹራንስ",
+            short_description: "Covers your legal liability to employees injured or disabled while at work.",
+            short_description_am: "ሠራተኞች በስራ ላይ ለሚደርስባቸው ጉዳት ተጠያቂነት ይሸፍናል።",
+            full_description:
+              "Meets your statutory obligation to compensate employees for injury, disability, or death arising out of and in the course of their employment.",
+            full_description_am:
+              "ሠራተኞች በስራ ምክንያት ለሚደርስባቸው ጉዳት፣ ውለታ ወይም ሞት ካሳ የመስጠት የህግ ግዴታን ይሸፍናል።",
+            coverage_list: ["Compensation for workplace injury", "Compensation for permanent disability", "Death benefit to dependents", "Medical expense reimbursement"],
+            exclusions: ["Self-inflicted injury", "Injury while under influence at work", "Injury outside the course of employment"],
+            pricing_rules: { base_rate: 3000 },
+            cta_text: "Get a Quote",
+          },
+        ],
+      },
+      // 6. General Accident Insurance
+      {
+        name: "General Accident Insurance",
+        name_am: "አጠቃላይ አደጋ ኢንሹራንስ",
+        slug: "general-accident-insurance",
+        icon: "Heart",
+        children: [
+          {
+            slug: "personal-accident",
+            name: "Personal Accident",
+            name_am: "የግል አደጋ ኢንሹራንስ",
+            short_description: "Lump-sum payouts for accidental death, disability, or injury — anytime, anywhere.",
+            short_description_am: "ለድንገተኛ ሞት፣ ውለታ ወይም ጉዳት ክፍያ ይሰጣል።",
+            full_description:
+              "A straightforward policy that pays out a lump sum if you suffer accidental death, permanent disability, or temporary disability — on the road, at work, or at home, 24 hours a day.",
+            full_description_am:
+              "በመንገድ ላይ፣ በስራ ቦታ ወይም በቤት ውስጥ ለሚደርስ ድንገተኛ ሞት ወይም ውለታ የክፍያ ፖሊሲ።",
+            coverage_list: ["Accidental death benefit", "Permanent total disability", "Permanent partial disability", "Temporary total disability weekly benefit", "Medical expense reimbursement"],
+            exclusions: ["Self-inflicted injury", "Injury while under influence", "Pre-existing disabilities", "Hazardous sports (unless declared)"],
+            pricing_rules: { base_rate: 900 },
+            cta_text: "Get a Quote",
+          },
+          {
+            slug: "group-personal-accident",
+            name: "Group Personal Accident",
+            name_am: "የቡድን የግል አደጋ ኢንሹራንስ",
+            short_description: "Bundled personal accident cover for a company's entire workforce.",
+            short_description_am: "ለድርጅት ሁሉም ሠራተኞች የተጣመረ የግል አደጋ ሽፋን።",
+            full_description:
+              "Lets employers provide accidental death and disability cover to all staff under one master policy, with simplified enrollment and consistent benefit levels.",
+            full_description_am:
+              "አሰሪዎች ለሁሉም ሠራተኞች በአንድ ፖሊሲ ስር የአደጋ ሽፋን እንዲሰጡ ያስችላል።",
+            coverage_list: ["Accidental death benefit per employee", "Permanent and temporary disability cover", "Simplified group enrollment", "Consistent benefit tiers by role"],
+            exclusions: ["Self-inflicted injury", "Injury while under influence", "Employees below minimum group size", "Hazardous sports (unless declared)"],
+            pricing_rules: { base_rate: 700 },
+            cta_text: "Cover Your Team",
+          },
+        ],
+      },
+      // 7. Engineering Insurance
       {
         name: "Engineering Insurance",
         name_am: "የምህንድስና ኢንሹራንስ",
@@ -439,144 +577,6 @@ const catalogue: RawCategory[] = [
             exclusions: ["Stock past its normal shelf life", "Wear and tear of refrigeration units", "Deliberate power disconnection"],
             pricing_rules: { base_rate: 6500 },
             cta_text: "Get a Quote",
-          },
-        ],
-      },
-      // 6. Liability Insurance
-      {
-        name: "Liability Insurance",
-        name_am: "የተጠያቂነት ኢንሹራንስ",
-        slug: "liability-insurance",
-        icon: "Shield",
-        children: [
-          {
-            slug: "liability-public",
-            name: "Public Liability",
-            name_am: "የህዝብ ተጠያቂነት ኢንሹራንስ",
-            short_description: "Covers claims from third parties injured or whose property is damaged on your premises.",
-            short_description_am: "በግቢዎ ላይ ለሚደርስ የሶስተኛ ወገን ጉዳት ወይም የንብረት ጉዳት ይሸፍናል።",
-            full_description:
-              "Protects your business against claims of injury or property damage suffered by members of the public as a result of your business operations or premises.",
-            full_description_am:
-              "ንግድዎ በስራው ወይም በግቢው ምክንያት በህዝብ ላይ ለሚደርስ ጉዳት ጥያቄዎችን ይጠብቃል።",
-            coverage_list: ["Third-party bodily injury claims", "Third-party property damage claims", "Legal defense costs", "Court attendance costs"],
-            exclusions: ["Employee injuries (see Workmen's Compensation)", "Intentional acts", "Contractual liability", "Professional advice errors"],
-            pricing_rules: { base_rate: 6000 },
-            cta_text: "Get a Quote",
-          },
-          {
-            slug: "liability-product",
-            name: "Product Liability",
-            name_am: "የምርት ተጠያቂነት ኢንሹራንስ",
-            short_description: "Covers claims arising from injury or damage caused by products you manufacture or sell.",
-            short_description_am: "በሚያመርቱት ወይም በሚሸጡት ምርት ምክንያት ለሚደርስ ጉዳት ጥያቄዎችን ይሸፍናል።",
-            full_description:
-              "For manufacturers, distributors, and retailers — covers legal liability for injury or property damage caused by a defect in a product once it has left your premises.",
-            full_description_am:
-              "ለአምራቾች እና ለችርቻሮ ንግዶች የተዘጋጀ፣ በምርት ችግር ምክንያት ለሚደርስ ጉዳት የህግ ተጠያቂነትን ይሸፍናል።",
-            coverage_list: ["Bodily injury from defective products", "Property damage from defective products", "Product recall costs (optional rider)", "Legal defense costs"],
-            exclusions: ["Known defects at time of sale", "Intentional misrepresentation", "Pure financial loss", "Products outside declared use"],
-            pricing_rules: { base_rate: 7500 },
-            cta_text: "Get a Quote",
-          },
-          {
-            slug: "liability-carriers",
-            name: "Carrier's Liability",
-            name_am: "የአጓጓዥ ተጠያቂነት ኢንሹራንስ",
-            short_description: "Covers a transporter's legal liability for goods lost or damaged in their care.",
-            short_description_am: "አጓጓዦችን ለተያዙ ዕቃዎች ጉዳት ተጠያቂነት ይሸፍናል።",
-            full_description:
-              "Protects freight operators and haulage companies against legal liability for loss or damage to customers' goods while under their care, custody, and control.",
-            full_description_am:
-              "የጭነት አጓጓዦችን ደንበኞቻቸው ላደራቸው ዕቃ ለሚደርስ ጉዳት ተጠያቂነት ይጠብቃል።",
-            coverage_list: ["Liability for goods lost in transit", "Liability for goods damaged in transit", "Legal defense costs", "Cover across declared routes"],
-            exclusions: ["Inherent vice of goods carried", "Inadequate packing by shipper", "Unlicensed or unauthorized carriers"],
-            pricing_rules: { base_rate: 4000 },
-            cta_text: "Get a Quote",
-          },
-          {
-            slug: "liability-directors-officers",
-            name: "Directors' & Officers' Liability",
-            name_am: "የዳይሬክተሮች እና ኃላፊዎች ተጠያቂነት ኢንሹራንስ",
-            short_description: "Protects company leadership from personal liability for management decisions.",
-            short_description_am: "የኩባንያ አመራሮችን ከግል ተጠያቂነት ይጠብቃል።",
-            full_description:
-              "Covers directors and senior officers against claims alleging wrongful acts, errors, or breaches of duty in the course of managing the company.",
-            full_description_am:
-              "ዳይሬክተሮችን እና ከፍተኛ ኃላፊዎችን ኩባንያውን በማስተዳደር ላይ ላደረጉት ውሳኔ ከሚነሳ ክስ ይጠብቃል።",
-            coverage_list: ["Defense costs for wrongful act claims", "Damages awarded against directors", "Regulatory investigation costs", "Employment practices claims (optional rider)"],
-            exclusions: ["Fraudulent or criminal acts", "Fines and penalties imposed by regulators", "Known claims before policy inception"],
-            pricing_rules: { base_rate: 15000 },
-            cta_text: "Get a Quote",
-          },
-          {
-            slug: "liability-professional-indemnity",
-            name: "Professional Indemnity",
-            name_am: "የሙያ ካሳ ኢንሹራንስ",
-            short_description: "Covers claims of negligence, errors, or omissions in professional services you provide.",
-            short_description_am: "በሙያ አገልግሎትዎ ውስጥ ለሚፈጠር ስህተት ወይም ግድፈት ካሳ ይሸፍናል።",
-            full_description:
-              "Essential for consultants, engineers, accountants, and other professionals — covers legal costs and damages if a client claims your advice, design, or service caused them financial loss.",
-            full_description_am:
-              "ለአማካሪዎች፣ ለምህንድስና ባለሙያዎች እና ለሂሳብ ባለሙያዎች የተዘጋጀ፣ በምክር ወይም አገልግሎት ምክንያት ለሚደርስ ኪሳራ ካሳ ይሸፍናል።",
-            coverage_list: ["Negligence claims", "Errors and omissions", "Legal defense costs", "Breach of professional duty", "Loss of documents"],
-            exclusions: ["Fraudulent or dishonest acts", "Bodily injury or property damage claims", "Fines and penalties", "Known claims before inception"],
-            pricing_rules: { base_rate: 9000 },
-            cta_text: "Get a Quote",
-          },
-          {
-            slug: "liability-workmens-compensation",
-            name: "Workmen's Compensation Insurance",
-            name_am: "የሠራተኛ ካሳ ኢንሹራንስ",
-            short_description: "Covers your legal liability to employees injured or disabled while at work.",
-            short_description_am: "ሠራተኞች በስራ ላይ ለሚደርስባቸው ጉዳት ተጠያቂነት ይሸፍናል።",
-            full_description:
-              "Meets your statutory obligation to compensate employees for injury, disability, or death arising out of and in the course of their employment.",
-            full_description_am:
-              "ሠራተኞች በስራ ምክንያት ለሚደርስባቸው ጉዳት፣ ውለታ ወይም ሞት ካሳ የመስጠት የህግ ግዴታን ይሸፍናል።",
-            coverage_list: ["Compensation for workplace injury", "Compensation for permanent disability", "Death benefit to dependents", "Medical expense reimbursement"],
-            exclusions: ["Self-inflicted injury", "Injury while under influence at work", "Injury outside the course of employment"],
-            pricing_rules: { base_rate: 3000 },
-            cta_text: "Get a Quote",
-          },
-        ],
-      },
-      // 7. General Accident Insurance
-      {
-        name: "General Accident Insurance",
-        name_am: "አጠቃላይ አደጋ ኢንሹራንስ",
-        slug: "general-accident-insurance",
-        icon: "Heart",
-        children: [
-          {
-            slug: "personal-accident",
-            name: "Personal Accident",
-            name_am: "የግል አደጋ ኢንሹራንስ",
-            short_description: "Lump-sum payouts for accidental death, disability, or injury — anytime, anywhere.",
-            short_description_am: "ለድንገተኛ ሞት፣ ውለታ ወይም ጉዳት ክፍያ ይሰጣል።",
-            full_description:
-              "A straightforward policy that pays out a lump sum if you suffer accidental death, permanent disability, or temporary disability — on the road, at work, or at home, 24 hours a day.",
-            full_description_am:
-              "በመንገድ ላይ፣ በስራ ቦታ ወይም በቤት ውስጥ ለሚደርስ ድንገተኛ ሞት ወይም ውለታ የክፍያ ፖሊሲ።",
-            coverage_list: ["Accidental death benefit", "Permanent total disability", "Permanent partial disability", "Temporary total disability weekly benefit", "Medical expense reimbursement"],
-            exclusions: ["Self-inflicted injury", "Injury while under influence", "Pre-existing disabilities", "Hazardous sports (unless declared)"],
-            pricing_rules: { base_rate: 900 },
-            cta_text: "Get a Quote",
-          },
-          {
-            slug: "group-personal-accident",
-            name: "Group Personal Accident",
-            name_am: "የቡድን የግል አደጋ ኢንሹራንስ",
-            short_description: "Bundled personal accident cover for a company's entire workforce.",
-            short_description_am: "ለድርጅት ሁሉም ሠራተኞች የተጣመረ የግል አደጋ ሽፋን።",
-            full_description:
-              "Lets employers provide accidental death and disability cover to all staff under one master policy, with simplified enrollment and consistent benefit levels.",
-            full_description_am:
-              "አሰሪዎች ለሁሉም ሠራተኞች በአንድ ፖሊሲ ስር የአደጋ ሽፋን እንዲሰጡ ያስችላል።",
-            coverage_list: ["Accidental death benefit per employee", "Permanent and temporary disability cover", "Simplified group enrollment", "Consistent benefit tiers by role"],
-            exclusions: ["Self-inflicted injury", "Injury while under influence", "Employees below minimum group size", "Hazardous sports (unless declared)"],
-            pricing_rules: { base_rate: 700 },
-            cta_text: "Cover Your Team",
           },
         ],
       },

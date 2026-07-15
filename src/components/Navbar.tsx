@@ -197,7 +197,7 @@ const Navbar = () => {
                     setProductsOpen(true);
                   }}
                   onMouseLeave={() => {
-                    productsCloseTimer.current = setTimeout(() => setProductsOpen(false), 350);
+                    productsCloseTimer.current = setTimeout(() => setProductsOpen(false), 400);
                   }}
                 >
                   <button
@@ -244,7 +244,7 @@ const Navbar = () => {
                       if (productsCloseTimer.current) clearTimeout(productsCloseTimer.current);
                     }}
                     onMouseLeave={() => {
-                      productsCloseTimer.current = setTimeout(() => setProductsOpen(false), 350);
+                      productsCloseTimer.current = setTimeout(() => setProductsOpen(false), 400);
                     }}
                     style={{
                       width: "min(1000px, calc(100vw - 56px))",
@@ -345,9 +345,9 @@ const Navbar = () => {
                   }}
                   onMouseLeave={() => {
                     if (link.label === "Channels") {
-                      channelsCloseTimer.current = setTimeout(() => setChannelsOpen(false), 350);
+                      channelsCloseTimer.current = setTimeout(() => setChannelsOpen(false), 400);
                     } else {
-                      mediaCloseTimer.current = setTimeout(() => setMediaOpen(false), 350);
+                      mediaCloseTimer.current = setTimeout(() => setMediaOpen(false), 400);
                     }
                   }}
                 >
@@ -391,9 +391,9 @@ const Navbar = () => {
                     }}
                     onMouseLeave={() => {
                       if (link.label === "Channels") {
-                        channelsCloseTimer.current = setTimeout(() => setChannelsOpen(false), 350);
+                        channelsCloseTimer.current = setTimeout(() => setChannelsOpen(false), 400);
                       } else {
-                        mediaCloseTimer.current = setTimeout(() => setMediaOpen(false), 350);
+                        mediaCloseTimer.current = setTimeout(() => setMediaOpen(false), 400);
                       }
                     }}
                     style={{
