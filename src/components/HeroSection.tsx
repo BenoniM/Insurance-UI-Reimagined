@@ -5,7 +5,6 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { useRef } from "react";
 import CTAButton from "./CTAButton";
 import heroVideo from "@/assets/Hero/magnific_create-a-5second_jSK0088LD0.mp4";
-import CrossfadeVideo from "./CrossfadeVideo";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -13,9 +12,14 @@ const HeroSection = () => {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
 
   useGSAP(() => {
     if (!sectionRef.current) return;
+
+    if (heroVideoRef.current) {
+      heroVideoRef.current.playbackRate = 0.5;
+    }
 
     // Initial load animations
     const tl = gsap.timeline();
@@ -86,13 +90,13 @@ const HeroSection = () => {
 
       {/* Background Video */}
       <div className="hero-images opacity-0 absolute inset-0 pointer-events-none z-0">
-        <CrossfadeVideo
+        <video
+          ref={heroVideoRef}
           src={heroVideo}
           autoPlay
+          loop
           muted
           playsInline
-          playbackRate={0.6}
-          crossfadeDuration={0.8}
           className="w-screen h-screen object-cover object-center"
           style={{ transform: "translateY(5%)" }}
         />
