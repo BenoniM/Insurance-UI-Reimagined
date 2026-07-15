@@ -4,8 +4,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useRef } from "react";
 import CTAButton from "./CTAButton";
-import heroVideo from "@/assets/Hero/magnific_using-the-provided-vector_brEfd8T5Y2.mp4";
-import usePingPongVideo from "@/hooks/usePingPongVideo";
+import heroVideo from "@/assets/Hero/magnific_create-a-5second_jSK0088LD0.mp4";
+import CrossfadeVideo from "./CrossfadeVideo";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -13,7 +13,6 @@ const HeroSection = () => {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const heroVideoRef = usePingPongVideo(0.7);
 
   useGSAP(() => {
     if (!sectionRef.current) return;
@@ -55,7 +54,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#DDE2E6]">
       {/* Content */}
       <div
         ref={contentRef}
@@ -87,14 +86,15 @@ const HeroSection = () => {
 
       {/* Background Video */}
       <div className="hero-images opacity-0 absolute inset-0 pointer-events-none z-0">
-        <video
-          ref={heroVideoRef}
+        <CrossfadeVideo
           src={heroVideo}
           autoPlay
           muted
           playsInline
-          className="w-full h-full object-cover object-center"
-          style={{ transform: "translateY(10%)" }}
+          playbackRate={0.6}
+          crossfadeDuration={0.8}
+          className="w-screen h-screen object-cover object-center"
+          style={{ transform: "translateY(5%)" }}
         />
         {/* Subtle overlay to help text readability */}
         <div className="absolute inset-0 bg-white/20"></div>
