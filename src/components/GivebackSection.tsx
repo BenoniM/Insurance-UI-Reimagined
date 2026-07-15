@@ -36,39 +36,6 @@ const GivebackSection = () => {
 
   return (
     <SectionWrapper id="giveback" className="relative">
-            {/* Impact callout */}
-      <ScrollReveal delay={0.2}>
-        <div
-          className="relative mx-auto my-8 w-full max-w-[1800px] overflow-hidden rounded-3xl bg-gradient-to-br from-[hsl(201,78%,23%)] to-[hsl(201,78%,18%)] p-8 text-white shadow-xl md:my-10 md:p-10"
-        >
-          <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-primary/15" />
-          <div className="absolute -bottom-12 -left-12 w-40 h-40 rounded-full bg-white/5" />
-
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-            <div className="flex-1 max-w-3xl flex flex-col items-center md:items-start">
-              <span className="inline-block px-3 py-1 rounded-full bg-white/15 text-xs font-bold tracking-wider uppercase text-white/90 mb-3">
-                IMPACT TO DATE
-              </span>
-              <h3 className="qupe-heading text-2xl md:text-3xl text-white mb-2 text-center md:text-left w-full">
-                Over 4.2M Birr returned to Ethiopian communities
-              </h3>
-              <p className="text-white/75 text-sm md:text-base leading-relaxed text-center md:text-left">
-                Funding clean water projects, scholarships, mobile clinics, and emergency response — chosen by you, the policyholder. Your coverage doesn't just protect you, it lifts up the country we all share.
-              </p>
-            </div>
-            <div className="shrink-0">
-              <CTAButton href="/quote" variant="secondary" size="lg" className="!bg-primary !text-[hsla(0, 0%, 100%, 1.00)] hover:!bg-primary/90">
-                Join the movement <ArrowRight className="w-4 h-4 ml-1" />
-              </CTAButton>
-            </div>
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {/* Backdrop accent */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[hsl(160,55%,45%)/0.04] to-transparent" />
-
-
 
       {/* Steps Scroll Showcase */}
       <div className="relative h-[250vh]" ref={stepsContainerRef}>
@@ -83,7 +50,6 @@ const GivebackSection = () => {
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden py-8 md:py-0 z-10">
           <div className="section-header mb-8 md:mb-16 relative z-20 px-4 mt-8 md:mt-0 w-full max-w-[1800px]">
             <ScrollReveal>
-              <span className="section-badge mb-3 md:mb-4 inline-block">WASS GIVEBACK</span>
               <h2 className="section-title mt-2 md:mt-4">
                 Insurance with a <span className="text-primary">Bigger Purpose</span>
               </h2>
