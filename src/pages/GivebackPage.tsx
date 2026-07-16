@@ -205,7 +205,36 @@ const GivebackPage = () => {
   return (
     <div className="min-h-screen overflow-x-clip">
       <Navbar />
-      <section className="relative h-screen flex items-center justify-center overflow-hidden px-4 bg-[#FBFAFA]">
+      {/* ── MOBILE HERO (image below text, no cropping) ── */}
+      <section className="block md:hidden bg-[#FBFAFA] overflow-hidden">
+        <div className="flex flex-col items-center text-center px-4 pt-28 pb-6">
+          <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+            GIVEBACK
+          </span>
+          <h1
+            className="text-4xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl"
+            dangerouslySetInnerHTML={{ __html: 'Insurance That <span class="text-[#288A69]">Gives Back</span>' }}
+          />
+          <p className="text-lg text-muted-foreground max-w-2xl mb-8">
+            Earn rewards for healthy living and a claims-free year. WASS puts people first.
+          </p>
+          <CTAButton href="/quote" size="lg">
+            Learn More
+          </CTAButton>
+        </div>
+        {/* Full-width image at natural aspect ratio — no cropping */}
+        <div className="w-screen">
+          <img
+            src={csrHeroImage}
+            alt="CSR Background"
+            className="w-full h-auto"
+            loading="eager"
+          />
+        </div>
+      </section>
+
+      {/* ── DESKTOP HERO (full-screen background image) ── */}
+      <section className="hidden md:flex relative h-screen items-center justify-center overflow-hidden px-4 bg-[#FBFAFA]">
         <div className="absolute inset-0 z-0">
           <img
             src={csrHeroImage}
@@ -219,9 +248,9 @@ const GivebackPage = () => {
           <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
             GIVEBACK
           </span>
-          <h1 
-            className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl" 
-            dangerouslySetInnerHTML={{ __html: 'Insurance That <span class="text-[#288A69]">Gives Back</span>' }} 
+          <h1
+            className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl"
+            dangerouslySetInnerHTML={{ __html: 'Insurance That <span class="text-[#288A69]">Gives Back</span>' }}
           />
           <p className="text-xl text-muted-foreground max-w-2xl mb-8">
             Earn rewards for healthy living and a claims-free year. WASS puts people first.

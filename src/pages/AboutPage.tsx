@@ -12,7 +12,7 @@ import {
   Landmark, Globe, Truck, FileText, PieChart, BookOpen, 
   Briefcase, Scale, ArrowRight, FileDown 
 } from "lucide-react";
-import aboutHeroVideo from "@/assets/AboutHero/magnific_animate-the-provided-flat_tfdpVGumZJ.mp4";
+import aboutHeroVideo from "@/assets/AboutHero/magnific_animate-start-image-for-w_cDGiAeS0eP.mp4";
 
 import {
   Carousel,
@@ -130,7 +130,7 @@ const AboutPage = () => {
       <Navbar />
 
       {/* ── MOBILE HERO (static, no scroll animation) ── */}
-      <div className="block md:hidden bg-[#FBFAFA] pt-56 pb-0 overflow-hidden">
+      <div className="block md:hidden bg-[#F2F2F2] pt-56 pb-0 overflow-hidden">
         <div className="flex flex-col items-center text-center px-4">
           <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
             ABOUT WASS
@@ -150,7 +150,7 @@ const AboutPage = () => {
           </CTAButton>
         </div>
         {/* Video bleeds full width outside all horizontal padding */}
-        <div className="w-screen mt-12">
+        <div className="w-screen mt-6">
           <video
             src={aboutHeroVideo}
             autoPlay
@@ -166,8 +166,8 @@ const AboutPage = () => {
       </div>
 
       {/* ── DESKTOP HERO (scroll-animated) ── */}
-      <div ref={heroRef} className="relative h-[280vh] hidden md:block">
-        <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#FBFAFA]">
+      <div ref={heroRef} className="relative h-[240vh] hidden md:block">
+        <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#F2F2F2]">
           {/* Text Content */}
           <motion.div
             className="absolute inset-0 flex flex-col items-center justify-center text-center z-30 px-4 pb-[15vh]"
@@ -212,15 +212,13 @@ const AboutPage = () => {
       </div>
 
       {/* ── STATS ─────────────────────────────────────────────────── */}
-      <section className="w-full min-h-16 py-4 bg-gray-50 border-y border-gray-100 flex items-center justify-center relative z-10">
+      <section className="w-full min-h-16 bg-gray-50 border-y border-gray-100 flex items-center justify-center relative z-10">
         <div className="container mx-auto px-4 flex justify-center items-center gap-x-6 md:gap-x-12 gap-y-4 flex-wrap">
           {stats.map((stat, i) => (
-            <ScrollReveal key={stat.label} animation="fadeUp" delay={i * 0.05}>
-              <div className="group flex items-baseline gap-1.5 whitespace-nowrap opacity-80 hover:opacity-100 transition-all cursor-default font-hero">
-                <span className="text-lg md:text-xl font-bold tracking-tight text-gray-500 group-hover:text-[#288A69] transition-colors">{stat.value}</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-400 group-hover:text-[#288A69]/80 transition-colors font-sans">{stat.label}</span>
-              </div>
-            </ScrollReveal>
+            <div key={stat.label} className="group flex items-baseline gap-1.5 whitespace-nowrap opacity-80 hover:opacity-100 transition-all cursor-default font-hero">
+              <span className="text-lg md:text-xl font-bold tracking-tight text-gray-500 group-hover:text-[#288A69] transition-colors">{stat.value}</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-400 group-hover:text-[#288A69]/80 transition-colors font-sans">{stat.label}</span>
+            </div>
           ))}
         </div>
       </section>

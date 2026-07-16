@@ -111,7 +111,36 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
   return (
     <div className="min-h-screen overflow-x-clip bg-[#FBFAFA]">
       <Navbar />
-      <section className="relative flex min-h-screen overflow-hidden bg-[#FBFAFA]">
+      {/* ── MOBILE HERO (image below text, no cropping) ── */}
+      <section className="block md:hidden bg-[#FBFAFA] overflow-hidden">
+        <div className="flex flex-col items-center text-center px-4 pt-28 pb-6">
+          <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
+            {content.badge}
+          </span>
+          <h1 className="text-4xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl">
+            {content.title}
+          </h1>
+          <p className="text-lg font-semibold text-[hsl(160,55%,35%)]">
+            {content.subtitle}
+          </p>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-600">
+            {content.intro}
+          </p>
+        </div>
+        {/* Full-width image at natural aspect ratio — no cropping */}
+        <div className="w-screen">
+          <img
+            src={kind === "wia" ? wiaHeroBg : brokerHeroBg}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-auto"
+            loading="eager"
+          />
+        </div>
+      </section>
+
+      {/* ── DESKTOP HERO (full-screen background image) ── */}
+      <section className="hidden md:flex relative min-h-screen overflow-hidden bg-[#FBFAFA]">
         {/* Background image per channel */}
         <img
           src={kind === "wia" ? wiaHeroBg : brokerHeroBg}

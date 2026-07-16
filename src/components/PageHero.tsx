@@ -96,94 +96,133 @@ const PageHero = ({ images, badge, title, subtitle, children, interval = 5000 }:
   }, [children]);
 
   return (
-    <section ref={containerRef} className="relative min-h-[75vh] md:min-h-[85vh] flex items-end overflow-hidden bg-slate-900">
-      {/* Parallax background images with crossfade */}
-      <div ref={bgRef} className="absolute inset-0 z-0">
-        {images.map((src, idx) => (
-           <img
-             key={src}
-             src={src}
-             alt=""
-             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1500 ease-in-out"
-             style={{ opacity: idx === currentIndex ? 1 : 0 }}
-             loading="eager"
-             width={1920}
-             height={1080}
-           />
-        ))}
-      </div>
-
-      {/* Dark scrim — stronger for text legibility */}
-      <div className="absolute inset-0 z-[1] bg-[#0D4969]/75" />
-
-      {/* Animated particles */}
-      <div ref={particlesRef} className="absolute inset-0 z-[2] pointer-events-none">
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full opacity-15"
-            style={{
-              width: 2 + (i % 3) * 2,
-              height: 2 + (i % 3) * 2,
-              left: `${10 + i * 11}%`,
-              top: `${15 + (i % 4) * 20}%`,
-              background: i % 2 === 0
-                ? "hsl(var(--primary) / 0.35)"
-                : "hsl(0 0% 100% / 0.2)",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Slide indicators */}
-      {images.length > 1 && (
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-[5] flex gap-2">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentIndex(i)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                i === currentIndex ? "bg-primary w-6" : "bg-white/40 hover:bg-white/60"
-              }`}
+    <>
+      {/* ── MOBILE HERO (image below text, no cropping) ── */}
+      <div className="block md:hidden bg-slate-900 overflow-hidden">
+        <div
+          ref={textRef}
+          className="flex flex-col items-start px-4 pt-28 pb-6"
+        >
+          <span className="hero-badge inline-block mb-5 px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full bg-primary/20 text-primary border border-primary/30 backdrop-blur-md">
+            {badge}
+          </span>
+          <h1 className="hero-title qupe-heading text-4xl text-white max-w-4xl leading-[1.08]">
+            {title}
+          </h1>
+          <p className="hero-subtitle mt-5 text-lg text-white/90 max-w-2xl leading-relaxed">
+            {subtitle}
+          </p>
+          {children && (
+            <div className="hero-children mt-8">
+              {children}
+            </div>
+          )}
+        </div>
+        {/* Full-width image at natural aspect ratio — no cropping */}
+        <div className="w-screen relative">
+          {images.map((src, idx) => (
+            <img
+              key={src}
+              src={src}
+              alt=""
+              className="w-full h-auto absolute top-0 left-0 transition-opacity duration-1500 ease-in-out"
+              style={{ opacity: idx === currentIndex ? 1 : 0, position: idx === 0 ? "relative" : "absolute" }}
+              loading="eager"
             />
           ))}
         </div>
-      )}
+      </div>
 
-      {/* Content */}
-      <div
-        ref={textRef}
-        className="container mx-auto px-4 lg:px-8 relative z-10 pb-16 md:pb-24"
-      >
-        <span className="hero-badge inline-block mb-5 px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full bg-primary/20 text-primary border border-primary/30 backdrop-blur-md">
-          {badge}
-        </span>
+      {/* ── DESKTOP HERO (full-screen parallax background) ── */}
+      <section ref={containerRef} className="hidden md:flex relative min-h-[85vh] items-end overflow-hidden bg-slate-900">
+        {/* Parallax background images with crossfade */}
+        <div ref={bgRef} className="absolute inset-0 z-0">
+          {images.map((src, idx) => (
+             <img
+               key={src}
+               src={src}
+               alt=""
+               className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1500 ease-in-out"
+               style={{ opacity: idx === currentIndex ? 1 : 0 }}
+               loading="eager"
+               width={1920}
+               height={1080}
+             />
+          ))}
+        </div>
 
-        <h1 className="hero-title qupe-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white max-w-4xl leading-[1.08]">
-          {title}
-        </h1>
+        {/* Dark scrim — stronger for text legibility */}
+        <div className="absolute inset-0 z-[1] bg-[#0D4969]/75" />
 
-        <p className="hero-subtitle mt-5 text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed">
-          {subtitle}
-        </p>
+        {/* Animated particles */}
+        <div ref={particlesRef} className="absolute inset-0 z-[2] pointer-events-none">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full opacity-15"
+              style={{
+                width: 2 + (i % 3) * 2,
+                height: 2 + (i % 3) * 2,
+                left: `${10 + i * 11}%`,
+                top: `${15 + (i % 4) * 20}%`,
+                background: i % 2 === 0
+                  ? "hsl(var(--primary) / 0.35)"
+                  : "hsl(0 0% 100% / 0.2)",
+              }}
+            />
+          ))}
+        </div>
 
-        {children && (
-          <div className="hero-children mt-8">
-            {children}
+        {/* Slide indicators */}
+        {images.length > 1 && (
+          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-[5] flex gap-2">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  i === currentIndex ? "bg-primary w-6" : "bg-white/40 hover:bg-white/60"
+                }`}
+              />
+            ))}
           </div>
         )}
-      </div>
 
-      {/* Scroll indicator */}
-      <div
-        ref={scrollIndicatorRef}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
-      >
-        <div className="w-5 h-8 rounded-full border-2 border-white/25 flex items-start justify-center p-1">
-          <div className="scroll-dot w-1 h-1 rounded-full bg-primary" />
+        {/* Content */}
+        <div
+          ref={textRef}
+          className="container mx-auto px-4 lg:px-8 relative z-10 pb-16 md:pb-24"
+        >
+          <span className="hero-badge inline-block mb-5 px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full bg-primary/20 text-primary border border-primary/30 backdrop-blur-md">
+            {badge}
+          </span>
+
+          <h1 className="hero-title qupe-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white max-w-4xl leading-[1.08]">
+            {title}
+          </h1>
+
+          <p className="hero-subtitle mt-5 text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed">
+            {subtitle}
+          </p>
+
+          {children && (
+            <div className="hero-children mt-8">
+              {children}
+            </div>
+          )}
         </div>
-      </div>
-    </section>
+
+        {/* Scroll indicator */}
+        <div
+          ref={scrollIndicatorRef}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
+        >
+          <div className="w-5 h-8 rounded-full border-2 border-white/25 flex items-start justify-center p-1">
+            <div className="scroll-dot w-1 h-1 rounded-full bg-primary" />
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

@@ -358,7 +358,7 @@ const ClaimsPage = () => {
   const [faqOpenIndex, setFaqOpenIndex] = useState<number>(0);
 
   return (
-  <div className="min-h-screen">
+  <div className="min-h-screen overflow-x-clip bg-[#FBFAFA]">
     <Navbar />
 
     <ClaimsHeroAnimation />

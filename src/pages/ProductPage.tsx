@@ -963,7 +963,7 @@ const ProductPage = () => {
                   return (
                     <SlowVideo
                       src={media.src}
-                      className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-darken -mt-8 lg:-mt-16"
+                      className="w-full max-w-2xl md:aspect-square md:object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-darken lg:-mt-16"
                     />
                   );
                 } else {
@@ -971,7 +971,7 @@ const ProductPage = () => {
                     <img
                       src={media.src}
                       alt={name}
-                      className="w-full max-w-2xl aspect-square object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-darken -mt-8 lg:-mt-16"
+                      className="w-full max-w-2xl md:aspect-square md:object-cover hover:scale-110 transition-transform duration-500 ease-out rounded-3xl mix-blend-darken lg:-mt-16"
                     />
                   );
                 }
