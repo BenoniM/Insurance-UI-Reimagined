@@ -13,13 +13,15 @@ import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, ArrowRight, ArrowLeft, Sparkles, Pencil, ShieldCheck } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getActiveProducts, Product as LocalProduct } from "@/data/products";
 
 interface Product {
-  id: string;
+  id: string; // same as slug
   name: string;
   slug: string;
   name_am: string | null;
   pricing_rules: any;
+  category: string;
 }
 
 const QuotePage = () => {
@@ -39,18 +41,31 @@ const QuotePage = () => {
   const [submitted, setSubmitted] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, boolean>>({});
 
+  // Load products from local data — deduplicated to subcategory level
   useEffect(() => {
-    supabase.from("products").select("id, name, slug, name_am, pricing_rules").eq("active", true).order("sort_order").then(({ data }) => {
-      if (data) {
-        setProducts(data);
-        const preselect = searchParams.get("product");
-        if (preselect) {
-          const found = data.find((p) => p.slug === preselect);
-          if (found) setSelectedProduct(found.id);
-        }
+    const localProducts = getActiveProducts();
+    const seen = new Set<string>();
+    const subcategoryLevel: Product[] = [];
+    for (const p of localProducts) {
+      if (!seen.has(p.subcategory_slug)) {
+        seen.add(p.subcategory_slug);
+        subcategoryLevel.push({
+          id: p.subcategory_slug,
+          name: p.subcategory,
+          slug: p.subcategory_slug,
+          name_am: null,
+          pricing_rules: p.pricing_rules,
+          category: p.category,
+        });
       }
-      setProductsLoading(false);
-    });
+    }
+    setProducts(subcategoryLevel);
+    const preselect = searchParams.get("product");
+    if (preselect) {
+      const found = subcategoryLevel.find((p) => p.slug === preselect);
+      if (found) setSelectedProduct(found.id);
+    }
+    setProductsLoading(false);
   }, [searchParams]);
 
   // Reset details when the chosen product changes so stale answers from a
@@ -352,18 +367,24 @@ const QuotePage = () => {
                     </p>
                   ) : (
                     <RadioGroup value={selectedProduct} onValueChange={setSelectedProduct}>
-                      {products.map((p) => (
-                        <div
-                          key={p.id}
-                          className={`flex items-center space-x-3 border rounded-lg p-4 hover:bg-accent/50 transition-colors cursor-pointer ${
-                            selectedProduct === p.id ? "border-primary bg-primary/5" : "border-border"
-                          }`}
-                          onClick={() => setSelectedProduct(p.id)}
-                        >
-                          <RadioGroupItem value={p.id} id={p.id} />
-                          <Label htmlFor={p.id} className="cursor-pointer font-medium flex-1">
-                            {lang === "am" && p.name_am ? p.name_am : p.name}
-                          </Label>
+                      {/* Group by category */}
+                      {Array.from(new Set(products.map((p) => p.category))).map((cat) => (
+                        <div key={cat}>
+                          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2 mt-4 first:mt-0">{cat}</p>
+                          {products.filter((p) => p.category === cat).map((p) => (
+                            <div
+                              key={p.id}
+                              className={`flex items-center space-x-3 border rounded-lg p-4 mb-2 hover:bg-accent/50 transition-colors cursor-pointer ${
+                                selectedProduct === p.id ? "border-primary bg-primary/5" : "border-border"
+                              }`}
+                              onClick={() => setSelectedProduct(p.id)}
+                            >
+                              <RadioGroupItem value={p.id} id={p.id} />
+                              <Label htmlFor={p.id} className="cursor-pointer font-medium flex-1">
+                                {lang === "am" && p.name_am ? p.name_am : p.name}
+                              </Label>
+                            </div>
+                          ))}
                         </div>
                       ))}
                     </RadioGroup>

@@ -3,10 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, CalendarDays, UserRound } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SectionWrapper from "@/components/SectionWrapper";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Skeleton } from "@/components/ui/skeleton";
+import { FALLBACK_ARTICLES } from "@/data/fallbackArticles";
 
 const NewsArticlePage = () => {
   const { slug } = useParams();
@@ -24,10 +24,17 @@ const NewsArticlePage = () => {
       .eq("published", true)
       .maybeSingle()
       .then(({ data }) => {
-        setArticle(data || null);
+        if (data) {
+          setArticle(data);
+        } else {
+          // Fall back to local hardcoded articles
+          const local = FALLBACK_ARTICLES.find((a) => a.slug === slug) ?? null;
+          setArticle(local);
+        }
         setLoading(false);
       });
   }, [slug]);
+
 
   const title = lang === "am" && article?.title_am ? article.title_am : article?.title;
   const intro = lang === "am" && article?.intro_am ? article.intro_am : article?.intro;
@@ -36,7 +43,8 @@ const NewsArticlePage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <SectionWrapper className="pt-32">
+      <div style={{ paddingTop: "7rem", paddingBottom: "5rem" }}>
+        <div className="container mx-auto px-4 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <Link to="/news" className="inline-flex items-center gap-2 text-sm font-semibold text-primary mb-8">
             <ArrowLeft className="w-4 h-4" />
@@ -93,7 +101,8 @@ const NewsArticlePage = () => {
             </div>
           )}
         </div>
-      </SectionWrapper>
+        </div>
+      </div>
       <Footer />
     </div>
   );

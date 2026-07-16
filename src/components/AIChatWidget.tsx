@@ -89,7 +89,7 @@ const AIChatWidget = () => {
     <>
       {open && (
         <div
-          className="fixed bottom-24 right-4 md:right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] h-[500px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 zoom-in-95 duration-200"
+          className="fixed bottom-24 right-4 md:right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] h-[520px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 zoom-in-95 duration-200"
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-primary/5">
@@ -192,7 +192,7 @@ const AIChatWidget = () => {
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          "fixed bottom-20 right-4 md:right-6 z-50 w-14 h-14 rounded-full bg-secondary text-secondary-foreground shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200",
+          "fixed bottom-6 right-4 md:right-6 z-50 w-14 h-14 rounded-full bg-secondary text-secondary-foreground shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200",
           open ? "" : "ring-4 ring-secondary/20"
         )}
       >

@@ -4,10 +4,13 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import SectionWrapper from "./SectionWrapper";
 import ScrollReveal from "./ScrollReveal";
+import { FALLBACK_ARTICLES } from "@/data/fallbackArticles";
+
+
 
 const Insights = () => {
   const { lang } = useLanguage();
-  const [articles, setArticles] = useState<any[]>([]);
+  const [articles, setArticles] = useState<any[]>(FALLBACK_ARTICLES);
 
   useEffect(() => {
     supabase
@@ -17,7 +20,7 @@ const Insights = () => {
       .order("created_at", { ascending: false })
       .limit(3)
       .then(({ data }) => {
-        if (data) setArticles(data);
+        if (data && data.length > 0) setArticles(data);
       });
   }, []);
 
