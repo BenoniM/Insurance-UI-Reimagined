@@ -8,7 +8,7 @@ const slides = [
     title: "Multilingual Support",
     description:
       "Services available in Amharic, English, and Oromifa — so every Ethiopian family can understand their coverage.",
-    img: MultiImg,
+    img: "https://images.pexels.com/photos/7689745/pexels-photo-7689745.jpeg?auto=compress&w=1260&h=750&dpr=2",
     imgAlt: "Team collaborating around a table",
   },
   {
