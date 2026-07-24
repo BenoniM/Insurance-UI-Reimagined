@@ -310,7 +310,7 @@ const AdminPage = () => {
                 </div>
               )}
 
-              {/* WIA agent applications */}
+              {/* WIIA agent applications */}
               {tab === "agent-applications" && (
                 <div className="space-y-4">
                   {agentApplications.map((application) => (
@@ -340,7 +340,7 @@ const AdminPage = () => {
                       </div>
                     </div>
                   ))}
-                  {agentApplications.length === 0 && <p className="py-8 text-center text-muted-foreground">No WIA applications yet</p>}
+                  {agentApplications.length === 0 && <p className="py-8 text-center text-muted-foreground">No WIIA applications yet</p>}
                 </div>
               )}
             </>

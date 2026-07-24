@@ -105,7 +105,7 @@ const HeroSection = () => {
       </section>
 
       {/* ── DESKTOP HERO (full-screen background video) ── */}
-      <section className="hidden md:flex relative min-h-screen items-center justify-center overflow-hidden bg-[#DDE2E6]">
+      <section className="hidden md:flex relative min-h-screen items-center justify-center overflow-hidden bg-[#FDFDFD]">
         {/* Content */}
         <div className="container mx-auto px-4 lg:px-8 relative z-10 flex flex-col items-center text-center">
           <div className="max-w-3xl mx-auto flex flex-col items-center pb-20">

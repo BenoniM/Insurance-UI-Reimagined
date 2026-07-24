@@ -79,10 +79,11 @@ const Navbar = () => {
     { label: "Announcements", href: "/announcements" },
     { label: "Gallery", href: "/gallery" },
     { label: "Articles", href: "/articles" },
+    { label: "Downloads", href: "/downloads" },
   ];
 
   const channelLinks = [
-    { label: "WIA", href: "/channels/wia" },
+    { label: "WIIA", href: "/channels/wia" },
     { label: "Broker Portal", href: "/channels/broker-portal" },
   ];
 

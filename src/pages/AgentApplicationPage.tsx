@@ -64,7 +64,7 @@ const AgentApplicationPage = () => {
         <main className="container mx-auto min-h-[72vh] max-w-2xl px-4 pb-16 pt-32">
           <div className="rounded-2xl border bg-white p-8 text-center shadow-sm">
             <div className={`mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full ${approved ? "bg-primary/10 text-primary" : "bg-amber-100 text-amber-700"}`}><ClipboardCheck /></div>
-            <h1 className="font-heading text-2xl font-bold text-foreground">{approved ? "Your WIA agent account is approved" : "Your WIA application is being reviewed"}</h1>
+            <h1 className="font-heading text-2xl font-bold text-foreground">{approved ? "Your WIIA agent account is approved" : "Your WIIA application is being reviewed"}</h1>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
               {approved ? "Your digital selling workspace is ready." : "We have received your application. The WASS channels team will contact you after the review is complete."}
             </p>
@@ -79,7 +79,7 @@ const AgentApplicationPage = () => {
   return (
     <div className="min-h-screen bg-[hsl(201,78%,98%)]"><Navbar />
       <main className="container mx-auto max-w-2xl px-4 pb-16 pt-32">
-        <div className="mb-7 text-center"><span className="section-badge">WIA REGISTRATION</span><h1 className="mt-4 font-heading text-3xl font-bold text-foreground">Become a WIA Agent</h1><p className="mt-2 text-muted-foreground">Complete your registration to begin the WASS agent approval process.</p></div>
+        <div className="mb-7 text-center"><span className="section-badge">WIIA REGISTRATION</span><h1 className="mt-4 font-heading text-3xl font-bold text-foreground">Become a WIIA Agent</h1><p className="mt-2 text-muted-foreground">Complete your registration to begin the WASS agent approval process.</p></div>
         <form onSubmit={submit} className="space-y-5 rounded-2xl border bg-white p-6 shadow-sm md:p-8">
           <div className="grid gap-5 sm:grid-cols-2">
             <div><Label htmlFor="full_name">Full name</Label><Input id="full_name" value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} required /></div>
@@ -90,7 +90,7 @@ const AgentApplicationPage = () => {
             <div><Label htmlFor="business">Business name (optional)</Label><Input id="business" value={form.business_name} onChange={(e) => setForm({ ...form, business_name: e.target.value })} /></div>
           </div>
           <div><Label htmlFor="experience">Insurance sales experience</Label><select id="experience" value={form.experience_level} onChange={(e) => setForm({ ...form, experience_level: e.target.value })} className="mt-1 flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm"><option value="new">New to insurance sales</option><option value="under_2_years">Under 2 years</option><option value="2_plus_years">2+ years</option></select></div>
-          <div><Label htmlFor="motivation">Why do you want to become a WIA Agent?</Label><Textarea id="motivation" value={form.motivation} onChange={(e) => setForm({ ...form, motivation: e.target.value })} className="mt-1 min-h-28" required /></div>
+          <div><Label htmlFor="motivation">Why do you want to become a WIIA Agent?</Label><Textarea id="motivation" value={form.motivation} onChange={(e) => setForm({ ...form, motivation: e.target.value })} className="mt-1 min-h-28" required /></div>
           <Button type="submit" className="w-full" disabled={submitting}>{submitting && <Loader2 className="animate-spin" />}{submitting ? "Submitting application..." : "Submit registration"}</Button>
         </form>
       </main><Footer />

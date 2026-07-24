@@ -168,12 +168,15 @@ const Footer = () => {
                   <li><Link to="/claims" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("footer.fileClaim")}</Link></li>
                   <li><Link to="/dashboard" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("footer.trackClaim")}</Link></li>
                   <li><Link to="/claims" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("footer.requiredDocs")}</Link></li>
+                  <li><Link to="/channels/wia" className="text-[13px] text-white/50 hover:text-white transition-colors">WIIA</Link></li>
+                  <li><Link to="/channels/broker-portal" className="text-[13px] text-white/50 hover:text-white transition-colors">Broker Portal</Link></li>
                 </ul>
               </div>
 
               <div className="hidden lg:block col-span-1">
                 <h4 className="font-heading text-[14px] font-semibold text-white mb-4">{t("footer.company")}</h4>
                 <ul className="space-y-2">
+                  <li><Link to="/" className="text-[13px] text-white/50 hover:text-white transition-colors">{lang === "am" ? "ዋና ገጽ" : "Home"}</Link></li>
                   <li><Link to="/about" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("footer.aboutUs")}</Link></li>
                   <li><Link to="/giveback" className="text-[13px] text-white/50 hover:text-white transition-colors">{lang === "am" ? "ጊቨባክ" : "Giveback"}</Link></li>
                   <li><Link to="/contact" className="text-[13px] text-white/50 hover:text-white transition-colors">{t("nav.contact")}</Link></li>
@@ -218,6 +221,8 @@ const Footer = () => {
                         <li><Link to="/claims" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.fileClaim")}</Link></li>
                         <li><Link to="/dashboard" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.trackClaim")}</Link></li>
                         <li><Link to="/claims" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.requiredDocs")}</Link></li>
+                        <li><Link to="/channels/wia" className="text-sm text-white/50 hover:text-white transition-colors block">WIIA</Link></li>
+                        <li><Link to="/channels/broker-portal" className="text-sm text-white/50 hover:text-white transition-colors block">Broker Portal</Link></li>
                       </ul>
                     </AccordionContent>
                   </AccordionItem>
@@ -228,6 +233,7 @@ const Footer = () => {
                     </AccordionTrigger>
                     <AccordionContent>
                       <ul className="space-y-3 pb-2 pt-2">
+                        <li><Link to="/" className="text-sm text-white/50 hover:text-white transition-colors block">{lang === "am" ? "ዋና ገጽ" : "Home"}</Link></li>
                         <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors block">{t("footer.aboutUs")}</Link></li>
                         <li><Link to="/giveback" className="text-sm text-white/50 hover:text-white transition-colors block">{lang === "am" ? "ጊቨባክ" : "Giveback"}</Link></li>
                         <li><Link to="/contact" className="text-sm text-white/50 hover:text-white transition-colors block">{t("nav.contact")}</Link></li>

@@ -87,6 +87,7 @@ const AnimatedRoutes = () => {
       <Route path="/announcements" element={<PageTransition><MediaPage kind="announcements" /></PageTransition>} />
       <Route path="/gallery" element={<PageTransition><MediaPage kind="gallery" /></PageTransition>} />
       <Route path="/articles" element={<PageTransition><MediaPage kind="articles" /></PageTransition>} />
+      <Route path="/downloads" element={<PageTransition><MediaPage kind="downloads" /></PageTransition>} />
       <Route path="/channels/wia" element={<PageTransition><ChannelPage kind="wia" /></PageTransition>} />
       <Route path="/channels/broker-portal" element={<PageTransition><ChannelPage kind="broker" /></PageTransition>} />
       <Route path="/agents/apply" element={<PageTransition><AgentApplicationPage /></PageTransition>} />

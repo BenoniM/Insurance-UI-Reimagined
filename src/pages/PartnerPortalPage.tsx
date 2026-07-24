@@ -40,11 +40,11 @@ const PartnerPortalPage = ({ kind }: { kind: PortalKind }) => {
 
   if (kind === "wia" && !agentApproved) {
     return (
-      <div className="min-h-screen"><Navbar /><main className="container mx-auto flex min-h-[72vh] max-w-2xl items-center px-4 pt-20"><div className="w-full rounded-2xl border bg-card p-8 text-center"><BriefcaseBusiness className="mx-auto mb-4 h-12 w-12 text-primary" /><h1 className="font-heading text-2xl font-bold">Complete WIA onboarding</h1><p className="mt-3 text-sm text-muted-foreground">Your agent portal becomes available after your WIA application has been approved.</p><Button className="mt-6" onClick={() => navigate("/agents/apply")}>View application status</Button></div></main><Footer /></div>
+      <div className="min-h-screen"><Navbar /><main className="container mx-auto flex min-h-[72vh] max-w-2xl items-center px-4 pt-20"><div className="w-full rounded-2xl border bg-card p-8 text-center"><BriefcaseBusiness className="mx-auto mb-4 h-12 w-12 text-primary" /><h1 className="font-heading text-2xl font-bold">Complete WIIA onboarding</h1><p className="mt-3 text-sm text-muted-foreground">Your agent portal becomes available after your WIIA application has been approved.</p><Button className="mt-6" onClick={() => navigate("/agents/apply")}>View application status</Button></div></main><Footer /></div>
     );
   }
 
-  const label = kind === "wia" ? "WIA Agent" : "Broker";
+  const label = kind === "wia" ? "WIIA Agent" : "Broker";
   return (
     <div className="min-h-screen bg-[hsl(201,78%,98%)]"><Navbar />
       <main className="container mx-auto px-4 pb-16 pt-32 lg:px-8">

@@ -18,6 +18,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import CTAButton from "@/components/CTAButton";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import brokerIcon1 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_01.png";
 import brokerIcon2 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_02.png";
 import brokerIcon3 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_03.png";
@@ -57,11 +58,11 @@ const wiaBenefits = [
 const channelContent = {
   wia: {
     badge: "CHANNELS",
-    title: "WIA - Wass Insurance Agents",
+    title: "WIIA - Wass Insurance Independent Agents",
     subtitle: "Join Ethiopia's fastest-growing insurance distribution network.",
     intro:
-      "WIA helps motivated agents grow a modern insurance business with digital tools, product support, certification guidance, and a clear commission opportunity.",
-    portalTitle: "WIA Agent Portal",
+      "WIIA helps motivated agents grow a modern insurance business with digital tools, product support, certification guidance, and a clear commission opportunity.",
+    portalTitle: "WIIA Agent Portal",
     portalIntro: "Agents can sign in with their email to manage customer insurance activity from one digital workspace.",
     loginLabel: "Agent Email",
     loginPlaceholder: "agent@example.com",
@@ -107,6 +108,7 @@ const heroImagePositions = [
 
 const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
   const content = channelContent[kind];
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen overflow-x-clip bg-[#FBFAFA]">
@@ -171,45 +173,13 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
         </div>
       </section>
 
-      <section id="portal" className="bg-white py-16 md:py-20">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto w-full max-w-2xl rounded-lg border border-gray-100 bg-white p-6 shadow-[0_20px_60px_rgba(11,63,91,0.10)]">
-              <div className="mb-5 flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[hsl(160,55%,45%)] text-white">
-                  <KeyRound className="h-5 w-5" />
-                </div>
-                <div>
-                  <h2 className="font-heading text-xl font-bold text-[hsl(201,78%,20%)]">
-                    {content.portalTitle}
-                  </h2>
-                  <p className="text-sm text-gray-500">Login</p>
-                </div>
-              </div>
-              <p className="mb-5 text-sm leading-relaxed text-gray-600">{content.portalIntro}</p>
-              <div className="space-y-2">
-                <Label>{content.loginLabel}</Label>
-                <div className="flex items-center gap-3 rounded-md border border-input bg-muted/30 px-3 py-2.5 text-sm text-muted-foreground">
-                  <Mail className="h-4 w-4 text-gray-400" />
-                  Sign in securely with your email and password
-                </div>
-              </div>
-              <Link
-                to={`/auth?redirect=${encodeURIComponent(kind === "wia" ? "/portal/wia" : "/portal/broker")}`}
-                className="mt-5 block w-full rounded-lg bg-[hsl(201,78%,20%)] px-5 py-3 text-center text-sm font-bold text-white transition-colors hover:bg-[hsl(201,78%,28%)]"
-              >
-                Continue to login
-              </Link>
-          </div>
-        </div>
-      </section>
-
       {content.showBenefits && (
         <SectionWrapper id="apply" className="bg-[hsl(201,78%,98%)]">
           <ScrollReveal>
             <div className="mb-8 max-w-3xl mx-auto text-center">
-              <span className="section-badge mb-4 inline-block">BECOME A WIA AGENT</span>
+              <span className="section-badge mb-4 inline-block">BENEFITS</span>
               <h2 className="section-title text-foreground capitalize">
-                Build your insurance business with WASS
+                Benefits of Becoming a WIIA Agent
               </h2>
             </div>
           </ScrollReveal>
@@ -221,17 +191,26 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
               </div>
             ))}
           </div>
-          <div className="mt-8 rounded-lg border border-white/10 bg-[hsl(201,78%,20%)] p-6 text-center">
-            <h3 className="font-heading text-xl font-bold text-white">Online Agent Registration Form</h3>
-            <p className="mx-auto mt-2 max-w-2xl text-white/70">
-              Use the application form to register interest. The WASS channels team will review your details and guide you through onboarding.
-            </p>
-            <CTAButton href="/agents/apply" className="mt-5 mx-auto bg-[hsl(160,55%,45%)] bg-none shadow-[0_14px_30px_hsl(160,55%,45%)/0.25] hover:bg-[hsl(160,55%,39%)] hover:opacity-100">
-              Apply Now
-            </CTAButton>
-          </div>
+
         </SectionWrapper>
       )}
+
+      <section id="portal" className="bg-[#FBFAFA] pb-16 md:pb-20 pt-8">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mt-8 w-full rounded-lg border border-white/10 bg-[hsl(201,78%,20%)] p-6 md:p-10 text-center">
+            <h3 className="font-heading text-xl md:text-2xl font-bold text-white">{content.portalTitle}</h3>
+            <p className="mx-auto mt-3 max-w-2xl text-white/70">
+              {content.portalIntro}
+            </p>
+            <Link
+              to={user ? (kind === "wia" ? "/agents/apply" : "/portal/broker") : `/auth?redirect=${encodeURIComponent(kind === "wia" ? "/portal/wia" : "/portal/broker")}`}
+              className="mt-6 inline-flex mx-auto items-center justify-center rounded-lg bg-[hsl(160,55%,45%)] px-8 py-3 text-center text-sm font-bold text-white shadow-[0_14px_30px_hsl(160,55%,45%)/0.25] transition-all hover:bg-[hsl(160,55%,39%)] hover:opacity-100"
+            >
+              {user ? (kind === "wia" ? "Register for WIIA" : "Continue to portal") : "Continue to login"}
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <SectionWrapper className="bg-[hsl(201,78%,98%)]">
         <ScrollReveal>

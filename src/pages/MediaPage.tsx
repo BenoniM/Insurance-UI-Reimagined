@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { BriefcaseBusiness, Camera, FileText, Landmark, Megaphone, Newspaper, Sparkles, ArrowRight } from "lucide-react";
+import { BriefcaseBusiness, Camera, FileText, Landmark, Megaphone, Newspaper, Sparkles, ArrowRight, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SectionWrapper from "@/components/SectionWrapper";
@@ -40,6 +40,13 @@ const mediaPageContent = {
     intro: "Insurance awareness articles, practical guides, and expert insights to help customers make confident protection decisions.",
     icon: Newspaper,
     items: ["Insurance guides", "Risk awareness", "Claims education", "Customer protection tips"],
+  },
+  downloads: {
+    badge: "MEDIA",
+    title: "Downloads",
+    intro: "Access essential insurance forms, policy documents, brochures, and important resources.",
+    icon: Download,
+    items: ["Claim Forms", "Policy Documents", "Brochures", "Corporate Reports"],
   },
 };
 
@@ -88,7 +95,7 @@ const announcementSections = [
       {
         title: "Digital Sales & Channel Support Associate",
         meta: "Hybrid",
-        detail: "Assist WIA agents, brokers, and online customers with quote, policy, and payment workflows.",
+        detail: "Assist WIIA agents, brokers, and online customers with quote, policy, and payment workflows.",
       },
     ],
   },
@@ -177,6 +184,60 @@ const articleSections = [
         title: "Keeping your personal data secure",
         meta: "Privacy",
         detail: "Our commitment to data privacy and steps you can take to secure your online interactions.",
+      },
+    ],
+  },
+];
+
+const downloadSections = [
+  {
+    title: "Claim Forms",
+    icon: FileText,
+    description: "Standard forms required for filing and processing your insurance claims.",
+    items: [
+      {
+        title: "Motor Insurance Claim Form",
+        meta: "PDF • 1.2 MB",
+        detail: "Required for all vehicle-related accident and damage claims.",
+      },
+      {
+        title: "Health Insurance Claim Form",
+        meta: "PDF • 0.8 MB",
+        detail: "Standard form for inpatient and outpatient medical claims reimbursement.",
+      },
+    ],
+  },
+  {
+    title: "Policy Documents",
+    icon: BriefcaseBusiness,
+    description: "Detailed policy wordings, terms and conditions, and product manuals.",
+    items: [
+      {
+        title: "Comprehensive Motor Policy Booklet",
+        meta: "PDF • 3.5 MB",
+        detail: "Full terms, conditions, and coverage details for comprehensive motor policies.",
+      },
+      {
+        title: "General Liability Policy Wordings",
+        meta: "PDF • 2.1 MB",
+        detail: "Coverage terms and exclusions for business liability policies.",
+      },
+    ],
+  },
+  {
+    title: "Brochures",
+    icon: Megaphone,
+    description: "Product overviews and promotional materials for our insurance solutions.",
+    items: [
+      {
+        title: "WASS Corporate Profile",
+        meta: "PDF • 5.0 MB",
+        detail: "Overview of WASS Insurance, our mission, vision, and corporate achievements.",
+      },
+      {
+        title: "Travel Insurance Brochure",
+        meta: "PDF • 1.5 MB",
+        detail: "Quick guide to our international travel insurance packages and benefits.",
       },
     ],
   },
@@ -400,6 +461,115 @@ const ArticlesContent = () => {
   );
 };
 
+const DownloadsContent = () => {
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+
+  const allItems = useMemo(() => {
+    return downloadSections.flatMap(section => 
+      section.items.map(item => ({
+        ...item,
+        category: section.title,
+        icon: section.icon,
+      }))
+    );
+  }, []);
+
+  const filteredItems = useMemo(() => {
+    if (activeCategory === "all") return allItems;
+    return allItems.filter(item => item.category === activeCategory);
+  }, [activeCategory, allItems]);
+
+  const getCategoryCounts = () => {
+    const counts: Record<string, number> = {};
+    downloadSections.forEach(section => {
+      counts[section.title] = section.items.length;
+    });
+    return counts;
+  };
+  const categoryCounts = getCategoryCounts();
+
+  return (
+    <SectionWrapper id="latest-downloads" className="bg-white py-16">
+      <div className="mb-10">
+        <ScrollReveal>
+          <div className="section-header mb-8">
+            <span className="section-badge mb-4 inline-block">RESOURCES</span>
+            <h2 className="section-title">
+              Downloads
+            </h2>
+            <p className="section-description">
+              Access essential insurance forms, policy documents, brochures, and important resources.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="flex flex-wrap justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => setActiveCategory("all")}
+            className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all ${
+              activeCategory === "all"
+                ? "border-foreground bg-foreground text-background shadow-lg shadow-foreground/10"
+                : "border-border bg-card text-foreground hover:bg-muted"
+            }`}
+          >
+            <Sparkles className="w-4 h-4" />
+            All Downloads
+            <span className={`rounded-full px-2 py-0.5 text-[11px] ${activeCategory === "all" ? "bg-background/15" : "bg-muted text-muted-foreground"}`}>
+              {allItems.length}
+            </span>
+          </button>
+          
+          {downloadSections.map((section) => (
+            <button
+              key={section.title}
+              type="button"
+              onClick={() => setActiveCategory(section.title)}
+              className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all hover:-translate-y-0.5 ${
+                activeCategory === section.title
+                  ? "border-[hsl(160,55%,45%)] bg-[hsl(160,55%,45%)] text-white shadow-lg shadow-[hsl(160,55%,45%)]/20"
+                  : "border-border bg-card text-[hsl(160,55%,45%)] hover:bg-muted"
+              }`}
+            >
+              <section.icon className="w-4 h-4" />
+              {section.title}
+              <span className={`rounded-full px-2 py-0.5 text-[11px] ${activeCategory === section.title ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"}`}>
+                {categoryCounts[section.title] || 0}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {filteredItems.map((item, i) => {
+          const CategoryIcon = item.icon;
+          return (
+            <ScrollReveal key={item.title} animation="fadeUp" delay={i * 0.06}>
+              <div className="qupe-card h-full flex flex-col transition-all duration-300 hover:-translate-y-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-1 bg-[hsl(160,55%,96%)] text-[hsl(160,55%,35%)]">
+                    <CategoryIcon className="w-3.5 h-3.5" />
+                    {item.category}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-1 bg-muted/50 text-muted-foreground border border-border/50">
+                    {item.meta}
+                  </span>
+                </div>
+                <h3 className="font-heading font-semibold text-lg text-foreground mb-3 group-hover:text-primary transition-colors">{item.title}</h3>
+                <p className="text-sm text-muted-foreground mb-5 leading-relaxed flex-1">{item.detail}</p>
+                <a href="#" className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all cursor-pointer">
+                  Download <Download className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </ScrollReveal>
+          );
+        })}
+      </div>
+    </SectionWrapper>
+  );
+};
+
 const MediaPage = ({ kind }: { kind: MediaPageKind }) => {
   const content = mediaPageContent[kind];
   const Icon = content.icon;
@@ -464,6 +634,8 @@ const MediaPage = ({ kind }: { kind: MediaPageKind }) => {
         <AnnouncementsContent />
       ) : kind === "articles" ? (
         <ArticlesContent />
+      ) : kind === "downloads" ? (
+        <DownloadsContent />
       ) : (
         <SectionWrapper>
           <ScrollReveal>
