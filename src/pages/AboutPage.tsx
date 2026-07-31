@@ -23,12 +23,9 @@ import {
 } from "@/components/ui/carousel";
 
 const stats = [
-  { value: "15+", label: "Years of Service" },
-  { value: "50K+", label: "Satisfied Clients" },
-  { value: "200+", label: "Partner Network" },
-  { value: "12", label: "Branch Offices" },
-  { value: "98%", label: "Claims Approval" },
-  { value: "24/7", label: "Customer Support" },
+  { value: "General", label: "Insurance" },
+  { value: "Medical", label: "Insurance" },
+  { value: "Others", label: "Insurance" },
 ];
 
 const values = [

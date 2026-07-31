@@ -50,10 +50,9 @@ const HeroSection = () => {
   }, { scope: wrapperRef });
 
   const trustBadges = [
-    { label: t("hero.licensed"), value: "Licensed" },
-    { label: t("hero.years"), value: "15+" },
-    { label: t("hero.clients"), value: "50,000+" },
-    { label: t("hero.partners"), value: "200+" },
+    { label: "Insurance", value: "General" },
+    { label: "Insurance", value: "Medical" },
+    { label: "Insurance", value: "Others" },
   ];
 
   return (

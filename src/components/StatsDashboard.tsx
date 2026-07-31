@@ -35,10 +35,10 @@ const AnimatedCounter = ({ target, suffix = "", prefix = "" }: { target: number;
 };
 
 const stats = [
-  { label: "Active Policyholders", value: 52400, suffix: "+", prefix: "" },
-  { label: "Policies Issued", value: 78600, suffix: "+", prefix: "" },
-  { label: "Claims Settled", value: 14200, suffix: "+", prefix: "" },
-  { label: "Satisfaction Rate", value: 97, suffix: "%", prefix: "" },
+  { label: "Service Ambition", value: "Nationwide", isText: true },
+  { label: "Insurance Products", value: 10, suffix: "+", prefix: "" },
+  { label: "Customer Support", value: "24/7", isText: true },
+  { label: "Customer Commitment", value: 100, suffix: "%", prefix: "" },
 ];
 
 const miniChart = [35, 42, 38, 55, 48, 62, 58, 72, 68, 85, 78, 92];
@@ -167,8 +167,8 @@ const StatsDashboard = () => {
                 {stats.slice(0, 2).map((stat, i) => (
                   <ScrollReveal key={stat.label} delay={i * 0.1} animation="fadeUp" className={`flex w-full ${i > 0 ? '-mt-[1px]' : ''}`}>
                     <div className="border border-slate-200 py-10 sm:py-12 pl-4 sm:pl-5 pr-6 flex flex-col justify-between bg-white group hover:border-emerald-500/50 hover:shadow-xl hover:z-10 relative transition-all duration-500 min-h-[300px] sm:min-h-[380px] w-full text-left">
-                      <p className="text-5xl sm:text-6xl font-hero font-light text-primary tracking-tighter transition-transform duration-500 group-hover:translate-x-2 origin-left">
-                        <AnimatedCounter target={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
+                      <p className="text-3xl sm:text-4xl md:text-5xl font-hero font-light text-primary tracking-tighter transition-transform duration-500 group-hover:translate-x-2 origin-left">
+                        {stat.isText ? stat.value : <AnimatedCounter target={stat.value as number} suffix={stat.suffix} prefix={stat.prefix} />}
                       </p>
                       <p className="text-sm md:text-base text-slate-500 font-medium tracking-wide mt-12">
                         {stat.label}
@@ -183,8 +183,8 @@ const StatsDashboard = () => {
                 {stats.slice(2, 4).map((stat, i) => (
                   <ScrollReveal key={stat.label} delay={i * 0.1 + 0.2} animation="fadeUp" className={`flex w-full ${i > 0 ? '-mt-[1px]' : ''}`}>
                     <div className="border border-slate-200 py-10 sm:py-12 pl-4 sm:pl-5 pr-6 flex flex-col justify-between bg-white group hover:border-emerald-500/50 hover:shadow-xl hover:z-10 relative transition-all duration-500 min-h-[300px] sm:min-h-[380px] w-full text-left">
-                      <p className="text-5xl sm:text-6xl font-hero font-light text-primary tracking-tighter transition-transform duration-500 group-hover:translate-x-2 origin-left">
-                        <AnimatedCounter target={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
+                      <p className="text-3xl sm:text-4xl md:text-5xl font-hero font-light text-primary tracking-tighter transition-transform duration-500 group-hover:translate-x-2 origin-left">
+                        {stat.isText ? stat.value : <AnimatedCounter target={stat.value as number} suffix={stat.suffix} prefix={stat.prefix} />}
                       </p>
                       <p className="text-sm md:text-base text-slate-500 font-medium tracking-wide mt-12">
                         {stat.label}
