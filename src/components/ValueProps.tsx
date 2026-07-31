@@ -254,7 +254,7 @@ const ValueProps = () => {
                   }}
                 >
                   <div className="p-8 pb-6">
-                    {/* Icon + stat row */}
+                    {/* Icon + title row */}
                     <div className="flex items-start justify-between gap-4 mb-5">
                       <div>
                         {/* Icon badge */}
@@ -270,14 +270,6 @@ const ValueProps = () => {
                         >
                           {item.title}
                         </h3>
-                      </div>
-
-                      {/* Stat — smaller, fully visible */}
-                      <div
-                        className="font-heading font-black leading-none shrink-0 text-foreground/60"
-                        style={{ fontSize: "clamp(1.2rem, 2.2vw, 1.6rem)" }}
-                      >
-                        {item.stat}
                       </div>
                     </div>
 
