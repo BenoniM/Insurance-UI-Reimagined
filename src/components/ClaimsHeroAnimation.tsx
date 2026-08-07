@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import CTAButton from '@/components/CTAButton';
-import claimsBg from '@/assets/ClaimsHero/ChatGPT Image Jul 14, 2026, 10_45_52 AM.webp';
+import claimsBg from '@/assets/ClaimsHero/ChatGPT Image Aug 7, 2026, 12_56_35 PM.png';
 
 const ClaimsHeroAnimation = () => {
   return (
     <>
       {/* ── MOBILE HERO (image below text, no cropping) ── */}
-      <div className="block md:hidden bg-[#FBFAFA] overflow-hidden">
+      <div className="block md:hidden bg-[#EEEEEF] overflow-hidden">
         <div className="flex flex-col items-center text-center px-4 pt-28 pb-6">
           <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
             CLAIMS
@@ -34,7 +34,7 @@ const ClaimsHeroAnimation = () => {
       </div>
 
       {/* ── DESKTOP HERO (full-screen background image) ── */}
-      <div className="hidden md:flex relative w-full h-screen min-h-[500px] overflow-hidden bg-[#FBFAFA] items-center justify-center">
+      <div className="hidden md:flex relative w-full h-screen min-h-[500px] overflow-hidden bg-[#EEEEEF] items-center justify-center">
         {/* Background image */}
         <img
           src={claimsBg}

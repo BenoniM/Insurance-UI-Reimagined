@@ -4,7 +4,7 @@ import ExpandingHeroSVG from "@/components/ExpandingHeroSVG";
 import GivebackSection from "@/components/GivebackSection";
 import ScrollReveal from "@/components/ScrollReveal";
 import CTAButton from "@/components/CTAButton";
-import csrHeroImage from "@/assets/CsrHero/ChatGPT Image Jul 14, 2026, 10_23_32 AM.webp";
+import csrHeroImage from "@/assets/GivebackHero/ChatGPT Image Aug 7, 2026, 11_36_03 AM (1).png";
 
 import { useEffect, useState, useRef } from "react";
 import {
