@@ -34,16 +34,16 @@ const AboutMilestones = () => {
             <div className="text-center md:text-left">
               <h3 className="text-3xl font-bold mb-3 text-foreground font-hero">2023</h3>
               <p className="text-muted-foreground leading-relaxed max-w-md mx-auto md:mx-0">
-                Grew partner network to 200+ institutions, serving 50,000+ clients.
+                WASS Insurance was formally established, its founding committee constituted, and the groundwork laid for what would become a new force in Ethiopian insurance.
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal animation="fadeUp" delay={0.2}>
             <div className="text-center md:text-right">
-              <h3 className="text-3xl font-bold mb-3 text-foreground font-hero">2025</h3>
+              <h3 className="text-3xl font-bold mb-3 text-foreground font-hero">2026</h3>
               <p className="text-muted-foreground leading-relaxed max-w-md mx-auto md:mr-0">
-                12 branches nationwide, leading innovation in Ethiopian insurance.
+                Preparations complete, WASS Insurance stands ready to commence full operations and open its doors to the Ethiopian market.
               </p>
             </div>
           </ScrollReveal>

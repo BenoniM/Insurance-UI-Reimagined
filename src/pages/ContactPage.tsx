@@ -8,12 +8,12 @@ import { ClipboardList, Lightbulb, MessageSquareWarning, Search, Star } from "lu
 import { useState, useRef } from "react";
 
 const branches = [
-  { city: "Addis Ababa (Head Office)", address: "Bole Road, Friendship Building, 4th Floor", phone: "+251 11 123 4567", img: "https://images.pexels.com/photos/14391906/pexels-photo-14391906.jpeg" },
-  { city: "Bahir Dar", address: "Kebele 14, Main Street", phone: "+251 58 220 1234", img: "https://z-p3-scontent.fadd1-1.fna.fbcdn.net/v/t39.30808-6/557319388_1312475937557059_6825128574076986818_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x607&ctp=s590x590&_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Sod9nWp-HRMQ7kNvwFKBl0h&_nc_oc=AdqcYamOpZyDQT3rNnCnMjZGnurdOH0ZficMBxl53EfOAuxU7vseuek3sCn9ZWD91oY&_nc_zt=23&_nc_ht=z-p3-scontent.fadd1-1.fna&_nc_gid=mcjur4-Xl1eaxNCmJjENxA&_nc_ss=7b289&oh=00_Af_mAI4Hyek9dB4pPOumzyfXGQeCEC683xG91uj7AGS4_w&oe=6A47D09B" },
+  { city: "Addis Ababa (Head Office)", address: "Bole Road, Friendship Building, 4th Floor", phone1: "+251 91 110 2050", phone2: "+251 91 366 7537", img: "https://images.pexels.com/photos/14391906/pexels-photo-14391906.jpeg" },
+/*   { city: "Bahir Dar", address: "Kebele 14, Main Street", phone: "+251 58 220 1234", img: "https://z-p3-scontent.fadd1-1.fna.fbcdn.net/v/t39.30808-6/557319388_1312475937557059_6825128574076986818_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x607&ctp=s590x590&_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Sod9nWp-HRMQ7kNvwFKBl0h&_nc_oc=AdqcYamOpZyDQT3rNnCnMjZGnurdOH0ZficMBxl53EfOAuxU7vseuek3sCn9ZWD91oY&_nc_zt=23&_nc_ht=z-p3-scontent.fadd1-1.fna&_nc_gid=mcjur4-Xl1eaxNCmJjENxA&_nc_ss=7b289&oh=00_Af_mAI4Hyek9dB4pPOumzyfXGQeCEC683xG91uj7AGS4_w&oe=6A47D09B" },
   { city: "Hawassa", address: "Piazza Area, Commercial Center", phone: "+251 46 220 5678", img: "https://z-p3-scontent.fadd2-1.fna.fbcdn.net/v/t39.30808-6/656172810_844563612006065_2853273626881206658_n.jpg?stp=dst-jpg_tt6&cstp=mx1200x630&ctp=s1200x630&_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=mHSt10qtG_0Q7kNvwGd_joj&_nc_oc=Adq7wXIiQaiZ64aOUE84vhklxacpH5tbtJwD_GR-jetxltyThwh4KlRx3d2jlg8kFeQ&_nc_zt=23&_nc_ht=z-p3-scontent.fadd2-1.fna&_nc_gid=V6nvvT45eexmgdfAG3ps4A&_nc_ss=7b289&oh=00_Af89tMkRPED2VqWeEkgLF5Pjz8aYBPGJoT_A2Prj11DfBw&oe=6A47E4E3" },
   { city: "Dire Dawa", address: "Kezira, Near CBE Branch", phone: "+251 25 111 2345", img: "https://www.geeska.com/sites/default/files/styles/main_664x374/public/2025-03/GettyImages-1244176098.jpg.webp?itok=6sgc78il" },
   { city: "Mekelle", address: "Ayder, Business District", phone: "+251 34 441 6789", img: "https://gheraltatour.com/wp-content/uploads/2024/03/Mekelle-city.jpg" },
-  { city: "Adama (Nazret)", address: "Main Road, Negash Building", phone: "+251 22 111 3456", img: "https://z-p3-scontent.fadd1-1.fna.fbcdn.net/v/t39.30808-6/484996198_676381621585895_2548246790889037144_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x612&ctp=p180x540&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=hNYGC1yhVCoQ7kNvwEkQYbH&_nc_oc=AdqBhOKTdym7ES6z9_G_h6ol_eEJH-4O0wPvzBioT9baGWVR5uuI-w8-40-P2eusW5Y&_nc_zt=23&_nc_ht=z-p3-scontent.fadd1-1.fna&_nc_gid=Y9o1YJeGTYGEpEWbXtL3QA&_nc_ss=7b289&oh=00_Af95-0M6h3iOda2OB2npiuQgnhHJoPorYp24-uaA4tYgdA&oe=6A47D7C0" },
+  { city: "Adama (Nazret)", address: "Main Road, Negash Building", phone: "+251 22 111 3456", img: "https://z-p3-scontent.fadd1-1.fna.fbcdn.net/v/t39.30808-6/484996198_676381621585895_2548246790889037144_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x612&ctp=p180x540&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=hNYGC1yhVCoQ7kNvwEkQYbH&_nc_oc=AdqBhOKTdym7ES6z9_G_h6ol_eEJH-4O0wPvzBioT9baGWVR5uuI-w8-40-P2eusW5Y&_nc_zt=23&_nc_ht=z-p3-scontent.fadd1-1.fna&_nc_gid=Y9o1YJeGTYGEpEWbXtL3QA&_nc_ss=7b289&oh=00_Af95-0M6h3iOda2OB2npiuQgnhHJoPorYp24-uaA4tYgdA&oe=6A47D7C0" }, */
 ];
 
 const HoverBranchList = () => {
@@ -53,45 +53,18 @@ const HoverBranchList = () => {
                </h3>
                <p className="text-xs md:text-sm text-muted-foreground mt-1">{branch.address}</p>
                
-               {/* Mobile Image (Accordion style) */}
-               <div className={`md:hidden w-full overflow-hidden transition-all duration-300 ease-in-out ${hoveredIndex === i ? 'max-h-[250px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
-                 <img src={branch.img} alt={branch.city} className="w-full h-[200px] object-cover rounded-xl shadow-md" />
-               </div>
+
             </div>
-            <div className="text-left md:text-right mt-2 md:mt-0">
-               <span className="text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors">{branch.phone}</span>
+            <div className="flex items-center gap-1 mt-2 md:mt-0 text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors">
+               <a href="tel:+251911102050" className="hover:text-primary transition-colors">+251 91 110 2050</a>
+               <span className="select-none">/</span>
+               <a href="tel:+251913667537" className="hover:text-primary transition-colors">+251 91 366 7537</a>
             </div>
           </div>
         ))}
       </div>
       
-      {/* Floating Image Wrapper (Instant position) */}
-      <div 
-        className="pointer-events-none absolute z-50 hidden md:block"
-        style={{
-          transform: `translate(calc(${mousePos.x}px - 50%), calc(${mousePos.y}px - 50%))`,
-          left: 0,
-          top: 0,
-        }}
-      >
-        <div
-          className="w-[200px] md:w-[250px] aspect-[5/3] rounded-xl overflow-hidden shadow-2xl transition-all duration-300 ease-out"
-          style={{
-            opacity: hoveredIndex !== null ? 1 : 0,
-            transform: `scale(${hoveredIndex !== null ? 1 : 0.9})`,
-          }}
-        >
-          {branches.map((branch, i) => (
-            <img
-              key={i}
-              src={branch.img}
-              alt={branch.city}
-              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
-              style={{ opacity: hoveredIndex === i ? 1 : 0 }}
-            />
-          ))}
-        </div>
-      </div>
+
     </div>
   );
 };
@@ -204,7 +177,7 @@ const ContactPage = () => (
           Let's <span className="text-[#288A69]">Talk</span>
         </h1>
         <p className="text-lg leading-relaxed text-gray-600 max-w-2xl mb-8">
-          Our team is available 24/7 to answer questions, assist with claims, or help you find the right plan.
+          Our team is available to answer questions, assist with claims, or help you find the right plan.
         </p>
         <a href="#branches" className="rounded-xl bg-[#288A69] px-8 py-4 text-base font-bold text-white transition-all hover:bg-[#288A69]/90 hover:scale-105 hover:shadow-xl hover:shadow-[#288A69]/20 text-center">
           Reach Out
@@ -243,7 +216,7 @@ const ContactPage = () => (
               Let's <span className="text-[#288A69]">Talk</span>
             </h1>
             <p className="text-xl leading-relaxed text-gray-600 max-w-2xl mb-8">
-              Our team is available 24/7 to answer questions, assist with claims, or help you find the right plan.
+              Our team is available to answer questions, assist with claims, or help you find the right plan.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <a href="#branches" className="w-full sm:w-auto rounded-xl bg-[#288A69] px-8 py-4 text-base font-bold text-white transition-all hover:bg-[#288A69]/90 hover:scale-105 hover:shadow-xl hover:shadow-[#288A69]/20 text-center">
@@ -271,7 +244,7 @@ const ContactPage = () => (
     </SectionWrapper>
 
     {/* Contact Information Cards */}
-    <SectionWrapper className="bg-accent/10">
+    {/* <SectionWrapper className="bg-accent/10">
       <div className="max-w-[1800px] mx-auto px-4 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8">
           
@@ -299,8 +272,7 @@ const ContactPage = () => (
               <div className="p-4 relative flex flex-col min-h-[150px]">
                 <span className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wider">Support</span>
                 <h3 className="font-heading font-semibold text-base text-foreground mb-2 leading-tight">Claims Hotline</h3>
-                <p className="text-[13px] text-muted-foreground leading-relaxed mb-1">Available 24/7</p>
-                <p className="text-[13px] text-foreground font-medium leading-relaxed">+251 11 123 4567</p>
+                <p className="text-[13px] text-foreground font-medium leading-relaxed">+251 91 110 2050 / +251 91 366 7537</p>
                 
                 <span className="absolute bottom-4 right-4 text-[10px] text-muted-foreground">WASS Insurance</span>
               </div>
@@ -316,7 +288,7 @@ const ContactPage = () => (
                 <span className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wider">Urgent</span>
                 <h3 className="font-heading font-semibold text-base text-foreground mb-2 leading-tight">Emergency</h3>
                 <p className="text-[13px] text-muted-foreground leading-relaxed mb-1">Roadside assistance</p>
-                <p className="text-[13px] text-foreground font-medium leading-relaxed">+251 91 123 4567</p>
+                <p className="text-[13px] text-foreground font-medium leading-relaxed">+251 91 110 2050 / +251 91 366 7537</p>
                 
                 <span className="absolute bottom-4 right-4 text-[10px] text-muted-foreground">WASS Insurance</span>
               </div>
@@ -325,7 +297,7 @@ const ContactPage = () => (
 
         </div>
       </div>
-    </SectionWrapper>
+    </SectionWrapper> */}
 
     <ComplaintFeedbackSection />
 

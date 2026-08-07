@@ -91,10 +91,10 @@ const ContactBlock = () => {
                  <a href="mailto:info@wassinsurance.com" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
                    info@wassinsurance.com
                  </a>
-                 <a href="tel:+251111234567" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
-                   +251 11 123 4567
+                 <a href="tel:+251911102050" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
+                   +251 91 110 2050 / +251 91 366 7537
                  </a>
-                 <a href="https://wa.me/251911234567" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
+                 <a href="https://wa.me/251911102050" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
                    WhatsApp
                  </a>
                  <div className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-[12px] font-medium text-primary">
