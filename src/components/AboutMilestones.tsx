@@ -1,5 +1,5 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import journeyPanorama from "@/assets/Journey/ChatGPT Image Jul 14, 2026, 12_39_47 PM.png";
+import journeyPanorama from "@/assets/New/ChatGPT Image Aug 8, 2026, 09_23_29 AM.png";
 
 const AboutMilestones = () => {
   return (

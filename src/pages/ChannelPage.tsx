@@ -35,8 +35,8 @@ import wiaIcon5 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/gre
 import wiaIcon6 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_06.png";
 import wiaIcon7 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_07.png";
 import wiaIcon8 from "@/assets/ChannelsHero/separated_green_finance_icons(2)/green_finance_icon_08.png";
-import wiaHeroBg from "@/assets/ChannelsHero/ChatGPT Image Jul 14, 2026, 11_07_50 AM.webp";
-import brokerHeroBg from "@/assets/ChannelsHero/ChatGPT Image Jul 14, 2026, 11_01_40 AM.webp";
+import wiaHeroBg from "@/assets/New/ethiopian_family_illustration.png";
+import brokerHeroBg from "@/assets/New/ethiopian_healthcare_colored.png";
 
 const sharedPortalActions = [
   "Request Quote",
@@ -148,8 +148,7 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
           src={kind === "wia" ? wiaHeroBg : brokerHeroBg}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          style={{ transform: kind === "wia" ? "translateY(6%)" : "translateY(15%)" }}
+          className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none opacity-30"
           fetchPriority="high"
           loading="eager"
         />

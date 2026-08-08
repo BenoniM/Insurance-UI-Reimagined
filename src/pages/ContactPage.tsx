@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactBlock from "@/components/ContactBlock";
 import SectionWrapper from "@/components/SectionWrapper";
-import contactHeroNew from "@/assets/ContactHero/ChatGPT Image Jul 14, 2026, 09_59_56 AM.webp";
+import contactHeroNew from "@/assets/New/wass_insurance_sketch_final.png";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ClipboardList, Lightbulb, MessageSquareWarning, Search, Star } from "lucide-react";
 import { useState, useRef } from "react";
@@ -200,7 +200,7 @@ const ContactPage = () => (
         <img
           src={contactHeroNew}
           alt="Contact Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-top opacity-30"
           fetchPriority="high"
           loading="eager"
         />
