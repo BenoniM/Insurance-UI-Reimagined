@@ -259,8 +259,8 @@ const iconMap: Record<string, typeof Heart> = { Heart, Car, Home, Briefcase, Pla
 const whyChooseUs = [
   {
     icon: Shield,
-    title: "NBE Licensed & Regulated",
-    description: "Fully licensed by the National Bank of Ethiopia with strict compliance to all regulatory standards.",
+    title: "Dedicated Support Team",
+    description: "Our in-house support team is available to guide you through your policy, answer coverage questions, and assist with any claim — no outsourcing.",
     image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&auto=format&fit=crop&q=80",
   },
   {

@@ -250,7 +250,7 @@ const Footer = () => {
               <div className="flex flex-col gap-1">
                 <p className="text-xs text-white/30">{t("footer.copyright")}</p>
                 <p className="text-xs text-white/30">
-                  Licensed and regulated by the National Bank of Ethiopia (NBE).
+                  Ethiopian-owned insurer. Founded in Addis Ababa.
                 </p>
               </div>
               <div className="flex gap-6">

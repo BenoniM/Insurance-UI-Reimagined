@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import CTAButton from '@/components/CTAButton';
-import claimsBg from '@/assets/New/restyled_insurance_illustration.png';
+import claimsBg from '@/assets/New/wass_insurance_sketch_final.png';
 
 const ClaimsHeroAnimation = () => {
   return (
@@ -39,7 +39,8 @@ const ClaimsHeroAnimation = () => {
         <img
           src={claimsBg}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none opacity-25"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-20"
+          style={{ transform: "translateY(10%)" }}
           aria-hidden="true"
           fetchPriority="high"
           loading="eager"

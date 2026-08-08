@@ -64,7 +64,7 @@ export const translations = {
   "value.support": { en: "Always-On Care", am: "ሁልጊዜ ድጋፍ" },
   "value.supportProof": { en: "Real humans on phone, WhatsApp, and Telegram — 24/7. AI-powered chat handles the simple stuff instantly.", am: "በስልክ፣ WhatsApp እና Telegram እውነተኛ ሰዎች።" },
   "value.local": { en: "Built for Ethiopia", am: "ለኢትዮጵያ የተሰራ" },
-  "value.localProof": { en: "Licensed by the National Bank of Ethiopia. 12 branches, payments in Birr, Amharic-first support.", am: "በኢትዮጵያ ብሔራዊ ባንክ ፈቃድ ያለው።" },
+  "value.localProof": { en: "Ethiopian-owned insurer. 12 branches, payments in Birr, Amharic-first support.", am: "የኢትዮጵያ ባለቤትነት ያለው ኢንሹራንስ።" },
 
   // Process Steps
   "process.title": { en: "How It Works", am: "እንዴት እንደሚሰራ" },
@@ -121,8 +121,8 @@ export const translations = {
 
   // Footer
   "footer.description": {
-    en: "WASS Insurance is a trusted Ethiopian insurance provider offering comprehensive coverage for individuals and businesses since 2010.",
-    am: "ዋስ ኢንሹራንስ ከ2010 ጀምሮ ለግለሰቦች እና ለንግዶች አጠቃላይ ሽፋን የሚሰጥ ታማኝ የኢትዮጵያ ኢንሹራንስ አቅራቢ ነው።",
+    en: "WASS Insurance is a trusted Ethiopian insurance provider offering comprehensive coverage for individuals and businesses since 2026.",
+    am: "ዋስ ኢንሹራንስ ከ2026 ጀምሮ ለግለሰቦች እና ለንግዶች አጠቃላይ ሽፋን የሚሰጥ ታማኝ የኢትዮጵያ ኢንሹራንስ አቅራቢ ነው።",
   },
   "footer.products": { en: "Products", am: "ምርቶች" },
   "footer.claims": { en: "Claims", am: "ጥያቄዎች" },
@@ -132,7 +132,7 @@ export const translations = {
   "footer.requiredDocs": { en: "Required Documents", am: "አስፈላጊ ሰነዶች" },
   "footer.aboutUs": { en: "About Us", am: "ስለ እኛ" },
   "footer.careers": { en: "Careers", am: "ስራ ዕድሎች" },
-  "footer.copyright": { en: "© 2026 WASS Insurance S.C. All rights reserved. Licensed by the National Bank of Ethiopia.", am: "© 2026 ዋስ ኢንሹራንስ አ.ማ. ሁሉም መብቶች የተጠበቁ ናቸው። በኢትዮጵያ ብሔራዊ ባንክ ፈቃድ ያገኘ።" },
+  "footer.copyright": { en: "© 2026 WASS Insurance S.C. All rights reserved.", am: "© 2026 ዋስ ኢንሹራንስ አ.ማ. ሁሉም መብቶች የተጠበቁ ናቸው።" },
   "footer.terms": { en: "Terms of Service", am: "የአገልግሎት ውሎች" },
   "footer.privacy": { en: "Privacy Policy", am: "የግላዊነት ፖሊሲ" },
   "footer.cookies": { en: "Cookie Policy", am: "የኩኪ ፖሊሲ" },

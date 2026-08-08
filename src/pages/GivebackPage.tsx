@@ -31,45 +31,45 @@ const testimonials = [
 const transparencyPanels = [
   {
     n: "01",
-    label: "AUDIT",
-    title: "Third-party verified.",
-    body: "Annual audit by an independent Ethiopian firm — every birr accounted for.",
-    image: "https://images.pexels.com/photos/6077915/pexels-photo-6077915.jpeg",
-  },
-  {
-    n: "02",
-    label: "TRACKING",
-    title: "Live impact tracker.",
-    body: "Quarterly updates published on this page so you always know where your premium went.",
+    label: "PLAIN LANGUAGE",
+    title: "No fine-print surprises.",
+    body: "Our policy documents are written in straightforward language. If anything is unclear, our team explains it directly — by phone or in person.",
     image: "https://images.pexels.com/photos/5036927/pexels-photo-5036927.jpeg",
   },
   {
-    n: "03",
-    label: "ALLOCATION",
-    title: "100% unclaimed to causes.",
-    body: "After our fixed operating fee, every unclaimed-premium birr flows directly to funded projects.",
+    n: "02",
+    label: "PREMIUM STRUCTURE",
+    title: "You know what you pay for.",
+    body: "Before you sign anything, you receive a clear breakdown of your premium, what it covers, and what it does not. No hidden charges.",
     image: "https://images.pexels.com/photos/7821701/pexels-photo-7821701.jpeg",
   },
   {
-    n: "04",
-    label: "PARTNERS",
-    title: "Vetted & public.",
-    body: "Every nonprofit partner is independently assessed and listed openly — no hidden relationships.",
+    n: "03",
+    label: "GIVEBACK TIMELINE",
+    title: "Honest about where we are.",
+    body: "The Giveback programme is new. We are building the allocation process carefully and will publish our first community project report once our initial policyholder base is established.",
     image: "https://images.pexels.com/photos/9064715/pexels-photo-9064715.jpeg",
   },
   {
-    n: "05",
-    label: "CHOICE",
-    title: "You vote on causes.",
-    body: "Policyholders choose which causes receive funding during signup — no surprises, ever.",
+    n: "04",
+    label: "OPEN CONTACT",
+    title: "Always reachable.",
+    body: "Have a question about your policy or a concern about a claim? Call us directly on +251 91 110 2050 or visit our Bole Road head office — real people, no call centres.",
     image: "https://images.pexels.com/photos/4669113/pexels-photo-4669113.jpeg",
   },
   {
-    n: "06",
-    label: "REPORTING",
-    title: "Field reports, always.",
-    body: "A published field report follows every funded project so impact is never just a number.",
+    n: "05",
+    label: "UPDATES",
+    title: "We'll tell you when things change.",
+    body: "If our products, pricing, or giveback programme evolves, we notify existing policyholders before changes take effect — no silent updates.",
     image: "https://images.pexels.com/photos/7948038/pexels-photo-7948038.jpeg",
+  },
+  {
+    n: "06",
+    label: "CLAIMS PROCESS",
+    title: "How claims actually work.",
+    body: "We walk every claimant through the exact steps, required documents, and expected timelines — before, during, and after you file. No guessing.",
+    image: "https://images.pexels.com/photos/6077915/pexels-photo-6077915.jpeg",
   },
 ];
 
@@ -229,7 +229,7 @@ const GivebackPage = () => {
                 className="section-title text-foreground capitalize"
                 style={{ letterSpacing: "-0.025em" }}
               >
-                How we keep ourselves honest.
+                How we keep it simple and honest.
               </h2>
             </div>
           </ScrollReveal>
