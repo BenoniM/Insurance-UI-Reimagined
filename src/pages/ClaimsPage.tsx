@@ -21,7 +21,7 @@ const steps = [
   { 
     number: "1", 
     title: "Report the Incident", 
-    description: "Contact us within 48 hours of the incident via phone (+251 91 110 2050 / +251 91 366 7537), WhatsApp, email, or visit any of our branch offices across Ethiopia. Our agents are available for emergency claims.",
+    description: "Contact us within 48 hours of the incident via phone (+251 99 537 1314 / +251 99 537 2014), WhatsApp, email, or visit any of our branch offices across Ethiopia. Our agents are available for emergency claims.",
     image: "https://images.pexels.com/photos/8960941/pexels-photo-8960941.jpeg"
   },
   { 

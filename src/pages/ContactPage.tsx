@@ -8,7 +8,7 @@ import { ClipboardList, Lightbulb, MessageSquareWarning, Search, Star } from "lu
 import { useState, useRef } from "react";
 
 const branches = [
-  { city: "Addis Ababa (Head Office)", address: "Bole Road, Friendship Building, 4th Floor", phone1: "+251 91 110 2050", phone2: "+251 91 366 7537", img: "https://images.pexels.com/photos/14391906/pexels-photo-14391906.jpeg" },
+  { city: "Addis Ababa (Head Office)", address: "Stadium, AN Business Center first floor", phone1: "+251 99 537 1314", phone2: "+251 99 537 2014", img: "https://images.pexels.com/photos/14391906/pexels-photo-14391906.jpeg" },
 /*   { city: "Bahir Dar", address: "Kebele 14, Main Street", phone: "+251 58 220 1234", img: "https://z-p3-scontent.fadd1-1.fna.fbcdn.net/v/t39.30808-6/557319388_1312475937557059_6825128574076986818_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x607&ctp=s590x590&_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Sod9nWp-HRMQ7kNvwFKBl0h&_nc_oc=AdqcYamOpZyDQT3rNnCnMjZGnurdOH0ZficMBxl53EfOAuxU7vseuek3sCn9ZWD91oY&_nc_zt=23&_nc_ht=z-p3-scontent.fadd1-1.fna&_nc_gid=mcjur4-Xl1eaxNCmJjENxA&_nc_ss=7b289&oh=00_Af_mAI4Hyek9dB4pPOumzyfXGQeCEC683xG91uj7AGS4_w&oe=6A47D09B" },
   { city: "Hawassa", address: "Piazza Area, Commercial Center", phone: "+251 46 220 5678", img: "https://z-p3-scontent.fadd2-1.fna.fbcdn.net/v/t39.30808-6/656172810_844563612006065_2853273626881206658_n.jpg?stp=dst-jpg_tt6&cstp=mx1200x630&ctp=s1200x630&_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=mHSt10qtG_0Q7kNvwGd_joj&_nc_oc=Adq7wXIiQaiZ64aOUE84vhklxacpH5tbtJwD_GR-jetxltyThwh4KlRx3d2jlg8kFeQ&_nc_zt=23&_nc_ht=z-p3-scontent.fadd2-1.fna&_nc_gid=V6nvvT45eexmgdfAG3ps4A&_nc_ss=7b289&oh=00_Af89tMkRPED2VqWeEkgLF5Pjz8aYBPGJoT_A2Prj11DfBw&oe=6A47E4E3" },
   { city: "Dire Dawa", address: "Kezira, Near CBE Branch", phone: "+251 25 111 2345", img: "https://www.geeska.com/sites/default/files/styles/main_664x374/public/2025-03/GettyImages-1244176098.jpg.webp?itok=6sgc78il" },
@@ -56,9 +56,9 @@ const HoverBranchList = () => {
 
             </div>
             <div className="flex items-center gap-1 mt-2 md:mt-0 text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors">
-               <a href="tel:+251911102050" className="hover:text-primary transition-colors">+251 91 110 2050</a>
+               <a href="tel:+251995371314" className="hover:text-primary transition-colors">+251 99 537 1314</a>
                <span className="select-none">/</span>
-               <a href="tel:+251913667537" className="hover:text-primary transition-colors">+251 91 366 7537</a>
+               <a href="tel:+251995372014" className="hover:text-primary transition-colors">+251 99 537 2014</a>
             </div>
           </div>
         ))}

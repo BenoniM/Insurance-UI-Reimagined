@@ -94,14 +94,14 @@ const Footer = () => {
                 </Link>
                 <p className="text-sm leading-relaxed text-white/50 max-w-xs">{t("footer.description")}</p>
                 <div className="flex flex-col gap-3 mt-6">
-                  <a href="tel:+251911102050" className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors">
-                    <Phone className="w-4 h-4" /> +251 91 110 2050 / +251 91 366 7537
+                  <a href="tel:+251995371314" className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors">
+                    <Phone className="w-4 h-4" /> +251 99 537 1314 / +251 99 537 2014
                   </a>
                   <a href="mailto:info@wassinsurance.com" className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors">
                     <Mail className="w-4 h-4" /> info@wassinsurance.com
                   </a>
                   <span className="flex items-start gap-2 text-sm text-white/50">
-                    <MapPin className="w-4 h-4 mt-0.5" /> Bole Road, Addis Ababa, Ethiopia
+                    <MapPin className="w-4 h-4 mt-0.5" /> Stadium, AN Business Center first floor
                   </span>
                 </div>
 

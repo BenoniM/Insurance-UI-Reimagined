@@ -73,7 +73,7 @@ const ContactBlock = () => {
             <ScrollReveal delay={0.1} className="lg:flex-grow lg:flex lg:flex-col w-full">
               <div className="w-full h-[300px] lg:h-auto lg:flex-grow rounded-md overflow-hidden mb-8 opacity-90 contrast-125 filter grayscale-[50%]">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.5!2d38.7636!3d9.0054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMDAnMTkuNCJOIDM4wrA0NSc0OS4wIkU!5e0!3m2!1sen!2set!4v1" 
+                  src="https://maps.google.com/maps?q=9.014272,38.754326&hl=en&z=15&output=embed"
                   width="100%" 
                   height="100%" 
                   style={{ border: 0, minHeight: "300px" }} 
@@ -91,14 +91,14 @@ const ContactBlock = () => {
                  <a href="mailto:info@wassinsurance.com" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
                    info@wassinsurance.com
                  </a>
-                 <a href="tel:+251911102050" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
-                   +251 91 110 2050 / +251 91 366 7537
+                 <a href="tel:+251995371314" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
+                   +251 99 537 1314 / +251 99 537 2014
                  </a>
-                 <a href="https://wa.me/251911102050" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
+                 <a href="https://wa.me/251995371314" className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:border-primary/40 rounded-full text-[12px] font-medium text-primary transition-colors">
                    WhatsApp
                  </a>
                  <div className="whitespace-nowrap px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-[12px] font-medium text-primary">
-                   Addis Ababa, Ethiopia
+                   Stadium, AN Business Center first floor
                  </div>
               </div>
             </ScrollReveal>

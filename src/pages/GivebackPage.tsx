@@ -54,7 +54,7 @@ const transparencyPanels = [
     n: "04",
     label: "OPEN CONTACT",
     title: "Always reachable.",
-    body: "Have a question about your policy or a concern about a claim? Call us directly on +251 91 110 2050 or visit our Bole Road head office — real people, no call centres.",
+    body: "Have a question about your policy or a concern about a claim? Call us directly on +251 99 537 1314 or visit our Stadium head office — real people, no call centres.",
     image: "https://images.pexels.com/photos/4669113/pexels-photo-4669113.jpeg",
   },
   {
