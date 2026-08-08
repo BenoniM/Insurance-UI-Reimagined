@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import CTAButton from '@/components/CTAButton';
-import claimsBg from '@/assets/ClaimsHero/ChatGPT Image Aug 7, 2026, 12_56_35 PM.png';
+import claimsBg from '@/assets/New/restyled_insurance_illustration.png';
 
 const ClaimsHeroAnimation = () => {
   return (
@@ -39,8 +39,7 @@ const ClaimsHeroAnimation = () => {
         <img
           src={claimsBg}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          style={{ transform: "translateY(18%)" }}
+          className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none opacity-25"
           aria-hidden="true"
           fetchPriority="high"
           loading="eager"
