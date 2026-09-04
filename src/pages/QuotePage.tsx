@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,10 +10,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle, ArrowRight, ArrowLeft, Sparkles, Pencil, ShieldCheck } from "lucide-react";
+import { CheckCircle, ArrowRight, ArrowLeft, Sparkles, Pencil, ShieldCheck, UserCheck, Shield } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getActiveProducts, Product as LocalProduct } from "@/data/products";
+import { getActiveProducts } from "@/data/products";
 
 interface Product {
   id: string; // same as slug
@@ -23,6 +23,43 @@ interface Product {
   pricing_rules: any;
   category: string;
 }
+
+const getFieldsForProduct = (product?: Product | null): string[] => {
+  if (!product) return ["coverage_amount", "location"];
+  if (product.pricing_rules?.fields && Array.isArray(product.pricing_rules.fields) && product.pricing_rules.fields.length > 0) {
+    return product.pricing_rules.fields;
+  }
+  const slug = (product.slug || product.id || "").toLowerCase();
+  const cat = (product.category || "").toLowerCase();
+
+  if (slug.includes("motor") || slug.includes("vehicle") || slug.includes("car")) {
+    return ["vehicle_type", "vehicle_year", "coverage_type", "vehicle_value"];
+  }
+  if (
+    slug.includes("property") ||
+    slug.includes("fire") ||
+    slug.includes("house") ||
+    slug.includes("home") ||
+    slug.includes("building") ||
+    slug.includes("engineering") ||
+    slug.includes("burglary")
+  ) {
+    return ["property_type", "property_value", "location"];
+  }
+  if (cat.includes("life") || slug.includes("life") || slug.includes("endowment") || slug.includes("education") || slug.includes("annuity")) {
+    return ["age", "smoker", "coverage_amount", "term_years"];
+  }
+  if (cat.includes("medical") || slug.includes("medical") || slug.includes("health") || slug.includes("accident")) {
+    return ["age", "family_size", "pre_existing_conditions", "coverage_amount"];
+  }
+  if (slug.includes("marine") || slug.includes("cargo") || slug.includes("transit")) {
+    return ["coverage_amount", "location"];
+  }
+  if (cat.includes("financial") || slug.includes("liability") || slug.includes("pecuniary") || slug.includes("bond")) {
+    return ["property_type", "coverage_amount", "location"];
+  }
+  return ["coverage_amount", "location"];
+};
 
 const QuotePage = () => {
   const [searchParams] = useSearchParams();
@@ -53,23 +90,41 @@ const QuotePage = () => {
           id: p.subcategory_slug,
           name: p.subcategory,
           slug: p.subcategory_slug,
-          name_am: null,
+          name_am: p.subcategory_am || null,
           pricing_rules: p.pricing_rules,
           category: p.category,
         });
       }
     }
     setProducts(subcategoryLevel);
+
     const preselect = searchParams.get("product");
     if (preselect) {
-      const found = subcategoryLevel.find((p) => p.slug === preselect);
-      if (found) setSelectedProduct(found.id);
+      const match =
+        subcategoryLevel.find((p) => p.slug === preselect || p.id === preselect) ||
+        localProducts.find((p) => p.slug === preselect);
+      if (match) {
+        const id = match.subcategory_slug || match.id || match.slug;
+        setSelectedProduct(id);
+      }
+    } else if (subcategoryLevel.length > 0 && !selectedProduct) {
+      setSelectedProduct(subcategoryLevel[0].id);
     }
     setProductsLoading(false);
   }, [searchParams]);
 
-  // Reset details when the chosen product changes so stale answers from a
-  // different product's fields don't carry over into the price calc.
+  // Prepopulate contact info from user if logged in
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || user.user_metadata?.full_name || "",
+        email: prev.email || user.email || "",
+      }));
+    }
+  }, [user]);
+
+  // Reset product-specific answers when product changes, preserving contact info
   useEffect(() => {
     setFormData((prev) => {
       const next: Record<string, string> = {};
@@ -81,45 +136,52 @@ const QuotePage = () => {
     setFieldErrors({});
   }, [selectedProduct]);
 
-  const currentProduct = products.find((p) => p.id === selectedProduct);
-  const pricingRules = currentProduct?.pricing_rules as any;
-  const fields: string[] = pricingRules?.fields || [];
+  const currentProduct = useMemo(() => {
+    return products.find((p) => p.id === selectedProduct || p.slug === selectedProduct) || products[0];
+  }, [products, selectedProduct]);
+
+  const fields = useMemo(() => {
+    return getFieldsForProduct(currentProduct);
+  }, [currentProduct]);
 
   const fieldLabels: Record<string, { en: string; am: string }> = {
+    name: { en: "Full Name", am: "ሙሉ ስም" },
+    email: { en: "Email Address", am: "የኢሜይል አድራሻ" },
+    phone: { en: "Phone Number", am: "ስልክ ቁጥር" },
     age: { en: "Your Age", am: "ዕድሜዎ" },
-    family_size: { en: "Family Size", am: "የቤተሰብ ብዛት" },
-    pre_existing_conditions: { en: "Pre-existing Conditions?", am: "ቀድሞ ያሉ ሁኔታዎች?" },
+    family_size: { en: "Family Size (Members)", am: "የቤተሰብ ብዛት" },
+    pre_existing_conditions: { en: "Pre-existing Medical Conditions?", am: "ቀድሞ ያሉ የጤና ሁኔታዎች?" },
     vehicle_type: { en: "Vehicle Type", am: "የተሽከርካሪ ዓይነት" },
     vehicle_year: { en: "Vehicle Age", am: "የተሽከርካሪ ዕድሜ" },
-    vehicle_value: { en: "Vehicle Value (ETB)", am: "የተሽከርካሪ ዋጋ (ብር)" },
+    vehicle_value: { en: "Vehicle Value (ETB)", am: "የተሽከርካሪ ግምታዊ ዋጋ (ብር)" },
     coverage_type: { en: "Coverage Type", am: "የሽፋን ዓይነት" },
-    coverage_amount: { en: "Coverage Amount (ETB)", am: "የሽፋን መጠን (ብር)" },
-    term_years: { en: "Term (Years)", am: "ዘመን (ዓመታት)" },
-    smoker: { en: "Smoker?", am: "ሲጋራ ያጨሳሉ?" },
-    property_type: { en: "Property Type", am: "የንብረት ዓይነት" },
-    property_value: { en: "Property Value (ETB)", am: "የንብረት ዋጋ (ብር)" },
-    location: { en: "Location", am: "ቦታ" },
+    coverage_amount: { en: "Desired Coverage Amount (ETB)", am: "የሚፈለገው የሽፋን መጠን (ብር)" },
+    term_years: { en: "Term (Years)", am: "የፖሊሲ ዘመን (ዓመታት)" },
+    smoker: { en: "Smoker / Tobacco User?", am: "ሲጋራ ያጨሳሉ?" },
+    property_type: { en: "Property / Asset Type", am: "የንብረት ዓይነት" },
+    property_value: { en: "Property Estimated Value (ETB)", am: "የንብረት ዋጋ (ብር)" },
+    location: { en: "Location / Region", am: "ቦታ / ክልል" },
   };
 
   const fieldOptions: Record<string, { label: string; value: string }[]> = {
     vehicle_type: [
-      { label: "Sedan", value: "sedan" },
-      { label: "SUV", value: "suv" },
-      { label: "Truck", value: "truck" },
-      { label: "Motorcycle", value: "motorcycle" },
+      { label: "Private Sedan / Hatchback", value: "sedan" },
+      { label: "SUV / 4WD", value: "suv" },
+      { label: "Commercial Van / Truck", value: "truck" },
+      { label: "Motorcycle / Bajaj", value: "motorcycle" },
     ],
     vehicle_year: [
-      { label: "Brand New", value: "new" },
+      { label: "Brand New (0-1 yr)", value: "new" },
       { label: "1-5 Years", value: "1-5" },
       { label: "6-10 Years", value: "6-10" },
       { label: "10+ Years", value: "10+" },
     ],
     coverage_type: [
-      { label: "Comprehensive", value: "comprehensive" },
-      { label: "Third Party", value: "third_party" },
+      { label: "Comprehensive Cover", value: "comprehensive" },
+      { label: "Third Party Only", value: "third_party" },
     ],
     smoker: [
-      { label: "No", value: "no" },
+      { label: "No (Non-smoker)", value: "no" },
       { label: "Yes", value: "yes" },
     ],
     pre_existing_conditions: [
@@ -127,56 +189,100 @@ const QuotePage = () => {
       { label: "Yes", value: "yes" },
     ],
     property_type: [
-      { label: "Residential", value: "residential" },
-      { label: "Commercial", value: "commercial" },
-      { label: "Industrial", value: "industrial" },
+      { label: "Residential / Home", value: "residential" },
+      { label: "Commercial / Office / Retail", value: "commercial" },
+      { label: "Industrial / Factory / Warehouse", value: "industrial" },
+    ],
+    location: [
+      { label: "Addis Ababa", value: "Addis Ababa" },
+      { label: "Oromia Region", value: "Oromia" },
+      { label: "Amhara Region", value: "Amhara" },
+      { label: "Sidama / SNNPR", value: "Sidama" },
+      { label: "Other Regions", value: "Other" },
     ],
   };
 
   const calculatePrice = () => {
-    if (!pricingRules) return null;
-    let price = pricingRules.base_rate || 0;
+    let base = currentProduct?.pricing_rules?.base_rate || 3800;
+    let price = base;
 
     // Age factor
-    if (formData.age && pricingRules.age_factor) {
+    if (formData.age) {
       const age = parseInt(formData.age);
-      if (age <= 30) price *= pricingRules.age_factor["18-30"] || 1;
-      else if (age <= 45) price *= pricingRules.age_factor["31-45"] || 1;
-      else if (age <= 60) price *= pricingRules.age_factor["46-60"] || 1;
-      else price *= pricingRules.age_factor["61+"] || 1;
+      if (!isNaN(age)) {
+        if (age <= 30) price *= 0.9;
+        else if (age <= 45) price *= 1.1;
+        else if (age <= 60) price *= 1.35;
+        else price *= 1.65;
+      }
     }
 
     // Family addon
-    if (formData.family_size && pricingRules.family_addon) {
-      price += (parseInt(formData.family_size) - 1) * pricingRules.family_addon;
+    if (formData.family_size) {
+      const size = parseInt(formData.family_size);
+      if (!isNaN(size) && size > 1) {
+        price += (size - 1) * 750;
+      }
     }
 
     // Vehicle factor
-    if (formData.vehicle_type && pricingRules.vehicle_factor) {
-      price *= pricingRules.vehicle_factor[formData.vehicle_type] || 1;
+    if (formData.vehicle_type) {
+      const vFactors: Record<string, number> = { sedan: 1.0, suv: 1.25, truck: 1.5, motorcycle: 0.75 };
+      price *= vFactors[formData.vehicle_type] || 1;
     }
 
     // Vehicle year factor
-    if (formData.vehicle_year && pricingRules.year_factor) {
-      price *= pricingRules.year_factor[formData.vehicle_year] || 1;
+    if (formData.vehicle_year) {
+      const yFactors: Record<string, number> = { new: 1.15, "1-5": 1.0, "6-10": 0.88, "10+": 0.75 };
+      price *= yFactors[formData.vehicle_year] || 1;
+    }
+
+    // Vehicle value factor
+    if (formData.vehicle_value) {
+      const val = parseFloat(formData.vehicle_value);
+      if (!isNaN(val) && val > 0) {
+        price += val * 0.012;
+      }
     }
 
     // Property factor
-    if (formData.property_type && pricingRules.property_factor) {
-      price *= pricingRules.property_factor[formData.property_type] || 1;
+    if (formData.property_type) {
+      const pFactors: Record<string, number> = { residential: 1.0, commercial: 1.35, industrial: 1.7 };
+      price *= pFactors[formData.property_type] || 1;
+    }
+
+    // Property value factor
+    if (formData.property_value) {
+      const val = parseFloat(formData.property_value);
+      if (!isNaN(val) && val > 0) {
+        price += val * 0.0015;
+      }
     }
 
     // Coverage amount factor
     if (formData.coverage_amount) {
-      price *= parseInt(formData.coverage_amount) / 1000000;
+      const cov = parseFloat(formData.coverage_amount);
+      if (!isNaN(cov) && cov > 0) {
+        price *= Math.max(0.6, Math.min(5.0, cov / 500000));
+      }
     }
 
     // Smoker
     if (formData.smoker === "yes") {
-      price *= 1.4;
+      price *= 1.35;
     }
 
-    return Math.round(price);
+    // Pre-existing conditions
+    if (formData.pre_existing_conditions === "yes") {
+      price *= 1.25;
+    }
+
+    // Coverage type
+    if (formData.coverage_type === "third_party") {
+      price *= 0.55;
+    }
+
+    return Math.max(1200, Math.round(price));
   };
 
   const livePrice = step === 1 ? calculatePrice() : null;
@@ -184,14 +290,14 @@ const QuotePage = () => {
 
   const validateStep1 = () => {
     const errors: Record<string, boolean> = {};
-    if (!user) {
-      if (!formData.name?.trim()) errors.name = true;
-      if (!formData.email?.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) errors.email = true;
-      if (!formData.phone?.trim()) errors.phone = true;
-    }
+    if (!formData.name?.trim()) errors.name = true;
+    if (!formData.email?.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) errors.email = true;
+    if (!formData.phone?.trim()) errors.phone = true;
+
     fields.forEach((f) => {
-      if (!formData[f] || formData[f] === "") errors[f] = true;
+      if (!formData[f] || formData[f].trim() === "") errors[f] = true;
     });
+
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -298,7 +404,7 @@ const QuotePage = () => {
                   onClick={() => {
                     setSubmitted(false);
                     setStep(0);
-                    setSelectedProduct("");
+                    setSelectedProduct(products[0]?.id || "");
                     setFormData({});
                     setEstimatedPrice(null);
                   }}
@@ -347,97 +453,129 @@ const QuotePage = () => {
             ))}
           </div>
 
-            <div
-              key={step}
-              className="bg-card border border-border rounded-2xl p-6 md:p-8 animate-in fade-in slide-in-from-right-4 duration-500"
-            >
-              {/* Step 0: Select Product */}
-              {step === 0 && (
-                <div className="space-y-4">
-                  <h2 className="font-heading text-xl font-semibold mb-4">{t("quote.selectProduct")}</h2>
-                  {productsLoading ? (
-                    <div className="space-y-3">
-                      {[0, 1, 2].map((i) => (
-                        <Skeleton key={i} className="h-[60px] w-full rounded-lg" />
-                      ))}
-                    </div>
-                  ) : products.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-8">
-                      {lang === "am" ? "በአሁኑ ጊዜ ምንም ምርቶች የሉም።" : "No products are available right now. Please check back soon."}
-                    </p>
-                  ) : (
-                    <RadioGroup value={selectedProduct} onValueChange={setSelectedProduct}>
-                      {/* Group by category */}
-                      {Array.from(new Set(products.map((p) => p.category))).map((cat) => (
-                        <div key={cat}>
-                          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2 mt-4 first:mt-0">{cat}</p>
-                          {products.filter((p) => p.category === cat).map((p) => (
+          <div
+            key={step}
+            className="bg-card border border-border rounded-2xl p-6 md:p-8 animate-in fade-in slide-in-from-right-4 duration-500 shadow-sm"
+          >
+            {/* Step 0: Select Product */}
+            {step === 0 && (
+              <div className="space-y-4">
+                <h2 className="font-heading text-xl font-semibold mb-4">{t("quote.selectProduct")}</h2>
+                {productsLoading ? (
+                  <div className="space-y-3">
+                    {[0, 1, 2].map((i) => (
+                      <Skeleton key={i} className="h-[60px] w-full rounded-lg" />
+                    ))}
+                  </div>
+                ) : products.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-8">
+                    {lang === "am" ? "በአሁኑ ጊዜ ምንም ምርቶች የሉም።" : "No products are available right now. Please check back soon."}
+                  </p>
+                ) : (
+                  <RadioGroup value={selectedProduct} onValueChange={setSelectedProduct}>
+                    {/* Group by category */}
+                    {Array.from(new Set(products.map((p) => p.category))).map((cat) => (
+                      <div key={cat}>
+                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2 mt-4 first:mt-0">{cat}</p>
+                        {products
+                          .filter((p) => p.category === cat)
+                          .map((p) => (
                             <div
                               key={p.id}
-                              className={`flex items-center space-x-3 border rounded-lg p-4 mb-2 hover:bg-accent/50 transition-colors cursor-pointer ${
-                                selectedProduct === p.id ? "border-primary bg-primary/5" : "border-border"
+                              className={`flex items-center space-x-3 border rounded-xl p-4 mb-2 hover:bg-accent/50 transition-all cursor-pointer ${
+                                selectedProduct === p.id ? "border-primary bg-primary/5 ring-1 ring-primary/20 shadow-sm" : "border-border"
                               }`}
                               onClick={() => setSelectedProduct(p.id)}
                             >
                               <RadioGroupItem value={p.id} id={p.id} />
-                              <Label htmlFor={p.id} className="cursor-pointer font-medium flex-1">
+                              <Label htmlFor={p.id} className="cursor-pointer font-medium flex-1 text-sm md:text-base">
                                 {lang === "am" && p.name_am ? p.name_am : p.name}
                               </Label>
                             </div>
                           ))}
-                        </div>
-                      ))}
-                    </RadioGroup>
-                  )}
-                </div>
-              )}
+                      </div>
+                    ))}
+                  </RadioGroup>
+                )}
+              </div>
+            )}
 
-              {/* Step 1: Form fields */}
-              {step === 1 && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between mb-4">
+            {/* Step 1: Form fields */}
+            {step === 1 && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between pb-4 border-b border-border">
+                  <div>
                     <h2 className="font-heading text-xl font-semibold">{t("quote.yourDetails")}</h2>
-                    <button
-                      type="button"
-                      onClick={() => setStep(0)}
-                      className="text-xs text-primary hover:underline flex items-center gap-1"
-                    >
-                      <Pencil className="w-3 h-3" /> {lang === "am" ? "ምርት ቀይር" : "Change product"}
-                    </button>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {lang === "am" ? "ለተመረጠው ምርት: " : "For product: "}
+                      <span className="font-semibold text-primary">
+                        {lang === "am" && currentProduct?.name_am ? currentProduct.name_am : currentProduct?.name}
+                      </span>
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setStep(0)}
+                    className="text-xs text-primary hover:underline flex items-center gap-1 font-medium bg-primary/5 px-2.5 py-1.5 rounded-lg border border-primary/20 transition-colors hover:bg-primary/10"
+                  >
+                    <Pencil className="w-3 h-3" /> {lang === "am" ? "ምርት ቀይር" : "Change product"}
+                  </button>
+                </div>
+
+                {/* Contact Information */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                    <UserCheck className="w-3.5 h-3.5 text-primary" />
+                    <span>{lang === "am" ? "የእርስዎ መረጃ" : "Contact Information"}</span>
                   </div>
 
-                  {!user && (
-                    <>
-                      <div>
-                        <Label>{lang === "am" ? "ስም" : "Name"}</Label>
-                        <Input
-                          value={formData.name || ""}
-                          onChange={(e) => { setFormData({ ...formData, name: e.target.value }); setFieldErrors((f) => ({ ...f, name: false })); }}
-                          placeholder="Full name"
-                          className={fieldErrors.name ? "border-destructive focus-visible:ring-destructive" : ""}
-                        />
-                      </div>
-                      <div>
-                        <Label>{lang === "am" ? "ኢሜይል" : "Email"}</Label>
-                        <Input
-                          type="email"
-                          value={formData.email || ""}
-                          onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setFieldErrors((f) => ({ ...f, email: false })); }}
-                          placeholder="you@email.com"
-                          className={fieldErrors.email ? "border-destructive focus-visible:ring-destructive" : ""}
-                        />
-                      </div>
-                      <div>
-                        <Label>{lang === "am" ? "ስልክ" : "Phone"}</Label>
-                        <Input
-                          value={formData.phone || ""}
-                          onChange={(e) => { setFormData({ ...formData, phone: e.target.value }); setFieldErrors((f) => ({ ...f, phone: false })); }}
-                          placeholder="+251..."
-                          className={fieldErrors.phone ? "border-destructive focus-visible:ring-destructive" : ""}
-                        />
-                      </div>
-                    </>
-                  )}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="sm:col-span-2">
+                      <Label className="text-xs font-semibold">{lang === "am" ? "ሙሉ ስም" : "Full Name"}</Label>
+                      <Input
+                        value={formData.name || ""}
+                        onChange={(e) => {
+                          setFormData({ ...formData, name: e.target.value });
+                          setFieldErrors((f) => ({ ...f, name: false }));
+                        }}
+                        placeholder="Abebe Kebede"
+                        className={`mt-1 ${fieldErrors.name ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-xs font-semibold">{lang === "am" ? "ኢሜይል አድራሻ" : "Email Address"}</Label>
+                      <Input
+                        type="email"
+                        value={formData.email || ""}
+                        onChange={(e) => {
+                          setFormData({ ...formData, email: e.target.value });
+                          setFieldErrors((f) => ({ ...f, email: false }));
+                        }}
+                        placeholder="abebe@example.com"
+                        className={`mt-1 ${fieldErrors.email ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-xs font-semibold">{lang === "am" ? "ስልክ ቁጥር" : "Phone Number"}</Label>
+                      <Input
+                        value={formData.phone || ""}
+                        onChange={(e) => {
+                          setFormData({ ...formData, phone: e.target.value });
+                          setFieldErrors((f) => ({ ...f, phone: false }));
+                        }}
+                        placeholder="+251 91 234 5678"
+                        className={`mt-1 ${fieldErrors.phone ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Policy / Insurance Details */}
+                <div className="space-y-4 pt-4 border-t border-border">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                    <Shield className="w-3.5 h-3.5 text-primary" />
+                    <span>{lang === "am" ? "የፖሊሲ ዝርዝሮች" : "Coverage & Policy Details"}</span>
+                  </div>
 
                   {fields.map((field) => {
                     const label = fieldLabels[field]?.[lang] || field;
@@ -446,20 +584,35 @@ const QuotePage = () => {
 
                     if (options) {
                       return (
-                        <div key={field}>
-                          <Label>{label}</Label>
-                          <RadioGroup value={formData[field] || ""} onValueChange={(val) => { setFormData({ ...formData, [field]: val }); setFieldErrors((f) => ({ ...f, [field]: false })); }}>
-                            <div className="grid grid-cols-2 gap-2 mt-1">
+                        <div key={field} className="space-y-1.5">
+                          <Label className="text-xs font-semibold">{label}</Label>
+                          <RadioGroup
+                            value={formData[field] || ""}
+                            onValueChange={(val) => {
+                              setFormData({ ...formData, [field]: val });
+                              setFieldErrors((f) => ({ ...f, [field]: false }));
+                            }}
+                          >
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
                               {options.map((opt) => (
                                 <div
                                   key={opt.value}
-                                  className={`flex items-center space-x-2 border rounded-lg p-3 hover:bg-accent/50 cursor-pointer ${
-                                    formData[field] === opt.value ? "border-primary bg-primary/5" : hasError ? "border-destructive" : "border-border"
+                                  className={`flex items-center space-x-2 border rounded-lg p-3 hover:bg-accent/50 cursor-pointer transition-all ${
+                                    formData[field] === opt.value
+                                      ? "border-primary bg-primary/5 ring-1 ring-primary/20"
+                                      : hasError
+                                      ? "border-destructive"
+                                      : "border-border"
                                   }`}
-                                  onClick={() => { setFormData({ ...formData, [field]: opt.value }); setFieldErrors((f) => ({ ...f, [field]: false })); }}
+                                  onClick={() => {
+                                    setFormData({ ...formData, [field]: opt.value });
+                                    setFieldErrors((f) => ({ ...f, [field]: false }));
+                                  }}
                                 >
                                   <RadioGroupItem value={opt.value} id={`${field}-${opt.value}`} />
-                                  <Label htmlFor={`${field}-${opt.value}`} className="cursor-pointer text-sm">{opt.label}</Label>
+                                  <Label htmlFor={`${field}-${opt.value}`} className="cursor-pointer text-xs sm:text-sm">
+                                    {opt.label}
+                                  </Label>
                                 </div>
                               ))}
                             </div>
@@ -469,103 +622,146 @@ const QuotePage = () => {
                     }
 
                     return (
-                      <div key={field}>
-                        <Label>{label}</Label>
+                      <div key={field} className="space-y-1">
+                        <Label className="text-xs font-semibold">{label}</Label>
                         <Input
-                          type="number"
+                          type={field.includes("amount") || field.includes("value") || field.includes("age") || field.includes("term") || field.includes("size") ? "number" : "text"}
                           value={formData[field] || ""}
-                          onChange={(e) => { setFormData({ ...formData, [field]: e.target.value }); setFieldErrors((f) => ({ ...f, [field]: false })); }}
-                          placeholder={label}
-                          className={hasError ? "border-destructive focus-visible:ring-destructive" : ""}
+                          onChange={(e) => {
+                            setFormData({ ...formData, [field]: e.target.value });
+                            setFieldErrors((f) => ({ ...f, [field]: false }));
+                          }}
+                          placeholder={
+                            field === "vehicle_value"
+                              ? "e.g. 1,500,000"
+                              : field === "property_value"
+                              ? "e.g. 5,000,000"
+                              : field === "coverage_amount"
+                              ? "e.g. 1,000,000"
+                              : field === "age"
+                              ? "e.g. 35"
+                              : field === "term_years"
+                              ? "e.g. 10"
+                              : field === "family_size"
+                              ? "e.g. 4"
+                              : label
+                          }
+                          className={`mt-1 ${hasError ? "border-destructive focus-visible:ring-destructive" : ""}`}
                         />
                       </div>
                     );
                   })}
+                </div>
 
-                  {/* Live price preview, updates as the form is filled in */}
-                  {requiredFieldsComplete && livePrice !== null && (
-                    <div className="flex items-center justify-between bg-primary/5 border border-primary/20 rounded-lg px-4 py-3 mt-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                      <span className="text-xs text-muted-foreground">{lang === "am" ? "የቀጥታ ግምት" : "Live estimate"}</span>
-                      <span className="font-heading font-bold text-primary">
-                        {livePrice.toLocaleString()} {t("common.etb")} <span className="text-xs font-normal text-muted-foreground">{lang === "am" ? "/ ዓመት" : "/ yr"}</span>
+                {/* Live price preview, updates as the form is filled in */}
+                {livePrice !== null && (
+                  <div className="flex items-center justify-between bg-primary/5 border border-primary/20 rounded-xl px-4 py-3.5 mt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <div>
+                      <span className="text-xs font-semibold text-primary block">{lang === "am" ? "የቀጥታ ግምት" : "Live Estimate"}</span>
+                      <span className="text-[11px] text-muted-foreground">
+                        {requiredFieldsComplete
+                          ? lang === "am"
+                            ? "በተመረጡት ዝርዝሮች መሠረት"
+                            : "Calculated based on your details"
+                          : lang === "am"
+                          ? "የመነሻ ግምት"
+                          : "Estimated starting rate"}
                       </span>
                     </div>
-                  )}
-                </div>
-              )}
-
-              {/* Step 2: Review */}
-              {step === 2 && (
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <h2 className="font-heading text-xl font-semibold">{t("quote.review")}</h2>
-                    <button
-                      type="button"
-                      onClick={() => setStep(1)}
-                      className="text-xs text-primary hover:underline flex items-center gap-1"
-                    >
-                      <Pencil className="w-3 h-3" /> {lang === "am" ? "አርትዕ" : "Edit details"}
-                    </button>
-                  </div>
-                  
-                  <div
-                    className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-xl p-8 text-center animate-in zoom-in-95 fade-in duration-500 fill-mode-backwards"
-                  >
-                    <div className="flex items-center justify-center gap-2 text-primary mb-2">
-                      <Sparkles className="w-4 h-4" />
-                      <p className="text-xs font-bold tracking-widest uppercase">{t("quote.estimatedPremium")}</p>
-                    </div>
-                    <p
-                      className="font-heading text-5xl font-bold text-primary animate-in slide-in-from-bottom-4 fade-in duration-500 delay-150 fill-mode-backwards"
-                    >
-                      {estimatedPrice?.toLocaleString()} <span className="text-xl">{t("common.etb")}</span>
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-2">{lang === "am" ? "በዓመት" : "per year"}</p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="text-sm"><strong>{lang === "am" ? "ምርት" : "Product"}:</strong> {lang === "am" && currentProduct?.name_am ? currentProduct.name_am : currentProduct?.name}</p>
-                    {Object.entries(formData).map(([key, val]) => (
-                      <p key={key} className="text-sm text-muted-foreground">
-                        <strong>{fieldLabels[key]?.[lang] || key}:</strong> {val}
-                      </p>
-                    ))}
-                  </div>
-
-                  <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/40 rounded-lg p-3">
-                    <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <span>
-                      {lang === "am"
-                        ? "ይህ ግምት ብቻ ነው እና አስገዳጅ አይደለም። ቡድናችን ለማረጋገጥ ያነጋግርዎታል።"
-                        : "This is a non-binding estimate. No payment is taken now — our team will confirm final pricing with you."}
+                    <span className="font-heading font-bold text-lg md:text-xl text-primary">
+                      {livePrice.toLocaleString()} {t("common.etb")} <span className="text-xs font-normal text-muted-foreground">{lang === "am" ? "/ ዓመት" : "/ yr"}</span>
                     </span>
                   </div>
-                </div>
-              )}
-
-              {/* Navigation */}
-              <div className="flex justify-between mt-8">
-                {step > 0 ? (
-                  <Button variant="outline" onClick={() => setStep((s) => s - 1)}>
-                    <ArrowLeft className="w-4 h-4 mr-1" /> {t("quote.back")}
-                  </Button>
-                ) : <div />}
-
-                {step < 2 ? (
-                  <Button
-                    className="teal-gradient text-primary-foreground"
-                    onClick={handleNext}
-                    disabled={step === 0 && (productsLoading || !selectedProduct)}
-                  >
-                    {t("quote.next")} <ArrowRight className="w-4 h-4 ml-1" />
-                  </Button>
-                ) : (
-                  <Button className="teal-gradient text-primary-foreground" onClick={handleSubmit} disabled={submitting}>
-                    {submitting ? t("common.loading") : t("quote.submit")}
-                  </Button>
                 )}
               </div>
+            )}
+
+            {/* Step 2: Review */}
+            {step === 2 && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="font-heading text-xl font-semibold">{t("quote.review")}</h2>
+                  <button
+                    type="button"
+                    onClick={() => setStep(1)}
+                    className="text-xs text-primary hover:underline flex items-center gap-1 font-medium bg-primary/5 px-2.5 py-1.5 rounded-lg border border-primary/20 transition-colors hover:bg-primary/10"
+                  >
+                    <Pencil className="w-3 h-3" /> {lang === "am" ? "አርትዕ" : "Edit details"}
+                  </button>
+                </div>
+
+                <div
+                  className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-xl p-8 text-center animate-in zoom-in-95 fade-in duration-500 fill-mode-backwards"
+                >
+                  <div className="flex items-center justify-center gap-2 text-primary mb-2">
+                    <Sparkles className="w-4 h-4" />
+                    <p className="text-xs font-bold tracking-widest uppercase">{t("quote.estimatedPremium")}</p>
+                  </div>
+                  <p
+                    className="font-heading text-4xl md:text-5xl font-bold text-primary animate-in slide-in-from-bottom-4 fade-in duration-500 delay-150 fill-mode-backwards"
+                  >
+                    {estimatedPrice?.toLocaleString()} <span className="text-xl">{t("common.etb")}</span>
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-2">{lang === "am" ? "በዓመት" : "per year"}</p>
+                </div>
+
+                <div className="space-y-3 bg-muted/20 border border-border/60 rounded-xl p-4">
+                  <p className="text-sm font-semibold text-foreground border-b border-border/50 pb-2">
+                    {lang === "am" ? "ምርት: " : "Product: "}
+                    <span className="text-primary font-bold">
+                      {lang === "am" && currentProduct?.name_am ? currentProduct.name_am : currentProduct?.name}
+                    </span>
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                    {Object.entries(formData).map(([key, val]) => {
+                      if (!val) return null;
+                      const displayLabel = fieldLabels[key]?.[lang] || key;
+                      const optionMatch = fieldOptions[key]?.find((o) => o.value === val);
+                      const displayVal = optionMatch ? optionMatch.label : val;
+                      return (
+                        <div key={key} className="text-xs">
+                          <span className="text-muted-foreground font-medium">{displayLabel}:</span>{" "}
+                          <span className="font-semibold text-foreground">{displayVal}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/40 rounded-lg p-3">
+                  <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                  <span>
+                    {lang === "am"
+                      ? "ይህ ግምት ብቻ ነው እና አስገዳጅ አይደለም። ቡድናችን ለማረጋገጥ ያነጋግርዎታል።"
+                      : "This is a non-binding estimate. No payment is taken now — our team will confirm final pricing with you."}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Navigation */}
+            <div className="flex justify-between mt-8 pt-4 border-t border-border">
+              {step > 0 ? (
+                <Button variant="outline" onClick={() => setStep((s) => s - 1)}>
+                  <ArrowLeft className="w-4 h-4 mr-1" /> {t("quote.back")}
+                </Button>
+              ) : <div />}
+
+              {step < 2 ? (
+                <Button
+                  className="teal-gradient text-primary-foreground font-semibold px-6"
+                  onClick={handleNext}
+                  disabled={step === 0 && (productsLoading || !selectedProduct)}
+                >
+                  {t("quote.next")} <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+              ) : (
+                <Button className="teal-gradient text-primary-foreground font-semibold px-8" onClick={handleSubmit} disabled={submitting}>
+                  {submitting ? t("common.loading") : t("quote.submit")}
+                </Button>
+              )}
             </div>
+          </div>
         </div>
       </section>
       <Footer />
