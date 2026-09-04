@@ -94,11 +94,26 @@ const Footer = () => {
                 </Link>
                 <p className="text-sm leading-relaxed text-white/50 max-w-xs">{t("footer.description")}</p>
                 <div className="flex flex-col gap-3 mt-6">
-                  <a href="tel:+251995371314" className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors">
-                    <Phone className="w-4 h-4" /> +251 99 537 1314 / +251 99 537 2014
-                  </a>
+                  <div className="flex items-center gap-2 text-sm text-white/50">
+                    <Phone className="w-4 h-4 shrink-0" />
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <a
+                        href="tel:+251995371314"
+                        className="hover:text-white transition-colors"
+                      >
+                        +251 99 537 1314
+                      </a>
+                      <span className="text-white/30 select-none">/</span>
+                      <a
+                        href="tel:+251995372014"
+                        className="hover:text-white transition-colors"
+                      >
+                        +251 99 537 2014
+                      </a>
+                    </div>
+                  </div>
                   <a href="mailto:info@wassinsurance.com" className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors">
-                    <Mail className="w-4 h-4" /> info@wassinsurance.com
+                    <Mail className="w-4 h-4 shrink-0" /> info@wassinsurance.com
                   </a>
                   <span className="flex items-start gap-2 text-sm text-white/50">
                     <MapPin className="w-4 h-4 mt-0.5" /> Stadium, AN Business Center first floor
