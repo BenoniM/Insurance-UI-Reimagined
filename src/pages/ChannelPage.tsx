@@ -19,6 +19,7 @@ import CTAButton from "@/components/CTAButton";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import ScrollFocusHero from "@/components/ScrollFocusHero";
 import brokerIcon1 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_01.png";
 import brokerIcon2 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_02.png";
 import brokerIcon3 from "@/assets/ChannelsHero/separated_finance_icons_blue/finance_icon_03.png";
@@ -113,64 +114,15 @@ const ChannelPage = ({ kind }: { kind: ChannelKind }) => {
   return (
     <div className="min-h-screen overflow-x-clip bg-[#FBFAFA]">
       <Navbar />
-      {/* ── MOBILE HERO (image below text, no cropping) ── */}
-      <section className="block md:hidden bg-[#FBFAFA] overflow-hidden">
-        <div className="flex flex-col items-center text-center px-4 pt-28 pb-6">
-          <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
-            {content.badge}
-          </span>
-          <h1 className="text-4xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl">
-            {content.title}
-          </h1>
-          <p className="text-lg font-semibold text-[hsl(160,55%,35%)]">
-            {content.subtitle}
-          </p>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-600">
-            {content.intro}
-          </p>
-        </div>
-        {/* Full-width image at natural aspect ratio — no cropping */}
-        <div className="w-screen">
-          <img
-            src={kind === "wia" ? wiaHeroBg : brokerHeroBg}
-            alt=""
-            aria-hidden="true"
-            className="w-full h-auto"
-            loading="eager"
-          />
-        </div>
-      </section>
-
-      {/* ── DESKTOP HERO (full-screen background image) ── */}
-      <section className="hidden md:flex relative min-h-screen overflow-hidden bg-[#FBFAFA]">
-        {/* Background image per channel */}
-        <img
-          src={kind === "wia" ? wiaHeroBg : brokerHeroBg}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none opacity-30"
-          fetchPriority="high"
-          loading="eager"
-        />
-        <div className="container relative z-10 mx-auto flex min-h-screen flex-col px-4 lg:px-8">
-          <div className="flex min-h-screen flex-1 flex-col items-center justify-center px-0 py-24 text-center">
-            <div className="flex w-full max-w-4xl flex-col items-center">
-              <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
-                {content.badge}
-              </span>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl">
-                {content.title}
-              </h1>
-              <p className="text-xl font-semibold text-[hsl(160,55%,35%)]">
-                {content.subtitle}
-              </p>
-              <p className="mt-4 max-w-2xl text-base md:text-xl leading-relaxed text-gray-600">
-                {content.intro}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ScrollFocusHero
+        badge={content.badge}
+        title={content.title}
+        subtitle={content.subtitle}
+        intro={content.intro}
+        imageSrc={kind === "wia" ? wiaHeroBg : brokerHeroBg}
+        imageAlt={content.title}
+        bgColor="#FBFAFA"
+      />
 
       {content.showBenefits && (
         <SectionWrapper id="apply" className="bg-[hsl(201,78%,98%)]">

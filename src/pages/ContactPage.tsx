@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import ContactBlock from "@/components/ContactBlock";
 import SectionWrapper from "@/components/SectionWrapper";
 import contactHeroNew from "@/assets/New/wass_insurance_sketch_final.png";
+import ScrollFocusHero from "@/components/ScrollFocusHero";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ClipboardList, Lightbulb, MessageSquareWarning, Search, Star } from "lucide-react";
 import { useState, useRef } from "react";
@@ -165,68 +166,29 @@ const ComplaintFeedbackSection = () => (
 );
 
 const ContactPage = () => (
-  <div className="min-h-screen">
+  <div className="min-h-screen overflow-x-clip bg-[#FBFAFA]">
     <Navbar />
-    {/* ── MOBILE HERO (image below text, no cropping) ── */}
-    <section className="block md:hidden bg-[#FBFAFA] overflow-hidden">
-      <div className="flex flex-col items-center text-center px-4 pt-28 pb-6">
-        <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
-          CONTACT US
-        </span>
-        <h1 className="text-4xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl">
+
+    <ScrollFocusHero
+      badge="CONTACT US"
+      title={
+        <>
           Let's <span className="text-[#288A69]">Talk</span>
-        </h1>
-        <p className="text-lg leading-relaxed text-gray-600 max-w-2xl mb-8">
-          Our team is available to answer questions, assist with claims, or help you find the right plan.
-        </p>
-        <a href="#branches" className="rounded-xl bg-[#288A69] px-8 py-4 text-base font-bold text-white transition-all hover:bg-[#288A69]/90 hover:scale-105 hover:shadow-xl hover:shadow-[#288A69]/20 text-center">
+        </>
+      }
+      intro="Our team is available to answer questions, assist with claims, or help you find the right plan."
+      cta={
+        <a
+          href="#branches"
+          className="rounded-xl bg-[#288A69] px-8 py-4 text-base font-bold text-white transition-all hover:bg-[#288A69]/90 hover:scale-105 hover:shadow-xl hover:shadow-[#288A69]/20 text-center"
+        >
           Reach Out
         </a>
-      </div>
-      {/* Full-width image at natural aspect ratio — no cropping */}
-      <div className="w-screen">
-        <img
-          src={contactHeroNew}
-          alt="Contact Background"
-          className="w-full h-auto"
-          loading="eager"
-        />
-      </div>
-    </section>
-
-    {/* ── DESKTOP HERO (full-screen background image) ── */}
-    <section className="hidden md:flex relative h-screen items-center justify-center overflow-hidden bg-[#FBFAFA]">
-      <div className="absolute inset-0 z-0">
-        <img
-          src={contactHeroNew}
-          alt="Contact Background"
-          className="w-full h-full object-cover object-top opacity-30"
-          fetchPriority="high"
-          loading="eager"
-        />
-      </div>
-      
-      <div className="relative z-10 container mx-auto px-4 pt-20 pb-12 flex flex-col items-center text-center">
-        <ScrollReveal>
-          <div className="flex flex-col items-center">
-            <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-[#288A69]/10 text-[#288A69] hover:bg-[#288A69]/20 mb-6">
-              CONTACT US
-            </span>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(201,78%,20%)] mb-6 max-w-4xl">
-              Let's <span className="text-[#288A69]">Talk</span>
-            </h1>
-            <p className="text-xl leading-relaxed text-gray-600 max-w-2xl mb-8">
-              Our team is available to answer questions, assist with claims, or help you find the right plan.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <a href="#branches" className="w-full sm:w-auto rounded-xl bg-[#288A69] px-8 py-4 text-base font-bold text-white transition-all hover:bg-[#288A69]/90 hover:scale-105 hover:shadow-xl hover:shadow-[#288A69]/20 text-center">
-                Reach Out
-              </a>
-            </div>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
+      }
+      imageSrc={contactHeroNew}
+      imageAlt="Contact WASS Insurance Illustration"
+      bgColor="#FBFAFA"
+    />
 
     {/* Branch Network */}
     <SectionWrapper>
