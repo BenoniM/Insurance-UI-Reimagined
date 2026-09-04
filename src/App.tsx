@@ -11,6 +11,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import AIChatWidget from "@/components/AIChatWidget";
 import AnalyticsProvider from "@/components/AnalyticsProvider";
 import PageTransition from "@/components/PageTransition";
+import SmoothScroll, { getGlobalLenis } from "@/components/SmoothScroll";
 import Index from "./pages/Index";
 import ProductPage from "./pages/ProductPage";
 import ClaimsPage from "./pages/ClaimsPage";
@@ -45,7 +46,12 @@ const AnimatedRoutes = () => {
   useEffect(() => {
     // Push the scroll event slightly down the call stack to ensure it fires after initial render
     const timeout = setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      const lenis = getGlobalLenis();
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true });
+      } else {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      }
       // New page's components mount with their own ScrollTrigger instances, but GSAP
       // measures trigger positions against whatever layout existed at mount time. If
       // images on the new page haven't finished loading yet, those measurements go
@@ -110,9 +116,11 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <AnimatedRoutes />
-            <AIChatWidget />
-            <AnalyticsProvider />
+            <SmoothScroll>
+              <AnimatedRoutes />
+              <AIChatWidget />
+              <AnalyticsProvider />
+            </SmoothScroll>
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>

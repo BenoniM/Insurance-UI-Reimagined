@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { navCategories, type NavSubcategory } from "@/data/products";
+import { getGlobalLenis } from "@/components/SmoothScroll";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -53,13 +54,17 @@ const Navbar = () => {
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
+    const lenis = getGlobalLenis();
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
     } else {
       document.body.style.overflow = "unset";
+      lenis?.start();
     }
     return () => {
       document.body.style.overflow = "unset";
+      lenis?.start();
     };
   }, [mobileOpen]);
 
