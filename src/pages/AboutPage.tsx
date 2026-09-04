@@ -234,7 +234,7 @@ const AboutPage = () => {
 
       {/* ── OUR STORY ─────────────────────────────────────────────── */}
       <section className="about-story-section mt-16">
-        <div className="about-container-full">
+        <div className="about-container-wide">
           <div className="about-story-layout">
 
             <div className="about-zone-1">
@@ -357,7 +357,7 @@ const AboutPage = () => {
 
       {/* ── VALUES ────────────────────────────────────────────────── */}
       <section className="about-values-section">
-        <div className="about-container">
+        <div className="about-container-wide">
           <ScrollReveal>
             <div className="section-header about-section-header">
               <span className="about-eyebrow about-eyebrow--light">
@@ -580,6 +580,14 @@ const AboutPage = () => {
         }
         @media (min-width: 768px) { .about-container-full { padding: 0 3rem; } }
         @media (min-width: 1024px) { .about-container-full { padding: 0 4rem; } }
+        .about-container-wide {
+          width: 100%;
+          max-width: 1800px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+        }
+        @media (min-width: 768px) { .about-container-wide { padding: 0 2rem; } }
+        @media (min-width: 1024px) { .about-container-wide { padding: 0 3rem; } }
 
         /* ─── Eyebrow label ─────────────────────────────────── */
         .about-eyebrow {
@@ -649,7 +657,8 @@ const AboutPage = () => {
            text-align: center;
          }
          .about-story-copy-grid {
-           max-width: 1040px;
+           width: 100%;
+           max-width: none;
            margin: 0 auto;
            text-align: center;
          }
