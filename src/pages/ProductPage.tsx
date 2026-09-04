@@ -462,7 +462,7 @@ const pricingFactors = [
 
 // ─── Pricing Section ──────────────────────────────────────────────────────────
 
-const PricingSection = ({ pricingRules, t }: { pricingRules: any; t: (key: string) => string }) => (
+const PricingSection = () => (
   <section className="py-8 md:py-12 w-full">
     <div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8">
       <div className="text-center mb-4">
@@ -507,25 +507,16 @@ const PricingSection = ({ pricingRules, t }: { pricingRules: any; t: (key: strin
         ))}
       </div>
 
-      {pricingRules?.base_rate && (
-        <div className="flex flex-col items-center gap-6 mt-10">
-          <p className="text-center text-lg md:text-xl text-muted-foreground">
-            Premiums start from{" "}
-            <span className="font-semibold text-primary underline underline-offset-16">
-              ETB {pricingRules.base_rate.toLocaleString()}
-            </span>{" "}
-            per year.
-          </p>
-          <a
-            href="/quote"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 active:scale-95"
-            style={{ background: "hsl(152, 48%, 38%)" }}
-          >
-            Get Your Exact Quote
-            <ArrowRight size={18} strokeWidth={2.5} />
-          </a>
-        </div>
-      )}
+      <div className="flex flex-col items-center gap-6 mt-10">
+        <a
+          href="/quote"
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 active:scale-95"
+          style={{ background: "hsl(152, 48%, 38%)" }}
+        >
+          Get Your Exact Quote
+          <ArrowRight size={18} strokeWidth={2.5} />
+        </a>
+      </div>
     </div>
   </section>
 );
@@ -911,7 +902,6 @@ const ProductPage = () => {
   const description = lang === "am" && product.full_description_am ? product.full_description_am : product.full_description;
   const coverageList: string[] = Array.isArray(product.coverage_list) ? product.coverage_list : [];
   const exclusions: string[] = Array.isArray(product.exclusions) ? product.exclusions : [];
-  const pricingRules = product.pricing_rules || {};
 
   return (
     <div className="min-h-screen">
@@ -1003,9 +993,7 @@ const ProductPage = () => {
       </section>
 
       {/* Pricing Section */}
-      {pricingRules.base_rate && (
-        <PricingSection pricingRules={pricingRules} t={t} />
-      )}
+      <PricingSection />
 
       {/* Testimonials — marquee design */}
       <TestimonialsMarquee lang={lang} />
